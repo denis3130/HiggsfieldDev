@@ -78,7 +78,7 @@ def _queue_room(cfg: dict, state: State) -> int:
 
 # ------------------------------------------------------------------ singola fonte
 
-def process_source(settings: Settings, state: State, src: Source, dry_run: bool) -> list[dict]:
+def process_source(settings: Settings, state: State, src: Source, dry_run: bool, budget: int = 1) -> list[dict]:
     cfg = settings.cfg
     sel = cfg["selection"]
     wd = WORK_DIR / src.key.replace(":", "_")
@@ -116,7 +116,12 @@ def process_source(settings: Settings, state: State, src: Source, dry_run: bool)
 
     results = []
     vod_key = f"twitch_vod:{src.extra['video_id']}" if src.extra.get("video_id") else None
-    for m in moments[:1]:   # un solo Short per fonte, per varietà del canale
+    picked: list[tuple[float, float]] = []
+    for m in moments:
+        if len(results) >= min(sel.get("max_shorts_per_source", 1), budget):
+            break
+        if any(dedupe.overlaps((m["start"], m["end"]), p, 0.1) for p in picked):
+            continue
         seg = (m["start"], m["end"])
         vod_seg = None
         if vod_key and src.extra.get("vod_offset") is not None:
@@ -127,6 +132,7 @@ def process_source(settings: Settings, state: State, src: Source, dry_run: bool)
             log.info("Scartato (%s)", why)
             continue
 
+        picked.append(seg)
         cut, keep = render.dynamic_cut(video, seg[0], seg[1], wd / f"cut_{int(seg[0])}.mp4", sel["min_duration"])
         short_dur = media.probe_duration(cut)
         hashes = dedupe.video_hashes(cut, wd / "hash")
@@ -218,7 +224,7 @@ def run(settings: Settings, dry_run: bool = False, max_new: int | None = None) -
         if len(made) >= target:
             break
         try:
-            made += process_source(settings, state, s, dry_run)
+            made += process_source(settings, state, s, dry_run, budget=target - len(made))
         except Exception as e:
             log.exception("Errore su %s: %s", s.key, e)
         finally:

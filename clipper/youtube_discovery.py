@@ -46,7 +46,7 @@ def discover(settings) -> list[Source]:
     ids: set[str] = set()
 
     if disc.get("youtube_creative_commons_search", True):
-        for term in cfg["game"]["search_terms"][:2]:   # 100 unità di quota per ricerca
+        for term in cfg["game"]["search_terms"]:   # 100 unità di quota per ricerca
             res = _get("search", key, part="id", q=term, type="video", videoLicense="creativeCommon",
                        publishedAfter=after, maxResults=disc["youtube_max_results"], order="viewCount")
             ids |= {it["id"]["videoId"] for it in res.get("items", [])}

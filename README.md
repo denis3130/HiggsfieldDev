@@ -73,6 +73,6 @@ python -m pytest -q
 ## Limiti noti
 
 - **Download da YouTube su GitHub Actions:** YouTube spesso blocca gli IP dei datacenter con "Sign in to confirm you're not a bot". Le clip Twitch di solito si scaricano senza problemi. Se succede, usa un runner self-hosted (anche un mini-PC o una VPS), oppure passa a yt-dlp i cookie di un account secondario.
-- **Quota YouTube:** 10.000 unità al giorno per progetto. Ogni ricerca costa 100 unità e anche gli upload consumano molta quota: con 5 Short e 4 giri di ricerca al giorno si sta nel limite, ma con poco margine. Se serve, chiedi un aumento di quota insieme all'audit.
+- **Quota YouTube:** 10.000 unità al giorno per progetto; ogni ricerca costa 100 unità e gli upload ne consumano molte. Per non far competere ricerche e upload, crea `YOUTUBE_API_KEY` in un **secondo progetto Google** (quota separata) e lascia l'OAuth di upload nel primo. Oltre 6 Short al giorno serve un aumento di quota, da chiedere insieme all'audit.
 - **Volume:** i video GTA 6 su YouTube con licenza CC BY sono pochi. Per arrivare stabilmente a 3–5 Short al giorno servono i permessi di almeno 2–3 streamer.
 - **Costo Claude:** due chiamate per fonte analizzata (selezione + pacchetto), con frame a bassa risoluzione. Ordine di grandezza: pochi centesimi di dollaro per Short.

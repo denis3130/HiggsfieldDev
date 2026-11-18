@@ -2,8 +2,8 @@ name: GTA6 Auto-Clipper
 
 on:
   schedule:
-    # ogni 6 ore (UTC) → 4 giri al giorno; ogni giro riempie la coda fino a 2 giorni di slot
-    - cron: "17 5,11,17,23 * * *"
+    # ogni 3 ore (UTC) → 8 giri al giorno; ogni giro riempie la coda fino a 2 giorni di slot
+    - cron: "17 */3 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
