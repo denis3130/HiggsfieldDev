@@ -1,0 +1,41 @@
+# REGISTRO DIRITTI — il "cancello" legale della pipeline.
+#
+# Regola: una clip viene pubblicata SOLO se rientra in uno di questi casi:
+#   1. Video YouTube con licenza "Creative Commons Attribution" (CC BY) → riuso consentito con attribuzione.
+#   2. Creator presente qui sotto con status: granted e prova del permesso (email/DM/contratto) salvata.
+#   3. Materiale tuo (own_channels).
+#
+# Le clip Twitch e i normali video YouTube (licenza standard) restano di proprietà dello streamer:
+# il fatto che siano pubblici NON ne autorizza il ricaricamento. Senza permesso il sistema li analizza
+# e li mette in "data/candidates_blocked.json" (utile per sapere cosa chiedere), ma NON li pubblica.
+#
+# Il gameplay di GTA 6 è di Rockstar: la loro policy consente video di gameplay, ma non copre
+# volto, voce e commento dello streamer, che sono opera dello streamer.
+
+own_channels: []          # es. ["UCxxxxxxxx"] il tuo canale
+
+creators:
+  - name: "Blur"
+    platforms: { twitch: "blur" }
+    status: "pending"       # pending | granted | denied
+    scope: ""               # es. "clip di max 45s, con credito e link, monetizzazione ok"
+    proof: ""               # es. "email del 2026-11-20, salvata in docs/permessi/blur.pdf"
+    expires: ""             # YYYY-MM-DD, vuoto = nessuna scadenza
+  - name: "Favij"
+    platforms: { twitch: "favijtv" }
+    status: "pending"
+    scope: ""
+    proof: ""
+    expires: ""
+  - name: "Delux"
+    platforms: { twitch: "delux" }
+    status: "pending"
+    scope: ""
+    proof: ""
+    expires: ""
+  # Gli streamer USA scelti dinamicamente vengono aggiunti qui solo quando ottieni il permesso.
+  # Alcuni streamer pubblicano una policy di "clip libere" per i canali clip: in quel caso
+  # aggiungili con status granted e incolla il link alla policy in proof.
+
+# Licenze YouTube accettate automaticamente
+youtube_licenses_allowed: ["creativeCommon"]

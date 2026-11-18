@@ -1,0 +1,65 @@
+# Configurazione GTA 6 Auto-Clipper
+# Modifica questo file per cambiare streamer, quote e orari. Nessuna conferma manuale per clip:
+# il sistema decide da solo, ma pubblica SOLO fonti che superano il controllo diritti (config/rights.yaml).
+
+game:
+  name: "Grand Theft Auto VI"
+  search_terms: ["GTA 6", "GTA VI", "Grand Theft Auto VI"]
+
+streamers:
+  # Italiani richiesti esplicitamente. Gli handle vanno verificati: se cambiano, aggiornali qui.
+  italian:
+    - name: "Blur"
+      twitch: "blur"
+      youtube_channel_id: ""   # opzionale: UC... del canale YouTube
+    - name: "Favij"
+      twitch: "favijtv"
+      youtube_channel_id: ""
+    - name: "Delux"
+      twitch: "delux"
+      youtube_channel_id: ""
+  # Americani: calcolati dinamicamente ad ogni esecuzione = i primi N live su GTA VI per spettatori (lingua en).
+  us_top_live:
+    count: 3
+    language: "en"
+
+discovery:
+  twitch_clips_lookback_hours: 48
+  twitch_clips_per_streamer: 20
+  youtube_lookback_days: 7
+  youtube_max_results: 25
+  # Ricerca YouTube di video con licenza Creative Commons (CC BY) su GTA 6: riutilizzabili con attribuzione.
+  youtube_creative_commons_search: true
+
+selection:
+  shorts_per_day: 4            # obiettivo 3–5
+  min_score: 6.5               # punteggio Claude 0–10 sotto cui la scena viene scartata
+  min_duration: 15
+  max_duration: 45
+  categories: ["divertente", "incidente", "inseguimento", "reazione", "epico"]
+
+render:
+  width: 1080
+  height: 1920
+  fps: 30
+  layout: "blur_fill"         # sfondo sfocato + gameplay centrato, con zoom dinamici
+  subtitle_language: "it"
+  add_original_commentary: true   # overlay testuale originale (titolo-hook + commento) quando utile
+  watermark_source: true          # mostra "Fonte: @canale" a schermo
+
+upload:
+  enabled: true
+  privacy_until_publish: "private"
+  timezone: "Europe/Rome"
+  publish_slots: ["12:30", "15:30", "18:30", "21:00", "22:30"]
+  category_id: "20"            # Gaming
+  default_language: "it"
+  made_for_kids: false
+
+llm:
+  model: "claude-opus-5-5"
+  effort: "medium"
+
+whisper:
+  model: "small"               # tiny/base/small/medium: compromesso velocità/qualità su runner CPU
+  compute_type: "int8"
