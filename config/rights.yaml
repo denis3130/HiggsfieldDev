@@ -17,21 +17,21 @@ own_channels: []          # es. ["UCxxxxxxxx"] il tuo canale
 creators:
   - name: "Blur"
     platforms: { twitch: "blur" }
-    status: "pending"       # pending | granted | denied
-    scope: ""               # es. "clip di max 45s, con credito e link, monetizzazione ok"
-    proof: ""               # es. "email del 2026-11-20, salvata in docs/permessi/blur.pdf"
+    status: "granted"       # pending | granted | denied
+    scope: "clip con credito e link alla fonte"
+    proof: "permesso dichiarato dall'utente il 2026-11-18"
     expires: ""             # YYYY-MM-DD, vuoto = nessuna scadenza
   - name: "Favij"
     platforms: { twitch: "favijtv" }
-    status: "pending"
-    scope: ""
-    proof: ""
+    status: "granted"
+    scope: "clip con credito e link alla fonte"
+    proof: "permesso dichiarato dall'utente il 2026-11-18"
     expires: ""
   - name: "Delux"
     platforms: { twitch: "delux" }
-    status: "pending"
-    scope: ""
-    proof: ""
+    status: "granted"
+    scope: "clip con credito e link alla fonte"
+    proof: "permesso dichiarato dall'utente il 2026-11-18"
     expires: ""
   # Gli streamer USA scelti dinamicamente vengono aggiunti qui solo quando ottieni il permesso.
   # Alcuni streamer pubblicano una policy di "clip libere" per i canali clip: in quel caso
