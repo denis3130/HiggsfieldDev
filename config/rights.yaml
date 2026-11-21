@@ -16,7 +16,7 @@ own_channels: []          # es. ["UCxxxxxxxx"] il tuo canale
 
 creators:
   - name: "Blur"
-    platforms: { twitch: "blur" }
+    platforms: { twitch: "tumblurr" }
     status: "granted"       # pending | granted | denied
     scope: "clip con credito e link alla fonte"
     proof: "permesso dichiarato dall'utente il 2026-11-18"
@@ -27,11 +27,11 @@ creators:
     scope: "clip con credito e link alla fonte"
     proof: "permesso dichiarato dall'utente il 2026-11-18"
     expires: ""
-  - name: "Delux"
-    platforms: { twitch: "delux" }
-    status: "granted"
+  - name: "IShowSpeed"
+    platforms: { youtube: "UCWsDFcIhY2DBi3GB5uykGXA" }
+    status: "pending"       # in attesa di conferma del permesso da parte dell'utente
     scope: "clip con credito e link alla fonte"
-    proof: "permesso dichiarato dall'utente il 2026-11-18"
+    proof: ""
     expires: ""
   # Gli streamer USA scelti dinamicamente vengono aggiunti qui solo quando ottieni il permesso.
   # Alcuni streamer pubblicano una policy di "clip libere" per i canali clip: in quel caso

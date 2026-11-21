@@ -10,14 +10,14 @@ streamers:
   # Italiani richiesti esplicitamente. Gli handle vanno verificati: se cambiano, aggiornali qui.
   italian:
     - name: "Blur"
-      twitch: "blur"
+      twitch: "tumblurr"
       youtube_channel_id: ""   # opzionale: UC... del canale YouTube
     - name: "Favij"
       twitch: "favijtv"
       youtube_channel_id: ""
-    - name: "Delux"
-      twitch: "delux"
-      youtube_channel_id: ""
+    - name: "IShowSpeed"     # live su YouTube, non su Twitch
+      twitch: ""
+      youtube_channel_id: "UCWsDFcIhY2DBi3GB5uykGXA"
   # Americani: calcolati dinamicamente ad ogni esecuzione = i primi N live su GTA VI per spettatori (lingua en).
   us_top_live:
     count: 3
