@@ -9,3 +9,5 @@ numpy>=2.0
 Pillow>=11.0
 pytest>=8.0
 opencv-python-headless>=4.10,<5   # riconoscimento del volto per lo stacco su Blur (la 5.x non ha più i classificatori Haar)
+kokoro-onnx>=0.4   # voce italiana gratuita per le Short "guida" (modello scaricato da Hugging Face)
+soundfile>=0.12

@@ -6,3 +6,9 @@ output/
 data/*.tmp
 client_secret*.json
 .env
+scripts/kokoro.onnx
+scripts/voices.bin
+scripts/mix.wav
+scripts/part*.mp4
+scripts/parts.txt
+scripts/guida.ass
