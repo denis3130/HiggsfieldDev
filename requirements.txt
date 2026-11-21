@@ -8,3 +8,4 @@ PyYAML>=6.0
 numpy>=2.0
 Pillow>=11.0
 pytest>=8.0
+opencv-python-headless>=4.10,<5   # riconoscimento del volto per lo stacco su Blur (la 5.x non ha più i classificatori Haar)

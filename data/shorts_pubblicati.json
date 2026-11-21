@@ -30,61 +30,8 @@
       "via": "vidiq",
       "post_id": "0f224cde-f3f5-44ce-9857-c815aee1cbd3",
       "youtube": "https://www.youtube.com/watch?v=UhDnRxIZxZY"
-    },
-    {
-      "clip_id": "581260434",
-      "creator": "Blur",
-      "fonte": "https://www.twitch.tv/tumblurr/clip/WanderingEndearingPheasantPipeHype-a-z4Br3-PtqAO7vF",
-      "titolo": "La CLIENTELA dello strip club di GTA 6 😂 Blur #shorts",
-      "uscita": "2026-11-21T18:00:00+01:00",
-      "via": "metricool",
-      "post_id": "436660607"
-    },
-    {
-      "clip_id": "1153898672",
-      "creator": "Blur",
-      "fonte": "https://www.twitch.tv/tumblurr/clip/PlumpImpossibleDumplingsCoolCat-3f0JCfak-4gYBCps",
-      "titolo": "Blur SENZA COLPI nel momento peggiore 💀 GTA 6 #shorts",
-      "uscita": "2026-11-21T19:00:00+01:00",
-      "via": "metricool",
-      "post_id": "436660846"
-    },
-    {
-      "clip_id": "541182766",
-      "creator": "Blur",
-      "fonte": "https://www.twitch.tv/tumblurr/clip/AgitatedSnappyGarlicPipeHype-n8FgYd-65a8H9Br-",
-      "titolo": "Blur entra nello STRIP CLUB di GTA 6 😳 #shorts",
-      "uscita": "2026-11-21T20:00:00+01:00",
-      "via": "metricool",
-      "post_id": "436661729"
-    },
-    {
-      "clip_id": "2902920368",
-      "creator": "Blur",
-      "fonte": "https://www.twitch.tv/tumblurr/clip/UninterestedFairDragonPastaThat-BEDnrCVyLpv8gSTs",
-      "titolo": "In GTA 6 c'è perfino la CELLULITE 😳 Blur #shorts",
-      "uscita": "2026-11-22T19:00:00+01:00",
-      "via": "metricool",
-      "post_id": "436675601"
-    },
-    {
-      "clip_id": "712066860",
-      "creator": "Blur",
-      "fonte": "https://www.twitch.tv/tumblurr/clip/CautiousPeppyTireChefFrank-mrU1RqShBTbGoLeT",
-      "titolo": "Blur trova una barca ESPLOSA piena di… 😳 GTA 6 #shorts",
-      "uscita": "2026-11-22T20:00:00+01:00",
-      "via": "metricool",
-      "post_id": "436685222"
     }
   ],
-  "bozze_vidiq_da_non_pubblicare": {
-    "motivo": "Doppioni: queste 3 sono uscite con Metricool dopo il limite di 3 caricamenti al giorno di vidIQ gratis.",
-    "post_id": [
-      "8927af82-79f9-47fb-8082-27ab05c5120b",
-      "e2bb862a-141d-47e7-9ca8-c34088a907ec",
-      "ad164edd-ec83-467d-9a54-24fe17ec31be"
-    ]
-  },
   "scartate": {
     "30172268": "debole",
     "3333346964": "poco chiara",
@@ -106,32 +53,84 @@
   },
   "bozze_vidiq_in_attesa_di_ok": [
     {
-      "clip_id": "2958549462",
-      "fonte": "https://www.twitch.tv/tumblurr/clip/FlaccidTenaciousScorpionPogChamp-UfLsIHsDnEHfm02Y",
-      "titolo": "Il problema del SALTINO in GTA 6 😂 Blur #shorts",
-      "uscita": "2026-11-22T16:00:00+01:00",
-      "post_id": "a749ec65-4c50-4cd8-ac07-6f3b10f0eefd",
-      "revision": "d6acd81a"
+      "giorno": "2026-11-22",
+      "ora": "18:00",
+      "clip_id": "2902920368",
+      "titolo": "In GTA 6 c'è perfino la CELLULITE 😳 Blur #shorts",
+      "post_id": "39b4c387-2f05-46ae-abd7-e14a8a8cec34",
+      "revision": "7cb0c15a"
     },
     {
+      "giorno": "2026-11-22",
+      "ora": "19:00",
       "clip_id": "4099124902",
-      "fonte": "https://www.twitch.tv/tumblurr/clip/RepleteMuddyEagleFutureMan-lKotyu0nZGz6BhIC",
       "titolo": "Blur non ne può più di LUCIA 😂 GTA 6 #shorts",
-      "uscita": "2026-11-22T17:00:00+01:00",
       "post_id": "6c07b895-eddb-4094-8920-160354ee5cd3",
-      "revision": "7fb911e5"
+      "revision": "ba500250"
     },
     {
+      "giorno": "2026-11-22",
+      "ora": "20:00",
+      "clip_id": "712066860",
+      "titolo": "Blur trova una barca ESPLOSA piena di… 😳 GTA 6 #shorts",
+      "post_id": "fa127bf6-9255-4f8a-877f-55ce0d2991b9",
+      "revision": "e095296c"
+    },
+    {
+      "giorno": "2026-11-23",
+      "ora": "18:00",
+      "clip_id": "1153898672",
+      "titolo": "Blur SENZA COLPI nel momento peggiore 💀 GTA 6 #shorts",
+      "post_id": "e2bb862a-141d-47e7-9ca8-c34088a907ec",
+      "revision": "24184d2d",
+      "nota": "non pubblicare se è già uscita con Metricool il 21/11 alle 19"
+    },
+    {
+      "giorno": "2026-11-23",
+      "ora": "19:00",
       "clip_id": "516705677",
-      "fonte": "https://www.twitch.tv/tumblurr/clip/CrunchyDeterminedKoalaMau5-k9Dc_7z33yTMfZsU",
       "titolo": "Blur prova a SCAPPARE ma è tutto scriptato 💀 GTA 6 #shorts",
-      "uscita": "2026-11-22T18:00:00+01:00",
       "post_id": "32bb971b-f45e-4c0c-b4a6-1832ad52bfcf",
-      "revision": "9d83ef5a"
+      "revision": "7d4bfef7"
+    },
+    {
+      "giorno": "2026-11-23",
+      "ora": "20:00",
+      "clip_id": "541182766",
+      "titolo": "Blur entra nello STRIP CLUB di GTA 6 😳 #shorts",
+      "post_id": "ad164edd-ec83-467d-9a54-24fe17ec31be",
+      "revision": "42a280c7",
+      "nota": "non pubblicare se è già uscita con Metricool il 21/11 alle 20"
+    },
+    {
+      "giorno": "2026-11-24",
+      "ora": "18:00",
+      "clip_id": "2958549462",
+      "titolo": "Il problema del SALTINO in GTA 6 😂 Blur #shorts",
+      "post_id": "a749ec65-4c50-4cd8-ac07-6f3b10f0eefd",
+      "revision": "c65cdf77"
+    },
+    {
+      "giorno": "2026-11-24",
+      "ora": "19:00",
+      "clip_id": "581260434",
+      "titolo": "La CLIENTELA dello strip club di GTA 6 😂 Blur #shorts",
+      "post_id": "8927af82-79f9-47fb-8082-27ab05c5120b",
+      "revision": "6e4ead89"
     }
   ],
   "limiti_gratuiti": {
-    "vidiq": "3 caricamenti YouTube al giorno, si azzera alle 09:00 italiane; ogni bozza va approvata dall'utente",
-    "metricool": "20 post pubblicati al mese, si azzera il 1° del mese; nessuna approvazione richiesta dallo strumento"
+    "vidiq": "3 caricamenti YouTube al giorno (conteggio alla pubblicazione, si azzera alle 09:00 italiane); ogni bozza va approvata dall'utente",
+    "metricool": "20 post pubblicati al mese: finiti a novembre, ripartono il 1° dicembre"
+  },
+  "metricool_21_11": {
+    "nota": "Alle 18 Metricool ha dato errore 'You have reached your Metricool account limit' (post gratuiti del mese finiti). Le 19 e le 20 erano ancora in coda: controllare se sono uscite prima di pubblicare i doppioni su vidIQ.",
+    "18:00 clientela (581260434)": "ERRORE limite Metricool, post 436864572",
+    "19:00 senza colpi (1153898672)": "in coda, post 436887213",
+    "20:00 strip club (541182766)": "in coda, post 436661729"
+  },
+  "metricool_bozze_per_dicembre": {
+    "436891445": "cellulite (2902920368)",
+    "436891608": "barca (712066860)"
   }
 }
