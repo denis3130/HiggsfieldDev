@@ -82,8 +82,7 @@
       "clip_id": "1153898672",
       "titolo": "Blur SENZA COLPI nel momento peggiore 💀 GTA 6 #shorts",
       "post_id": "e2bb862a-141d-47e7-9ca8-c34088a907ec",
-      "revision": "24184d2d",
-      "nota": "non pubblicare se è già uscita con Metricool il 21/11 alle 19"
+      "revision": "24184d2d"
     },
     {
       "giorno": "2026-11-23",
@@ -99,8 +98,7 @@
       "clip_id": "541182766",
       "titolo": "Blur entra nello STRIP CLUB di GTA 6 😳 #shorts",
       "post_id": "ad164edd-ec83-467d-9a54-24fe17ec31be",
-      "revision": "42a280c7",
-      "nota": "non pubblicare se è già uscita con Metricool il 21/11 alle 20"
+      "revision": "42a280c7"
     },
     {
       "giorno": "2026-11-24",
@@ -124,10 +122,10 @@
     "metricool": "20 post pubblicati al mese: finiti a novembre, ripartono il 1° dicembre"
   },
   "metricool_21_11": {
-    "nota": "Alle 18 Metricool ha dato errore 'You have reached your Metricool account limit' (post gratuiti del mese finiti). Le 19 e le 20 erano ancora in coda: controllare se sono uscite prima di pubblicare i doppioni su vidIQ.",
-    "18:00 clientela (581260434)": "ERRORE limite Metricool, post 436864572",
-    "19:00 senza colpi (1153898672)": "in coda, post 436887213",
-    "20:00 strip club (541182766)": "in coda, post 436661729"
+    "nota": "Tutte e tre fallite con 'You have reached your Metricool account limit' (post gratuiti di novembre finiti): nessuna è uscita, quindi le bozze vidIQ non sono doppioni.",
+    "18:00 clientela (581260434)": "ERRORE, post 436864572",
+    "19:00 senza colpi (1153898672)": "ERRORE, post 436887213",
+    "20:00 strip club (541182766)": "ERRORE, post 436661729"
   },
   "metricool_bozze_per_dicembre": {
     "436891445": "cellulite (2902920368)",
