@@ -1,6 +1,7 @@
 """Short verticale 1080x1920 da una clip di streamer: webcam sopra, gioco sotto, sottotitoli al centro.
 Uso: python stack_short.py spec.json   (spec: clip, cam=[x,y,w,h], start, end, hook, credit, subs=[[t0,t1,testo],...], out)
-I tempi dei sottotitoli sono relativi all'inizio del taglio (start)."""
+Al posto di start/end si può dare segments=[[a,b],[c,d],...]: i pezzi vengono montati uno dopo l'altro (tagli secchi).
+I tempi dei sottotitoli sono relativi al video finale (cioè all'inizio del primo pezzo)."""
 import json
 import subprocess
 import sys
@@ -54,21 +55,26 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 def main():
     spec = json.loads(Path(sys.argv[1]).read_text())
     x, y, w, h = spec["cam"]
-    start, end = float(spec["start"]), float(spec["end"])
-    dur = end - start
+    segs = spec.get("segments") or [[spec["start"], spec["end"]]]
+    dur = sum(float(b) - float(a) for a, b in segs)
     sub = Path(spec["out"]).with_suffix(".ass")
     ass(spec, dur, sub)
     gw = round(1080 * W / GAME_H / 2) * 2          # larghezza del ritaglio di gioco (altezza piena 1080)
     gx = (1920 - gw) // 2
     sub_arg = str(sub).replace(":", "\\:").replace("'", "\\'")
-    fc = (f"[0:v]split=2[c][g];"
+    cut = "".join(f"[0:v]trim=start={float(a):.3f}:end={float(b):.3f},setpts=PTS-STARTPTS[v{i}];"
+                  f"[0:a]atrim=start={float(a):.3f}:end={float(b):.3f},asetpts=PTS-STARTPTS[a{i}];"
+                  for i, (a, b) in enumerate(segs))
+    cut += "".join(f"[v{i}][a{i}]" for i in range(len(segs))) + f"concat=n={len(segs)}:v=1:a=1[vc][ac];"
+    fc = (cut +
+          f"[vc]split=2[c][g];"
           f"[c]crop={w}:{h}:{x}:{y},scale={W}:-2:flags=lanczos,crop={W}:{CAM_H}:0:(ih-{CAM_H})*0.3[cam];"
           f"[g]crop={gw}:1080:{gx}:0,scale={W}:{GAME_H}:flags=lanczos[game];"
           f"[cam][game]vstack,drawbox=x=0:y={CAM_H - 3}:w={W}:h=6:color=black@0.9:t=fill,"
-          f"subtitles='{sub_arg}',format=yuv420p[v]")
-    subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", f"{start:.2f}", "-t", f"{dur:.2f}", "-i", spec["clip"],
-                    "-filter_complex", fc, "-map", "[v]", "-map", "0:a",
-                    "-af", "loudnorm=I=-14:TP=-1.5:LRA=11,afade=t=in:d=0.15,afade=t=out:st=%.2f:d=0.4" % (dur - 0.4),
+          f"subtitles='{sub_arg}',format=yuv420p[v];"
+          f"[ac]loudnorm=I=-14:TP=-1.5:LRA=11,afade=t=in:d=0.15,afade=t=out:st={dur - 0.4:.2f}:d=0.4[aout]")
+    subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", spec["clip"],
+                    "-filter_complex", fc, "-map", "[v]", "-map", "[aout]",
                     "-c:v", "libx264", "-preset", "medium", "-crf", "19", "-r", "30", "-c:a", "aac", "-b:a", "192k",
                     "-ar", "48000", "-movflags", "+faststart", spec["out"]], check=True)
     print("ok", spec["out"], round(dur, 1), "s")
