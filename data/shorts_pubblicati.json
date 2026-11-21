@@ -51,72 +51,6 @@
     "4164847914": "quasi senza parlato",
     "2885253365": "debole"
   },
-  "bozze_vidiq_in_attesa_di_ok": [
-    {
-      "giorno": "2026-11-22",
-      "ora": "18:00",
-      "clip_id": "2902920368",
-      "titolo": "In GTA 6 c'è perfino la CELLULITE 😳 Blur #shorts",
-      "post_id": "39b4c387-2f05-46ae-abd7-e14a8a8cec34",
-      "revision": "7cb0c15a"
-    },
-    {
-      "giorno": "2026-11-22",
-      "ora": "19:00",
-      "clip_id": "4099124902",
-      "titolo": "Blur non ne può più di LUCIA 😂 GTA 6 #shorts",
-      "post_id": "6c07b895-eddb-4094-8920-160354ee5cd3",
-      "revision": "ba500250"
-    },
-    {
-      "giorno": "2026-11-22",
-      "ora": "20:00",
-      "clip_id": "712066860",
-      "titolo": "Blur trova una barca ESPLOSA piena di… 😳 GTA 6 #shorts",
-      "post_id": "fa127bf6-9255-4f8a-877f-55ce0d2991b9",
-      "revision": "e095296c"
-    },
-    {
-      "giorno": "2026-11-23",
-      "ora": "18:00",
-      "clip_id": "1153898672",
-      "titolo": "Blur SENZA COLPI nel momento peggiore 💀 GTA 6 #shorts",
-      "post_id": "e2bb862a-141d-47e7-9ca8-c34088a907ec",
-      "revision": "24184d2d"
-    },
-    {
-      "giorno": "2026-11-23",
-      "ora": "19:00",
-      "clip_id": "516705677",
-      "titolo": "Blur prova a SCAPPARE ma è tutto scriptato 💀 GTA 6 #shorts",
-      "post_id": "32bb971b-f45e-4c0c-b4a6-1832ad52bfcf",
-      "revision": "7d4bfef7"
-    },
-    {
-      "giorno": "2026-11-23",
-      "ora": "20:00",
-      "clip_id": "541182766",
-      "titolo": "Blur entra nello STRIP CLUB di GTA 6 😳 #shorts",
-      "post_id": "ad164edd-ec83-467d-9a54-24fe17ec31be",
-      "revision": "42a280c7"
-    },
-    {
-      "giorno": "2026-11-24",
-      "ora": "18:00",
-      "clip_id": "2958549462",
-      "titolo": "Il problema del SALTINO in GTA 6 😂 Blur #shorts",
-      "post_id": "a749ec65-4c50-4cd8-ac07-6f3b10f0eefd",
-      "revision": "c65cdf77"
-    },
-    {
-      "giorno": "2026-11-24",
-      "ora": "19:00",
-      "clip_id": "581260434",
-      "titolo": "La CLIENTELA dello strip club di GTA 6 😂 Blur #shorts",
-      "post_id": "8927af82-79f9-47fb-8082-27ab05c5120b",
-      "revision": "6e4ead89"
-    }
-  ],
   "limiti_gratuiti": {
     "vidiq": "3 caricamenti YouTube al giorno (conteggio alla pubblicazione, si azzera alle 09:00 italiane); ogni bozza va approvata dall'utente",
     "metricool": "20 post pubblicati al mese: finiti a novembre, ripartono il 1° dicembre"
@@ -128,7 +62,95 @@
     "20:00 strip club (541182766)": "ERRORE, post 436661729"
   },
   "metricool_bozze_per_dicembre": {
-    "436891445": "cellulite (2902920368)",
-    "436891608": "barca (712066860)"
-  }
+    "nota": "Non usare: l'utente non vuole Metricool. Restano come bozze ferme.",
+    "436891445": "cellulite",
+    "436891608": "barca"
+  },
+  "bozze_vidiq_approvate": [
+    {
+      "giorno": "2026-11-22",
+      "ora": "18:00",
+      "clip_id": "2902920368",
+      "titolo": "In GTA 6 c'è perfino la CELLULITE 😳 Blur #shorts",
+      "post_id": "39b4c387-2f05-46ae-abd7-e14a8a8cec34",
+      "revision": "7cb0c15a",
+      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+    },
+    {
+      "giorno": "2026-11-22",
+      "ora": "19:00",
+      "clip_id": "4099124902",
+      "titolo": "Blur non ne può più di LUCIA 😂 GTA 6 #shorts",
+      "post_id": "6c07b895-eddb-4094-8920-160354ee5cd3",
+      "revision": "ba500250",
+      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+    },
+    {
+      "giorno": "2026-11-22",
+      "ora": "20:00",
+      "clip_id": "712066860",
+      "titolo": "Blur trova una barca ESPLOSA piena di… 😳 GTA 6 #shorts",
+      "post_id": "fa127bf6-9255-4f8a-877f-55ce0d2991b9",
+      "revision": "e095296c",
+      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+    },
+    {
+      "giorno": "2026-11-23",
+      "ora": "18:00",
+      "clip_id": "1153898672",
+      "titolo": "Blur SENZA COLPI nel momento peggiore 💀 GTA 6 #shorts",
+      "post_id": "e2bb862a-141d-47e7-9ca8-c34088a907ec",
+      "revision": "24184d2d",
+      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+    },
+    {
+      "giorno": "2026-11-23",
+      "ora": "19:00",
+      "clip_id": "516705677",
+      "titolo": "Blur prova a SCAPPARE ma è tutto scriptato 💀 GTA 6 #shorts",
+      "post_id": "32bb971b-f45e-4c0c-b4a6-1832ad52bfcf",
+      "revision": "7d4bfef7",
+      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+    },
+    {
+      "giorno": "2026-11-23",
+      "ora": "20:00",
+      "clip_id": "541182766",
+      "titolo": "Blur entra nello STRIP CLUB di GTA 6 😳 #shorts",
+      "post_id": "ad164edd-ec83-467d-9a54-24fe17ec31be",
+      "revision": "42a280c7",
+      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+    },
+    {
+      "giorno": "2026-11-24",
+      "ora": "18:00",
+      "clip_id": "2958549462",
+      "titolo": "Il problema del SALTINO in GTA 6 😂 Blur #shorts",
+      "post_id": "a749ec65-4c50-4cd8-ac07-6f3b10f0eefd",
+      "revision": "c65cdf77",
+      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+    },
+    {
+      "giorno": "2026-11-24",
+      "ora": "19:00",
+      "clip_id": "581260434",
+      "titolo": "La CLIENTELA dello strip club di GTA 6 😂 Blur #shorts",
+      "post_id": "8927af82-79f9-47fb-8082-27ab05c5120b",
+      "revision": "6e4ead89",
+      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+    }
+  ],
+  "regole_utente": [
+    "Pubblicare solo con vidIQ, niente Metricool (21/11)",
+    "Massimo 3 al giorno: 18:00, 19:00, 20:00",
+    "Stacco a tutto schermo su Blur quando fissa la camera o reagisce"
+  ]
 }
