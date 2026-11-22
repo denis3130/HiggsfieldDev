@@ -1,0 +1,56 @@
+{
+ "nota": "Suoni di questo episodio: registrazioni vere CC0 da Freesound, trovate con l'API di Openverse. I suoni della scheda finale (colpo, rise_long, heart60), amb_slow, respiro e legno sono quelli comuni in scripts/bivio/sfx/ (licenze in quel file).",
+ "sfx/vento_fessura.mp3": {
+  "titolo": "Wind Howling thru window crack.mp3",
+  "autore": "DAVESTALKER",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/DAVESTALKER/sounds/331527",
+  "nota": "anello di 38 secondi senza salti (la coda sfuma sull'inizio)"
+ },
+ "sfx/radio_fruscio.mp3": {
+  "titolo": "Short Wave Radio Noise 2",
+  "autore": "zmobie",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/zmobie/sounds/257879",
+  "nota": "anello di 16 secondi senza salti"
+ },
+ "sfx/bufera.mp3": {
+  "titolo": "DMP013016 HEAVYSNOWSTORM.wav",
+  "autore": "martypinso",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/martypinso/sounds/22606",
+  "nota": "ritaglio di 36 secondi (da 1:44) della registrazione originale"
+ },
+ "sfx/squelch.mp3": {
+  "titolo": "Radio Buzz / Squelch 1",
+  "autore": "magnuswaker",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/magnuswaker/sounds/522164"
+ },
+ "sfx/interruttore.mp3": {
+  "titolo": "Toggle Switch",
+  "autore": "pillwave",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/pillwave/sounds/423957"
+ },
+ "sfx/bip.mp3": {
+  "titolo": "stopwatch beep.wav",
+  "autore": "vestibule-door",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/vestibule-door/sounds/668985"
+ },
+ "sfx/ronzio.mp3": {
+  "titolo": "electric hum buzz deep short +bg noise.flac",
+  "autore": "kyles",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/kyles/sounds/451860",
+  "nota": "ritaglio di 6 secondi"
+ },
+ "sfx/neon.mp3": {
+  "titolo": "Neon Lamp, Switch On, Hum",
+  "autore": "Kinoton",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Kinoton/sounds/351430",
+  "nota": "primi 2 secondi (accensione e ronzio)"
+ }
+}

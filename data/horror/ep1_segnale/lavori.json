@@ -1,0 +1,130 @@
+[
+ {
+  "out": "data/horror/ep1_segnale/img/s01_ago.png",
+  "prompt": "extreme macro close-up of an analog needle meter on a vintage grey-green radio transceiver, a thin black needle over a curved scale of small tick marks behind a small rectangular glass window glowing warm amber, dust on the glass, the rest of the radio fading into darkness, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 101,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s02_radio.png",
+  "prompt": "close-up of the front of a vintage 1980s grey-green desktop radio transceiver standing on a metal desk, a round speaker grille, one large black tuning knob, a small meter window glowing amber, plain worn panel, seen at a slight angle, faint red glow from the side, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 102,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s03_scrivania.png",
+  "prompt": "first-person point of view of a person sitting at a metal desk, in the foreground two hands in grey fingerless wool gloves and orange windbreaker sleeves resting on the desk, in front a vintage grey-green radio transceiver with a glowing amber meter, a desk lamp, behind it a frosted window with snow blowing outside in the dark, dark wood-panelled walls, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 103,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s04_bufera.png",
+  "prompt": "wide exterior shot of a small low mountain hut of stone and corrugated metal standing alone on a snowy ridge in a violent blizzard, one small window glowing warm yellow, a red beacon light on the roof, snow blowing horizontally across the frame, dark jagged rocky peaks barely visible behind, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 104,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s05_polso.png",
+  "prompt": "first-person close-up looking down at a left wrist resting on a metal desk, orange windbreaker sleeve with grey reflective bands, grey fingerless wool glove, a chunky black digital wristwatch with a large rectangular dark green screen in the centre of the frame, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 105,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s06_muro.png",
+  "prompt": "a black rectangular digital wall clock with a wide dark glass display hanging on dark wood panelling, beside it a child's crayon drawing on paper taped to the wall showing a mountain, a small house and a little orange figure, seen from slightly below, warm lamp light from the side, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 106,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s07_bobine.png",
+  "prompt": "close-up of a vintage reel-to-reel tape recorder with two large metal reels and brown tape, next to a grey-green radio transceiver with a small meter window glowing amber, on a metal desk, a gooseneck microphone in the foreground out of focus, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 107,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s08_antenna.png",
+  "prompt": "low-angle exterior shot looking up at the top of a steel lattice radio tower in a blizzard, a round dish antenna and thin antenna rods completely encrusted with thick ice and rime, small blue-violet electric glow flickering on the tips of the antennas, one small red light, snow blowing sideways, black sky, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 108,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s09_canalone.png",
+  "prompt": "high-angle view looking straight down from the edge of a cliff into a deep narrow rocky ravine filled with darkness, snow-covered rock walls dropping into pure black, at the top edge of the frame the steel leg of a lattice tower with a blue climbing rope tied to it hanging down into the dark, snow blowing, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 109,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s10_scarponi.png",
+  "prompt": "first-person view looking down at a pair of dry black mountain boots and black snow trousers under a metal desk, wooden plank floor, beside them a small black cast-iron stove with its door open, full of cold grey ash, no fire, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 110,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s11_microfono.png",
+  "prompt": "close-up of a hand in a grey fingerless wool glove gripping the stem of a gooseneck desk microphone and pressing the button on its base, orange windbreaker cuff, behind it a vintage grey-green radio transceiver with a glowing amber meter, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 111,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s12_spia.png",
+  "prompt": "macro of a small round red indicator lamp, switched off and dark, on the grey-green front panel of a vintage radio transceiver, beside it a round microphone socket surrounded by a black burnt scorch mark and melted plastic, an amber glow out of focus in the background, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 112,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s13_targhetta.png",
+  "prompt": "a blank rectangular brushed-metal plate fixed with four screws to dark wood panelling, seen straight on and filling the upper half of the frame, below it the top of a vintage grey-green radio transceiver with its small meter window glowing amber, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 113,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/s14_spalle.png",
+  "prompt": "wide shot from behind of a lone person in an orange hooded windbreaker with the hood up, sitting on a chair at a metal desk in a small wood-panelled room, facing a vintage radio with an amber glow and a frosted window with a blizzard outside, a single warm desk lamp, the room mostly in shadow, the figure small in the frame, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 114,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/sA_porta.png",
+  "prompt": "a heavy iron door standing wide open, seen from inside a dark room, opening onto a white blizzard at night, snow blowing in over the threshold, outside a guide rope strung between orange iron stakes vanishing into the darkness, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 115,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_segnale/img/sB_chiavistello.png",
+  "prompt": "close-up of a heavy sliding iron bolt locked shut on a riveted rusty iron door, frost creeping over the metal, warm amber lamp light from the side, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 116,
+  "steps": 4
+ }
+]

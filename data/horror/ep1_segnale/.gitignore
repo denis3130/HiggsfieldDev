@@ -1,0 +1,9 @@
+# file intermedi del montaggio: non vanno nel repository
+_voce/
+voce.wav
+mix.wav
+_muto.mp4
+sub.ass
+anteprima/
+*.mp4
+__pycache__/

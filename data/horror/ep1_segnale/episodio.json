@@ -1,0 +1,29 @@
+{
+ "serie": "IL BIVIO",
+ "storia": "Segnale",
+ "episodio": 1,
+ "titolo": "La chiamata",
+ "righe": [
+  {"id": 1, "voce": "", "lontana": "Lo so che ti sei appena svegliato.", "img": "s01_ago.png", "mov": "avanza_lento"},
+  {"id": 2, "voce": "È la tua voce. Esce dalla radio.", "img": "s02_radio.png", "mov": "avanza_lento"},
+  {"id": 3, "voce": "Apri gli occhi. Sei solo, alla scrivania della stazione radio di Croda Muta.", "img": "s03_scrivania.png", "mov": "apri_occhi"},
+  {"id": 4, "voce": "Fuori, la bufera.", "img": "s04_bufera.png", "mov": "avanza_lento"},
+  {"id": 5, "voce": "Il tuo orologio segna le undici e dieci.", "img": "s05_polso.png", "mov": "mano"},
+  {"id": 6, "voce": "Quello a muro, le tre. Dev'essere impazzito.", "img": "s06_muro.png", "mov": "avanza_lento"},
+  {"id": 7, "voce": "La voce continua:", "lontana": "Aiutami. Sono uscito a mezzanotte e dodici.", "img": "s07_bobine.png", "mov": "panoramica"},
+  {"id": 8, "voce": "", "lontana": "A togliere il ghiaccio dall'antenna.", "img": "s08_antenna.png", "mov": "avanza_lento"},
+  {"id": 9, "voce": "", "lontana": "Sono caduto nel canalone. Ho una gamba bloccata.", "img": "s09_canalone.png", "mov": "scendi"},
+  {"id": 10, "voce": "Mezzanotte e dodici. Manca un'ora. E tu non sei mai uscito.", "img": "s10_scarponi.png", "mov": "avanza_lento"},
+  {"id": 11, "voce": "Afferri il microfono e gridi:", "grido": "Ti sento! Chi sei?", "sottotitolo_grido": "TI SENTO! CHI SEI?", "img": "s11_microfono.png", "mov": "avanza"},
+  {"id": 12, "voce": "La spia non si accende. Puoi solo ascoltare.", "img": "s12_spia.png", "mov": "avanza_lento"},
+  {"id": 13, "voce": "", "lontana": "Richiamo allo scoccare dell'ora.", "img": "s13_targhetta.png", "mov": "avanza_lento"},
+  {"id": 14, "voce": "", "silenzio": 2.0, "img": "s14_spalle.png", "mov": "arretra"},
+  {"id": 15, "voce": "Cosa fai?",
+   "opzioni": {
+    "a": {"voce": "La A: esci nella bufera e vai a cercarlo.", "testo": "Esci\na cercarlo", "img": "sA_porta.png", "ritaglio": [0.5, 0.45, 0.8]},
+    "b": {"voce": "Oppure la B: sbarri la porta e resti dentro.", "testo": "Ti chiudi\ndentro", "img": "sB_chiavistello.png", "ritaglio": [0.5, 0.5, 0.8]}
+   },
+   "chiusura": "Scrivilo nei commenti.",
+   "sfondo": "s14_spalle.png"}
+ ]
+}

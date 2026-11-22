@@ -1,0 +1,15 @@
+diff --git a/scripts/bivio/voce.py b/scripts/bivio/voce.py
+index e029db2..9086d7d 100644
+--- a/scripts/bivio/voce.py
++++ b/scripts/bivio/voce.py
+@@ -18,7 +18,9 @@ RIF = os.environ.get("RIF") or str(B / "voci/narratore.wav"); RIF_ID = hashlib.s
+ CACHE = D / "_voce"; CACHE.mkdir(exist_ok=True)
+ import time; _t = time.time()
+ v = Voce(RIF); wq = WhisperModel("medium", device="cpu", compute_type="int8"); print("modelli pronti in", round(time.time() - _t), "s", flush=True)
+-NUM = {"0": "zero", "1": "uno", "2": "due", "3": "tre", "4": "quattro", "5": "cinque", "6": "sei", "7": "sette", "8": "otto", "9": "nove", "10": "dieci"}
++NUM = {"0": "zero", "1": "uno", "2": "due", "3": "tre", "4": "quattro", "5": "cinque", "6": "sei", "7": "sette", "8": "otto", "9": "nove", "10": "dieci",
++       "11": "undici", "12": "dodici", "13": "tredici", "14": "quattordici", "15": "quindici", "16": "sedici", "17": "diciassette", "18": "diciotto", "19": "diciannove",
++       "20": "venti", "30": "trenta", "40": "quaranta", "50": "cinquanta"}   # Whisper scrive i numeri in cifre: senza questi «le undici e dieci» risultava «quasi»
+ r16 = lambda a: np.interp(np.arange(0, len(a), 1.5), np.arange(len(a)), a).astype(np.float32)
+ 
+ 
