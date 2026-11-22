@@ -1,6 +1,6 @@
 # Il Bivio — come si produce un episodio (tutto gratis, su questa macchina)
 
-Stato al 22/11: storia 01 scritta; episodio 1 in produzione. Niente Higgsfield.
+Stato al 22/11: 11 storie scritte (data/horror/storie/). Episodio 1 di «La voce nel bosco» montato come prova (non pubblicato). Niente Higgsfield.
 
 ## Immagini: FLUX.1-schnell in locale (OpenVINO int4, solo CPU)
 - `pip install openvino-genai` (porta openvino e openvino-tokenizers), poi il modello `OpenVINO/FLUX.1-schnell-int4-ov` da Hugging Face (8,7 GB; licenza Apache 2.0, uso commerciale consentito).
@@ -16,9 +16,13 @@ Stato al 22/11: storia 01 scritta; episodio 1 in produzione. Niente Higgsfield.
 - Registrazioni vere CC0 da Freesound, cercate con l'API di Openverse (`api.openverse.org`, file su `cdn.freesound.org`; scaricare con curl senza user agent da browser). Licenze da annotare per ogni file.
 - Musica: la sceglie l'utente; in attesa, solo ambiente scuro CC0.
 
-## Montaggio (da fare per l'episodio 1)
+## Montaggio: `scripts/bivio/monta.py cartella_episodio` (RIUSA=1 rifà solo sottotitoli e audio)
 1. Profondità di ogni immagine (Depth-Anything piccolo, ONNX) e movimento di camera 2,5D: avanzare, arretrare, panoramica, camera a mano.
 2. Strati sopra: nebbia che scorre, fiato bianco dalle cavità, grana, vignettatura, sfarfallio; per la prima inquadratura le palpebre che si aprono.
 3. Schermi del telefono disegnati col codice (ora 03:17, batteria 3%, messaggio).
 4. Sottotitoli parola per parola, titolo della serie nei primi 2 secondi, scheda finale A/B.
 5. Mix: voce + suoni reali + ambiente; silenzio totale dopo il grido (a Valsorda non c'è eco).
+
+## Tempi di un episodio
+Voce 3 minuti, 12 immagini 40 minuti, montaggio 6 minuti. Il file finale va ricodificato a circa 7 Mbit/s (la grana pesa molto).
+Il modello di profondità è `onnx-community/depth-anything-v2-small` (onnx/model.onnx) in `modelli/depth_small.onnx`; i suoni stanno in `sfx/` accanto a monta.py.

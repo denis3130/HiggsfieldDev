@@ -1,17 +1,111 @@
-{"serie":"IL BIVIO","storia":"La voce nel bosco","episodio":1,"titolo":"Il risveglio",
- "righe":[
-  {"id":1,"voce":"Apri gli occhi. È notte.","img":"s01_chiome.png","mov":"apri_occhi"},
-  {"id":2,"voce":"Sei sdraiato nell'erba di un bosco che non conosci.","img":"s02_radura.png","mov":"scendi"},
-  {"id":3,"voce":"La gamba fasciata ti brucia.","img":"s03_gamba.png","mov":"avanza"},
-  {"id":4,"voce":"E l'erba bagnata ti fa scivolare mentre provi ad alzarti.","img":"s04_scarpone.png","mov":"mano"},
-  {"id":5,"voce":"Qualcuno ti ha medicato. Ma non ricordi chi. Non ricordi niente.","img":"s05_nodo.png","mov":"avanza_lento"},
-  {"id":6,"voce":"Gridi con tutte le tue forze:","grido":"Sono qui! Sono qui, aiuto!","sottotitolo_grido":"SONO QUI! SONO QUI, AIUTO!","img":"s06_grido.png","mov":"arretra"},
-  {"id":7,"voce":"","silenzio":2.2,"img":"s07_bosco_fermo.png","mov":"fermo"},
-  {"id":8,"voce":"Nessuna eco. Il bosco inghiotte la tua voce.","img":"s08_tronchi_bocca.png","mov":"panoramica"},
-  {"id":9,"voce":"Poi il telefono vibra. Batteria al tre per cento.","img":"s09_telefono_mano.png","mov":"mano","schermo_dopo":1.6,"schermo":"blocco"},
-  {"id":10,"voce":"Un messaggio da un numero sconosciuto:","citazione":"Non rispondere a chi ti chiama.","schermo":"messaggio","mov":"mano"},
-  {"id":11,"voce":"","silenzio":2.4,"img":"s11_cavita_fiato.png","mov":"avanza_lento","vapore":true},
-  {"id":12,"voce":"E dagli alberi, qualcuno ti chiama. Dice il tuo nome.","img":"s12_luce_buio.png","mov":"mano"},
-  {"id":13,"voce":"È la voce di tuo fratello:","lontana":"Sono qui… vieni a prendermi.","img":"s13_chiarore.png","mov":"avanza_lento"},
-  {"id":14,"voce":"Cosa fai? A: vai verso la voce. B: ti nascondi. Scrivilo nei commenti.","scelta":{"a":"VAI VERSO LA VOCE","b":"TI NASCONDI","img_a":"s13_chiarore.png","img_b":"sB_tronco.png"}}
- ]}
+{
+ "serie": "IL BIVIO",
+ "storia": "La voce nel bosco",
+ "episodio": 1,
+ "titolo": "Il risveglio",
+ "righe": [
+  {
+   "id": 1,
+   "voce": "Apri gli occhi. È notte.",
+   "img": "s01_chiome.png",
+   "mov": "apri_occhi"
+  },
+  {
+   "id": 2,
+   "voce": "Sei sdraiato nell'erba di un bosco che non conosci.",
+   "img": "s02_radura.png",
+   "mov": "scendi",
+   "scurisci": [
+    0.5,
+    0.36,
+    0.075,
+    0.045
+   ]
+  },
+  {
+   "id": 3,
+   "voce": "La gamba fasciata ti brucia.",
+   "img": "s03_gamba_v1.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 4,
+   "voce": "E l'erba bagnata ti fa scivolare mentre provi ad alzarti.",
+   "img": "s04_scarpone.png",
+   "mov": "mano"
+  },
+  {
+   "id": 5,
+   "voce": "Qualcuno ti ha medicato. Ma non ricordi chi. Non ricordi niente.",
+   "img": "s05_nodo.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 6,
+   "voce": "Gridi con tutte le tue forze:",
+   "grido": "Sono qui! Sono qui, aiuto!",
+   "sottotitolo_grido": "SONO QUI! SONO QUI, AIUTO!",
+   "img": "s06_grido.png",
+   "mov": "arretra"
+  },
+  {
+   "id": 7,
+   "voce": "",
+   "silenzio": 2.2,
+   "img": "s07_bosco_fermo.png",
+   "mov": "fermo"
+  },
+  {
+   "id": 8,
+   "voce": "Nessuna eco. Il bosco inghiotte la tua voce.",
+   "img": "s08_tronchi_bocca.png",
+   "mov": "panoramica"
+  },
+  {
+   "id": 9,
+   "voce": "Poi il telefono vibra. Batteria al tre per cento.",
+   "img": "s09_telefono_mano.png",
+   "mov": "mano",
+   "schermo_dopo": 1.6,
+   "schermo": "blocco"
+  },
+  {
+   "id": 10,
+   "voce": "Un messaggio da un numero sconosciuto:",
+   "citazione": "Non rispondere a chi ti chiama.",
+   "schermo": "messaggio",
+   "mov": "mano"
+  },
+  {
+   "id": 11,
+   "voce": "",
+   "silenzio": 2.4,
+   "img": "s11_cavita_fiato.png",
+   "mov": "avanza_lento",
+   "vapore": true
+  },
+  {
+   "id": 12,
+   "voce": "E dagli alberi, qualcuno ti chiama. Dice il tuo nome.",
+   "img": "s12_luce_buio.png",
+   "mov": "mano"
+  },
+  {
+   "id": 13,
+   "voce": "È la voce di tuo fratello:",
+   "lontana": "Sono qui… vieni a prendermi.",
+   "img": "s13_chiarore.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 14,
+   "voce": "Cosa fai? A: vai verso la voce. B: ti nascondi. Scrivilo nei commenti.",
+   "scelta": {
+    "a": "VAI VERSO LA VOCE",
+    "b": "TI NASCONDI",
+    "img_a": "s13_chiarore.png",
+    "img_b": "sB_tronco.png"
+   }
+  }
+ ]
+}
