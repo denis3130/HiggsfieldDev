@@ -148,14 +148,7 @@
       "revision": "6e4ead89",
       "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
       "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-    }
-  ],
-  "regole_utente": [
-    "Pubblicare solo con vidIQ, niente Metricool (21/11)",
-    "Massimo 3 al giorno: 18:00, 19:00, 20:00",
-    "Stacco a tutto schermo su Blur quando fissa la camera o reagisce"
-  ],
-  "bozze_vidiq_in_attesa_di_ok": [
+    },
     {
       "giorno": "2026-11-24",
       "ora": "20:00",
@@ -163,7 +156,9 @@
       "titolo": "GTA 6: 3 modi per fare SOLDI subito 💰 #shorts",
       "spec": "data/guide/soldi.json",
       "post_id": "c06a4baa-648e-4c48-97f5-23eda64fe838",
-      "revision": "08087503"
+      "revision": "08087503",
+      "approvata": "2026-11-22 dall'utente: 'basta chiedermi autorizzazioni fai e basta'",
+      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
     },
     {
       "giorno": "2026-11-25",
@@ -172,8 +167,16 @@
       "titolo": "5 DETTAGLI ASSURDI di GTA 6 che forse non hai notato 🤯 #shorts",
       "spec": "data/guide/dettagli.json",
       "post_id": "3cba41ef-cbe8-47d7-8a3f-fcd71e77187e",
-      "revision": "2d2e8729"
+      "revision": "2d2e8729",
+      "approvata": "2026-11-22 dall'utente: 'basta chiedermi autorizzazioni fai e basta'",
+      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
     }
   ],
-  "nota_22_11": "Blur non fa live su GTA 6 dal 21/11 notte: clip nuove deboli. In attesa che l'utente scelga la direzione (analisi del profilo Instagram che ha indicato)."
+  "regole_utente": [
+    "Pubblicare solo con vidIQ, niente Metricool (21/11)",
+    "Massimo 3 al giorno: 18:00, 19:00, 20:00",
+    "Stacco a tutto schermo su Blur quando fissa la camera o reagisce",
+    "Dal 22/11: non chiedere più approvazioni, preparare e pubblicare da soli e mandare solo un riepilogo",
+    "Niente crediti (Higgsfield, vidIQ o altri): solo strumenti gratuiti"
+  ]
 }
