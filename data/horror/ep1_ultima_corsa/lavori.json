@@ -1,0 +1,114 @@
+[
+ {
+  "out": "img/s01_scala.png",
+  "prompt": "first-person POV from the top of a staircase looking down into an empty underground metro station at night, wet concrete steps descending toward a platform with glossy white tiled walls, a modern grey metro train stopped at the platform with its sliding doors open and teal-green light spilling out, a blank black rectangular display board hanging from the ceiling above the platform, puddles and wet reflections on the floor, nobody there, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 301,
+  "steps": 4
+ },
+ {
+  "out": "img/s02_ombrello_porte.png",
+  "prompt": "extreme close-up of the grey sliding doors of a metro train closing on a closed bright red umbrella wedged between the two door panels, the pointed steel tip and red fabric of the umbrella sticking out toward the camera, water drops dripping from it, black rubber door edges, cold light glowing through the narrow gap from inside the train, seen from the platform, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 302,
+  "steps": 4
+ },
+ {
+  "out": "img/s03_uomo_c.png",
+  "prompt": "a tall broad-shouldered man in a long black wool overcoat and a grey scarf seen from behind, standing inside a metro carriage in front of the closed grey sliding doors, his right hand resting on the curved pale wooden handle of a tightly furled closed bright red umbrella that he holds like a walking cane, the folded umbrella pointing straight down with its steel tip on the wet floor, water dripping from it, grey dust on the shoulders of his coat, steel poles, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 423,
+  "steps": 4
+ },
+ {
+  "out": "img/s04_vagone_b.png",
+  "prompt": "wide shot down the aisle of a metro carriage at night with exactly four passengers, on the left bench an old man in a grey felt hat holding a large open newspaper up in front of his face and behind him a woman with long dark hair hanging over her face, on the right bench a young man in a grey hoodie with the hood up bent forward and behind him an old woman in a headscarf with a bouquet of dried flowers on her lap, all four with heads bowed and faces hidden, thin grey dust on their clothes, long grey-blue benches along the walls, steel poles, black windows, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 404,
+  "steps": 4
+ },
+ {
+  "out": "img/s05_finestrino.png",
+  "prompt": "close-up of a large black window of a metro train at night seen from inside the carriage, the dark glass faintly reflecting the empty carriage interior and its ceiling lights, grey window frame, a horizontal steel handrail in front of the glass, total darkness of the tunnel outside, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 305,
+  "steps": 4
+ },
+ {
+  "out": "img/s06_mappa.png",
+  "prompt": "low angle close-up looking up at the top of the sliding doors inside a metro carriage, a long horizontal glossy black display strip mounted above the doors, completely blank and switched off, plain grey ceiling panels, a fluorescent ceiling light, a steel handrail, the upper part of the grey doors, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 306,
+  "steps": 4
+ },
+ {
+  "out": "img/s07_banchina.png",
+  "prompt": "first-person view from a seat inside a metro carriage looking at the wide open sliding doors, outside the doors a bare raw concrete station platform in near darkness, rough unfinished concrete walls without tiles, puddles on the concrete floor, cold mist drifting in through the doors, steel poles framing the doorway, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 307,
+  "steps": 4
+ },
+ {
+  "out": "img/s08_neon_cartello.png",
+  "prompt": "an abandoned unfinished underground station platform made of bare raw concrete, a single fluorescent tube light on the ceiling glowing cold white, below it a blank white rectangular enamel sign plate mounted on the concrete wall, completely empty with nothing on it, puddles on the floor reflecting the light, deep darkness at the far end of the platform, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 308,
+  "steps": 4
+ },
+ {
+  "out": "img/s09_soglia.png",
+  "prompt": "floor-level shot from inside a metro carriage looking out through the open sliding doors, the steel door threshold in the foreground, beyond it an empty wet bare concrete platform lit from the side by a single cold light, nobody there, darkness beyond, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 309,
+  "steps": 4
+ },
+ {
+  "out": "img/s11_passeggeri.png",
+  "prompt": "side view inside a metro carriage at night, two passengers sitting on a long grey-blue bench with their heads bowed low, faces hidden in shadow, one wearing a grey hoodie with the hood up, the other a woman with long dark hair covering her face, thin grey dust on their shoulders, right next to them the sliding doors stand wide open onto a dark empty concrete platform, neither of them looks toward the open doors, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 311,
+  "steps": 4
+ },
+ {
+  "out": "img/s12_giornale.png",
+  "prompt": "close-up of an old man sitting in a metro carriage, completely hidden behind a large open yellowed old newspaper that he holds up high with both hands in brown leather gloves, only the top of his grey felt hat visible above the newspaper, sleeves of a dusty grey herringbone coat, a cobweb stretched from his hat to the black window behind him, the newspaper print faded and out of focus, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 312,
+  "steps": 4
+ },
+ {
+  "out": "img/s13_ombrello_appeso.png",
+  "prompt": "close-up inside a metro carriage of a bright red closed umbrella hanging by its curved pale wooden handle from a horizontal brushed steel handrail, at the left edge of the frame the shoulder of a person in a mustard-yellow puffer jacket seen from behind, in the blurred background a man in a long black overcoat seen from behind stepping out through the open sliding doors into darkness, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 313,
+  "steps": 4
+ },
+ {
+  "out": "img/s14_sagoma.png",
+  "prompt": "view from inside a metro carriage through the wide open sliding doors onto a dark bare concrete station platform, the small distant silhouette of a man in a long black overcoat walking away with his back turned, disappearing into the darkness beyond a single fluorescent tube light on the ceiling, in the sharp foreground at the edge of the doorway a bright red closed umbrella hangs from a steel handrail, puddles on the concrete, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 314,
+  "steps": 4
+ },
+ {
+  "out": "img/sB_posto.png",
+  "prompt": "first-person POV of a person sitting on a metro bench looking down at their own lap, knees in dark jeans, a charcoal grey backpack held tightly on the lap by hands in black wool gloves, sleeves of a mustard-yellow puffer jacket, a bright red closed umbrella hanging from a steel handrail right next to the seat, open sliding doors onto darkness in the background, cinematic horror film still, shot on 35mm anamorphic lens, night in the Milan underground, cold teal-green fluorescent light, deep black shadows, muted desaturated colors, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 315,
+  "steps": 4
+ }
+]

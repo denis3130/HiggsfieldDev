@@ -1,0 +1,106 @@
+{
+ "interno_treno.mp3": {
+  "titolo": "DC Metro - Interior 1",
+  "autore": "crashoverride6",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/crashoverride6/sounds/219233",
+  "uso": "rombo dentro il vagone in corsa",
+  "nota": "ritaglio da 42 a 70 secondi della registrazione originale"
+ },
+ "frenata.mp3": {
+  "titolo": "Train coming to a stop (recorded between two cars)",
+  "autore": "avakas",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/avakas/sounds/197118",
+  "uso": "il treno frena e si ferma",
+  "nota": "ritaglio da 58.5 a 68.8 secondi della registrazione originale"
+ },
+ "bip_porte.mp3": {
+  "titolo": "train door close 2a",
+  "autore": "Yoyodaman234",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Yoyodaman234/sounds/341199",
+  "uso": "segnale di chiusura porte e porte che si chiudono",
+  "nota": "ritaglio da 4 a 10.2 secondi della registrazione originale"
+ },
+ "porte_aprono.mp3": {
+  "titolo": "train door open 1a",
+  "autore": "Yoyodaman234",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Yoyodaman234/sounds/341198",
+  "uso": "sbuffo delle porte che si aprono",
+  "nota": "ritaglio da 0.1 a 3.2 secondi della registrazione originale"
+ },
+ "porte_meccanica.mp3": {
+  "titolo": "train door open 2a (no beeping)",
+  "autore": "Yoyodaman234",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Yoyodaman234/sounds/341328",
+  "uso": "meccanismo delle porte",
+  "nota": "ritaglio da 1 a 3.6 secondi della registrazione originale"
+ },
+ "scale_corsa.mp3": {
+  "titolo": "Steps On Stairs",
+  "autore": "TheSpiderWriter",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/TheSpiderWriter/sounds/353261",
+  "uso": "passi di corsa sulle scale",
+  "nota": "ritaglio da 0 a 2.6 secondi della registrazione originale"
+ },
+ "passi_fretta.mp3": {
+  "titolo": "hurry_to_the_station.aif",
+  "autore": "Heigh-hoo",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Heigh-hoo/sounds/13649",
+  "uso": "passi affrettati in stazione",
+  "nota": "ritaglio da 22 a 29.5 secondi della registrazione originale"
+ },
+ "neon.mp3": {
+  "titolo": "FXLM neon lights flicker bathroom.wav",
+  "autore": "LudwigMueller",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/LudwigMueller/sounds/202612",
+  "uso": "neon che frigge e sfarfalla",
+  "nota": "ritaglio da 0 a 30 secondi della registrazione originale"
+ },
+ "ronzio_stazione.mp3": {
+  "titolo": "metro subway Montreal electric hum with fluorescent light buzz",
+  "autore": "kyles",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/kyles/sounds/450899",
+  "uso": "ronzio elettrico della stazione vuota",
+  "nota": "ritaglio da 1 a 47 secondi della registrazione originale"
+ },
+ "giornale.mp3": {
+  "titolo": "Paper Rustling 1 (Newspaper)",
+  "autore": "Sheyvan",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Sheyvan/sounds/471903",
+  "uso": "fruscio del giornale",
+  "nota": "ritaglio da 8.1 a 9.7 secondi della registrazione originale"
+ },
+ "toc.mp3": {
+  "titolo": "wood_knock.wav",
+  "autore": "110110010",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/110110010/sounds/66397",
+  "uso": "il manico di legno contro il corrimano",
+  "nota": "ritaglio da 0.22 a 0.47 secondi della registrazione originale"
+ },
+ "passi_cemento.mp3": {
+  "titolo": "footsteps concrete",
+  "autore": "Yuval",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Yuval/sounds/205748",
+  "uso": "passi sul cemento, da vicino",
+  "nota": "ritaglio da 0 a 3.6 secondi della registrazione originale"
+ },
+ "passi_eco.mp3": {
+  "titolo": "Footsteps in Factory Hall on Wood and Concrete.wav",
+  "autore": "RutgerMuller",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/RutgerMuller/sounds/155858",
+  "uso": "passi che si allontanano con l'eco",
+  "nota": "ritaglio da 58 a 72 secondi della registrazione originale"
+ }
+}

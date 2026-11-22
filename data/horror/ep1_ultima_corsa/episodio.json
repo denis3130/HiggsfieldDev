@@ -1,0 +1,155 @@
+{
+ "serie": "IL BIVIO",
+ "storia": "L'ultima corsa",
+ "episodio": 1,
+ "titolo": "La fermata che non c'è",
+ "righe": [
+  {
+   "id": 1,
+   "voce": "È l'ultima metro della notte. E faresti meglio a perderla.",
+   "img": "s01_scala.png",
+   "mov": "corsa",
+   "corsa": true
+  },
+  {
+   "id": 2,
+   "voce": "Invece corri. Le porte si chiudono, e un ombrello rosso le blocca.",
+   "img": "s02_ombrello_porte.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 3,
+   "voce": "Sali. «Prego», dice un uomo. «Tanto io scendo alla prossima.»",
+   "img": "s03_uomo_c.png",
+   "mov": "mano"
+  },
+  {
+   "id": 4,
+   "voce": "Ti siedi. Quattro passeggeri, nessuno alza la testa.",
+   "img": "s04_vagone_b.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 5,
+   "voce": "Poi il treno frena, e si ferma.",
+   "img": "s05_finestrino.png",
+   "mov": "fermo",
+   "galleria": true
+  },
+  {
+   "id": 6,
+   "voce": "Ma sulla mappa, qui, non c'è nessuna fermata.",
+   "img": "s06_mappa.png",
+   "mov": "avanza_lento",
+   "lampeggia": true
+  },
+  {
+   "id": 7,
+   "voce": "Le porte si aprono su una banchina di cemento.",
+   "img": "s07_banchina.png",
+   "mov": "avanza_lento",
+   "neon": 0.45,
+   "vapore": [
+    0.5,
+    0.5,
+    0.18
+   ]
+  },
+  {
+   "id": 8,
+   "voce": "Un neon. Un cartello bianco, senza nome.",
+   "img": "s08_neon_cartello.png",
+   "mov": "avanza_lento",
+   "neon": 0.8
+  },
+  {
+   "id": 9,
+   "voce": "Nessuno sale.",
+   "img": "s09_soglia.png",
+   "mov": "fermo",
+   "neon": 0.5
+  },
+  {
+   "id": 10,
+   "voce": "",
+   "silenzio": 1.2,
+   "img": "s09_soglia.png",
+   "mov": "fermo",
+   "neon": 0.5
+  },
+  {
+   "id": 11,
+   "voce": "Nel vagone nessuno guarda fuori.",
+   "img": "s11_passeggeri.png",
+   "mov": "panoramica"
+  },
+  {
+   "id": 12,
+   "voce": "Un vecchio alza il giornale un po' di più.",
+   "img": "s12_giornale.png",
+   "mov": "avanza_lento",
+   "alza": true
+  },
+  {
+   "id": 13,
+   "voce": "L'uomo appende l'ombrello accanto a te. E scende.",
+   "img": "s13_ombrello_appeso.png",
+   "mov": "mano"
+  },
+  {
+   "id": 14,
+   "voce": "Sparisce nel buio, senza voltarsi. Le porte restano aperte.",
+   "img": "s14_sagoma.png",
+   "mov": "avanza_lento",
+   "neon": 0.4
+  },
+  {
+   "id": 15,
+   "voce": "Cosa fai?",
+   "opzioni": {
+    "a": {
+     "voce": "La A: scendi a riportargli l'ombrello.",
+     "testo": "Gli riporti\nl'ombrello",
+     "img": "s14_sagoma.png",
+     "ritaglio": [
+      0.5,
+      0.47,
+      0.62
+     ]
+    },
+    "b": {
+     "voce": "Oppure la B: resti al tuo posto, sul treno.",
+     "testo": "Resti al\ntuo posto",
+     "img": "sB_posto.png",
+     "ritaglio": [
+      0.52,
+      0.42,
+      0.85
+     ]
+    }
+   },
+   "chiusura": "Scrivilo nei commenti.",
+   "sfondo": "s14_sagoma.png"
+  }
+ ],
+ "ambiente": [
+  {
+   "file": "amb_slow.mp3",
+   "vol": [
+    0.05,
+    0.14
+   ]
+  },
+  {
+   "file": "ronzio_stazione.mp3",
+   "vol": 0.09
+  }
+ ],
+ "silenzi": [
+  {
+   "da_riga": 9,
+   "a_riga": 11
+  }
+ ],
+ "suoni": []
+}

@@ -1,0 +1,8 @@
+# file generati dal montaggio: non vanno nel repository
+_voce/
+voce.wav
+mix.wav
+sub.ass
+_muto.mp4
+anteprima/
+*.mp4
