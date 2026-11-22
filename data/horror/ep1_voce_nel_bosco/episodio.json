@@ -43,8 +43,8 @@
   {
    "id": 6,
    "voce": "Gridi con tutte le tue forze:",
-   "grido": "Sono qui! Sono qui, aiuto!",
-   "sottotitolo_grido": "SONO QUI! SONO QUI, AIUTO!",
+   "grido": "Sono qui! Sono qui! Aiuto!",
+   "sottotitolo_grido": "SONO QUI! SONO QUI! AIUTO!",
    "img": "s06_grido.png",
    "mov": "arretra"
   },
@@ -99,13 +99,151 @@
   },
   {
    "id": 14,
-   "voce": "Cosa fai? A: vai verso la voce. B: ti nascondi. Scrivilo nei commenti.",
-   "scelta": {
-    "a": "VAI VERSO LA VOCE",
-    "b": "TI NASCONDI",
-    "img_a": "s13_chiarore.png",
-    "img_b": "sB_tronco.png"
-   }
+   "voce": "Cosa fai?",
+   "opzioni": {
+    "a": {
+     "voce": "La A: vai verso la voce di tuo fratello.",
+     "testo": "Vai verso\nla voce",
+     "img": "s13_chiarore.png",
+     "ritaglio": [
+      0.45,
+      0.35,
+      0.62
+     ]
+    },
+    "b": {
+     "voce": "Oppure la B: resti in silenzio e ti nascondi.",
+     "testo": "Ti nascondi\nin silenzio",
+     "img": "sB_tronco.png",
+     "ritaglio": [
+      0.56,
+      0.5,
+      0.86
+     ]
+    }
+   },
+   "chiusura": "Scrivilo nei commenti.",
+   "sfondo": "s13_chiarore.png"
+  }
+ ],
+ "telefono": {
+  "ora": "03:17",
+  "data": "domenica 22 novembre",
+  "batteria": 3,
+  "rete": "Nessun servizio",
+  "mittente": "Numero sconosciuto",
+  "messaggio": [
+   "Non rispondere",
+   "a chi ti chiama."
+  ],
+  "sfondo": "s12_luce_buio.png"
+ },
+ "ambiente": [
+  {
+   "file": "amb_bosco.mp3",
+   "da": 0,
+   "vol": 0.2
+  },
+  {
+   "file": "amb_slow.mp3",
+   "vol": [
+    0.05,
+    0.16
+   ]
+  }
+ ],
+ "silenzi": [
+  {
+   "da_riga": 6,
+   "a_riga": 8
+  }
+ ],
+ "suoni": [
+  {
+   "file": "gocce.mp3",
+   "riga": 2,
+   "dopo": 0.2,
+   "vol": 0.22
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 3,
+   "dur": 2.4,
+   "vol": 0.3
+  },
+  {
+   "file": "scivolata.mp3",
+   "riga": 4,
+   "parola": "scivolare",
+   "dopo": -0.05,
+   "vol": 0.55
+  },
+  {
+   "file": "stoffa.mp3",
+   "riga": 4,
+   "parola": "scivolare",
+   "dopo": 0.9,
+   "vol": 0.3
+  },
+  {
+   "file": "stoffa.mp3",
+   "riga": 5,
+   "dopo": 0.1,
+   "vol": 0.25
+  },
+  {
+   "file": "phone_table.mp3",
+   "riga": 9,
+   "dopo": 0.1,
+   "dur": 1.5,
+   "vol": 0.5
+  },
+  {
+   "file": "notifica.mp3",
+   "riga": 10,
+   "dopo": 0.05,
+   "vol": 0.45
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 11,
+   "da": 3,
+   "dur": 2.6,
+   "vol": 0.5
+  },
+  {
+   "file": "legno.mp3",
+   "riga": 11,
+   "dopo": 0.3,
+   "dur": 2.4,
+   "vol": 0.4
+  },
+  {
+   "file": "heart60.mp3",
+   "riga": 13,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.3,
+    1
+   ],
+   "vol": 0.45,
+   "sfuma": 0.4
+  },
+  {
+   "file": "colpo.mp3",
+   "riga": 14,
+   "vol": 0.6
+  },
+  {
+   "file": "rise_long.mp3",
+   "riga": 14,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.2,
+    1
+   ],
+   "vol": 0.22,
+   "sfuma": 0.3
   }
  ]
 }

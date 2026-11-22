@@ -1,9 +1,11 @@
 {
+ "nota": "I suoni di questo episodio sono tutti in scripts/bivio/sfx/ (vedi licenze_suoni.json lì): registrazioni CC0 da Freesound.",
  "sfx/amb_bosco.mp3": {
   "titolo": "Wind Through Trees",
   "autore": "Yoyodaman234",
   "licenza": "CC0 1.0",
-  "pagina": "https://freesound.org/people/Yoyodaman234/sounds/335889"
+  "pagina": "https://freesound.org/people/Yoyodaman234/sounds/335889",
+  "nota": "ritaglio di 80 secondi (da 0:20) della registrazione originale"
  },
  "sfx/scivolata.mp3": {
   "titolo": "Muddy Boots",

@@ -1,12 +1,48 @@
-{"nota":"Sessioni separate (Fable 5.2, impegno max) create il 22/11: una storia ciascuna, formato in data/horror/FORMATO_STORIA.md. Ogni sessione salva in data/horror/storie/ e fa push sul proprio branch.",
- "01_la_voce_nel_bosco":{"sessione":"session_014XUVKvtzkFcKyxGyCFgvZJ (questa)","branch":"claude/gta6-auto-clipping-system-p29knx"},
- "02_nono_piano":{"sessione":"session_014XUVKscC89zAzvT5efyTwo","branch":"claude/il-bivio-02-nono-piano"},
- "03_ultima_corsa":{"sessione":"session_014XUVKuQoaCe8sWuLogFUht","branch":"claude/il-bivio-03-ultima-corsa"},
- "04_reparto_7":{"sessione":"session_014XUVKsvBbw9FYzaTUS9GvT","branch":"claude/il-bivio-04-reparto-7"},
- "05_uscita_13":{"sessione":"session_014XUVKx1iLkvMH2h6uKi6T6","branch":"claude/il-bivio-05-uscita-13"},
- "06_paese_che_dorme":{"sessione":"session_014XUVKu5agW2pmqGYk5dERK","branch":"claude/il-bivio-06-paese-che-dorme"},
- "07_baby_monitor":{"sessione":"session_014XUVKuJS66LFmg78eeuecU","branch":"claude/il-bivio-07-baby-monitor"},
- "08_il_bunker":{"sessione":"session_014XUVKsXmiiYmv6JKukHYtU","branch":"claude/il-bivio-08-il-bunker"},
- "09_segnale":{"sessione":"session_014XUVKvvjBawhZ8rcTpHArH","branch":"claude/il-bivio-09-segnale"},
- "10_casa_della_nonna":{"sessione":"session_014XUVKuVf2UDSvePNJF3s3y","branch":"claude/il-bivio-10-casa-della-nonna"},
- "11_il_traghetto":{"sessione":"session_014XUVKvaEPTeYY9PCD72RE3","branch":"claude/il-bivio-11-il-traghetto"}}
+{
+ "nota": "Sessioni separate (Fable 5.2, impegno max) create il 22/11: una storia ciascuna, formato in data/horror/FORMATO_STORIA.md. Ogni sessione salva in data/horror/storie/ e fa push sul proprio branch.",
+ "01_la_voce_nel_bosco": {
+  "sessione": "session_014XUVKvtzkFcKyxGyCFgvZJ (questa)",
+  "branch": "claude/gta6-auto-clipping-system-p29knx"
+ },
+ "02_nono_piano": {
+  "sessione": "session_014XUVKscC89zAzvT5efyTwo",
+  "branch": "claude/il-bivio-02-nono-piano"
+ },
+ "03_ultima_corsa": {
+  "sessione": "session_014XUVKuQoaCe8sWuLogFUht",
+  "branch": "claude/il-bivio-03-ultima-corsa"
+ },
+ "04_reparto_7": {
+  "sessione": "session_014XUVKsvBbw9FYzaTUS9GvT",
+  "branch": "claude/il-bivio-04-reparto-7"
+ },
+ "05_uscita_13": {
+  "sessione": "session_014XUVKx1iLkvMH2h6uKi6T6",
+  "branch": "claude/il-bivio-05-uscita-13"
+ },
+ "06_paese_che_dorme": {
+  "sessione": "session_014XUVKu5agW2pmqGYk5dERK",
+  "branch": "claude/il-bivio-06-paese-che-dorme"
+ },
+ "07_baby_monitor": {
+  "sessione": "session_014XUVKuJS66LFmg78eeuecU",
+  "branch": "claude/il-bivio-07-baby-monitor"
+ },
+ "08_il_bunker": {
+  "sessione": "session_014XUVKsXmiiYmv6JKukHYtU",
+  "branch": "claude/il-bivio-08-il-bunker"
+ },
+ "09_segnale": {
+  "sessione": "session_014XUVKvvjBawhZ8rcTpHArH",
+  "branch": "claude/il-bivio-09-segnale"
+ },
+ "10_casa_della_nonna": {
+  "sessione": "session_014XUVKuVf2UDSvePNJF3s3y",
+  "branch": "claude/il-bivio-10-casa-della-nonna"
+ },
+ "11_il_traghetto": {
+  "sessione": "session_014XUVKvaEPTeYY9PCD72RE3",
+  "branch": "claude/il-bivio-11-il-traghetto"
+ },
+ "nota_video": "Dal 22/11 sera ogni sessione produce anche il video dell'Episodio 1 della propria storia con scripts/bivio/ (procedura in data/horror/PRODUZIONE.md) e lo consegna nella propria chat."
+}

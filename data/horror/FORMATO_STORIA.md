@@ -30,8 +30,12 @@ Obiettivo: qualità da cinema. Chi scorre deve fermarsi nei primi 2 secondi e vo
 - Ogni apertura comincia con «Avete scelto A: …» (o B) in poche parole: fa anche da riassunto per chi arriva adesso.
 - Parole: Ep. 1 = 100–125. Ep. 2–7: apertura 30–40 + parte comune 70–85 (bivio compreso). Ep. 8: ogni finale 100–125.
 - Ogni episodio: gancio nei primi 2 secondi → una scoperta → la minaccia cresce → colpo finale + bivio.
-- Il bivio è un vero dilemma: due scelte entrambe difendibili, da 50 e 50, su cui la gente litiga nei commenti. Etichette di massimo 5 parole. Ogni scelta cambia davvero l'apertura dell'episodio dopo.
-- Chiusura degli Ep. 1–7: «Cosa fai? A: … B: … Scrivilo nei commenti.»
+- Il bivio è un vero dilemma: due scelte entrambe difendibili, da 50 e 50, su cui la gente litiga nei commenti. Ogni scelta cambia davvero l'apertura dell'episodio dopo.
+- Chiusura degli Ep. 1–7 (dal 22/11): il narratore spiega le due scelte, una frase intera per ciascuna, in seconda persona:
+  «Cosa fai? La A: vai verso la voce di tuo fratello. Oppure la B: resti in silenzio e ti nascondi. Scrivilo nei commenti.»
+  (sempre «La A: …» e «Oppure la B: …»: con «O la B» la voce sintetica si impappina)
+  Ogni frase 6–10 parole, chiara anche per chi non ha visto l'inizio: dice cosa fai, non solo un titolo.
+- Scheda finale a schermo: due carte una sopra l'altra, ognuna con una miniatura quadrata, la lettera in un bollo (A oro, B azzurro) e un'etichetta di massimo 5 parole su due righe («Vai verso / la voce», «Ti nascondi / in silenzio»). Mentre il narratore legge la A si illumina la carta A e la frase compare in alto; poi la B. Alla fine «Scrivi A o B nei commenti».
 - Una scelta può portare a una morte: l'episodio dopo la mostra in poche righe, poi «riavvolge» e riparte dall'altra scelta. Massimo una volta per storia.
 - Colpo di scena finale preparato da almeno 3 indizi visibili negli episodi precedenti. I due finali devono essere entrambi soddisfacenti e l'ultima immagine deve richiamare la prima.
 - Ambientazione italiana (luoghi credibili, anche inventati).
@@ -46,6 +50,7 @@ Obiettivo: qualità da cinema. Chi scorre deve fermarsi nei primi 2 secondi e vo
 **Titolo YouTube:** … #horror #storiehorror #shorts
 Ep. 2–7: **Apertura se ha vinto A**, **Apertura se ha vinto B**, **Parte comune**. Ep. 8: **Finale A**, **Finale B**.
 Ogni parte è una tabella: `| # | Voce | Si vede | Suono |`
-**Bivio:** A: … / B: … · **Immagine A / Immagine B** (le due metà della scheda di scelta)
+**Bivio:** etichetta A / etichetta B (quelle scritte sulle carte, max 5 parole) · **Frase A / Frase B** (quelle dette dal narratore: «La A: …», «Oppure la B: …») · **Immagine A / Immagine B** (le miniature delle due carte)
+Nelle storie scritte prima del 22/11 il bivio è ancora nella forma breve «A: … B: …»: quando si produce l'episodio si riscrive nella forma nuova.
 **Parole:** apertura A n · apertura B n · comune n
 Solo per l'Episodio 1 aggiungi **Prompt immagini (inglese)**: un prompt per inquadratura, con lo stesso suffisso di stile per tutte.
