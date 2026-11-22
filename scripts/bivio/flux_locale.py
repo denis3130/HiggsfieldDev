@@ -9,7 +9,7 @@ from PIL import Image
 
 M = os.environ.get("FLUX_DIR", os.path.join(os.path.dirname(os.path.abspath(__file__)), "flux-schnell-int4"))
 core = ov.Core()
-CFG = {"PERFORMANCE_HINT": "LATENCY", "CACHE_DIR": os.path.join(M, "_cache")}
+CFG = {"PERFORMANCE_HINT": "LATENCY"}   # niente CACHE_DIR: la cache di OpenVINO occupa 9 GB di disco
 ram = lambda: round(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1e6, 1)
 
 
