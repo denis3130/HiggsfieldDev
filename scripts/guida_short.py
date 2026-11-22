@@ -43,15 +43,46 @@ def tts(segs, voice):
     return out
 
 
-def words(audios):
-    """Tempi parola per parola di ogni pezzo di voce (Whisper sulla voce sintetica, che è pulitissima)."""
+def align(text, heard):
+    """Mette il testo esatto del copione sui tempi delle parole sentite da Whisper.
+    Whisper può sbagliare qualche parola ("Tra" al posto di "Tre"): il testo resta quello scritto, i tempi i suoi."""
+    import difflib
+    import re
+    script = text.split()
+    norm = lambda s: re.sub(r"[^\w]", "", s.lower())
+    a = [norm(w) for w in script]
+    b = [norm(w[2]) for w in heard]
+    times = [None] * len(script)
+    for tag, i1, i2, j1, j2 in difflib.SequenceMatcher(a=a, b=b, autojunk=False).get_opcodes():
+        if tag == "equal":
+            for k in range(i2 - i1):
+                times[i1 + k] = heard[j1 + k][:2]
+        elif j2 > j1 and i2 > i1:                    # parole diverse: si dividono il tempo di quelle sentite
+            t0, t1 = heard[j1][0], heard[j2 - 1][1]
+            n = i2 - i1
+            for k in range(n):
+                times[i1 + k] = (t0 + (t1 - t0) * k / n, t0 + (t1 - t0) * (k + 1) / n)
+    known = [i for i, t in enumerate(times) if t]
+    for i, t in enumerate(times):                      # parole non sentite affatto: tra la precedente e la successiva
+        if t is None:
+            p = max([k for k in known if k < i], default=None)
+            q = min([k for k in known if k > i], default=None)
+            s0 = times[p][1] if p is not None else (heard[0][0] if heard else 0.0)
+            s1 = times[q][0] if q is not None else s0 + 0.3
+            times[i] = (s0, max(s1, s0 + 0.05))
+    return [(s, e, w) for (s, e), w in zip(times, script)]
+
+
+def words(audios, texts):
+    """Tempi parola per parola di ogni pezzo di voce (Whisper sulla voce sintetica, che è pulitissima), con il testo del copione."""
     from faster_whisper import WhisperModel
     m = WhisperModel("medium", device="cpu", compute_type="int8")
     res = []
-    for a in audios:
+    for a, txt in zip(audios, texts):
         a16 = np.interp(np.arange(0, len(a), SR / 16000), np.arange(len(a)), a).astype(np.float32)
-        segs, _ = m.transcribe(a16, language="it", word_timestamps=True, beam_size=5)
-        res.append([(w.start, w.end, w.word.strip()) for s in segs for w in s.words])
+        segs, _ = m.transcribe(a16, language="it", word_timestamps=True, beam_size=5, initial_prompt=txt)
+        heard = [(w.start, w.end, w.word.strip()) for s in segs for w in s.words]
+        res.append(align(txt, heard) if heard else [])
     return res
 
 
@@ -133,7 +164,7 @@ def main():
     spec = json.loads(Path(sys.argv[1]).read_text())
     segs = spec["segments"]
     voice = tts(segs, spec.get("voice", "im_nicola"))
-    wt = words(voice)
+    wt = words(voice, [s["text"] for s in segs])
     gap = 0.28
     starts, t = [], 0.35
     for a in voice:

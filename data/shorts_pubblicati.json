@@ -30,6 +30,33 @@
       "via": "vidiq",
       "post_id": "0f224cde-f3f5-44ce-9857-c815aee1cbd3",
       "youtube": "https://www.youtube.com/watch?v=UhDnRxIZxZY"
+    },
+    {
+      "clip_id": "2902920368",
+      "creator": "Blur",
+      "titolo": "In GTA 6 c'è perfino la CELLULITE 😳 Blur #shorts",
+      "uscita": "2026-11-22T18:00:00+01:00",
+      "via": "vidiq",
+      "post_id": "39b4c387-2f05-46ae-abd7-e14a8a8cec34",
+      "youtube": "https://www.youtube.com/watch?v=F-KvUxFXMgw"
+    },
+    {
+      "clip_id": "4099124902",
+      "creator": "Blur",
+      "titolo": "Blur non ne può più di LUCIA 😂 GTA 6 #shorts",
+      "uscita": "2026-11-22T19:00:00+01:00",
+      "via": "vidiq",
+      "post_id": "6c07b895-eddb-4094-8920-160354ee5cd3",
+      "youtube": "https://www.youtube.com/watch?v=QQc9PXHcPM8"
+    },
+    {
+      "clip_id": "712066860",
+      "creator": "Blur",
+      "titolo": "Blur trova una barca ESPLOSA piena di… 😳 GTA 6 #shorts",
+      "uscita": "2026-11-22T20:00:00+01:00",
+      "via": "vidiq",
+      "post_id": "fa127bf6-9255-4f8a-877f-55ce0d2991b9",
+      "youtube": "https://www.youtube.com/watch?v=OtsOx-7DoPM"
     }
   ],
   "scartate": {
@@ -49,7 +76,12 @@
     "772775466": "bestemmia",
     "942454473": "doppione di 4099124902",
     "4164847914": "quasi senza parlato",
-    "2885253365": "debole"
+    "2885253365": "debole",
+    "3662542658": "quasi senza commento (prima morte)",
+    "3283493283": "poco parlato, usata come immagini nella guida dettagli",
+    "10498826": "quasi tutta scena del gioco",
+    "462964797": "debole",
+    "4287492525": "debole, 15 s"
   },
   "limiti_gratuiti": {
     "vidiq": "3 caricamenti YouTube al giorno (conteggio alla pubblicazione, si azzera alle 09:00 italiane); ogni bozza va approvata dall'utente",
@@ -67,36 +99,6 @@
     "436891608": "barca"
   },
   "bozze_vidiq_approvate": [
-    {
-      "giorno": "2026-11-22",
-      "ora": "18:00",
-      "clip_id": "2902920368",
-      "titolo": "In GTA 6 c'è perfino la CELLULITE 😳 Blur #shorts",
-      "post_id": "39b4c387-2f05-46ae-abd7-e14a8a8cec34",
-      "revision": "7cb0c15a",
-      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
-      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-    },
-    {
-      "giorno": "2026-11-22",
-      "ora": "19:00",
-      "clip_id": "4099124902",
-      "titolo": "Blur non ne può più di LUCIA 😂 GTA 6 #shorts",
-      "post_id": "6c07b895-eddb-4094-8920-160354ee5cd3",
-      "revision": "ba500250",
-      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
-      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-    },
-    {
-      "giorno": "2026-11-22",
-      "ora": "20:00",
-      "clip_id": "712066860",
-      "titolo": "Blur trova una barca ESPLOSA piena di… 😳 GTA 6 #shorts",
-      "post_id": "fa127bf6-9255-4f8a-877f-55ce0d2991b9",
-      "revision": "e095296c",
-      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
-      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-    },
     {
       "giorno": "2026-11-23",
       "ora": "18:00",
@@ -152,5 +154,26 @@
     "Pubblicare solo con vidIQ, niente Metricool (21/11)",
     "Massimo 3 al giorno: 18:00, 19:00, 20:00",
     "Stacco a tutto schermo su Blur quando fissa la camera o reagisce"
-  ]
+  ],
+  "bozze_vidiq_in_attesa_di_ok": [
+    {
+      "giorno": "2026-11-24",
+      "ora": "20:00",
+      "tipo": "guida",
+      "titolo": "GTA 6: 3 modi per fare SOLDI subito 💰 #shorts",
+      "spec": "data/guide/soldi.json",
+      "post_id": "c06a4baa-648e-4c48-97f5-23eda64fe838",
+      "revision": "08087503"
+    },
+    {
+      "giorno": "2026-11-25",
+      "ora": "18:00",
+      "tipo": "guida",
+      "titolo": "5 DETTAGLI ASSURDI di GTA 6 che forse non hai notato 🤯 #shorts",
+      "spec": "data/guide/dettagli.json",
+      "post_id": "3cba41ef-cbe8-47d7-8a3f-fcd71e77187e",
+      "revision": "2d2e8729"
+    }
+  ],
+  "nota_22_11": "Blur non fa live su GTA 6 dal 21/11 notte: clip nuove deboli. In attesa che l'utente scelga la direzione (analisi del profilo Instagram che ha indicato)."
 }
