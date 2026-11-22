@@ -1,0 +1,3 @@
+Roboto — Copyright 2015 Google Inc. — Apache License 2.0 (https://www.apache.org/licenses/LICENSE-2.0)
+File presi dal pacchetto Debian fonts-roboto-unhinted (sorgente: https://github.com/google/roboto).
+Stanno qui perché monta.py e i sottotitoli abbiano lo stesso aspetto su ogni macchina, anche dove Roboto non è installato.

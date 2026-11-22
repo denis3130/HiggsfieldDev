@@ -32,8 +32,11 @@ rng = np.random.default_rng(5)
 ORO, AZZ, ROSSO = (255, 196, 64), (96, 190, 255), (255, 60, 60)          # RGB
 
 
+FONTS = B / "fonts"                                      # Roboto (Apache 2.0) accanto agli script: stesso aspetto su ogni macchina
+
+
 def font(peso, size):
-    for pat in (f"/usr/share/fonts/**/Roboto-{peso}.ttf", "/usr/share/fonts/**/DejaVuSans-Bold.ttf"):
+    for pat in (str(FONTS / f"Roboto-{peso}.ttf"), f"/usr/share/fonts/**/Roboto-{peso}.ttf", "/usr/share/fonts/**/DejaVuSans-Bold.ttf"):
         f = glob.glob(pat, recursive=True)
         if f:
             return ImageFont.truetype(f[0], size)
@@ -456,13 +459,14 @@ for i, (r, tr, ws) in enumerate(zip(righe, T, parole)):
                 b2 = g[wi + 1][0] if wi + 1 < len(g) else gfine
                 ass.append(f"Dialogue: 1,{ts(a)},{ts(b2)},{stile},,0,0,0,,{{\\pos({W // 2},{Y_CAP})\\fs{fs}}}{evidenzia(g, wi, col)}")
 (D / "sub.ass").write_text("\n".join(ass) + "\n", encoding="utf-8")
-SUB = str((D / "sub.ass").resolve()).replace(":", "\\:").replace("'", "\\'")
+filtro = lambda p: str(Path(p).resolve()).replace(":", "\\:").replace("'", "\\'")
+SUB = f"subtitles='{filtro(D / 'sub.ass')}'" + (f":fontsdir='{filtro(FONTS)}'" if FONTS.exists() else "")
 
 if os.environ.get("ANTEPRIMA"):
     (D / "anteprima").mkdir(exist_ok=True)
     for x in os.environ["ANTEPRIMA"].split(","):
         t = float(x); fr = fotogramma(t)
-        subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{W}x{H}", "-i", "-", "-vf", f"setpts=PTS+{t}/TB,subtitles='{SUB}'",
+        subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "rawvideo", "-pix_fmt", "bgr24", "-s", f"{W}x{H}", "-i", "-", "-vf", f"setpts=PTS+{t}/TB,{SUB}",
                         "-frames:v", "1", "-q:v", "3", str(D / "anteprima" / f"t{t:06.2f}.jpg")], input=fr.tobytes(), check=True)
     print("anteprime in", D / "anteprima"); sys.exit()
 
@@ -523,7 +527,7 @@ env = np.convolve(np.abs(voce), np.ones(4800) / 4800, mode="same"); duck = 1 - 0
 mix = voce * 0.95 + (fx + amb) * duck
 sf.write(D / "mix.wav", np.clip(mix / (np.abs(mix).max() + 1e-9) * 0.97, -1, 1), SR)
 finale = D / f"il_bivio_ep{ep['episodio']}.mp4"
-subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(D / "_muto.mp4"), "-i", str(D / "mix.wav"), "-vf", f"subtitles='{SUB}',format=yuv420p",
+subprocess.run(["ffmpeg", "-y", "-v", "error", "-i", str(D / "_muto.mp4"), "-i", str(D / "mix.wav"), "-vf", f"{SUB},format=yuv420p",
                 "-af", "loudnorm=I=-14:TP=-1.5:LRA=11", "-c:v", "libx264", "-preset", "medium", "-crf", "22", "-maxrate", "8M", "-bufsize", "16M",
                 "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", "-shortest", str(finale)], check=True)
 print("ok", finale, round(TOT, 1), "s")

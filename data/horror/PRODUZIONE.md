@@ -67,6 +67,7 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
   `disegna(r, tau, u, t, m)` disegna per intero le righe con `"speciale": "nome"`; `dopo(fr, r, tau, u, t, m)` ritocca ogni inquadratura normale
   prima di nebbia e grana. `m` è monta.py stesso (m.muovi, m.atmosfera, m.font, m.IMG, m.W, m.H…). Spiegazione nel commento «estensioni» di monta.py.
 - L'aspetto della scheda finale, dei sottotitoli e del titolo iniziale è uguale per tutta la serie: non si cambia nelle singole storie.
+  Il carattere è Roboto e sta in `scripts/bivio/fonts/` (Apache 2.0): monta.py e i sottotitoli lo prendono da lì, così l'aspetto è identico anche sulle macchine dove Roboto non è installato.
 - Sottotitoli parola per parola (testo esatto del copione), a gruppi di tre; il grido più grande, la voce lontana in corsivo.
 - Scheda finale (ultima riga): `voce: "Cosa fai?"`, `opzioni: {a, b}` ognuna con `voce` («La A: …» / «Oppure la B: …»), `testo` (etichetta su due righe con `\n`),
   `img`, `ritaglio: [cx, cy, lato]` per la miniatura; `chiusura: "Scrivilo nei commenti."`, `sfondo`. Due carte con miniatura viva, bollo A oro e B azzurro;
