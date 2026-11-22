@@ -1,0 +1,104 @@
+{
+ "nota": "Registrazioni vere CC0 da Freesound (cercate con Openverse), tagliate, unite e mescolate in montaggio: nessun suono sintetico. Da scripts/bivio/sfx/ (vedi licenze_suoni.json lì) vengono i suoni comuni: respiro, stoffa, heart60, colpo, rise_long, amb_slow.",
+ "sfx/colpi_porta.mp3": {
+  "titolo": "Door knock (Slow)",
+  "autore": "Terry93D",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Terry93D/sounds/342551",
+  "nota": "i primi tre colpi, con un'eco leggera del corridoio"
+ },
+ "sfx/colpi_porta_fretta.mp3": {
+  "titolo": "Door knock (Hurried)",
+  "autore": "Terry93D",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Terry93D/sounds/342552",
+  "nota": "i primi tre colpi, con un'eco leggera del corridoio"
+ },
+ "sfx/colpi_armadio.mp3": [
+  {
+   "titolo": "Knocking on Wood",
+   "autore": "ominouswhoosh",
+   "licenza": "CC0 1.0",
+   "pagina": "https://freesound.org/people/ominouswhoosh/sounds/679772",
+   "nota": "tre colpi secchi di nocche (da 3,2 s, 3,4 s e 4,75 s)"
+  },
+  {
+   "titolo": "dull blow - insides wardrobe",
+   "autore": "voxlab",
+   "licenza": "CC0 1.0",
+   "pagina": "https://freesound.org/people/voxlab/sounds/646186",
+   "nota": "colpo sordo dentro un armadio, sotto ognuno dei tre colpi"
+  }
+ ],
+ "sfx/colpi_armadio_lontani.mp3": {
+  "nota": "gli stessi colpi di colpi_armadio.mp3, filtrati e con più eco: sentiti dal fondo del corridoio"
+ },
+ "sfx/grucce.mp3": {
+  "titolo": "moving coat hangers in an metal suport.WAV",
+  "autore": "Millavsb",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Millavsb/sounds/197892",
+  "nota": "ritaglio da 1,85 s"
+ },
+ "sfx/letto.mp3": {
+  "titolo": "Creaking bed frame.aif",
+  "autore": "carroll27",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/carroll27/sounds/151886"
+ },
+ "sfx/lenzuola.mp3": {
+  "titolo": "Sheets - Sitting Up.wav",
+  "autore": "MWsfx",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/MWsfx/sounds/573730"
+ },
+ "sfx/passi_scalzi.mp3": {
+  "titolo": "01-10 Footsteps, Tile, Male Barefoot, Slow Pace.wav",
+  "autore": "SpliceSound",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/SpliceSound/sounds/197403",
+  "nota": "ritaglio di 6,3 s"
+ },
+ "sfx/schiaffo.mp3": {
+  "titolo": "Door being slapped.",
+  "autore": "felix.blume",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/felix.blume/sounds/407079",
+  "nota": "un solo colpo del palmo (da 0,42 s), con l'eco della tromba delle scale"
+ },
+ "sfx/neon.mp3": {
+  "titolo": "neon tube fluorescent light hum cu2.flac",
+  "autore": "kyles",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/kyles/sounds/454098",
+  "nota": "30 s da 0:10"
+ },
+ "sfx/neon_sfarfallio.mp3": {
+  "titolo": "FXLM neon lights flicker bathroom.wav",
+  "autore": "LudwigMueller",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/LudwigMueller/sounds/202612",
+  "nota": "7 s da 0:07; il neon che trema nell'immagine segue questi scatti"
+ },
+ "sfx/vibrazione.mp3": {
+  "titolo": "cellphone vibrate hand hold_loopable.wav",
+  "autore": "mobaudio",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/mobaudio/sounds/384484",
+  "nota": "le prime due vibrazioni"
+ },
+ "sfx/palazzo.mp3": {
+  "titolo": "room tone quiet apartment kitchen night nice with distant city traffic and ambient hum and hiss.flac",
+  "autore": "kyles",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/kyles/sounds/635732",
+  "nota": "58 s dall'inizio: ambiente di fondo del palazzo"
+ },
+ "sfx/esterno.mp3": {
+  "titolo": "NightCity-1.wav",
+  "autore": "Dr. Macak",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Dr.%20Macak/sounds/252690",
+  "nota": "20 s da 0:02: la città lontana nella nebbia"
+ }
+}

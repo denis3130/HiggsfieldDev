@@ -1,0 +1,114 @@
+[
+ {
+  "out": "img/s01_corridoio_letto.png",
+  "prompt": "View from a bed through an open bedroom doorway into a long narrow dark apartment corridor, at the far end a dark brown wooden front door with a thin blade of yellow light under it, cardboard moving boxes along the left wall, grey terrazzo floor, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 101,
+  "steps": 4
+ },
+ {
+  "out": "img/s02_mano_telefono.png",
+  "prompt": "First-person view of an adult male hand in a grey long sleeve touching a black smartphone lying on a small wooden nightstand, blank glowing white screen lighting the fingers and the edge of an unmade bed, dark room, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 102,
+  "steps": 4
+ },
+ {
+  "out": "img/s03_torre.png",
+  "prompt": "Low-angle wide shot from the street of a tall plain concrete nine-storey 1960s Italian public housing tower block at night in thick fog, all of its windows dark, only one single small window glowing warm yellow on the very top floor, orange sodium streetlights glowing in the fog, a large rusty skip full of discarded old furniture at the base of the building, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 203,
+  "steps": 4
+ },
+ {
+  "out": "img/s04_piedi.png",
+  "prompt": "First-person view from the edge of a bed at night: your own two bare feet in dark blue sweatpants standing flat on a cold grey terrazzo floor at the bottom of the frame, toes pointing forward; beyond them in the dim room a tall dark walnut 1960s wardrobe, a wooden chair with folded clothes, a white plate and a glass on the floor, and a small neatly made child's bed with a blue blanket and a small blue toy car on the pillow, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 204,
+  "steps": 4
+ },
+ {
+  "out": "img/s05_corridoio.png",
+  "prompt": "First-person view walking down a narrow dark apartment corridor at night toward a solid dark brown wooden front door with no windows at the far end, a thin blade of warm yellow light under the door, cardboard moving boxes stacked along the left wall, on the right in the foreground a white door frame with small red and blue pencil height marks, grey terrazzo floor, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 205,
+  "steps": 4
+ },
+ {
+  "out": "img/s06_spioncino.png",
+  "prompt": "Extreme close-up of an old brass peephole in a dark brown wooden door, a tiny dot of yellow light in its center, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 106,
+  "steps": 4
+ },
+ {
+  "out": "img/s07_pianerottolo.png",
+  "prompt": "Fisheye view through a door peephole with a round black vignette: an empty apartment landing under greenish-yellow fluorescent light, dusty terrazzo floor, the opposite door sealed with red and white barrier tape, grey metal elevator door on the left, staircase on the right, a blank wall, nobody there, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 107,
+  "steps": 4
+ },
+ {
+  "out": "img/s08_sagoma_porta.png",
+  "prompt": "From behind, the dark silhouette of a man's head and shoulders standing against a closed wooden front door, one open palm pressed on the wood, a blade of yellow light on the floor at his bare feet, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 108,
+  "steps": 4
+ },
+ {
+  "out": "img/s09_catena.png",
+  "prompt": "Close-up of a brass door handle and a security chain on a dark wooden front door, a faint beam of light from the peephole, dust in the air, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 109,
+  "steps": 4
+ },
+ {
+  "out": "img/s10_telefono_mano.png",
+  "prompt": "First-person view of a black smartphone held in an adult male hand in a dark corridor, blank white glowing screen lighting the thumb, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 110,
+  "steps": 4
+ },
+ {
+  "out": "img/s12_corridoio_camera.png",
+  "prompt": "First-person view down a long dark corridor from the front door toward a black open doorway at the far end, cardboard boxes along the wall, faint cold light, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 112,
+  "steps": 4
+ },
+ {
+  "out": "img/s13_armadio.png",
+  "prompt": "From a bedroom doorway: a tall dark glossy walnut 1960s wardrobe with two doors, round brass knobs and an empty brass keyhole, lit from below by cold phone light, a wooden chair with folded men's clothes and a white plate on the floor to the right, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 113,
+  "steps": 4
+ },
+ {
+  "out": "img/sA_ante.png",
+  "prompt": "frontal close-up of two dark walnut wardrobe doors with brass knobs and an empty brass keyhole, cold light from below, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 114,
+  "steps": 4
+ },
+ {
+  "out": "img/sB_telefono.png",
+  "prompt": "a black smartphone with a blank glowing screen held in a male hand in the dark, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, deep teal-black shadows, sickly yellow practical light, cold white phone glow, heavy film grain, high contrast, photorealistic, no people's faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 115,
+  "steps": 4
+ }
+]

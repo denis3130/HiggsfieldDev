@@ -1,0 +1,440 @@
+{
+ "serie": "IL BIVIO",
+ "storia": "Nono piano",
+ "episodio": 1,
+ "titolo": "Tre e nove",
+ "righe": [
+  {
+   "id": 1,
+   "voce": "",
+   "silenzio": 0.7,
+   "img": "s01_corridoio_letto.png",
+   "mov": "apri_occhi",
+   "speciale": "risveglio"
+  },
+  {
+   "id": 2,
+   "voce": "Tre colpi alla porta.",
+   "img": "s01_corridoio_letto.png",
+   "mov": "apri_occhi",
+   "speciale": "risveglio"
+  },
+  {
+   "id": 3,
+   "voce": "Apri gli occhi. Sono le tre e nove di notte.",
+   "img": "s02_mano_telefono.png",
+   "mov": "mano",
+   "schermo": "blocco",
+   "schermo_dopo": 1.38
+  },
+  {
+   "id": 4,
+   "voce": "Milano, nono piano. Nel palazzo siete rimasti in pochi: lo stanno svuotando.",
+   "img": "s03_torre.png",
+   "speciale": "sali"
+  },
+  {
+   "id": 5,
+   "voce": "Altri tre colpi. Ti alzi.",
+   "img": "s04_piedi.png",
+   "mov": "mano"
+  },
+  {
+   "id": 6,
+   "voce": "Il corridoio è buio. Arrivi alla porta.",
+   "img": "s05_corridoio.png",
+   "mov": "avanza",
+   "passi": true
+  },
+  {
+   "id": 7,
+   "voce": "Guardi dallo spioncino.",
+   "img": "s06_spioncino.png",
+   "mov": "avanza",
+   "tuffo": true
+  },
+  {
+   "id": 8,
+   "voce": "Il pianerottolo è illuminato. Deserto. Davanti alla tua porta non c'è nessuno.",
+   "img": "s07_pianerottolo.png",
+   "mov": "fermo",
+   "neon": true
+  },
+  {
+   "id": 9,
+   "voce": "Gridi:",
+   "grido": "Chi è? Chi c'è lì fuori?",
+   "sottotitolo_grido": "CHI È? CHI C'È LÌ FUORI?",
+   "img": "s08_sagoma_porta.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 10,
+   "voce": "",
+   "silenzio": 2.4,
+   "img": "s09_catena.png",
+   "mov": "fermo"
+  },
+  {
+   "id": 11,
+   "voce": "Poi il telefono vibra.",
+   "img": "s10_telefono_mano.png",
+   "mov": "mano"
+  },
+  {
+   "id": 12,
+   "voce": "Un numero sconosciuto:",
+   "citazione": "Lo so che sei sveglio. Apri.",
+   "schermo": "messaggio",
+   "speciale": "messaggio"
+  },
+  {
+   "id": 13,
+   "voce": "Fai un passo indietro. E lo senti: tre colpi. Non dalla porta.",
+   "img": "s12_corridoio_camera.png",
+   "prima": "s09_catena.png",
+   "giro_parola": "Non",
+   "speciale": "giro"
+  },
+  {
+   "id": 14,
+   "voce": "Vengono dalla tua camera. Da dentro l'armadio.",
+   "img": "s13_armadio.png",
+   "mov": "avanza_lento",
+   "schiarisci": 1.12
+  },
+  {
+   "id": 15,
+   "voce": "Cosa fai?",
+   "opzioni": {
+    "a": {
+     "voce": "La A: torni in camera e apri l'armadio.",
+     "testo": "Apri\nl'armadio",
+     "img": "sA_ante.png",
+     "ritaglio": [
+      0.5,
+      0.5,
+      0.7
+     ]
+    },
+    "b": {
+     "voce": "Oppure la B: rispondi al messaggio e chiedi chi è.",
+     "testo": "Rispondi al\nmessaggio",
+     "img": "sB_telefono.png",
+     "ritaglio": [
+      0.45,
+      0.33,
+      0.78
+     ]
+    }
+   },
+   "chiusura": "Scrivilo nei commenti.",
+   "sfondo": "s13_armadio.png"
+  }
+ ],
+ "telefono": {
+  "ora": "03:09",
+  "data": "venerdì 27 novembre",
+  "batteria": 41,
+  "rete": "",
+  "mittente": "Numero sconosciuto",
+  "messaggio": [
+   "Lo so che sei sveglio.",
+   "Apri."
+  ],
+  "sfondo": "s05_corridoio.png"
+ },
+ "ambiente": [
+  {
+   "file": "palazzo.mp3",
+   "vol": 0.12
+  },
+  {
+   "file": "amb_slow.mp3",
+   "vol": [
+    0.05,
+    0.16
+   ]
+  }
+ ],
+ "silenzi": [
+  {
+   "da_riga": 9,
+   "a_riga": 11
+  }
+ ],
+ "suoni": [
+  {
+   "file": "colpi_porta.mp3",
+   "riga": 1,
+   "dopo": -0.3,
+   "vol": 0.85,
+   "scuoti": [
+    [
+     0.01,
+     5
+    ],
+    [
+     0.24,
+     5
+    ],
+    [
+     0.5,
+     6
+    ]
+   ]
+  },
+  {
+   "file": "lenzuola.mp3",
+   "riga": 3,
+   "dopo": 0.0,
+   "vol": 0.3
+  },
+  {
+   "file": "esterno.mp3",
+   "riga": 4,
+   "dopo": -0.15,
+   "dur": 5.78,
+   "vol": 0.25,
+   "sfuma": 0.35
+  },
+  {
+   "file": "colpi_porta_fretta.mp3",
+   "riga": 5,
+   "dopo": -0.45,
+   "vol": 0.85,
+   "scuoti": [
+    [
+     0.01,
+     5
+    ],
+    [
+     0.2,
+     5
+    ],
+    [
+     0.38,
+     6
+    ]
+   ]
+  },
+  {
+   "file": "letto.mp3",
+   "riga": 5,
+   "parola": "alzi",
+   "dopo": -0.25,
+   "vol": 0.35
+  },
+  {
+   "file": "passi_scalzi.mp3",
+   "riga": 5,
+   "parola": "alzi",
+   "dopo": 0.45,
+   "dur": 0.6,
+   "vol": 0.4
+  },
+  {
+   "file": "passi_scalzi.mp3",
+   "riga": 6,
+   "dopo": 0.0,
+   "dur": 3.09,
+   "vol": 0.5
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 6,
+   "dopo": 0.2,
+   "dur": 3.0,
+   "vol": 0.22
+  },
+  {
+   "file": "stoffa.mp3",
+   "riga": 6,
+   "dopo": 0.4,
+   "vol": 0.18
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 7,
+   "dopo": 0.0,
+   "dur": 1.1,
+   "vol": 0.3,
+   "sfuma": 0.12
+  },
+  {
+   "file": "neon.mp3",
+   "riga": 7,
+   "dopo": 0.0,
+   "dur": 1.95,
+   "vol": 0.1,
+   "cresce": [
+    0.05,
+    1
+   ],
+   "sfuma": 0.03
+  },
+  {
+   "file": "neon.mp3",
+   "riga": 8,
+   "da": 1.95,
+   "dur": 7.53,
+   "vol": 0.1,
+   "sfuma": 0.03
+  },
+  {
+   "file": "neon_sfarfallio.mp3",
+   "riga": 8,
+   "dopo": 0.0,
+   "dur": 4.95,
+   "vol": 0.4,
+   "lampi": [
+    [
+     0.55,
+     0.15,
+     0.55
+    ],
+    [
+     1.0,
+     0.08,
+     0.4
+    ],
+    [
+     1.25,
+     0.08,
+     0.35
+    ],
+    [
+     1.75,
+     0.1,
+     0.5
+    ],
+    [
+     3.05,
+     0.12,
+     0.6
+    ],
+    [
+     3.35,
+     0.06,
+     0.3
+    ],
+    [
+     5.8,
+     0.12,
+     0.5
+    ],
+    [
+     6.25,
+     0.07,
+     0.35
+    ]
+   ]
+  },
+  {
+   "file": "schiaffo.mp3",
+   "riga": 9,
+   "parola": "chi",
+   "dopo": -0.3,
+   "vol": 0.8,
+   "scuoti": [
+    [
+     0.14,
+     7
+    ]
+   ]
+  },
+  {
+   "file": "vibrazione.mp3",
+   "riga": 11,
+   "dopo": 0.0,
+   "vol": 0.55,
+   "trema": [
+    [
+     0.0,
+     0.52
+    ],
+    [
+     1.0,
+     1.52
+    ]
+   ]
+  },
+  {
+   "file": "heart60.mp3",
+   "riga": 12,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.3,
+    1
+   ],
+   "vol": 0.45,
+   "sfuma": 0.4
+  },
+  {
+   "file": "passi_scalzi.mp3",
+   "riga": 13,
+   "da": 0.35,
+   "dur": 0.5,
+   "dopo": 0.25,
+   "vol": 0.35
+  },
+  {
+   "file": "colpi_armadio_lontani.mp3",
+   "riga": 13,
+   "parola": "senti",
+   "dopo": 0.3,
+   "vol": 0.5
+  },
+  {
+   "file": "stoffa.mp3",
+   "riga": 13,
+   "parola": "Non",
+   "dopo": -0.2,
+   "vol": 0.3
+  },
+  {
+   "file": "colpi_armadio.mp3",
+   "riga": 14,
+   "parola": "camera",
+   "dopo": 0.45,
+   "vol": 0.8,
+   "scuoti": [
+    [
+     0.01,
+     3
+    ],
+    [
+     0.35,
+     3.5
+    ],
+    [
+     0.67,
+     7
+    ]
+   ]
+  },
+  {
+   "file": "grucce.mp3",
+   "riga": 14,
+   "parola": "camera",
+   "dopo": 1.05,
+   "vol": 0.35
+  },
+  {
+   "file": "colpo.mp3",
+   "riga": 15,
+   "vol": 0.6
+  },
+  {
+   "file": "rise_long.mp3",
+   "riga": 15,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.2,
+    1
+   ],
+   "vol": 0.22,
+   "sfuma": 0.3
+  }
+ ]
+}
