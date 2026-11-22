@@ -9,13 +9,156 @@
    "voce": "",
    "lontana": "Lo so che ti sei appena svegliato.",
    "img": "s01_ago.png",
-   "mov": "avanza_lento"
+   "mov": "avanza_lento",
+   "speciale": "sovrapposto",
+   "dal_nero": 0.9,
+   "strumento": {
+    "quad": [
+     [
+      157,
+      357
+     ],
+     [
+      410,
+      268
+     ],
+     [
+      470,
+      530
+     ],
+     [
+      200,
+      707
+     ]
+    ],
+    "bordo": [
+     [
+      153,
+      357
+     ],
+     [
+      410,
+      268
+     ],
+     [
+      470,
+      530
+     ],
+     [
+      200,
+      712
+     ],
+     [
+      150,
+      520
+     ]
+    ],
+    "ang": [
+     -34,
+     26
+    ]
+   }
   },
   {
    "id": 2,
    "voce": "È la tua voce. Esce dalla radio.",
    "img": "s02_radio.png",
-   "mov": "avanza_lento"
+   "mov": "avanza_lento",
+   "speciale": "sovrapposto",
+   "strumento": {
+    "quad": [
+     [
+      352,
+      433
+     ],
+     [
+      485,
+      433
+     ],
+     [
+      485,
+      497
+     ],
+     [
+      352,
+      497
+     ]
+    ],
+    "bordo": [
+     [
+      352,
+      433
+     ],
+     [
+      485,
+      433
+     ],
+     [
+      485,
+      497
+     ],
+     [
+      474,
+      497
+     ],
+     [
+      474,
+      492
+     ],
+     [
+      471,
+      479
+     ],
+     [
+      463,
+      468
+     ],
+     [
+      451,
+      460
+     ],
+     [
+      436,
+      456
+     ],
+     [
+      420,
+      456
+     ],
+     [
+      405,
+      460
+     ],
+     [
+      393,
+      468
+     ],
+     [
+      385,
+      479
+     ],
+     [
+      382,
+      492
+     ],
+     [
+      382,
+      497
+     ],
+     [
+      352,
+      497
+     ]
+    ],
+    "ang": [
+     -30,
+     -30
+    ],
+    "segue": false,
+    "trema": 2.2,
+    "pulisci": 12,
+    "sfoca": 0.45
+   }
   },
   {
    "id": 3,
@@ -27,40 +170,110 @@
    "id": 4,
    "voce": "Fuori, la bufera.",
    "img": "s04_bufera.png",
-   "mov": "avanza_lento"
+   "mov": "avanza_lento",
+   "neve": 1.0,
+   "faro": {
+    "pos": [
+     388,
+     458
+    ],
+    "r": 20,
+    "periodo": 2.0
+   }
   },
   {
    "id": 5,
    "voce": "Il tuo orologio segna le undici e dieci.",
    "img": "s05_polso.png",
-   "mov": "mano"
+   "mov": "mano",
+   "speciale": "sovrapposto",
+   "display": {
+    "tipo": "lcd",
+    "testo": "23:10",
+    "quad": [
+     [
+      156,
+      466
+     ],
+     [
+      254,
+      498
+     ],
+     [
+      217,
+      562
+     ],
+     [
+      121,
+      522
+     ]
+    ]
+   }
   },
   {
    "id": 6,
    "voce": "Quello a muro, le tre. Deve essere impazzito.",
    "img": "s06_muro.png",
-   "mov": "avanza_lento"
+   "mov": "avanza_lento",
+   "speciale": "sovrapposto",
+   "display": {
+    "tipo": "led",
+    "testo": "03:00",
+    "quad": [
+     [
+      220,
+      311
+     ],
+     [
+      432,
+      246
+     ],
+     [
+      434,
+      430
+     ],
+     [
+      215,
+      459
+     ]
+    ],
+    "tremola": true
+   }
   },
   {
    "id": 7,
    "voce": "La voce continua:",
    "lontana": "Aiutami. Sono uscito a mezzanotte e dodici.",
    "img": "s07_bobine.png",
-   "mov": "panoramica"
+   "mov": "panoramica",
+   "speciale": "sovrapposto",
+   "ruota": {
+    "centro": [
+     165,
+     388
+    ],
+    "assi": [
+     147,
+     215
+    ],
+    "gradi_al_s": 8
+   }
   },
   {
    "id": 8,
    "voce": "",
    "lontana": "A togliere il ghiaccio dall'antenna.",
    "img": "s08_antenna.png",
-   "mov": "avanza_lento"
+   "mov": "avanza_lento",
+   "neve": 1.0
   },
   {
    "id": 9,
    "voce": "",
    "lontana": "Sono caduto nel canalone. Ho una gamba bloccata.",
    "img": "s09_canalone.png",
-   "mov": "scendi"
+   "mov": "scendi",
+   "neve": 0.6
   },
   {
    "id": 10,
@@ -87,7 +300,35 @@
    "voce": "",
    "lontana": "Ti richiamo allo scoccare dell'ora.",
    "img": "s13_targhetta.png",
-   "mov": "avanza_lento"
+   "mov": "avanza_lento",
+   "speciale": "sovrapposto",
+   "targa": {
+    "quad": [
+     [
+      128,
+      246
+     ],
+     [
+      454,
+      246
+     ],
+     [
+      454,
+      516
+     ],
+     [
+      128,
+      516
+     ]
+    ],
+    "righe": [
+     "EMERGENZA",
+     "LA CENTRALE ASCOLTA",
+     "ALLO SCOCCARE",
+     "DI OGNI ORA"
+    ],
+    "chiara": true
+   }
   },
   {
    "id": 14,
@@ -106,8 +347,8 @@
      "img": "sA_porta.png",
      "ritaglio": [
       0.5,
-      0.45,
-      0.8
+      0.5,
+      0.78
      ]
     },
     "b": {
@@ -115,7 +356,7 @@
      "testo": "Ti chiudi\ndentro",
      "img": "sB_chiavistello.png",
      "ritaglio": [
-      0.5,
+      0.46,
       0.5,
       0.8
      ]

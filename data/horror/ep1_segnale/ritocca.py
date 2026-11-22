@@ -11,6 +11,13 @@ for nome, zone in json.loads((D / "ritocchi.json").read_text()).items():
         shutil.copy(D / "img" / nome, src)
     im = cv2.imread(str(src)); mk = np.zeros(im.shape[:2], np.uint8)
     for z in zone:                                  # [x0, y0, x1, y1] oppure un poligono [[x, y], ...]; {"spegni": [x0, y0, x1, y1]} spegne un fuoco (via il rosso, più buio)
+        if isinstance(z, dict) and "notte" in z:    # {"notte": [x0, y0, x1, y1]}: una finestra troppo chiara diventa notte (si scuriscono solo i pixel freddi e luminosi)
+            x0, y0, x1, y1 = z["notte"]; roi = im[y0:y1, x0:x1].astype(np.float32); lum = roi.mean(-1)
+            k = np.clip((roi[..., 0] - roi[..., 2] - 5) / 25, 0, 1) * np.clip((lum - 50) / 50, 0, 1)
+            yy, xx = np.mgrid[0:y1 - y0, 0:x1 - x0].astype(np.float32); k = cv2.GaussianBlur(k, (0, 0), 2) * np.clip(np.minimum.reduce([xx, yy, x1 - x0 - 1 - xx, y1 - y0 - 1 - yy]) / 6, 0, 1)
+            scuro = roi * np.float32(z.get("tinta", [0.50, 0.40, 0.30])) * z.get("luce", 1.0)                # resta un blu profondo, la neve si vede ancora
+            im[y0:y1, x0:x1] = np.clip(roi * (1 - k[..., None]) + scuro * k[..., None], 0, 255).astype(np.uint8)
+            continue
         if isinstance(z, dict):
             x0, y0, x1, y1 = z["spegni"]; roi = im[y0:y1, x0:x1].astype(np.float32); b_, g_, r_ = roi[..., 0], roi[..., 1], roi[..., 2]
             caldo = np.clip((r_ - 1.25 * b_ - 10) / 45, 0, 1)                                 # quanto il pixel è caldo: rosso, arancio o giallo di fiamma
