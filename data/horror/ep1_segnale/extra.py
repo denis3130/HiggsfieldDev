@@ -118,13 +118,13 @@ def _livello(m, t, i):
 
 
 def _scritta(righe, larg=1200, alt=420):
-    """Scritta incisa (maschera 0-1) centrata, su più righe, tutta dentro la targhetta."""
+    """Scritta (maschera 0-1) centrata, su più righe, tutta dentro la targhetta; la prima riga è più grande."""
     S = 2; im = Image.new("L", (larg * S, alt * S), 0); d = ImageDraw.Draw(im)
     from glob import glob
     f0 = (glob("/usr/share/fonts/**/DejaVuSansCondensed-Bold.ttf", recursive=True) or glob("/usr/share/fonts/**/DejaVuSans-Bold.ttf", recursive=True))[0]
     n = len(righe); passo = alt * S * 0.74 / n; y = alt * S * 0.5 - passo * (n - 1) / 2
     for k, x in enumerate(righe):
-        size = int(passo * (0.80 if k == 0 else 0.58))
+        size = int(passo * (0.84 if k == 0 else 0.62))
         while size > 10 and ImageFont.truetype(f0, size).getlength(x) > larg * S * 0.86:
             size -= 2
         d.text((larg * S / 2, y + passo * k), x, font=ImageFont.truetype(f0, size), fill=255, anchor="mm")
@@ -187,10 +187,15 @@ def _base(r, m):
         big[y0:y1, x0:x1] = np.clip(z, 0, 255).astype(np.uint8)
         _mem[("strum", r["id"])] = (cv2.getPerspectiveTransform(np.float32([[0, 0], [FW, 0], [FW, FH], [0, FH]]), q - np.float32([x0, y0])), mk, (x0, y0, x1, y1), sf_)
     if r.get("targa"):
-        q = _quad(r["targa"]["quad"]); tx = _scritta(r["targa"]["righe"])
-        inc, _ = _stendi(tx, q, dim); luce, _ = _stendi(np.roll(tx, 2, axis=0), q, dim)
-        x0, y0, x1, y1 = _riquadro(q, 4, dim); z = big[y0:y1, x0:x1].astype(np.float32)
-        z = z * (1 - 0.80 * inc[y0:y1, x0:x1, None]) + 26 * np.clip(luce - inc, 0, 1)[y0:y1, x0:x1, None]       # incisa: scura, con un filo di luce sotto
+        q = _quad(r["targa"]["quad"]); n = lambda a, b: float(np.linalg.norm(q[a] - q[b]))
+        tx = _scritta(r["targa"]["righe"], 1200, int(1200 * (n(0, 3) + n(1, 2)) / (n(0, 1) + n(3, 2))))
+        inc, _ = _stendi(tx, q, dim); luce, _ = _stendi(np.roll(tx, 3, axis=0), q, dim)
+        x0, y0, x1, y1 = _riquadro(q, 4, dim); z = big[y0:y1, x0:x1].astype(np.float32); inc = inc[y0:y1, x0:x1, None]; luce = luce[y0:y1, x0:x1, None]
+        if r["targa"].get("chiara"):                                         # targhetta scura: lettere chiare verniciate, con la loro ombra
+            lum = cv2.GaussianBlur(z, (0, 0), 30).mean(-1, keepdims=True)    # prendono la luce della lamiera: più chiare dove la targhetta è più illuminata
+            z = z * (1 - 0.55 * np.clip(luce - inc, 0, 1)) * (1 - inc) + inc * (lum * 2.4 + 70) * np.float32(r["targa"].get("colore", [1.0, 0.98, 0.92]))
+        else:
+            z = z * (1 - 0.80 * inc) + 26 * np.clip(luce - inc, 0, 1)        # incisa: scura, con un filo di luce sotto
         big[y0:y1, x0:x1] = np.clip(z, 0, 255).astype(np.uint8)
     _mem[ch] = big
     return big
@@ -230,7 +235,7 @@ def _componi(r, tau, t, m, i):
         st = r["strumento"]; P, mk, (x0, y0, x1, y1), sf_ = _mem[("strum", r["id"])]
         liv = _livello(m, t, i) if st.get("segue", True) else 0.0
         g = np.random.default_rng(int(t * 30) + 13 * r["id"]); a0, a1 = st["ang"]
-        ang = a0 + (a1 - a0) * (liv ** 0.7) + 1.4 * (g.random() - 0.5) * (0.25 + liv)
+        ang = a0 + (a1 - a0) * (liv ** 0.7) + st.get("trema", 1.4) * (g.random() - 0.5) * (0.25 + liv)
         ago, ombra = _ago_piano(ang); dimr = (x1 - x0, y1 - y0)
         ago = cv2.GaussianBlur(cv2.warpPerspective(ago, P, dimr, flags=cv2.INTER_AREA), (0, 0), sf_)[..., None]
         ombra = cv2.warpPerspective(ombra, P, dimr, flags=cv2.INTER_AREA)[..., None]
