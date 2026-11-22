@@ -62,7 +62,11 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
   arretra, scendi, panoramica, mano, fermo, apri_occhi). Sopra: nebbia che scorre, grana, vignettatura; `vapore` per il fiato, `scurisci` per
   nascondere un volto, `apri_occhi` per le palpebre che si aprono.
 - Schermo del telefono disegnato col codice: righe con `schermo: "blocco" | "messaggio"`, testi in `telefono` (ora, data, batteria, rete, mittente, messaggio).
-  Altri schermi o scritte (monitor, citofono, cartelli) si aggiungono allo stesso modo, disegnati col codice, mai generati dal modello.
+- Cose che servono a una storia sola (display dell'ascensore, monitor, citofono, cartelli, radio, pioggia, luce che trema): si scrivono in
+  `cartella_episodio/extra.py`, senza toccare gli script comuni, e si disegnano sempre col codice (mai testo generato dal modello).
+  `disegna(r, tau, u, t, m)` disegna per intero le righe con `"speciale": "nome"`; `dopo(fr, r, tau, u, t, m)` ritocca ogni inquadratura normale
+  prima di nebbia e grana. `m` è monta.py stesso (m.muovi, m.atmosfera, m.font, m.IMG, m.W, m.H…). Spiegazione nel commento «estensioni» di monta.py.
+- L'aspetto della scheda finale, dei sottotitoli e del titolo iniziale è uguale per tutta la serie: non si cambia nelle singole storie.
 - Sottotitoli parola per parola (testo esatto del copione), a gruppi di tre; il grido più grande, la voce lontana in corsivo.
 - Scheda finale (ultima riga): `voce: "Cosa fai?"`, `opzioni: {a, b}` ognuna con `voce` («La A: …» / «Oppure la B: …»), `testo` (etichetta su due righe con `\n`),
   `img`, `ritaglio: [cx, cy, lato]` per la miniatura; `chiusura: "Scrivilo nei commenti."`, `sfondo`. Due carte con miniatura viva, bollo A oro e B azzurro;

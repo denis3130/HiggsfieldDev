@@ -12,7 +12,8 @@ episodio.json: serie, storia, episodio, titolo, righe[], e facoltativi telefono{
 Ogni riga: id, voce (+ grido, citazione, lontana), img, mov (vedi MOV), e facoltativi scurisci [cx, cy, rx, ry],
 vapore (true o [cx, cy, r]), schermo ("blocco" | "messaggio") con schermo_dopo, silenzio (secondi senza voce).
 Ultima riga: voce "Cosa fai?", opzioni {a, b} ognuna con voce, testo (2 righe con \\n), img, ritaglio [cx, cy, lato];
-chiusura, sfondo. I tempi li scrive voce.py."""
+chiusura, sfondo. I tempi li scrive voce.py.
+Le cose che servono a una storia sola (display, monitor, cartelli, pioggia…) vanno in cartella_episodio/extra.py: vedi «estensioni» più sotto."""
 import glob, json, os, re, subprocess, sys
 from pathlib import Path
 
@@ -293,7 +294,7 @@ def metti_strato(fr, strato, y, op, dy=0.0):
 def scheda(i, t):
     r, tr = righe[i], T[i]; tau = t - tr["inizio"]; u = min(1.0, tau / max(TOT - tr["inizio"], 1e-3))
     prec = righe[i - 1] if i else {}
-    if prec.get("img") == r.get("sfondo") and not prec.get("schermo"):      # stessa immagine del quadro prima: la camera prosegue senza stacco
+    if prec.get("img") == r.get("sfondo") and not prec.get("schermo") and not prec.get("speciale"):      # stessa immagine del quadro prima: la camera prosegue senza stacco
         fr = muovi(prec["img"], prec.get("mov", "avanza_lento"), u, t - T[i - 1]["inizio"], float(i - 1), oltre=True)
     else:
         fr = muovi(r.get("sfondo", r["opzioni"]["a"]["img"]), "avanza_lento", u, tau, float(i))
@@ -313,6 +314,18 @@ def scheda(i, t):
     return np.clip(fr + rng.standard_normal((H, W, 1)).astype(np.float32) * 2.5, 0, 255)
 
 
+# ---------- estensioni della singola storia: cartella_episodio/extra.py (facoltativo), così gli script comuni non si toccano
+#   disegna(r, tau, u, t, m) → fotogramma finito (BGR float32 0-255, HxWx3) per le righe con "speciale": "..." (display, monitor, cartelli, titoli…)
+#   dopo(fr, r, tau, u, t, m) → fotogramma: ritocco di ogni inquadratura normale prima di nebbia e grana (pioggia, luce che trema, scritta sovrapposta…)
+#   m è questo modulo: m.muovi, m.atmosfera, m.font, m.carica, m.IMG, m.W, m.H, m.VIGN, m.XN, m.YN, m.rng, m.telefono…
+#   r è la riga di episodio.json, tau i secondi dall'inizio della riga, u il suo avanzamento 0-1, t il tempo assoluto.
+EXTRA = None
+if (D / "extra.py").exists():
+    import importlib.util
+    _sp = importlib.util.spec_from_file_location("extra", D / "extra.py"); EXTRA = importlib.util.module_from_spec(_sp); _sp.loader.exec_module(EXTRA)
+QUESTO = sys.modules[__name__]
+
+
 # ---------- fotogrammi
 def fotogramma(t):
     i = max(k for k in range(len(T)) if T[k]["inizio"] <= t or k == 0)
@@ -320,6 +333,8 @@ def fotogramma(t):
     tau = max(0.0, t - tr["inizio"]); u = min(1.0, tau / max(fine - tr["inizio"], 1e-3))
     if r.get("opzioni"):
         fr = scheda(i, t)
+    elif r.get("speciale"):
+        fr = np.clip(EXTRA.disegna(r, tau, u, t, QUESTO), 0, 255)
     elif r.get("schermo") and tau >= r.get("schermo_dopo", 0):
         if r["schermo"] == "messaggio":
             sl = min(1.0, tau / 0.4); scr = S_MSG if sl >= 1 else schermo(True, 1 - (1 - sl) ** 3)
@@ -332,6 +347,8 @@ def fotogramma(t):
             cx, cy, rx, ry = r["scurisci"]; fr = fr * (1 - 0.85 * np.exp(-(((XN - cx) / rx) ** 2 + ((YN - cy) / ry) ** 2)))[..., None]
         if r.get("vapore"):
             fr = vapore(fr, tau, *(r["vapore"] if isinstance(r["vapore"], list) else []))
+        if EXTRA is not None and hasattr(EXTRA, "dopo"):
+            fr = EXTRA.dopo(fr, r, tau, u, t, QUESTO)
         fr = atmosfera(fr, t, 0.05 if r.get("mov") == "fermo" else 0.13)
         if r.get("mov") == "apri_occhi":
             fr = palpebre(fr, tau)
