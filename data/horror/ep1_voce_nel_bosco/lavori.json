@@ -1,0 +1,62 @@
+[
+ {
+  "out": "bivio/ep1/img/s01_chiome.png",
+  "prompt": "POV shot lying on the ground looking straight up at tall beech trees converging overhead, black branches and canopies against a dark blue night sky, drifting fog, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 20
+ },
+ {
+  "out": "bivio/ep1/img/s02_radura.png",
+  "prompt": "top-down aerial view from high above of a man in a black hooded rain jacket lying on his back in tall wet grass in a small forest clearing at night, his face completely hidden in the shadow of the hood, surrounded by dark trees, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 21
+ },
+ {
+  "out": "bivio/ep1/img/s03_gamba.png",
+  "prompt": "POV from the eyes of a person sitting on the ground at night, looking down along their own legs stretched out on wet grass, the left calf wrapped in a clean white gauze bandage with the jeans rolled up to the knee, muddy brown hiking boots, one dirty hand resting on the bandage, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 22
+ },
+ {
+  "out": "bivio/ep1/img/s04_scarpone.png",
+  "prompt": "extreme close-up at ground level of a muddy brown leather hiking boot slipping on glistening wet grass, mud splashing, a dirty hand pressed into the mud beside it, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 23
+ },
+ {
+  "out": "bivio/ep1/img/s05_nodo.png",
+  "prompt": "macro photograph of a clean white gauze bandage wrapped tightly around a leg and tied with a neat precise knot, tiny raindrops on the fabric, dark blurred forest background, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 24
+ },
+ {
+  "out": "bivio/ep1/img/s06_grido.png",
+  "prompt": "seen from behind, a lone man in a black hooded rain jacket standing in a foggy forest clearing with his arms slightly open, shouting toward a wall of dark trees, his breath condensing in the cold air, low wide angle, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 25
+ },
+ {
+  "out": "bivio/ep1/img/s07_bosco_fermo.png",
+  "prompt": "wide shot of a completely still beech forest, rows of smooth black trunks fading into thick fog, no people, eerie silence, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 26
+ },
+ {
+  "out": "bivio/ep1/img/s08_tronchi_bocca.png",
+  "prompt": "smooth dark beech tree trunks, the nearest trunk has a dark oval hollow that looks like an open mouth, seen from the side, fog between the trees, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 27
+ },
+ {
+  "out": "bivio/ep1/img/s09_telefono_mano.png",
+  "prompt": "close-up from the side of a dirty hand pulling a black smartphone out of the pocket of a black rain jacket, the glow of the screen lighting the fingers and the wet fabric, the screen itself not visible, dark forest behind, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 28
+ },
+ {
+  "out": "bivio/ep1/img/s11_cavita_fiato.png",
+  "prompt": "close-up of a hollow in a smooth beech trunk shaped like an open screaming mouth, thin white vapor drifting out of it like breath in cold air, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 29
+ },
+ {
+  "out": "bivio/ep1/img/s12_luce_buio.png",
+  "prompt": "first-person view of an arm in a black rain jacket holding up a phone flashlight toward the darkness between black tree trunks, a weak cone of pale light in moving fog, nothing visible beyond, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 30
+ },
+ {
+  "out": "bivio/ep1/img/sB_tronco.png",
+  "prompt": "a large fallen tree trunk covered in moss seen from ground level, dark wet ferns all around, thick fog behind, cinematic horror film still, shot on 35mm anamorphic lens, night in a foggy beech forest in the Italian Apennines, cold blue-green moonlight, deep black shadows, volumetric fog, wet surfaces, shallow depth of field, subtle film grain, photorealistic",
+  "seed": 31
+ }
+]

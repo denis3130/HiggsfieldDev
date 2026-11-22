@@ -1,0 +1,89 @@
+{
+ "righe": [
+  {
+   "id": 1,
+   "inizio": 0.5,
+   "fine": 2.63,
+   "voce_fine": 2.25
+  },
+  {
+   "id": 2,
+   "inizio": 2.63,
+   "fine": 6.155,
+   "voce_fine": 5.775
+  },
+  {
+   "id": 3,
+   "inizio": 6.155,
+   "fine": 8.67,
+   "voce_fine": 8.29
+  },
+  {
+   "id": 4,
+   "inizio": 8.67,
+   "fine": 12.679,
+   "voce_fine": 12.299
+  },
+  {
+   "id": 5,
+   "inizio": 12.679,
+   "fine": 16.914,
+   "voce_fine": 16.534
+  },
+  {
+   "id": 6,
+   "inizio": 16.914,
+   "fine": 20.847,
+   "voce_fine": 20.847
+  },
+  {
+   "id": 7,
+   "inizio": 20.847,
+   "fine": 23.297,
+   "voce_fine": 23.047
+  },
+  {
+   "id": 8,
+   "inizio": 23.297,
+   "fine": 26.462,
+   "voce_fine": 26.082
+  },
+  {
+   "id": 9,
+   "inizio": 26.462,
+   "fine": 30.103,
+   "voce_fine": 29.723
+  },
+  {
+   "id": 10,
+   "inizio": 30.103,
+   "fine": 35.254,
+   "voce_fine": 34.874
+  },
+  {
+   "id": 11,
+   "inizio": 35.254,
+   "fine": 37.904,
+   "voce_fine": 37.654
+  },
+  {
+   "id": 12,
+   "inizio": 37.904,
+   "fine": 41.652,
+   "voce_fine": 41.272
+  },
+  {
+   "id": 13,
+   "inizio": 41.652,
+   "fine": 46.501,
+   "voce_fine": 46.121
+  },
+  {
+   "id": 14,
+   "inizio": 46.501,
+   "fine": 51.306,
+   "voce_fine": 50.926
+  }
+ ],
+ "totale": 52.506
+}
