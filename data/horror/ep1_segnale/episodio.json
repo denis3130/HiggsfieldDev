@@ -4,26 +4,280 @@
  "episodio": 1,
  "titolo": "La chiamata",
  "righe": [
-  {"id": 1, "voce": "", "lontana": "Lo so che ti sei appena svegliato.", "img": "s01_ago.png", "mov": "avanza_lento"},
-  {"id": 2, "voce": "È la tua voce. Esce dalla radio.", "img": "s02_radio.png", "mov": "avanza_lento"},
-  {"id": 3, "voce": "Apri gli occhi. Sei solo, alla scrivania della stazione radio di Croda Muta.", "img": "s03_scrivania.png", "mov": "apri_occhi"},
-  {"id": 4, "voce": "Fuori, la bufera.", "img": "s04_bufera.png", "mov": "avanza_lento"},
-  {"id": 5, "voce": "Il tuo orologio segna le undici e dieci.", "img": "s05_polso.png", "mov": "mano"},
-  {"id": 6, "voce": "Quello a muro, le tre. Deve essere impazzito.", "img": "s06_muro.png", "mov": "avanza_lento"},
-  {"id": 7, "voce": "La voce continua:", "lontana": "Aiutami. Sono uscito a mezzanotte e dodici.", "img": "s07_bobine.png", "mov": "panoramica"},
-  {"id": 8, "voce": "", "lontana": "A togliere il ghiaccio dall'antenna.", "img": "s08_antenna.png", "mov": "avanza_lento"},
-  {"id": 9, "voce": "", "lontana": "Sono caduto nel canalone. Ho una gamba bloccata.", "img": "s09_canalone.png", "mov": "scendi"},
-  {"id": 10, "voce": "Mezzanotte e dodici. Manca un'ora. E tu non sei mai uscito.", "img": "s10_scarponi.png", "mov": "avanza_lento"},
-  {"id": 11, "voce": "Afferri il microfono e gridi:", "grido": "Ti sento! Chi sei?", "sottotitolo_grido": "TI SENTO! CHI SEI?", "img": "s11_microfono.png", "mov": "avanza"},
-  {"id": 12, "voce": "La spia non si accende. Puoi solo ascoltare.", "img": "s12_spia.png", "mov": "avanza_lento"},
-  {"id": 13, "voce": "", "lontana": "Ti richiamo allo scoccare dell'ora.", "img": "s13_targhetta.png", "mov": "avanza_lento"},
-  {"id": 14, "voce": "", "silenzio": 1.2, "img": "s14_spalle.png", "mov": "arretra"},
-  {"id": 15, "voce": "Cosa fai?",
+  {
+   "id": 1,
+   "voce": "",
+   "lontana": "Lo so che ti sei appena svegliato.",
+   "img": "s01_ago.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 2,
+   "voce": "È la tua voce. Esce dalla radio.",
+   "img": "s02_radio.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 3,
+   "voce": "Apri gli occhi. Sei solo, alla scrivania della stazione radio di Croda Muta.",
+   "img": "s03_scrivania.png",
+   "mov": "apri_occhi"
+  },
+  {
+   "id": 4,
+   "voce": "Fuori, la bufera.",
+   "img": "s04_bufera.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 5,
+   "voce": "Il tuo orologio segna le undici e dieci.",
+   "img": "s05_polso.png",
+   "mov": "mano"
+  },
+  {
+   "id": 6,
+   "voce": "Quello a muro, le tre. Deve essere impazzito.",
+   "img": "s06_muro.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 7,
+   "voce": "La voce continua:",
+   "lontana": "Aiutami. Sono uscito a mezzanotte e dodici.",
+   "img": "s07_bobine.png",
+   "mov": "panoramica"
+  },
+  {
+   "id": 8,
+   "voce": "",
+   "lontana": "A togliere il ghiaccio dall'antenna.",
+   "img": "s08_antenna.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 9,
+   "voce": "",
+   "lontana": "Sono caduto nel canalone. Ho una gamba bloccata.",
+   "img": "s09_canalone.png",
+   "mov": "scendi"
+  },
+  {
+   "id": 10,
+   "voce": "Mezzanotte e dodici. Manca un'ora. E tu non sei mai uscito.",
+   "img": "s10_scarponi.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 11,
+   "voce": "Afferri il microfono e gridi:",
+   "grido": "Ti sento! Chi sei?",
+   "sottotitolo_grido": "TI SENTO! CHI SEI?",
+   "img": "s11_microfono.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 12,
+   "voce": "La spia non si accende. Puoi solo ascoltare.",
+   "img": "s12_spia.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 13,
+   "voce": "",
+   "lontana": "Ti richiamo allo scoccare dell'ora.",
+   "img": "s13_targhetta.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 14,
+   "voce": "",
+   "silenzio": 1.2,
+   "img": "s14_spalle.png",
+   "mov": "arretra"
+  },
+  {
+   "id": 15,
+   "voce": "Cosa fai?",
    "opzioni": {
-    "a": {"voce": "La A: esci nella bufera e vai a cercarlo.", "testo": "Esci\na cercarlo", "img": "sA_porta.png", "ritaglio": [0.5, 0.45, 0.8]},
-    "b": {"voce": "Oppure la B: sbarri la porta e resti dentro.", "testo": "Ti chiudi\ndentro", "img": "sB_chiavistello.png", "ritaglio": [0.5, 0.5, 0.8]}
+    "a": {
+     "voce": "La A: esci nella bufera e vai a cercarlo.",
+     "testo": "Esci\na cercarlo",
+     "img": "sA_porta.png",
+     "ritaglio": [
+      0.5,
+      0.45,
+      0.8
+     ]
+    },
+    "b": {
+     "voce": "Oppure la B: sbarri la porta e resti dentro.",
+     "testo": "Ti chiudi\ndentro",
+     "img": "sB_chiavistello.png",
+     "ritaglio": [
+      0.5,
+      0.5,
+      0.8
+     ]
+    }
    },
    "chiusura": "Scrivilo nei commenti.",
-   "sfondo": "s14_spalle.png"}
+   "sfondo": "s14_spalle.png"
+  }
+ ],
+ "ambiente": [
+  {
+   "file": "vento_fessura.mp3",
+   "da": 0,
+   "vol": 0.2
+  },
+  {
+   "file": "radio_fruscio.mp3",
+   "da": 3,
+   "vol": 0.03
+  },
+  {
+   "file": "amb_slow.mp3",
+   "vol": [
+    0.05,
+    0.16
+   ]
+  }
+ ],
+ "suoni": [
+  {
+   "file": "radio_fruscio.mp3",
+   "riga": 1,
+   "dopo": -0.45,
+   "dur": 3.3,
+   "vol": 0.2,
+   "sfuma": 0.3
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 3,
+   "dur": 2.4,
+   "vol": 0.28
+  },
+  {
+   "file": "bufera.mp3",
+   "riga": 4,
+   "dopo": -0.15,
+   "dur": 2.22,
+   "vol": 0.6,
+   "sfuma": 0.25
+  },
+  {
+   "file": "bip.mp3",
+   "riga": 5,
+   "dopo": 0.1,
+   "vol": 0.3
+  },
+  {
+   "file": "ronzio.mp3",
+   "riga": 6,
+   "dur": 3.64,
+   "vol": 0.15,
+   "sfuma": 0.3
+  },
+  {
+   "file": "neon.mp3",
+   "riga": 6,
+   "parola": "impazzito",
+   "dopo": -0.45,
+   "vol": 0.32
+  },
+  {
+   "file": "radio_fruscio.mp3",
+   "riga": 7,
+   "dopo": 1.49,
+   "da": 5,
+   "dur": 10.22,
+   "vol": 0.2,
+   "sfuma": 0.3
+  },
+  {
+   "file": "bufera.mp3",
+   "riga": 8,
+   "dopo": -0.1,
+   "da": 12,
+   "dur": 6.88,
+   "vol": 0.5,
+   "sfuma": 0.3
+  },
+  {
+   "file": "squelch.mp3",
+   "riga": 10,
+   "dopo": -0.12,
+   "vol": 0.4
+  },
+  {
+   "file": "legno.mp3",
+   "riga": 10,
+   "dopo": 1.2,
+   "dur": 2.2,
+   "vol": 0.22
+  },
+  {
+   "file": "interruttore.mp3",
+   "riga": 11,
+   "parola": "gridi",
+   "dopo": 0.3,
+   "vol": 0.5
+  },
+  {
+   "file": "interruttore.mp3",
+   "riga": 12,
+   "dopo": 0.1,
+   "vol": 0.45
+  },
+  {
+   "file": "interruttore.mp3",
+   "riga": 12,
+   "dopo": 0.7,
+   "vol": 0.45
+  },
+  {
+   "file": "radio_fruscio.mp3",
+   "riga": 13,
+   "dopo": -0.1,
+   "da": 9,
+   "dur": 2.82,
+   "vol": 0.2,
+   "sfuma": 0.25
+  },
+  {
+   "file": "squelch.mp3",
+   "riga": 14,
+   "dopo": -0.05,
+   "vol": 0.45
+  },
+  {
+   "file": "heart60.mp3",
+   "riga": 14,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.3,
+    1
+   ],
+   "vol": 0.45,
+   "sfuma": 0.4
+  },
+  {
+   "file": "colpo.mp3",
+   "riga": 15,
+   "vol": 0.6
+  },
+  {
+   "file": "rise_long.mp3",
+   "riga": 15,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.2,
+    1
+   ],
+   "vol": 0.22,
+   "sfuma": 0.3
+  }
  ]
 }

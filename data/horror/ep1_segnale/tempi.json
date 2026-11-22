@@ -73,166 +73,166 @@
   {
    "id": 6,
    "inizio": 15.826,
-   "fine": 18.662,
-   "voce_fine": 18.412,
+   "fine": 19.47,
+   "voce_fine": 19.22,
    "pezzi": [
     {
      "tipo": "voce",
      "inizio": 15.826,
-     "fine": 18.292,
-     "n": 7
+     "fine": 19.1,
+     "n": 8
     }
    ]
   },
   {
    "id": 7,
-   "inizio": 18.662,
-   "fine": 23.687,
-   "voce_fine": 23.437,
+   "inizio": 19.47,
+   "fine": 24.495,
+   "voce_fine": 24.245,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 18.662,
-     "fine": 19.981,
+     "inizio": 19.47,
+     "fine": 20.789,
      "n": 3
     },
     {
      "tipo": "lontana",
-     "inizio": 20.501,
-     "fine": 23.337,
+     "inizio": 21.309,
+     "fine": 24.145,
      "n": 7
     }
    ]
   },
   {
    "id": 8,
-   "inizio": 23.687,
-   "fine": 26.281,
-   "voce_fine": 26.031,
+   "inizio": 24.495,
+   "fine": 27.089,
+   "voce_fine": 26.839,
    "pezzi": [
     {
      "tipo": "lontana",
-     "inizio": 24.087,
-     "fine": 25.931,
+     "inizio": 24.895,
+     "fine": 26.739,
      "n": 5
     }
    ]
   },
   {
    "id": 9,
-   "inizio": 26.281,
-   "fine": 30.273,
-   "voce_fine": 30.023,
+   "inizio": 27.089,
+   "fine": 31.081,
+   "voce_fine": 30.831,
    "pezzi": [
     {
      "tipo": "lontana",
-     "inizio": 26.681,
-     "fine": 29.923,
+     "inizio": 27.489,
+     "fine": 30.731,
      "n": 8
     }
    ]
   },
   {
    "id": 10,
-   "inizio": 30.273,
-   "fine": 35.079,
-   "voce_fine": 34.829,
+   "inizio": 31.081,
+   "fine": 35.887,
+   "voce_fine": 35.637,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 30.273,
-     "fine": 34.709,
+     "inizio": 31.081,
+     "fine": 35.517,
      "n": 11
     }
    ]
   },
   {
    "id": 11,
-   "inizio": 35.079,
-   "fine": 38.783,
-   "voce_fine": 38.783,
+   "inizio": 35.887,
+   "fine": 39.591,
+   "voce_fine": 39.591,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 35.079,
-     "fine": 37.402,
+     "inizio": 35.887,
+     "fine": 38.21,
      "n": 5
     },
     {
      "tipo": "grido",
-     "inizio": 37.522,
-     "fine": 38.783,
+     "inizio": 38.33,
+     "fine": 39.591,
      "n": 4
     }
    ]
   },
   {
    "id": 12,
-   "inizio": 38.783,
-   "fine": 41.958,
-   "voce_fine": 41.708,
+   "inizio": 39.591,
+   "fine": 42.766,
+   "voce_fine": 42.516,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 38.783,
-     "fine": 41.588,
+     "inizio": 39.591,
+     "fine": 42.396,
      "n": 8
     }
    ]
   },
   {
    "id": 13,
-   "inizio": 41.958,
-   "fine": 44.423,
-   "voce_fine": 44.173,
+   "inizio": 42.766,
+   "fine": 45.489,
+   "voce_fine": 45.239,
    "pezzi": [
     {
      "tipo": "lontana",
-     "inizio": 42.358,
-     "fine": 44.073,
-     "n": 4
+     "inizio": 43.166,
+     "fine": 45.139,
+     "n": 5
     }
    ]
   },
   {
    "id": 14,
-   "inizio": 44.423,
-   "fine": 46.673,
-   "voce_fine": 46.423,
+   "inizio": 45.489,
+   "fine": 46.939,
+   "voce_fine": 46.689,
    "pezzi": []
   },
   {
    "id": 15,
-   "inizio": 46.673,
-   "fine": 57.204,
-   "voce_fine": 56.954,
+   "inizio": 46.939,
+   "fine": 57.47,
+   "voce_fine": 57.22,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 46.673,
-     "fine": 47.371,
+     "inizio": 46.939,
+     "fine": 47.637,
      "n": 2
     },
     {
      "tipo": "a",
-     "inizio": 47.671,
-     "fine": 50.967,
+     "inizio": 47.937,
+     "fine": 51.233,
      "n": 9
     },
     {
      "tipo": "b",
-     "inizio": 51.367,
-     "fine": 54.682,
+     "inizio": 51.633,
+     "fine": 54.948,
      "n": 9
     },
     {
      "tipo": "chiusura",
-     "inizio": 55.082,
-     "fine": 56.754,
+     "inizio": 55.348,
+     "fine": 57.02,
      "n": 3
     }
    ]
   }
  ],
- "totale": 59.204
+ "totale": 59.47
 }
