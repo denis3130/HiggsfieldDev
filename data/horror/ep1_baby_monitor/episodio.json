@@ -1,0 +1,494 @@
+{
+ "serie": "IL BIVIO",
+ "storia": "Baby Monitor",
+ "episodio": 1,
+ "titolo": "La mamma è qui",
+ "righe": [
+  {
+   "id": 1,
+   "voce": "Qualcuno sta cantando al bambino. Ma in casa ci sei solo tu.",
+   "speciale": "monitor",
+   "img": "s01_monitor_tavolo.png",
+   "mov": "avanza_lento",
+   "led": {
+    "punti": [
+     [
+      280,
+      597
+     ],
+     [
+      300,
+      597
+     ],
+     [
+      320,
+      597
+     ],
+     [
+      340,
+      597
+     ],
+     [
+      360,
+      597
+     ]
+    ],
+    "r": 3.6,
+    "spia": [
+     373,
+     558
+    ],
+    "schermo": [
+     [
+      255,
+      410
+     ],
+     [
+      384,
+      408
+     ],
+     [
+      383,
+      499
+     ],
+     [
+      253,
+      500
+     ]
+    ],
+    "forza": 0.95,
+    "ritaglio": [
+     40,
+     400,
+     536,
+     747
+    ]
+   }
+  },
+  {
+   "id": 2,
+   "voce": "Stanotte fai da babysitter in una villa isolata sul lago di Como.",
+   "img": "s02_villa.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 3,
+   "voce": "I genitori sono a cena.",
+   "img": "s03_viale.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 4,
+   "voce": "Elia, due anni, dorme di sopra.",
+   "img": "s04_scala.png",
+   "mov": "scendi"
+  },
+  {
+   "id": 5,
+   "voce": "La voce esce dal baby monitor. Una donna sussurra:",
+   "lontana": "Ninna nanna, ninna o… lo darò all'uomo nero, che lo tiene un anno intero.",
+   "speciale": "monitor",
+   "img": "s05_monitor_mano.png",
+   "mov": "mano",
+   "led": {
+    "punti": [
+     [
+      325,
+      457
+     ],
+     [
+      335,
+      457
+     ],
+     [
+      345,
+      457
+     ],
+     [
+      355,
+      457
+     ],
+     [
+      365,
+      457
+     ]
+    ],
+    "r": 2.3,
+    "spia": [
+     345,
+     491
+    ],
+    "schermo": [
+     [
+      308,
+      372
+     ],
+     [
+      381,
+      370
+     ],
+     [
+      383,
+      440
+     ],
+     [
+      308,
+      442
+     ]
+    ],
+    "forza": 0.8,
+    "ritaglio": [
+     95,
+     400,
+     465,
+     746
+    ]
+   }
+  },
+  {
+   "id": 6,
+   "voce": "Guardi lo schermo. Elia respira nel lettino.",
+   "speciale": "schermo",
+   "img": "s06_culla.png",
+   "mov": "avanza_lento",
+   "respiro": [
+    290,
+    590,
+    100
+   ],
+   "ora": "21:31"
+  },
+  {
+   "id": 7,
+   "voce": "Nella cameretta non c'è nessuno.",
+   "speciale": "schermo",
+   "img": "s07_stanza.png",
+   "mov": "panoramica",
+   "ora": "21:31"
+  },
+  {
+   "id": 8,
+   "voce": "Chiami la madre: squilla a vuoto. Chiami il padre: spento.",
+   "speciale": "chiamata",
+   "ora": "21:32"
+  },
+  {
+   "id": 9,
+   "voce": "Accanto al lettino, una luce si accende. Da sola.",
+   "speciale": "schermo",
+   "img": "s06_culla.png",
+   "mov": "arretra",
+   "respiro": [
+    290,
+    590,
+    100
+   ],
+   "ora": "21:33",
+   "luce": {
+    "x": 445,
+    "y": 150,
+    "r": 55,
+    "parola": "accende"
+   }
+  },
+  {
+   "id": 10,
+   "voce": "La voce smette di cantare. E dice:",
+   "img": "s10_led_spenti.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 11,
+   "voce": "",
+   "lontana": "Dormi, Elia. La mamma è qui.",
+   "speciale": "schermo",
+   "img": "s06_culla.png",
+   "mov": "avanza",
+   "respiro": [
+    290,
+    590,
+    100
+   ],
+   "ora": "21:34",
+   "luce": {
+    "x": 445,
+    "y": 150,
+    "r": 55,
+    "accesa": true
+   }
+  },
+  {
+   "id": 12,
+   "voce": "",
+   "silenzio": 1.8,
+   "img": "s12_scala_luce.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 13,
+   "voce": "Cosa fai?",
+   "opzioni": {
+    "a": {
+     "voce": "La A: sali subito in cameretta, dal bambino.",
+     "testo": "Sali in\ncameretta",
+     "img": "s12_scala_luce.png",
+     "ritaglio": [
+      0.5,
+      0.42,
+      0.62
+     ]
+    },
+    "b": {
+     "voce": "Oppure la B: premi il tasto e rispondi alla voce.",
+     "testo": "Rispondi\nalla voce",
+     "img": "sB_tasto.png",
+     "ritaglio": [
+      0.5,
+      0.52,
+      0.9
+     ]
+    }
+   },
+   "chiusura": "Scrivilo nei commenti.",
+   "sfondo": "s12_scala_luce.png"
+  }
+ ],
+ "monitor": {
+  "feed": "s06_culla.png",
+  "ritaglio": [
+   40,
+   400,
+   536,
+   747
+  ]
+ },
+ "ambiente": [
+  {
+   "file": "amb_slow.mp3",
+   "vol": [
+    0.05,
+    0.16
+   ]
+  },
+  {
+   "file": "fruscio.mp3",
+   "vol": 0.035
+  }
+ ],
+ "silenzi": [
+  {
+   "da_riga": 10,
+   "a_riga": 12
+  }
+ ],
+ "suoni": [
+  {
+   "file": "ninna.mp3",
+   "riga": 1,
+   "dopo": -0.5,
+   "da": 0.0,
+   "dur": 4.526,
+   "vol": 0.2,
+   "sfuma": 0.15,
+   "led": true
+  },
+  {
+   "file": "ninna.mp3",
+   "riga": 2,
+   "dopo": 0.0,
+   "da": 4.376,
+   "dur": 8.418,
+   "vol": 0.07,
+   "sfuma": 0.15,
+   "led": true
+  },
+  {
+   "file": "ninna.mp3",
+   "riga": 5,
+   "dopo": 0.0,
+   "da": 12.644,
+   "dur": 9.943,
+   "vol": 0.18,
+   "sfuma": 0.15,
+   "led": true
+  },
+  {
+   "file": "ninna.mp3",
+   "riga": 6,
+   "dopo": 0.0,
+   "da": 22.437,
+   "dur": 5.93,
+   "vol": 0.16,
+   "sfuma": 0.15,
+   "led": true
+  },
+  {
+   "file": "ninna.mp3",
+   "riga": 8,
+   "dopo": 0.0,
+   "da": 28.217,
+   "dur": 4.941,
+   "vol": 0.07,
+   "sfuma": 0.15,
+   "led": true
+  },
+  {
+   "file": "ninna.mp3",
+   "riga": 9,
+   "dopo": 0.0,
+   "da": 33.008,
+   "dur": 1.84,
+   "vol": 0.16,
+   "sfuma": 0.03,
+   "led": true
+  },
+  {
+   "file": "lago.mp3",
+   "riga": 2,
+   "dopo": -0.1,
+   "dur": 4.11,
+   "vol": 0.42,
+   "sfuma": 0.35
+  },
+  {
+   "file": "pendolo.mp3",
+   "riga": 3,
+   "dur": 4.46,
+   "vol": 0.3,
+   "sfuma": 0.2
+  },
+  {
+   "file": "legno.mp3",
+   "riga": 4,
+   "dopo": 0.5,
+   "dur": 1.8,
+   "vol": 0.28
+  },
+  {
+   "file": "clic.mp3",
+   "riga": 5,
+   "parola": "Ninna",
+   "dopo": -0.14,
+   "vol": 0.26
+  },
+  {
+   "file": "fruscio.mp3",
+   "riga": 5,
+   "parola": "Ninna",
+   "dopo": -0.1,
+   "dur": 4.6,
+   "vol": 0.05,
+   "sfuma": 0.2
+  },
+  {
+   "file": "respiro_bimbo.mp3",
+   "riga": 6,
+   "dur": 5.78,
+   "vol": 0.26,
+   "sfuma": 0.3
+  },
+  {
+   "file": "squillo.mp3",
+   "riga": 8,
+   "vol": 0.13
+  },
+  {
+   "file": "squillo.mp3",
+   "riga": 8,
+   "parola": "squilla",
+   "dopo": 0.25,
+   "vol": 0.13
+  },
+  {
+   "file": "bip.mp3",
+   "riga": 8,
+   "parola": "spento",
+   "dopo": 0.05,
+   "vol": 0.14
+  },
+  {
+   "file": "bip.mp3",
+   "riga": 8,
+   "parola": "spento",
+   "dopo": 0.47,
+   "vol": 0.14
+  },
+  {
+   "file": "bip.mp3",
+   "riga": 8,
+   "parola": "spento",
+   "dopo": 0.89,
+   "vol": 0.14
+  },
+  {
+   "file": "respiro_bimbo.mp3",
+   "riga": 9,
+   "da": 4.0,
+   "dur": 3.54,
+   "vol": 0.2,
+   "sfuma": 0.3
+  },
+  {
+   "file": "clic.mp3",
+   "riga": 9,
+   "parola": "accende",
+   "vol": 0.45
+  },
+  {
+   "file": "clic.mp3",
+   "riga": 11,
+   "dopo": 0.24,
+   "vol": 0.3
+  },
+  {
+   "file": "fruscio.mp3",
+   "riga": 11,
+   "dopo": 0.28,
+   "dur": 2.8,
+   "vol": 0.08,
+   "sfuma": 0.12
+  },
+  {
+   "file": "respiro_bimbo.mp3",
+   "riga": 11,
+   "da": 0.5,
+   "dur": 3.05,
+   "vol": 0.2,
+   "sfuma": 0.3
+  },
+  {
+   "file": "pendolo.mp3",
+   "riga": 12,
+   "dur": 2.4499999999999997,
+   "vol": 0.34,
+   "sfuma": 0.15
+  },
+  {
+   "file": "heart60.mp3",
+   "riga": 12,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.3,
+    1
+   ],
+   "vol": 0.45,
+   "sfuma": 0.4
+  },
+  {
+   "file": "colpo.mp3",
+   "riga": 13,
+   "vol": 0.6
+  },
+  {
+   "file": "rise_long.mp3",
+   "riga": 13,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.2,
+    1
+   ],
+   "vol": 0.22,
+   "sfuma": 0.3
+  }
+ ]
+}

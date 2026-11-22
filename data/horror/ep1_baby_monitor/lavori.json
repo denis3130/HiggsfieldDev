@@ -1,0 +1,74 @@
+[
+ {
+  "out": "data/horror/ep1_baby_monitor/img/s01_monitor_tavolo.png",
+  "prompt": "extreme close-up of a vintage ivory plastic baby monitor handset, walkie-talkie shape with a short stubby antenna, a small square dim green screen above a round speaker grille, standing upright on a dark wooden side table, the front of the device facing the camera, pitch-black living room behind, the only light is the faint green glow of the small screen, cinematic thriller film still, shot on 35mm anamorphic lens, moonless November night in an old villa on Lake Como, low-key lighting, deep black shadows, cold teal-green tones, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 71,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_baby_monitor/img/s05_monitor_mano.png",
+  "prompt": "first-person view of a left hand in a mustard-yellow ribbed knit sweater sleeve holding up a vintage ivory plastic baby monitor handset, walkie-talkie shape with a short stubby antenna, a small square dim green screen above a round speaker grille, dark out-of-focus living room with tall black windows behind, cinematic thriller film still, shot on 35mm anamorphic lens, moonless November night in an old villa on Lake Como, low-key lighting, deep black shadows, cold teal-green tones, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 75,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_baby_monitor/img/s06_culla.png",
+  "prompt": "black and white infrared night-vision baby monitor camera image, grainy low-light security camera look, soft infrared glow, slightly washed out, wide-angle lens, high three-quarter angle looking down at a white wooden crib with bars against a wall, inside the crib a small toddler sleeping on his side turned away from the camera, covered up to the neck by a star-patterned blanket, only the back of his head with dark hair is visible, no face visible, beside the crib a white wall shelf with a small tower-shaped device on it, no adults in the room",
+  "w": 576,
+  "h": 1024,
+  "seed": 276,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_baby_monitor/img/s07_stanza.png",
+  "prompt": "black and white infrared night-vision baby monitor camera image, grainy low-light security camera look, soft infrared glow, slightly washed out, wide-angle lens, high angle view of an empty nursery corner at night: an empty armchair, a closed white two-door wardrobe, heavy closed curtains, a small framed picture on the wall, nobody in the room",
+  "w": 576,
+  "h": 1024,
+  "seed": 77,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_baby_monitor/img/scala_flux.png",
+  "prompt": "low-angle view from a black-and-white checkered marble floor looking up a dark wooden staircase with a red carpet runner rising into darkness, at the top a closed white door with a thin line of warm amber light glowing under it, no people, cinematic thriller film still, shot on 35mm anamorphic lens, moonless November night in an old villa on Lake Como, low-key lighting, deep black shadows, cold teal-green tones, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 74,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_baby_monitor/img/s02_villa.png",
+  "prompt": "extreme wide shot from water level of a lone three-storey 19th-century Italian villa on a rocky spur on a lake at night, ochre plaster walls, dark green shutters, three tall warmly lit French windows on the ground floor, all other windows dark, a black stone boathouse arch at the waterline beneath the house, patches of fog over black water, tiny orange lights on the far shore, dark mountains behind, cinematic thriller film still, shot on 35mm anamorphic lens, moonless November night in an old villa on Lake Como, low-key lighting, deep black shadows, cold teal-green tones, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 72,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_baby_monitor/img/s03_viale.png",
+  "prompt": "view through a tall narrow window from inside a dark hallway at night: an empty pale gravel driveway between two rows of cypress trees, a single yellow lamp post, a closed wrought-iron gate at the far end, no cars, no people, cinematic thriller film still, shot on 35mm anamorphic lens, moonless November night in an old villa on Lake Como, low-key lighting, deep black shadows, cold teal-green tones, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 73,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_baby_monitor/img/s10_led_spenti.png",
+  "prompt": "macro shot of the lower front of a vintage ivory plastic baby monitor handset: a round speaker grille and a row of five small round unlit LED lenses, slightly yellowed plastic, dust in the grille, almost total darkness, faint green rim light, cinematic thriller film still, shot on 35mm anamorphic lens, moonless November night in an old villa on Lake Como, low-key lighting, deep black shadows, cold teal-green tones, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 79,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_baby_monitor/img/sB_tasto.png",
+  "prompt": "macro shot of a thumb resting on a round grey button on the front of a vintage ivory plastic baby monitor handset, mustard-yellow knit sleeve at the edge of the frame, dim green glow, black background, cinematic thriller film still, shot on 35mm anamorphic lens, moonless November night in an old villa on Lake Como, low-key lighting, deep black shadows, cold teal-green tones, shallow depth of field, subtle film grain, photorealistic",
+  "w": 576,
+  "h": 1024,
+  "seed": 78,
+  "steps": 4
+ }
+]

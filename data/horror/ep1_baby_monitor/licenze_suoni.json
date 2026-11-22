@@ -1,0 +1,58 @@
+{
+ "nota": "Suoni di questo episodio: registrazioni vere CC0 da Freesound, trovate con l'API di Openverse. Per la scheda finale e l'ambiente scuro si usano i suoni comuni di scripts/bivio/sfx/ (colpo, rise_long, heart60, amb_slow, legno: licenze in scripts/bivio/sfx/licenze_suoni.json). Nessun suono sintetico, nessuna musica.",
+ "sfx/ninna.mp3": {
+  "titolo": "woman humming",
+  "autore": "PSsoundproject",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/PSsoundproject/sounds/183565",
+  "nota": "i primi 18,3 secondi ripetuti tre volte, filtrati (380–3000 Hz) come dal piccolo altoparlante del monitor"
+ },
+ "sfx/fruscio.mp3": {
+  "titolo": "Radio Static 2",
+  "autore": "Cloud-10",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Cloud-10/sounds/545962",
+  "nota": "ritaglio di 30 secondi (da 0:05), tolte le frequenze basse"
+ },
+ "sfx/pendolo.mp3": {
+  "titolo": "Old clock tick-tock",
+  "autore": "Duasun",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Duasun/sounds/323626"
+ },
+ "sfx/lago.mp3": {
+  "titolo": "Gentle waves on a lake",
+  "autore": "TheFlyFishingFilmmaker",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/TheFlyFishingFilmmaker/sounds/614299",
+  "nota": "ritaglio di 12 secondi (da 0:26)"
+ },
+ "sfx/squillo.mp3": {
+  "titolo": "Call.wav",
+  "autore": "rosenbergo",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/rosenbergo/sounds/545321",
+  "nota": "un solo squillo di linea (da 0:04, 1 secondo)"
+ },
+ "sfx/bip.mp3": {
+  "titolo": "busy signal_europe.mp3",
+  "autore": "Felfa",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Felfa/sounds/178821",
+  "nota": "un bip di 0,3 secondi, ripetuto tre volte nel montaggio"
+ },
+ "sfx/respiro_bimbo.mp3": {
+  "titolo": "Sleeping Baby 2yo - 001.wav",
+  "autore": "Gutek",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Gutek/sounds/361149",
+  "nota": "i primi 12 secondi, tolto il rombo sotto i 120 Hz"
+ },
+ "sfx/clic.mp3": {
+  "titolo": "Switch Light 04.wav",
+  "autore": "tbrook",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/tbrook/sounds/348219",
+  "nota": "i primi 0,5 secondi"
+ }
+}
