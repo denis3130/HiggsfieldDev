@@ -9,6 +9,8 @@ Righe con "speciale": "sovrapposto" → disegna(); dentro la riga, uno o più di
   "display": {"tipo": "led" | "lcd", "testo": "03:00", "quad": [[x, y] x4 da in alto a sinistra in senso orario], "tremola": true}
   "ago":     {"perno": [x, y], "lung": px, "ang": [riposo, massimo] in gradi (0 = in su, negativo = a sinistra), "cancella": [[x, y], [x, y]], "colore": [b, g, r]}
   "targa":   {"quad": [...], "righe": ["...", "..."]}
+  "strumento": {"quad": [...], "ang": [riposo, massimo], "segue": true}   quadrante della radio ridisegnato per intero (scala senza numeri + ago)
+  "ruota":   {"centro": [x, y], "assi": [a, b], "gradi_al_s": 14}          bobina del registratore che gira piano (ellisse vista di sbieco)
 Su ogni riga (anche normale): "neve": forza 0-1, "faro": {"pos": [x, y], "r": px, "periodo": s}, "dal_nero": secondi."""
 import cv2
 import numpy as np
@@ -36,8 +38,10 @@ def _cifre(testo, larg=960, alt=360):
     """Due maschere 0-1 (segmenti accesi, tutti i segmenti) per un testo tipo «23:10», inclinate come nei display veri."""
     S = 2; W_, H_ = larg * S, alt * S
     acc = Image.new("L", (W_, H_), 0); tut = Image.new("L", (W_, H_), 0); da, dt = ImageDraw.Draw(acc), ImageDraw.Draw(tut)
-    h = H_ * 0.70; w = h * 0.52; s = h * 0.115; passo = w * 1.30; due = w * 0.62
-    tot = sum(due if c == ":" else passo for c in testo) - (passo - w); x = (W_ - tot) / 2; y = (H_ - h) / 2
+    h = H_ * 0.70; w = h * 0.52; largo = lambda w: sum(w * 0.62 if c == ":" else w * 1.30 for c in testo) - w * 0.30
+    if largo(w) > W_ * 0.84:                                                 # display quasi quadrato: le cifre si misurano sulla larghezza
+        w *= W_ * 0.84 / largo(w); h = w / 0.52
+    s = h * 0.115; passo = w * 1.30; due = w * 0.62; tot = largo(w); x = (W_ - tot) / 2; y = (H_ - h) / 2
     for c in testo:
         if c == ":":
             for cy in (y + h * 0.32, y + h * 0.68):
@@ -54,9 +58,9 @@ def _cifre(testo, larg=960, alt=360):
     return f(acc), f(tut)
 
 
-def _display(tipo, testo):
-    """Immagine BGR float 0-255 del display (960x360) e, per i LED, il suo alone."""
-    acc, tut = _cifre(testo); h, w = acc.shape
+def _display(tipo, testo, aspetto=2.67):
+    """Immagine BGR float 0-255 del display (larga 960, alta secondo l'aspetto del vetro)."""
+    acc, tut = _cifre(testo, 960, int(960 / aspetto)); h, w = acc.shape
     if tipo == "led":
         fondo = np.zeros((h, w, 3), np.float32) + np.array([7, 5, 9], np.float32)
         rosso = np.array([36, 30, 255], np.float32)
@@ -104,6 +108,11 @@ def _inviluppo(m):
 def _livello(m, t, i):
     """Volume della voce all'istante t, rapportato al massimo della riga i (così l'ago si muove bene anche con la voce lontana)."""
     e = _inviluppo(m); a = int(m.T[i]["inizio"] * 100); b = int((m.T[i + 1]["inizio"] if i + 1 < len(m.T) else m.TOT) * 100)
+    radio = [p for p in m.T[i].get("pezzi", []) if p["tipo"] == "lontana"]
+    if radio:                                                                # l'ago segue solo la voce che esce dalla radio, non il narratore
+        if not any(p["inizio"] - 0.05 <= t <= p["fine"] + 0.4 for p in radio):
+            return 0.0
+        a, b = int(min(p["inizio"] for p in radio) * 100), int(max(p["fine"] for p in radio) * 100)
     mx = max(float(e[a:b].max()) if b > a else 0.0, 1e-4)
     return float(np.clip(e[min(len(e) - 1, int(t * 100))] / mx, 0, 1))
 
@@ -122,6 +131,35 @@ def _scritta(righe, larg=1200, alt=420):
     return cv2.resize(np.asarray(im), (larg, alt), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
 
 
+FW, FH, PERNO, RAG = 900, 640, (450.0, 800.0), 600.0          # quadrante «in piano»: il perno dell'ago sta sotto il bordo, come negli strumenti veri
+
+
+def _polare(ang, r):
+    a = np.radians(ang); return (PERNO[0] + r * np.sin(a), PERNO[1] - r * np.cos(a))
+
+
+def _scala():
+    """Segni fissi del quadrante (0-1): arco, tacche senza numeri, coprimozzo; e la zona rossa in fondo scala."""
+    S = 2; nero = np.zeros((FH * S, FW * S), np.uint8); rosso = np.zeros_like(nero); P = lambda q: (int(q[0] * S), int(q[1] * S))
+    arco = lambda im, a0, a1, r, sp: cv2.polylines(im, [np.int32([P(_polare(a, r)) for a in np.linspace(a0, a1, 80)])], False, 255, sp * S, cv2.LINE_AA)
+    arco(nero, -40, 18, RAG, 7); arco(rosso, 18, 40, RAG - 6, 20)
+    for k, a in enumerate(np.linspace(-40, 40, 21)):
+        lungo = k % 5 == 0
+        cv2.line(rosso if a > 18.5 else nero, P(_polare(a, RAG + 4)), P(_polare(a, RAG + (62 if lungo else 34))), 255, (9 if lungo else 5) * S, cv2.LINE_AA)
+    cv2.ellipse(nero, P((PERNO[0], FH + 30)), (170 * S, 120 * S), 0, 180, 360, 255, -1, cv2.LINE_AA)
+    f = lambda im: cv2.resize(im, (FW, FH), interpolation=cv2.INTER_AREA).astype(np.float32) / 255
+    return f(nero), f(rosso)
+
+
+def _ago_piano(ang):
+    """Ago (e la sua ombra sul fondo) nel quadrante in piano, 0-1."""
+    im = np.zeros((FH, FW), np.uint8); om = np.zeros((FH, FW), np.uint8)
+    a, b = _polare(ang, 60), _polare(ang, RAG + 22)
+    cv2.line(im, (int(a[0]), int(a[1])), (int(b[0]), int(b[1])), 255, 9, cv2.LINE_AA)
+    cv2.line(om, (int(a[0] + 12), int(a[1] + 16)), (int(b[0] + 12), int(b[1] + 16)), 255, 11, cv2.LINE_AA)
+    return im.astype(np.float32) / 255, cv2.GaussianBlur(om, (0, 0), 7).astype(np.float32) / 255
+
+
 def _base(r, m):
     """Immagine ingrandita della riga con le parti fisse già disegnate (ago vecchio cancellato, scritta della targhetta)."""
     ch = ("base", r["id"])
@@ -135,6 +173,19 @@ def _base(r, m):
             cv2.line(mk, a, b, 255, int(r["ago"].get("largo", 5) * K))
         x0, y0, x1, y1 = _riquadro(np.float32(pts), 40, dim)
         big[y0:y1, x0:x1] = cv2.inpaint(big[y0:y1, x0:x1], mk[y0:y1, x0:x1], 7, cv2.INPAINT_TELEA)
+    if r.get("strumento"):                                                   # via numeri, tacche e ago generati: resta il fondo ambrato con la sua luce
+        q = _quad(r["strumento"]["quad"]); x0, y0, x1, y1 = _riquadro(q, 40, dim); roi = big[y0:y1, x0:x1]
+        rk = int(r["strumento"].get("pulisci", 26) * K)
+        liscio = cv2.GaussianBlur(cv2.morphologyEx(roi, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * rk + 1, 2 * rk + 1))), (0, 0), 5 * K).astype(np.float32)
+        mk = np.zeros(big.shape[:2], np.uint8); cv2.fillPoly(mk, [np.int32(_quad(r["strumento"].get("bordo", r["strumento"]["quad"])))], 255, cv2.LINE_AA)   # "bordo": contorno del vetrino, se non è un quadrilatero
+        mk = cv2.GaussianBlur(cv2.erode(mk, np.ones((5, 5), np.uint8)), (0, 0), 1.5 * K)[y0:y1, x0:x1, None].astype(np.float32) / 255
+        nero, rosso = _scala(); sf_ = r["strumento"].get("sfoca", 0.9) * K
+        n_, _ = _stendi(nero, q, dim); r_, _ = _stendi(rosso, q, dim)
+        n_ = cv2.GaussianBlur(n_, (0, 0), sf_)[y0:y1, x0:x1, None]; r_ = cv2.GaussianBlur(r_, (0, 0), sf_)[y0:y1, x0:x1, None]
+        z = roi.astype(np.float32) * (1 - mk) + liscio * mk
+        z = z * (1 - 0.90 * n_ * mk) * (1 - r_ * mk * np.array([0.88, 0.86, 0.38], np.float32))        # i segni scuriscono il fondo; la zona rossa resta rossa
+        big[y0:y1, x0:x1] = np.clip(z, 0, 255).astype(np.uint8)
+        _mem[("strum", r["id"])] = (cv2.getPerspectiveTransform(np.float32([[0, 0], [FW, 0], [FW, FH], [0, FH]]), q - np.float32([x0, y0])), mk, (x0, y0, x1, y1), sf_)
     if r.get("targa"):
         q = _quad(r["targa"]["quad"]); tx = _scritta(r["targa"]["righe"])
         inc, _ = _stendi(tx, q, dim); luce, _ = _stendi(np.roll(tx, 2, axis=0), q, dim)
@@ -151,11 +202,10 @@ def _componi(r, tau, t, m, i):
     if r.get("display"):
         d = r["display"]; ch = ("disp", r["id"])
         if ch not in _mem:
-            q = _quad(d["quad"]); tex = _display(d["tipo"], d["testo"]); lay, mk = _stendi(tex, q, dim)
-            x0, y0, x1, y1 = _riquadro(q, 60 if d["tipo"] == "led" else 6, dim)
-            alone = None
-            if d["tipo"] == "led":                                            # la luce rossa esce un po' dal vetro
-                alone = cv2.GaussianBlur(lay[y0:y1, x0:x1], (0, 0), 22) * 0.35 * (1 - mk[y0:y1, x0:x1, None])
+            q = _quad(d["quad"]); n = lambda a, b: float(np.linalg.norm(q[a] - q[b]))
+            tex = _display(d["tipo"], d["testo"], (n(0, 1) + n(3, 2)) / (n(0, 3) + n(1, 2))); lay, mk = _stendi(tex, q, dim)
+            x0, y0, x1, y1 = _riquadro(q, 60, dim)                            # la luce del display esce un po' dal vetro (rossa per i LED, verde per i cristalli liquidi)
+            alone = cv2.GaussianBlur(lay[y0:y1, x0:x1], (0, 0), 22) * (0.35 if d["tipo"] == "led" else 0.16) * (1 - mk[y0:y1, x0:x1, None])
             _mem[ch] = (lay[y0:y1, x0:x1].copy(), mk[y0:y1, x0:x1, None].copy(), alone, (x0, y0, x1, y1))
         lay, mk, alone, (x0, y0, x1, y1) = _mem[ch]
         f = 1.0
@@ -165,6 +215,26 @@ def _componi(r, tau, t, m, i):
         z = big[y0:y1, x0:x1].astype(np.float32) * (1 - mk) + lay * f * mk
         if alone is not None:
             z += alone * f
+        big[y0:y1, x0:x1] = np.clip(z, 0, 255).astype(np.uint8)
+    if r.get("ruota"):
+        ru = r["ruota"]; cx, cy = ru["centro"][0] * K, ru["centro"][1] * K; ax, ay = ru["assi"][0] * K, ru["assi"][1] * K
+        x0, y0, x1, y1 = _riquadro(np.float32([[cx - ax, cy - ay], [cx + ax, cy + ay]]), 6, dim); roi = big[y0:y1, x0:x1]
+        th = np.radians(ru.get("gradi_al_s", 14) * tau); c, s_ = np.cos(th), np.sin(th); e = ay / ax
+        A = np.array([[c, -s_ / e], [s_ * e, c]], np.float64)                  # rotazione nel piano della bobina: si allarga a cerchio, si ruota, si restringe
+        ox, oy = cx - x0, cy - y0; M2 = np.hstack([A, [[ox - A[0, 0] * ox - A[0, 1] * oy], [oy - A[1, 0] * ox - A[1, 1] * oy]]]).astype(np.float32)
+        gir = cv2.warpAffine(roi, M2, (roi.shape[1], roi.shape[0]), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+        yy, xx = np.mgrid[0:roi.shape[0], 0:roi.shape[1]].astype(np.float32)
+        d = np.sqrt(((xx - ox) / ax) ** 2 + ((yy - oy) / ay) ** 2); mk_ = np.clip((ru.get("fin", 0.97) - d) / 0.03, 0, 1)[..., None]
+        big[y0:y1, x0:x1] = (roi * (1 - mk_) + gir * mk_).astype(np.uint8)
+    if r.get("strumento"):
+        st = r["strumento"]; P, mk, (x0, y0, x1, y1), sf_ = _mem[("strum", r["id"])]
+        liv = _livello(m, t, i) if st.get("segue", True) else 0.0
+        g = np.random.default_rng(int(t * 30) + 13 * r["id"]); a0, a1 = st["ang"]
+        ang = a0 + (a1 - a0) * (liv ** 0.7) + 1.4 * (g.random() - 0.5) * (0.25 + liv)
+        ago, ombra = _ago_piano(ang); dimr = (x1 - x0, y1 - y0)
+        ago = cv2.GaussianBlur(cv2.warpPerspective(ago, P, dimr, flags=cv2.INTER_AREA), (0, 0), sf_)[..., None]
+        ombra = cv2.warpPerspective(ombra, P, dimr, flags=cv2.INTER_AREA)[..., None]
+        z = big[y0:y1, x0:x1].astype(np.float32) * (1 - 0.30 * ombra * mk) * (1 - 0.93 * ago * mk)
         big[y0:y1, x0:x1] = np.clip(z, 0, 255).astype(np.uint8)
     if r.get("ago"):
         a = r["ago"]; liv = _livello(m, t, i)
