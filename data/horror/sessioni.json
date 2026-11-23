@@ -2,7 +2,11 @@
  "nota": "Sessioni separate (Fable 5.2, impegno max) create il 22/11: una storia ciascuna, formato in data/horror/FORMATO_STORIA.md. Ogni sessione salva in data/horror/storie/ e fa push sul proprio branch.",
  "01_la_voce_nel_bosco": {
   "sessione": "session_014XUVKvtzkFcKyxGyCFgvZJ (questa)",
-  "branch": "claude/gta6-auto-clipping-system-p29knx"
+  "branch": "claude/gta6-auto-clipping-system-p29knx",
+  "video": {
+   "sessione": "questa",
+   "stato": "video consegnato il 22/11 (versione 2: voce Chatterbox, finale con le carte A/B)"
+  }
  },
  "02_nono_piano": {
   "sessione": "session_014XUVKscC89zAzvT5efyTwo",
@@ -19,7 +23,7 @@
   "video": {
    "sessione": "session_014XUVKvjH6eEEpiBcpQ8yjy",
    "modello": "claude-opus-5-5",
-   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+   "stato": "video consegnato il 23/11 (entro le 07:54 UTC)"
   }
  },
  "04_reparto_7": {
@@ -28,7 +32,7 @@
   "video": {
    "sessione": "session_014XUVKtwXyvBR4oZftZPmuf",
    "modello": "claude-opus-5-5",
-   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+   "stato": "video consegnato il 23/11 (entro le 07:54 UTC)"
   }
  },
  "05_uscita_13": {
@@ -37,7 +41,7 @@
   "video": {
    "sessione": "session_014XUVKwFPqgmTf5rxKx1QbX",
    "modello": "claude-opus-5-5",
-   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+   "stato": "video consegnato il 23/11 (entro le 07:54 UTC)"
   }
  },
  "06_paese_che_dorme": {
@@ -46,7 +50,7 @@
   "video": {
    "sessione": "session_014XUVKurdb8Gf4uRTUjzUJq",
    "modello": "claude-opus-5-5",
-   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+   "stato": "video consegnato il 23/11 (entro le 07:54 UTC)"
   }
  },
  "07_baby_monitor": {
@@ -64,7 +68,7 @@
   "video": {
    "sessione": "session_014XUVKt6G5pFSaoVQDAyUXr",
    "modello": "claude-opus-5-5",
-   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+   "stato": "video consegnato il 23/11 (entro le 07:54 UTC)"
   }
  },
  "09_segnale": {
@@ -73,7 +77,7 @@
   "video": {
    "sessione": "session_014XUVKvcRbf4MjJW6uJTE9a",
    "modello": "claude-opus-5-5",
-   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+   "stato": "video consegnato il 23/11 (entro le 07:54 UTC)"
   }
  },
  "10_casa_della_nonna": {
@@ -82,7 +86,7 @@
   "video": {
    "sessione": "session_014XUVKtdCuyGo9wViY3JpGf",
    "modello": "claude-opus-5-5",
-   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+   "stato": "video consegnato il 23/11 (entro le 07:54 UTC)"
   }
  },
  "11_il_traghetto": {
@@ -91,9 +95,9 @@
   "video": {
    "sessione": "session_014XUVKwANxcKRkLTerxhK3y",
    "modello": "claude-opus-5-5",
-   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+   "stato": "video consegnato il 23/11 (entro le 07:54 UTC)"
   }
  },
- "nota_video": "Dal 22/11 sera ogni sessione produce anche il video dell'Episodio 1 della propria storia con scripts/bivio/ (procedura in data/horror/PRODUZIONE.md) e lo consegna nella propria chat.",
+ "nota_video": "Al 23/11 alle 08:24 UTC tutti gli 11 Episodi 1 sono pronti, ognuno consegnato nella chat della sua sessione. Nessuno è pubblicato: l'utente sceglie le storie migliori.",
  "nota_modelli": "Il 22/11 alle 19:48–20:02 UTC le sessioni Fable si sono fermate per il limite di utilizzo di Fable. Dal 23/11, su richiesta dell'utente, tutte le sessioni usano Opus 5.5 a impegno massimo."
 }
