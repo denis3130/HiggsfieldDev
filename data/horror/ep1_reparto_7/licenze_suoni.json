@@ -1,0 +1,89 @@
+{
+ "nota": "Registrazioni vere CC0 da Freesound (trovate con Openverse). Per la scheda finale e il respiro/stoffa/gocce/ambiente scuro si usano i suoni comuni in scripts/bivio/sfx/ (licenze lì).",
+ "sfx/neon_ronzio.mp3": {
+  "titolo": "Fluorescent lamps in hospital 03.wav",
+  "autore": "Daphne_in_Wonderland",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Daphne_in_Wonderland/sounds/383484",
+  "nota": "chiuso in ciclo con una dissolvenza incrociata di 1 s"
+ },
+ "sfx/pioggia.mp3": {
+  "titolo": "Rain Window Closed",
+  "autore": "dggrunzweig",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/dggrunzweig/sounds/342901",
+  "nota": "ritaglio da 0:04 a 1:20, chiuso in ciclo"
+ },
+ "sfx/neon_trema.mp3": {
+  "titolo": "fluorescent light flickering 1.wav",
+  "autore": "TemperMode",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/TemperMode/sounds/484157"
+ },
+ "sfx/neon_scatto.mp3": {
+  "titolo": "Light switch fluorescent flickering electric bulb BANFF 190107.flac",
+  "autore": "TRP",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/TRP/sounds/574100",
+  "nota": "ritaglio di 0,7 s (da 0:00.35)"
+ },
+ "sfx/cicalino.mp3": {
+  "titolo": "Single Beep and Double Beep.wav",
+  "autore": "Takimeko",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Takimeko/sounds/627787",
+  "nota": "solo il primo bip, con un filtro e l'eco del corridoio (suona lontano)"
+ },
+ "sfx/clic.mp3": {
+  "titolo": "Button Pressed",
+  "autore": "Jofae",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Jofae/sounds/367852"
+ },
+ "sfx/gracchio.mp3": {
+  "titolo": "Walkie_Talkie_Static.aif",
+  "autore": "crcavol",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/crcavol/sounds/154654"
+ },
+ "sfx/telo.mp3": {
+  "titolo": "Wind blowing in a plastic bag, on the ground, in the desert (Chile)",
+  "autore": "felix.blume",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/felix.blume/sounds/147794",
+  "nota": "ritaglio da 0:30 a 0:50"
+ },
+ "sfx/passi_nudi.mp3": {
+  "titolo": "01-10 Footsteps, Tile, Male Barefoot, Slow Pace.wav",
+  "autore": "SpliceSound",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/SpliceSound/sounds/197403"
+ },
+ "sfx/ruota.mp3": {
+  "titolo": "Foley_Mechanism_Wheel_Small_Rusty_Loop_Mono.wav",
+  "autore": "Nox_Sound",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Nox_Sound/sounds/559469",
+  "nota": "il ciclo ripetuto tre volte"
+ },
+ "sfx/carrello.mp3": {
+  "titolo": "G50-03-Trolley Squeak and Rumbling.wav",
+  "autore": "craigsmith",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/craigsmith/sounds/437594",
+  "nota": "ritaglio da 0:03.5"
+ },
+ "sfx/porta.mp3": {
+  "titolo": "05 - Swing doors",
+  "autore": "14GSionJ",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/14GSionJ/sounds/419387",
+  "nota": "primi 2 secondi"
+ },
+ "sfx/zoccoli.mp3": {
+  "titolo": "Clogs.m4a",
+  "autore": "Linik53",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Linik53/sounds/649131"
+ }
+}
