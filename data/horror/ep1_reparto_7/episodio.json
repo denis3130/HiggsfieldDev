@@ -12,7 +12,7 @@
   },
   {
    "id": 2,
-   "voce": "Al polso hai un braccialetto. C'è scritto: Aldo Venturi.",
+   "voce": "Al polso hai un braccialetto: Aldo Venturi.",
    "img": "s02_braccialetto.png",
    "mov": "avanza",
    "etichetta": {
@@ -78,7 +78,7 @@
   },
   {
    "id": 5,
-   "voce": "Sulla pancia, una medicazione. Ti hanno operato? Non ricordi nessuna operazione.",
+   "voce": "Sulla pancia, una medicazione. Ti hanno operato? Non lo ricordi.",
    "img": "s05_medicazione_b.png",
    "mov": "scendi",
    "ritocchi": [
@@ -120,7 +120,7 @@
   {
    "id": 7,
    "voce": "",
-   "silenzio": 2.3,
+   "silenzio": 1.5,
    "img": "s07_porta.png",
    "mov": "fermo"
   },
@@ -144,7 +144,7 @@
   {
    "id": 9,
    "voce": "",
-   "silenzio": 1.0,
+   "silenzio": 0.6,
    "img": "s08_telo.png",
    "mov": "fermo"
   },
@@ -156,7 +156,7 @@
   },
   {
    "id": 11,
-   "voce": "Il corridoio è vuoto. Letti senza materassi, teli di plastica.",
+   "voce": "Il corridoio è vuoto. Teli di plastica ovunque.",
    "img": "s11_corridoio.png",
    "mov": "avanza_lento",
    "orologio": {
@@ -171,7 +171,7 @@
   },
   {
    "id": 12,
-   "voce": "Un altoparlante gracchia. Una voce di donna, calma:",
+   "voce": "Poi un altoparlante gracchia. Una voce di donna:",
    "img": "s12_altoparlante.png",
    "mov": "avanza_lento",
    "ritocchi": [
@@ -291,8 +291,8 @@
      "img": "sB_telo.png",
      "ritaglio": [
       0.5,
-      0.47,
-      0.85
+      0.42,
+      0.62
      ]
     }
    },
@@ -336,7 +336,7 @@
    "parola": "neon",
    "dopo": -0.1,
    "da": 0.55,
-   "dur": 1.7,
+   "dur": 1.25,
    "vol": 0.4,
    "luce": 0.45
   },
@@ -350,7 +350,7 @@
    "file": "neon_scatto.mp3",
    "riga": 3,
    "parola": "nome",
-   "dopo": 0.45,
+   "dopo": 0.2,
    "dur": 0.7,
    "vol": 0.4,
    "luce": 0.35
@@ -375,16 +375,19 @@
    "riga": 5,
    "da": 4.0,
    "dur": 1.8,
-   "vol": 0.22
+   "vol": 0.22,
+   "parola": "operato",
+   "dopo": 0.0
   },
   {
    "file": "neon_trema.mp3",
    "riga": 5,
-   "parola": "ricordi",
+   "parola": "operato",
    "da": 3.3,
-   "dur": 1.9,
+   "dur": 1.8,
    "vol": 0.45,
-   "luce": 0.06
+   "luce": 0.06,
+   "dopo": 0.3
   },
   {
    "file": "clic.mp3",
@@ -403,7 +406,7 @@
   {
    "file": "cicalino.mp3",
    "riga": 7,
-   "dopo": 0.15,
+   "dopo": 0.1,
    "vol": 0.2
   },
   {
@@ -411,12 +414,6 @@
    "riga": 7,
    "dopo": 0.85,
    "vol": 0.18
-  },
-  {
-   "file": "cicalino.mp3",
-   "riga": 7,
-   "dopo": 1.55,
-   "vol": 0.16
   },
   {
    "file": "telo.mp3",
@@ -450,7 +447,7 @@
   {
    "file": "telo.mp3",
    "riga": 11,
-   "parola": "teli",
+   "parola": "Teli",
    "dopo": -0.3,
    "da": 5.0,
    "dur": 3.2,

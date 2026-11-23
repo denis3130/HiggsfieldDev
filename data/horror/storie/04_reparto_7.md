@@ -17,7 +17,7 @@
 
 **Indizi** (tutti visibili prima del colpo di scena)
 
-1. Ep. 1, inq. 9 — accanto ai tuoi piedi nudi, sotto il letto, non ci sono pantofole da paziente ma zoccoli bianchi da corsia (solo immagine).
+1. Ep. 1, inq. 10 — accanto ai tuoi piedi nudi, sotto il letto, non ci sono pantofole da paziente ma zoccoli bianchi da corsia (solo immagine).
 2. Ep. 1 e 5 — la voce parla sempre del «dottore» che deve arrivare, ma nel reparto non compare mai nessun dottore: ci sei solo tu.
 3. Ep. 2, aperture — la sagoma in verde non ti sveglia e non ti cerca: lascia una cartella e se ne va. Vuole che tu legga.
 4. Ep. 2, comune, inq. 6 — sfili la flebo «con un gesto preciso, come se l'avessi fatto mille volte».
@@ -78,44 +78,48 @@
 **Titolo YouTube:** Ti svegli in ospedale col nome di un altro | Reparto 7 · Ep. 1 #horror #storiehorror #shorts
 
 Ambiente di fondo per tutto l'episodio: ronzio dei neon, pioggia leggera sui vetri, un gocciolio lontano. Ore 02:10.
+(Testo aggiornato il 23/11 durante la produzione per stare sotto i 60 secondi: 120 parole con il bivio nella forma nuova; montaggio in `data/horror/ep1_reparto_7/`.)
 
 | # | Voce | Si vede | Suono |
 |---|---|---|---|
-| 1 | Ti svegli di notte in un letto d'ospedale. Sopra di te, un neon trema. | Soggettiva dal letto: le palpebre si aprono (vignetta nera che si allarga) sul soffitto crema, un neon a tubo trema e sfarfalla. La camera ondeggia appena. Luce fredda verde-acqua. | Respiro che si sveglia, ronzio e ticchettio del neon che sfarfalla, pioggia sui vetri. |
-| 2 | Al polso hai un braccialetto. C'è scritto: Aldo Venturi. | Soggettiva: il polso sinistro si alza davanti agli occhi, braccialetto di plastica bianca. Dettaglio ravvicinato, luce del neon dall'alto. TESTO A SCHERMO sul braccialetto: «VENTURI ALDO — 12/03/1951 — REP. 7 — LETTO 12». | Fruscio delle lenzuola, plastica del braccialetto che scricchiola. |
-| 3 | Non è il tuo nome. | Primissimo piano: il pollice dell'altra mano sfrega la stampa del nome, come per cancellarla. Sfondo sfocato. Lento avanzamento. | Sfregamento del dito sulla plastica. Il neon ha uno scatto. |
-| 4 | Nel braccio, una flebo. Sulla pancia, una medicazione. | Soggettiva verso il basso: avambraccio destro con ago-cannula e cerotto, il tubicino sale verso la sacca. La camera scende: la mano solleva il camice azzurro e scopre una medicazione quadrata bianca. | Goccia della flebo, stoffa che si solleva. |
-| 5 | Ti hanno operato? Tu non ricordi nessuna operazione. | Dettaglio della medicazione: le dita restano sospese sopra, senza toccarla. La luce trema e per un istante è buio. | Respiro trattenuto, ronzio del neon che cala e riprende. |
-| 6 | Premi il campanello. Sopra la porta si accende una luce rossa. | Dettaglio del pollice che preme il pulsante bianco di chiamata. Cambio di fuoco sulla porta della stanza: sopra lo stipite si accende una lucina rossa. | Clic del pulsante. Nel corridoio, lontano, il cicalino di chiamata. |
-| 7 | — | Inquadratura fissa e lunga: la porta aperta, il corridoio buio, il riflesso rosso sul linoleum lucido. Non si muove niente. | Il cicalino suona tre volte, lontano. Poi niente: nessun passo. |
-| 8 | Suona a vuoto. Gridi: C'È QUALCUNO? AIUTO! | Soggettiva verso la porta: la camera trema con il grido. In corridoio un telo di nylon si muove appena. | Il grido rimbomba nel corridoio vuoto, eco lunga. Poi silenzio totale per un secondo. |
-| 9 | Ti alzi, aggrappato all'asta della flebo. | Dal basso, a filo del pavimento: i piedi nudi toccano il linoleum accanto a un paio di zoccoli bianchi da corsia rimasti sotto il letto. La mano stringe l'asta cromata, le ruote si muovono. | Piedi nudi sul linoleum freddo, cigolio delle rotelle dell'asta, la sacca che dondola. |
-| 10 | Il corridoio è vuoto. Letti senza materassi, teli di plastica. | Soggettiva dalla soglia: il corridoio lungo e stretto, un neon che trema, letti senza materassi contro il muro, teli di nylon che respirano, il grande «7» verde sulla parete. In fondo, sopra la guardiola, l'orologio a cifre rosse: TESTO A SCHERMO «02:10». Lento avanzamento. | Nylon che fruscia nella corrente d'aria, gocciolio lontano, ronzio dei neon. |
-| 11 | Poi un altoparlante gracchia. Una voce di donna, calma: | Dal basso: la griglia di un altoparlante sul soffitto, polvere nella luce. Dietro, sfocata, una luce rossa di chiamata. | Scarica elettrica, fruscio di un interfono che si accende. |
-| 12 | «Signor Venturi, torni a letto. Il dottore sta arrivando.» | Campo lungo, simmetrico, da dietro: la tua sagoma piccola in mezzo al corridoio, camice azzurro, asta della flebo, sotto l'altoparlante. Il neon sopra di te trema. | La voce esce metallica dall'interfono, con un lieve riverbero. Clic di chiusura. |
-| 13 | In fondo al corridoio si apre una porta. Ruote che cigolano. Vengono verso di te. | Campo lungo verso il fondo: la porta a due ante con gli oblò si apre, una lama di luce bianca sul pavimento, l'ombra lunga di qualcosa su ruote. Zoom lento in avanti. | Porta che si apre con un soffio, ruote di carrello che cigolano e si avvicinano, passi lenti di zoccoli. |
-| 14 | Cosa fai? A: torni a letto. B: ti nascondi. Scrivilo nei commenti. | Scheda di scelta divisa in due metà (Immagine A / Immagine B) con le scritte A e B. | Un solo rintocco del cicalino, poi il cigolio delle ruote che continua sotto. |
+| 1 | Ti svegli in un letto d'ospedale. Sopra di te, un neon trema. | Soggettiva dal letto: le palpebre si aprono sul soffitto crema, un neon a tubo trema e sfarfalla (la luce cala dove il suono del neon tace). Luce fredda verde-acqua. | Respiro che si sveglia, ticchettio del neon che sfarfalla, pioggia sui vetri. |
+| 2 | Al polso hai un braccialetto: Aldo Venturi. | Soggettiva: il polso sinistro alzato davanti agli occhi, fascia di plastica bianca. TESTO A SCHERMO stampato sulla fascia: «VENTURI ALDO» / «12/03/1951 · REP. 7 · LETTO 12». Lento avanzamento. | Fruscio delle lenzuola. |
+| 3 | Non è il tuo nome. | Stacco ravvicinato sulla stampa: «VENTURI ALDO» riempie lo schermo. Il neon ha uno scatto e la luce cala per un attimo. | Scatto del neon. |
+| 4 | Nel braccio, una flebo. | Dettaglio: l'avambraccio destro sulla coperta, l'ago-cannula fissato col cerotto, il tubicino trasparente che sale verso la sacca. | Goccia della flebo. |
+| 5 | Sulla pancia, una medicazione. Ti hanno operato? Non lo ricordi. | Dettaglio della medicazione quadrata bianca sulla pancia: le dita restano sospese sopra, senza toccarla. La luce trema e per un istante è buio. | Stoffa che si solleva, respiro trattenuto, il neon che si spegne e si riaccende. |
+| 6 | Premi il campanello. Sopra la porta, una luce rossa. | Dettaglio del pollice sul pulsante bianco di chiamata col filo a spirale. Sullo sfondo, sopra la porta, la spia è spenta e si accende rossa sulla parola «luce». | Clic del pulsante. Nel corridoio, lontano, il cicalino di chiamata. |
+| 7 | — | Inquadratura fissa e lunga dal letto: la porta aperta, il corridoio buio, il riflesso rosso sul linoleum lucido. Non si muove niente. | Il cicalino suona ancora, lontano (tre volte in tutto). Poi niente: nessun passo. |
+| 8 | Suona a vuoto. Gridi: C'È QUALCUNO? AIUTO! | Soggettiva dal letto verso la porta: oltre la soglia, un telo di nylon appeso. La camera trema con il grido. | Il grido nel corridoio vuoto; il telo che fruscia appena. |
+| 9 | — | La stessa soggettiva, ferma. | Silenzio totale per un secondo. |
+| 10 | Ti alzi, aggrappato all'asta della flebo. | Soggettiva verso il basso: la mano stringe l'asta cromata, i piedi nudi toccano il linoleum accanto a un paio di zoccoli bianchi da corsia rimasti sotto il letto. | Piedi nudi sul linoleum freddo, cigolio delle rotelle dell'asta. |
+| 11 | Il corridoio è vuoto. Teli di plastica ovunque. | Soggettiva dalla soglia: il corridoio lungo e stretto, reti di letti contro i muri, teli appesi. In fondo, davanti alla finestra, l'orologio a cifre rosse disegnato in montaggio: TESTO A SCHERMO «02:10». Lento avanzamento. | Nylon che fruscia nella corrente d'aria, gocciolio lontano, ronzio dei neon. |
+| 12 | Poi un altoparlante gracchia. Una voce di donna: | Dal basso: la griglia rotonda di un altoparlante sul soffitto, polvere e una ragnatela nella luce. In fondo, sfocate, le luci rosse del corridoio. | Scarica elettrica di un interfono che si accende. |
+| 13 | «Signor Venturi, torni a letto. Il dottore sta arrivando.» | Campo lungo, simmetrico, da dietro: la tua sagoma in camice azzurro in mezzo al corridoio, sotto l'altoparlante. Il neon sopra di te trema. | La voce (detta dal narratore) esce ovattata dall'interfono, con il fruscio della linea. Clic di chiusura. |
+| 14 | In fondo si apre una porta. Ruote che cigolano. Vengono verso di te. | Campo lungo verso la porta a due ante con gli oblò: sulla parola «porta» gli oblò si illuminano e una lama di luce bianca si apre sul pavimento, con l'ombra lunga di un carrello su ruote. Avanzamento lento. | Porta a vento che si apre, ruote che cigolano e si avvicinano, passi lenti di zoccoli, il cuore che sale. |
+| 15 | Cosa fai? La A: torni a letto e fingi di dormire. Oppure la B: ti nascondi dietro un telo. Scrivilo nei commenti. | Scheda finale: due carte con miniatura (A oro: il letto vuoto visto dalla porta; B azzurro: il telo di nylon nel corridoio). | Colpo, un solo rintocco del cicalino, il cigolio delle ruote che continua sotto. |
 
-**Bivio:** A: torni a letto / B: ti nascondi · **Immagine A:** il letto 12 visto dalla porta, lenzuola smosse, la luce rossa accesa sopra lo stipite. **Immagine B:** il varco buio dietro un telo di nylon, nel corridoio.
+**Bivio:** Torni / a letto · Ti nascondi / dietro un telo · **Frase A:** «La A: torni a letto e fingi di dormire.» · **Frase B:** «Oppure la B: ti nascondi dietro un telo.» · **Immagine A:** il letto vuoto visto dalla porta, lenzuola smosse, la finestra con la pioggia. **Immagine B:** il telo di nylon appeso in mezzo al corridoio buio, una luce rossa in fondo.
 
-**Parole:** 123
+**Parole:** 120
 
-**Prompt immagini (inglese)** — ogni prompt finisce con lo stesso suffisso di stile: `[STILE] = vertical 9:16 cinematic film still, abandoned Italian hospital ward at night, cold teal-green fluorescent light, deep shadows, single red accent light, amber streetlight through rain-streaked windows, 35mm anamorphic lens, shallow depth of field, heavy film grain, photorealistic, tense medical thriller mood, no visible faces, no text, no letters, no watermark`
+**Prompt immagini (inglese)** — quelli usati davvero (FLUX.1-schnell in locale, 576×1024, 4 passi; seme tra parentesi). Ogni prompt finisce con lo stesso suffisso di stile: `[STILE] = vertical 9:16 cinematic film still, abandoned Italian hospital ward at night, cold teal-green fluorescent light, deep shadows, single red accent light, amber streetlight through rain-streaked windows, 35mm anamorphic lens, shallow depth of field, heavy film grain, photorealistic, tense medical thriller mood, no visible faces, no text, no letters, no watermark`
 
-1. `First-person view lying in a hospital bed looking up at a cream ceiling, one long fluorescent tube flickering, dark vignette like half-open eyelids, [STILE]`
-2. `First-person close-up of a man's left wrist raised in front of the camera, blank white plastic hospital ID wristband, pale blue patient gown sleeve, fluorescent light from above, [STILE]`
-3. `Extreme macro of a thumb rubbing a blank white plastic hospital wristband on a wrist, blurred hospital room behind, [STILE]`
-4. `First-person view looking down at a right forearm with an IV cannula fixed by white tape, thin clear tube, hand lifting a pale blue patient gown to reveal a square white gauze dressing on the abdomen, [STILE]`
-5. `Close-up of a square white gauze dressing on a man's abdomen, fingertips hovering above it without touching, light flickering, [STILE]`
-6. `Close-up of a thumb pressing a white nurse call button with a coiled cord, in the background a hospital room door with a small red call light glowing above the frame, [STILE]`
-7. `Static wide shot of an open hospital room door seen from the bed, pitch-dark empty corridor beyond, red light reflected on glossy grey linoleum floor, [STILE]`
-8. `First-person view from a hospital bed toward an open door and a dark corridor, a translucent plastic construction sheet moving slightly, slight motion blur, [STILE]`
-9. `Low angle at floor level, bare male feet stepping onto cold grey linoleum beside a pair of white hospital clogs under a bed, a hand gripping a chrome wheeled IV pole, [STILE]`
-10. `First-person view of a long narrow abandoned hospital corridor, flickering fluorescent tube, bed frames without mattresses along the wall, hanging translucent plastic sheets, a large dark green number 7 painted on the wall, [STILE]`
-11. `Low angle looking up at an old ceiling loudspeaker grille in a hospital corridor, dust floating in the light, a blurred red call light behind, [STILE]`
-12. `Symmetrical wide shot from behind of a thin man in a pale blue patient gown, bare calves, holding a wheeled IV pole, standing small in the middle of a long empty hospital corridor under a ceiling loudspeaker, [STILE]`
-13. `Long shot down a dark hospital corridor toward double doors with round porthole windows opening, a blade of white light on the floor, long shadow of a wheeled gurney, [STILE]`
-14. Scheda di scelta — A: `Empty hospital bed with rumpled sheets seen from the doorway, number plate above the headboard, red call light glowing above the door frame, [STILE]` · B: `Dark gap behind a hanging translucent plastic construction sheet in an abandoned hospital corridor, [STILE]`
+- Inq. 1 — `s01_soffitto_c.png` (seme 212): `Worm's-eye view from a hospital pillow straight up at a cream ceiling, a single long fluorescent tube light fixture overhead, the top of a chrome IV drip stand with a clear plastic bag at the edge of the frame, [STILE]`
+- Inq. 2 (e 3, stacco ravvicinato sulla stampa) — `s02_braccialetto.png` (seme 102): `First-person close-up of a man's left wrist raised in front of the camera, a blank white plastic hospital ID wristband with a wide flat white label facing the camera, pale blue patient gown sleeve, fluorescent light from above, [STILE]`
+- Inq. 4 — `s04_flebo_c.png` (seme 214): `Close-up of a pale male forearm lying on white hospital sheets, a small IV catheter taped on the forearm with a white plaster, a clear thin tube looping away, pale blue gown sleeve, [STILE]`
+- Inq. 5 (volto messo in ombra in montaggio) — `s05_medicazione_b.png` (seme 215): `Close-up of one single square white gauze dressing taped on the right side of a man's bare belly as he lies in a hospital bed, pale blue patient gown pulled up, his fingertips hovering just above the dressing without touching it, [STILE]`
+- Inq. 6 — `s06_campanello.png` (seme 106): `Close-up of a thumb pressing a white nurse call button with a coiled cord, in the background a hospital room door with a small red call light glowing above the frame, [STILE]`
+- Inq. 7 — `s07_porta.png` (seme 107): `Static wide shot of an open hospital room door seen from the bed, pitch-dark empty corridor beyond, red light reflected on glossy grey linoleum floor, [STILE]`
+- Inq. 8 e 9 — `s08_telo.png` (seme 108): `First-person view from a hospital bed toward an open door and a dark corridor, a translucent plastic construction sheet hanging in the corridor and moving slightly, [STILE]`
+- Inq. 10 — `s10_piedi_b.png` (seme 216): `First-person view looking down while sitting on the edge of a hospital bed at night, one hand with a white plastic hospital wristband gripping a chrome wheeled IV pole, bare feet touching cold grey linoleum, a pair of white hospital clogs on the floor beside the feet, dark rainy window, [STILE]`
+- Inq. 11 — `s11_corridoio.png` (seme 110): `First-person view of a long narrow abandoned hospital corridor, flickering fluorescent tube on the ceiling, bed frames without mattresses along the wall, hanging translucent plastic sheets, a nurses' station desk at the far end, [STILE]`
+- Inq. 12 — `s12_altoparlante.png` (seme 111): `Low angle looking up at an old round ceiling loudspeaker grille in a hospital corridor, dust floating in the light, a blurred red call light behind, [STILE]`
+- Inq. 13 — `s13_sagoma.png` (seme 112): `Symmetrical wide shot from behind of a thin man in a pale blue patient gown, bare calves, holding a wheeled IV pole, standing small in the middle of a long empty hospital corridor under a ceiling loudspeaker, [STILE]`
+- Inq. 14 (e sfondo della scheda) — `s14_porta_fondo.png` (seme 113): `Long shot down a dark hospital corridor toward double doors with round porthole windows opening, a blade of white light on the floor, long shadow of a wheeled gurney, [STILE]`
+- Inq. carta A — `sA_letto.png` (seme 114): `Empty hospital bed with rumpled white sheets and a pale blue blanket, seen from the open doorway of a dark hospital room, red glow of a call light spilling onto the bed, [STILE]`
+- Inq. carta B — `sB_telo.png` (seme 115): `Dark gap behind a hanging translucent plastic construction sheet in an abandoned hospital corridor, [STILE]`
+
+Scritte e luci disegnate col codice in montaggio (`data/horror/ep1_reparto_7/extra.py`): stampa del braccialetto, orologio «02:10», spia rossa che si accende, luce della porta in fondo, neon che sfarfalla col suo suono; tolte o sfocate le scritte finte generate dal modello.
 
 ## Episodio 2 — Letto dodici
 
