@@ -139,15 +139,23 @@ def manifesto(w=600, h=760):
         t = t.resize((int(t.width * stretta), t.height), Image.LANCZOS)        # lettere strette da manifesto
         im.alpha_composite(t, (int(cx * S - t.width / 2), int(y * S)))
     d.rectangle([18 * S, 18 * S, (w - 18) * S, (h - 18) * S], outline=nero, width=5 * S)
-    scritta("12 NOVEMBRE", 44, fb(74), rosso, cx=w * 0.40, sp=2)
-    # il volto di legno: ovale scuro, due fori tondi, niente bocca
-    ox, oy, rx, ry = w / 2, 330, 92, 120
-    d.ellipse([(ox - rx) * S, (oy - ry) * S, (ox + rx) * S, (oy + ry) * S], fill=nero)
-    for dx in (-36, 36):
-        d.ellipse([(ox + dx - 17) * S, (oy - 38 - 17) * S, (ox + dx + 17) * S, (oy - 38 + 17) * S], fill=(255, 255, 255, 0))
-    scritta("NOTTE", 470, fb(132), nero, stretta=0.74, sp=4)
-    scritta("DEI MUTI", 608, fb(104), nero, stretta=0.70, sp=3)
-    scritta("PIETRASONNA", 705, fm(30), rosso, cx=w * 0.33, stretta=0.85, sp=6)
+    scritta("12 NOVEMBRE", 40, fb(70), rosso, cx=w * 0.40, sp=2)
+    # un Muto, come una xilografia: cappuccio nero a punta e spalle, volto di legno chiaro (la carta), due fori, niente bocca
+    ox, oy = w / 2, 300
+    cappa = [(ox, oy - 150), (ox + 60, oy - 108), (ox + 92, oy - 20), (ox + 100, oy + 70), (ox + 168, oy + 110), (ox + 190, oy + 128),
+             (ox - 190, oy + 128), (ox - 168, oy + 110), (ox - 100, oy + 70), (ox - 92, oy - 20), (ox - 60, oy - 108)]
+    d.polygon([(x * S, y * S) for x, y in cappa], fill=nero)
+    rx, ry = 58, 78
+    d.ellipse([(ox - rx) * S, (oy - 8 - ry) * S, (ox + rx) * S, (oy - 8 + ry) * S], fill=(255, 255, 255, 0))
+    d.ellipse([(ox - rx) * S, (oy - 8 - ry) * S, (ox + rx) * S, (oy - 8 + ry) * S], outline=nero, width=4 * S)
+    for dx in (-24, 24):
+        d.ellipse([(ox + dx - 11) * S, (oy - 30 - 11) * S, (ox + dx + 11) * S, (oy - 30 + 11) * S], fill=nero)
+    for k in range(5):                                                       # venature del legno, appena accennate
+        yv = oy - 60 + 26 * k
+        d.arc([(ox - 40) * S, (yv - 6) * S, (ox + 40) * S, (yv + 6) * S], 200, 340, fill=(22, 20, 20, 110), width=2 * S)
+    scritta("NOTTE", 448, fb(124), nero, stretta=0.74, sp=4)
+    scritta("DEI MUTI", 574, fb(98), nero, stretta=0.70, sp=3)
+    scritta("PIETRASONNA", 684, fm(28), rosso, cx=w * 0.34, stretta=0.85, sp=6)
     a = np.asarray(im.resize((w, h), Image.LANCZOS)).astype(np.float32) / 255
     rgb, al = a[..., 2::-1], a[..., 3:]
     st = np.dstack([rgb * al + (1 - al), al])                                 # BGRA: bianco dove non c'è stampa
@@ -177,6 +185,21 @@ def strappa(big, quad, pts, w, h, K, fondo):
     return np.clip(b, 0, 255).astype(np.uint8)
 
 
+def spegni_lampioni(im, lampioni, K, soglia=60):
+    """Spegne i lampioni (luce bianca o azzurra) vicino ai punti dati (x, y, raggio, coordinate 576x1024): al posto della luce
+    il colore della nebbia intorno, il vetro del lampione scuro. Le lanterne rosse restano accese."""
+    B, G, R = im[..., 0], im[..., 1], im[..., 2]; lum = (B + G + R) / 3
+    yy, xx = np.mgrid[0:im.shape[0], 0:im.shape[1]].astype(np.float32) / K
+    vicino = np.clip(sum(np.exp(-((xx - x) ** 2 + (yy - y) ** 2) / (2 * r ** 2)) for x, y, r in lampioni) * 1.6, 0, 1)
+    freddo = np.clip((G - 0.62 * R) / (0.2 * R + 10), 0, 1)
+    w = np.clip((lum - soglia) / 70, 0, 1) * freddo * vicino
+    w = np.clip(cv2.GaussianBlur(w, (0, 0), 1.5 * K) * 1.25, 0, 1); wc = (1 - w) ** 2
+    bg = cv2.GaussianBlur(im * wc[..., None], (0, 0), 16 * K) / (cv2.GaussianBlur(wc, (0, 0), 16 * K)[..., None] + 1e-3)
+    det = np.clip(lum / (cv2.GaussianBlur(lum, (0, 0), 3 * K) + 2), 0.6, 1.5)[..., None] ** 0.4
+    nucleo = cv2.GaussianBlur((np.clip((lum - 185) / 40, 0, 1) * freddo * vicino), (0, 0), 1.2 * K)[..., None]
+    return im * (1 - w[..., None]) + bg * det * (1 - 0.5 * nucleo) * w[..., None]
+
+
 # ---------------------------------------------------------------- preparazione delle immagini (una volta sola)
 LETTERA = ["L'OROLOGIO", "DEL CAMPANILE", "SI FERMA SEMPRE", "ALLA STESSA ORA.", "VENGA LA SERA DEL 12.", "LA CHIAVE È", "ALLA LOCANDA."]
 BIGLIETTO = ["Qualunque cosa senti,", "non uscire."]
@@ -184,6 +207,12 @@ BIGLIETTO = ["Qualunque cosa senti,", "non uscire."]
 
 def prepara(m):
     K = m.SW / 576
+    m.MOV.setdefault("scala1", (1.0, 1.05, 0.0, 0, 0))                     # righe 13-14 sulla stessa immagine: la camera avanza
+    m.MOV.setdefault("scala2", (1.05, 1.12, 0.0, 0, 0))                     # senza stacchi verso il portone (e la scheda prosegue)
+    for r in m.righe:                                                         # immagini degli stacchi (non sono l'img di nessuna riga)
+        n = r.get("stacco", {}).get("img")
+        if n and n not in m.IMG and (m.D / "img" / n).exists():
+            m.IMG[n] = m.carica(n)
     if "s01_via.png" in m.IMG:                                                # campanile alle nove meno cinque
         big, dep = m.IMG["s01_via.png"]; quadrante(big, (292.5, 271.3), 19.5, 8, 55, K)
     if "s02_lettera.png" in m.IMG:                                            # la lettera che ti ha chiamato: stampatello tremante
@@ -203,11 +232,133 @@ def prepara(m):
         m.IMG["s04_bancone.png"] = (su_foglio(big, [(323.75, 485), (493.75, 527), (464.5, 656.25), (289.5, 613)], a, (0.16, 0.15, 0.17), K, 0.6), dep)
     if "s05_biglietto.png" in m.IMG:                                          # il biglietto da vicino: corsivo elegante, inchiostro nero
         big, dep = m.IMG["s05_biglietto.png"]; w, h = 1000, 1300
+        yy, xx = np.mgrid[0:big.shape[0], 0:big.shape[1]].astype(np.float32) / K        # il pollice senza guanto in basso a destra: in ombra
+        big = (big * (1 - 0.88 * np.exp(-(((xx - 548) / 42) ** 2 + ((yy - 728) / 52) ** 2)))[..., None]).astype(np.uint8)
         a = corsivo(BIGLIETTO, w, h, 104, [(70, 150), (300, 320)], seme=5)
         m.IMG["s05_biglietto.png"] = (su_foglio(big, [(60, 221.5), (546, 236.5), (561, 860), (124, 865)], a, (0.10, 0.10, 0.12), K, 0.9), dep)
-    for nome in ("s12_volto.png",):                                           # immagine dello stacco (non è in nessuna riga)
-        if nome not in m.IMG and (m.D / "img" / nome).exists():
-            m.IMG[nome] = m.carica(nome)
+    if "s12_volto_c.png" in m.IMG:                                            # volto di legno: tolto l'accenno di naso, resta liscio
+        big, dep = m.IMG["s12_volto_c.png"]; im = big.astype(np.float32)
+        yy, xx = np.mgrid[0:im.shape[0], 0:im.shape[1]].astype(np.float32) / K
+        mk = np.clip(1.6 - np.sqrt(((xx - 298) / 56) ** 2 + ((yy - 540) / 34) ** 2) * 1.6, 0, 1)[..., None]
+        m.IMG["s12_volto_c.png"] = ((im * (1 - mk) + np.roll(im, -int(52 * K), axis=0) * mk).astype(np.uint8), dep)
+    if "s13_sotto_b.png" in m.IMG:                                            # il Muto sotto la finestra: maschera liscia sotto il naso,
+        big, dep = m.IMG["s13_sotto_b.png"]; im = big.astype(np.float32)      # e il lumicino lontano a sinistra spento (ogni luce è spenta)
+        yy, xx = np.mgrid[0:im.shape[0], 0:im.shape[1]].astype(np.float32) / K
+        for (cx, cy, ax, ay, sg, scuro) in ((303, 437, 20, 11, 4.0, 1.0), (225, 342, 12, 12, 5.0, 0.55)):
+            mk = np.clip(1.5 - np.sqrt(((xx - cx) / ax) ** 2 + ((yy - cy) / ay) ** 2) * 1.5, 0, 1)[..., None]
+            im = im * (1 - mk) + cv2.GaussianBlur(im, (0, 0), sg * K) * scuro * mk
+        m.IMG["s13_sotto_b.png"] = (im.astype(np.uint8), dep)
+    if "s12_fila_b.png" in m.IMG:                                             # i Muti in fila: i lampioni generati vanno spenti (ogni luce è spenta)
+        big, dep = m.IMG["s12_fila_b.png"]
+        big = spegni_lampioni(big.astype(np.float32), [(150, 145, 60), (195, 274, 38), (282, 375, 34), (441, 385, 48)], K)
+        m.IMG["s12_fila_b.png"] = (np.clip(big, 0, 255).astype(np.uint8), dep)
+    if "s08_campanile.png" in m.IMG:                                          # quadrante pulito, le lancette si disegnano a ogni fotogramma
+        big, dep = m.IMG["s08_campanile.png"]; base = big.copy()
+        col = quadrante(base, OR8[0], OR8[1], 8, 59, K)
+        OROLOGIO8.update(base=base, colore=col)
+    if "s09_via_alto.png" in m.IMG:
+        prepara_via(m, K)
+
+
+# ---------------------------------------------------------------- riga 8: le lancette del campanile scattano sulle nove
+OR8 = ((290.0, 349.3), 34.5)                                                 # centro e raggio del quadrante in s08
+OROLOGIO8 = {}
+
+
+def campanile_alle_nove(fr, r, tau, u, t, m):
+    K = m.SW / 576; i = m.righe.index(r)
+    t_scatto = _inizio_parola(m, r, "nove")
+    t_scatto = (m.T[i]["inizio"] + 0.4) if t_scatto is None else t_scatto + 0.05
+    x = (t - t_scatto) / 0.16                                                # scatto con un piccolo rimbalzo, come i vecchi orologi da torre
+    salto = 0.0 if x <= 0 else 1.0 + 0.12 * math.exp(-3 * (x - 1)) * math.sin(9 * (x - 1)) if x >= 1 else x ** 2
+    ang_m = 354 + 6 * salto; ang_o = 269.5 + 0.5 * min(1.0, max(0.0, salto))
+    big = OROLOGIO8["base"].copy()
+    quadrante(big, OR8[0], OR8[1], 0, 0, K, colore=OROLOGIO8["colore"], lancette=(ang_o, ang_m))
+    return _con_immagine(m, "s08_campanile.png", big, r, u, tau)
+
+
+# ---------------------------------------------------------------- righe 9-11: la via dall'alto, le luci si spengono, poi le luci rosse
+# gruppi di luci (x, y, raggio) in s09, dal più vicino al più lontano: si spengono in quest'ordine
+GRUPPI = [(515, 880, 120), (380, 650, 95), (300, 640, 110), (222, 500, 55), (270, 497, 50), (373, 400, 26), (322, 440, 50),
+          (378, 310, 26), (260, 293, 16), (295, 325, 16)]
+VIA = {}
+
+
+def prepara_via(m, K):
+    """Versione «spenta» della via (la luce calda sostituita dal colore freddo dei dintorni) e pesi di ogni gruppo di luci."""
+    big, dep = m.IMG["s09_via_alto.png"]; im = big.astype(np.float32)
+    B, G, R = im[..., 0], im[..., 1], im[..., 2]; lum = (B + G + R) / 3
+    w = np.clip((R - B - 4) / 35, 0, 1); w = np.maximum(w, np.clip((lum - 140) / 60, 0, 1))
+    w = np.clip(cv2.GaussianBlur(w, (0, 0), 1.5 * K) * 1.3, 0, 1); wc = (1 - w) ** 2
+    bg = cv2.GaussianBlur(im * wc[..., None], (0, 0), 22 * K) / (cv2.GaussianBlur(wc, (0, 0), 22 * K)[..., None] + 1e-3)
+    det = np.clip(lum / (cv2.GaussianBlur(lum, (0, 0), 3 * K) + 2), 0.55, 1.6)[..., None] ** 0.7
+    off = im * (1 - w[..., None]) + np.minimum(bg * det * 0.92, 60) * w[..., None]
+    h4, w4 = big.shape[0] // 4, big.shape[1] // 4                            # pesi a un quarto della risoluzione (sono morbidi)
+    yy, xx = np.mgrid[0:h4, 0:w4].astype(np.float32) * (4 / K)
+    pesi = [np.exp(-2.0 * (((xx - x) ** 2 + (yy - y) ** 2) / rr ** 2)) for x, y, rr in GRUPPI]
+    VIA.update(on=im, off=off, pesi=pesi, tot=sum(pesi) + 0.03, dep=dep)
+
+
+def _righe_via(m):
+    """Indici delle tre righe sulla via (luci che si spengono, silenzio, luci rosse) e della riga dopo."""
+    v = [i for i, r in enumerate(m.righe) if r.get("effetto") == "via"]
+    return v[:3] + [v[2] + 1]
+
+
+def _camera_via(m, t):
+    """Camera continua sulle righe 9, 10 e 11 (stessa immagine): piccola salita lungo la via, attesa, poi avanza verso il fondo."""
+    i9, i10, i11, i12 = _righe_via(m); T = m.T
+    if t < T[i10]["inizio"]:
+        e = m.ease(min(1.0, max(0.0, (t - T[i9]["inizio"]) / (T[i10]["inizio"] - T[i9]["inizio"]))))
+        return 1.04 + 0.03 * e, 40 - 60 * e, 0.03 * e
+    if t < T[i11]["inizio"]:
+        u = (t - T[i10]["inizio"]) / (T[i11]["inizio"] - T[i10]["inizio"])
+        return 1.07 + 0.004 * u, -20 - 2 * u, 0.03 + 0.003 * u
+    e = m.ease(min(1.0, max(0.0, (t - T[i11]["inizio"]) / (T[i12]["inizio"] - T[i11]["inizio"]))))
+    return 1.074 + 0.12 * e, -22 + 120 * e, 0.033 + 0.04 * e
+
+
+def _spente(m, t):
+    """Quanto è spento ogni gruppo di luci all'istante t: uno dopo l'altro durante la voce della riga 9."""
+    i9 = _righe_via(m)[0]; r9 = m.T[i9]; t0 = r9["inizio"] + 0.45; t1 = r9["voce_fine"] - 0.25
+    n = len(GRUPPI); return [min(1.0, max(0.0, (t - (t0 + (t1 - t0) * k / (n - 1))) / 0.12)) for k in range(n)]
+
+
+LUCI_ROSSE = [(287.0, 543.0, 0.0), (300.0, 563.0, 2.1), (314.0, 587.0, 4.0)]   # in fila in fondo alla via (x, y, fase)
+
+
+def _luci_rosse(img, m, t, K):
+    """Tre lanterne rosse basse che escono dalla nebbia in fondo alla via e ondeggiano; riflesso sul selciato bagnato."""
+    i11 = _righe_via(m)[2]; t11 = m.T[i11]["inizio"]
+    if t < t11:
+        return img
+    tau = t - t11; comp = min(1.0, tau / 1.4) ** 1.5; avanti = 0.6 * tau   # compaiono piano e scendono la via verso di te
+    H, W = img.shape[:2]; out = img
+    for x, y, fase in LUCI_ROSSE:
+        dx = 1.3 * math.sin(2 * math.pi * tau / 1.15 + fase); dy = 0.5 * abs(math.sin(2 * math.pi * tau / 1.15 + fase)) + avanti * 2
+        cx, cy = (x + dx) * K, (y + dy) * K
+        tr = 0.85 + 0.15 * math.sin(2 * math.pi * 5.3 * tau + fase * 3) * math.sin(2 * math.pi * 1.7 * tau + fase)
+        x0, x1 = int(max(0, cx - 70 * K)), int(min(W, cx + 70 * K)); y0, y1 = int(max(0, cy - 60 * K)), int(min(H, cy + 90 * K))
+        yy, xx = np.mgrid[y0:y1, x0:x1].astype(np.float32); d2 = (xx - cx) ** 2 + (yy - cy) ** 2
+        nucleo = np.exp(-d2 / (2 * (1.3 * K) ** 2)); alone = np.exp(-d2 / (2 * (4.8 * K) ** 2)); nebbia = np.exp(-d2 / (2 * (22 * K) ** 2))
+        riflesso = np.exp(-((xx - cx) ** 2 / (2 * (2.6 * K) ** 2) + (yy - cy - 15 * K) ** 2 / (2 * (9 * K) ** 2)))
+        luce = (nucleo[..., None] * np.float32([150, 175, 255]) + alone[..., None] * np.float32([25, 30, 210]) * 0.85
+                + nebbia[..., None] * np.float32([12, 12, 95]) * 0.32 + riflesso[..., None] * np.float32([10, 14, 150]) * 0.40)
+        out[y0:y1, x0:x1] += luce * comp * tr
+    return out
+
+
+def via(fr, r, tau, u, t, m):
+    """Righe 9, 10, 11: la stessa via dall'alto con camera continua; le luci si spengono, silenzio, poi le luci rosse."""
+    K = m.SW / 576; sp = _spente(m, t)
+    f = sum(s * p for s, p in zip(sp, VIA["pesi"])) + (0.03 if min(sp) >= 1 else 0.0)
+    f = cv2.resize(f / VIA["tot"], (m.SW, m.SH), interpolation=cv2.INTER_LINEAR)[..., None]
+    img = VIA["on"] + (VIA["off"] - VIA["on"]) * f
+    img = _luci_rosse(img, m, t, K)
+    z, py, kd = _camera_via(m, t)
+    k = (m.SW / m.W) / (m.M * z); dd = VIA["dep"] - 0.5
+    mx = m.SW / 2 + m.GX * k * (1 - kd * dd); my = m.SH / 2 + m.GY * k * (1 - kd * dd) + py
+    return cv2.remap(img, mx.astype(np.float32), my.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
 
 
 _m = sys.modules.get("__main__")
@@ -241,18 +392,18 @@ def _inizio_parola(m, r, parola):
 
 
 def dopo(fr, r, tau, u, t, m):
-    rid = r["id"]
-    if rid in (6, 7):                                                         # il fuoco della stufa trema
+    eff = r.get("effetto")
+    if eff == "fuoco":                                                        # il fuoco della stufa trema
         fr = fr * (1 + _tremolio(t, 0.16) * _caldo(fr)) * (1 + _tremolio(t, 0.02, 4.0))
-    if rid == 14:                                                             # il lume trema
+    if eff == "lume":                                                         # il lume trema
         fr = fr * (1 + _tremolio(t, 0.22, 1.7) * _caldo(fr)) * (1 + _tremolio(t, 0.04, 0.4))
     if r.get("stacco"):                                                       # stacco stretto sul volto di legno
         st = r["stacco"]; i = m.righe.index(r); t0 = _inizio_parola(m, r, st["parola"])
         if t0 is not None and t >= t0 - 0.06:
             fine = m.T[i + 1]["inizio"] if i + 1 < len(m.T) else m.TOT; t0 -= 0.06
             fr = m.muovi(st["img"], st.get("mov", "avanza"), min(1.0, (t - t0) / max(fine - t0, 1e-3)), t - t0, float(i) + 0.5)
-    if rid == 8 and "OROLOGIO8" in globals():
+    if eff == "orologio" and OROLOGIO8:
         fr = campanile_alle_nove(fr, r, tau, u, t, m)
-    if rid in (9, 10) and "FINESTRE" in globals():
-        fr = finestre(fr, r, tau, u, t, m)
+    if eff == "via" and VIA:
+        fr = via(fr, r, tau, u, t, m)
     return fr

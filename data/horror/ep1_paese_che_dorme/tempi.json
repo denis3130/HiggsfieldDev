@@ -1,0 +1,225 @@
+{
+ "righe": [
+  {
+   "id": 1,
+   "inizio": 0.5,
+   "fine": 4.327,
+   "voce_fine": 4.077,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 0.5,
+     "fine": 3.957,
+     "n": 11
+    }
+   ]
+  },
+  {
+   "id": 2,
+   "inizio": 4.327,
+   "fine": 7.897,
+   "voce_fine": 7.647,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 4.327,
+     "fine": 7.527,
+     "n": 8
+    }
+   ]
+  },
+  {
+   "id": 3,
+   "inizio": 7.897,
+   "fine": 11.88,
+   "voce_fine": 11.63,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 7.897,
+     "fine": 11.51,
+     "n": 11
+    }
+   ]
+  },
+  {
+   "id": 4,
+   "inizio": 11.88,
+   "fine": 17.292,
+   "voce_fine": 17.042,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 11.88,
+     "fine": 14.434,
+     "n": 7
+    },
+    {
+     "tipo": "citazione",
+     "inizio": 14.754,
+     "fine": 16.942,
+     "n": 5
+    }
+   ]
+  },
+  {
+   "id": 5,
+   "inizio": 17.292,
+   "fine": 19.412,
+   "voce_fine": 19.162,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 17.292,
+     "fine": 19.042,
+     "n": 6
+    }
+   ]
+  },
+  {
+   "id": 6,
+   "inizio": 19.412,
+   "fine": 21.697,
+   "voce_fine": 21.447,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 19.412,
+     "fine": 21.327,
+     "n": 6
+    }
+   ]
+  },
+  {
+   "id": 7,
+   "inizio": 21.697,
+   "fine": 23.998,
+   "voce_fine": 23.748,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 21.697,
+     "fine": 23.628,
+     "n": 4
+    }
+   ]
+  },
+  {
+   "id": 8,
+   "inizio": 23.998,
+   "fine": 28.672,
+   "voce_fine": 28.422,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 23.998,
+     "fine": 28.302,
+     "n": 11
+    }
+   ]
+  },
+  {
+   "id": 9,
+   "inizio": 28.672,
+   "fine": 31.122,
+   "voce_fine": 30.872,
+   "pezzi": []
+  },
+  {
+   "id": 10,
+   "inizio": 31.122,
+   "fine": 33.741,
+   "voce_fine": 33.491,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 31.122,
+     "fine": 33.371,
+     "n": 5
+    }
+   ]
+  },
+  {
+   "id": 11,
+   "inizio": 33.741,
+   "fine": 38.722,
+   "voce_fine": 38.472,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 33.741,
+     "fine": 38.352,
+     "n": 11
+    }
+   ]
+  },
+  {
+   "id": 12,
+   "inizio": 38.722,
+   "fine": 42.421,
+   "voce_fine": 42.171,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 38.722,
+     "fine": 42.051,
+     "n": 11
+    }
+   ]
+  },
+  {
+   "id": 13,
+   "inizio": 42.421,
+   "fine": 44.854,
+   "voce_fine": 44.604,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 42.421,
+     "fine": 44.484,
+     "n": 5
+    }
+   ]
+  },
+  {
+   "id": 14,
+   "inizio": 44.854,
+   "fine": 47.304,
+   "voce_fine": 47.054,
+   "pezzi": []
+  },
+  {
+   "id": 15,
+   "inizio": 47.304,
+   "fine": 57.085,
+   "voce_fine": 56.835,
+   "pezzi": [
+    {
+     "tipo": "voce",
+     "inizio": 47.304,
+     "fine": 48.003,
+     "n": 2
+    },
+    {
+     "tipo": "a",
+     "inizio": 48.303,
+     "fine": 50.954,
+     "n": 7
+    },
+    {
+     "tipo": "b",
+     "inizio": 51.354,
+     "fine": 54.652,
+     "n": 9
+    },
+    {
+     "tipo": "chiusura",
+     "inizio": 55.052,
+     "fine": 56.635,
+     "n": 3
+    }
+   ]
+  }
+ ],
+ "totale": 59.085
+}
