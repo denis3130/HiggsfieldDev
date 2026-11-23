@@ -1,0 +1,114 @@
+[
+ {
+  "out": "data/horror/ep1_uscita_13/img/s01_cartello.png",
+  "prompt": "Driver's point of view from inside a car through a rain-streaked windshield with a small crack in the lower right corner, ahead in the center of the frame a large blank plain green Italian motorway exit sign with a white border on a pole at the roadside, lit by the headlights and emerging from the darkness, torn strips of black plastic sheeting flapping from its left edge, wet asphalt of a mountain motorway at night, the black dashboard edge at the bottom, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 101,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/s02_cartoncino.png",
+  "prompt": "Top-down close-up of the storage pocket on the inside of a car door, lit by a dim green dashboard glow, a blank white laminated card with nothing printed on it tucked in the pocket and filling the center of the frame, dark grey fabric and black plastic door panel, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 102,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/s03_volante.png",
+  "prompt": "First-person point of view looking down at the black steering wheel of an old car at night, both hands on the wheel almost hidden by the overlong sleeves of a brown corduroy jacket, the cuffs covering half of the hands, the edge of a pale sheepskin collar at the bottom of the frame, green glow of the instrument cluster, dark jeans, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 103,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/s04_biglietto.png",
+  "prompt": "Close-up of a blank yellow paper note stuck with clear tape on a black car dashboard, lit by green instrument light, raindrops on the windshield behind, in the upper part of the frame out of focus the driver's sun visor with a small printed photo of a little girl in a yellow raincoat held under a rubber band, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 104,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/s05_telefono.png",
+  "prompt": "Close-up of a black smartphone in a holder clipped to the air vent of a black car dashboard at night, its blank screen glowing with pale blue-white light and casting cold light on the dashboard, rain on the windshield behind, green instrument glow, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 105,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/s06_specchietto.png",
+  "prompt": "Close-up of a car interior rear-view mirror at night, in the mirror the reflection through the rear window of a black sedan with its headlights off following very close behind, its shape lit for an instant by a flash of lightning, raindrops on the rear window, dark car interior, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 106,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/s07_berlina_rossa.png",
+  "prompt": "Low angle from just behind the rear bumper of a grey station wagon, looking back at the front of an unlit black sedan following a few metres behind on a wet mountain motorway at night, the sedan's headlights are off, its black windshield, wet black hood and mud-caked front licence plate tinted deep red by the glow of the brake lights, rain falling, spray from the tyres, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 107,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/s09_area.png",
+  "prompt": "High wide shot looking down on a deserted Italian motorway service area at night in the rain, flooded forecourt reflecting the white neon lights of a fuel canopy, a small closed bar with its metal shutter rolled down, a lone grey early-2000s station wagon driving slowly in, nobody around, dark wooded mountains behind, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 109,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/s10_ingresso.png",
+  "prompt": "View from under a neon-lit fuel station canopy toward the dark entrance road of a motorway service area, at the edge of the light a black sedan with its headlights off stands still, its windshield completely black, heavy rain, flooded asphalt reflecting the neon, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 110,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/s11_nocche.png",
+  "prompt": "Point of view from the driver's seat looking at the fogged-up side window of a car, condensation and raindrops trickling down lit by white neon from outside, a blurred yellow shape outside the glass and the knuckles of a fist about to knock on the window, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 111,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/s12_ragazza.png",
+  "prompt": "Seen through the rain-covered side window of a car, half-length view of a young woman standing outside in a glossy yellow raincoat with the hood up, wet dark strands of hair, her face completely hidden in the deep shadow of the hood, white neon light behind her, rain falling, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 112,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/s13_palmo.png",
+  "prompt": "Close-up of a wet open palm pressed flat against the outside of a car window, the cuff of a glossy yellow raincoat sleeve, water drops on the glass, in the blurred background across a flooded service area forecourt the dark silhouette of an unlit black sedan, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 113,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/sA_portiera.png",
+  "prompt": "From the front seat looking back inside a car, the rear door opening onto the rain and white neon light, a glossy yellow raincoat sleeve reaching in, dark grey fabric back seat, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 114,
+  "steps": 4
+ },
+ {
+  "out": "data/horror/ep1_uscita_13/img/sB_sicura.png",
+  "prompt": "Close-up of the inside of a car's driver door, the central door lock button glowing faintly green on the dark grey door panel, a hand in the sleeve of a brown corduroy jacket reaching for the button, rain-streaked window above, cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos",
+  "w": 576,
+  "h": 1024,
+  "seed": 115,
+  "steps": 4
+ }
+]
