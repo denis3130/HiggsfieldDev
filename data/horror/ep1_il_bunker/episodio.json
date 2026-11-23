@@ -62,7 +62,7 @@
    "id": 10,
    "voce": "",
    "lontana": "Quell'uomo ha investito una ragazza ed è scappato.",
-   "img": "s10_altoparlante.png",
+   "img": "s10_altoparlante_v2.png",
    "mov": "fermo"
   },
   {
@@ -75,7 +75,7 @@
   {
    "id": 12,
    "voce": "Infili la mano in tasca. La chiave c'è.",
-   "img": "s12_chiave_palmo.png",
+   "img": "s12_chiave_palmo_v2.png",
    "mov": "mano"
   },
   {
