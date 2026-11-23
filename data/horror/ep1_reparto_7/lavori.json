@@ -1,10 +1,10 @@
 [
  {
-  "out": "data/horror/ep1_reparto_7/img/s01_soffitto.png",
-  "prompt": "First-person view lying on your back in a hospital bed looking straight up at a cream ceiling, one long fluorescent tube lamp flickering, the top of a chrome IV pole with a clear drip bag at the edge of the frame, vertical 9:16 cinematic film still, abandoned Italian hospital ward at night, cold teal-green fluorescent light, deep shadows, single red accent light, amber streetlight through rain-streaked windows, 35mm anamorphic lens, shallow depth of field, heavy film grain, photorealistic, tense medical thriller mood, no visible faces, no text, no letters, no watermark",
+  "out": "data/horror/ep1_reparto_7/img/s01_soffitto_c.png",
+  "prompt": "Worm's-eye view from a hospital pillow straight up at a cream ceiling, a single long fluorescent tube light fixture overhead, the top of a chrome IV drip stand with a clear plastic bag at the edge of the frame, vertical 9:16 cinematic film still, abandoned Italian hospital ward at night, cold teal-green fluorescent light, deep shadows, single red accent light, amber streetlight through rain-streaked windows, 35mm anamorphic lens, shallow depth of field, heavy film grain, photorealistic, tense medical thriller mood, no visible faces, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 101,
+  "seed": 212,
   "steps": 4
  },
  {
@@ -16,27 +16,19 @@
   "steps": 4
  },
  {
-  "out": "data/horror/ep1_reparto_7/img/s03_pollice.png",
-  "prompt": "Extreme macro of a thumb rubbing a blank white plastic hospital wristband on a wrist, blurred hospital room behind, vertical 9:16 cinematic film still, abandoned Italian hospital ward at night, cold teal-green fluorescent light, deep shadows, single red accent light, amber streetlight through rain-streaked windows, 35mm anamorphic lens, shallow depth of field, heavy film grain, photorealistic, tense medical thriller mood, no visible faces, no text, no letters, no watermark",
+  "out": "data/horror/ep1_reparto_7/img/s04_flebo_c.png",
+  "prompt": "Close-up of a pale male forearm lying on white hospital sheets, a small IV catheter taped on the forearm with a white plaster, a clear thin tube looping away, pale blue gown sleeve, vertical 9:16 cinematic film still, abandoned Italian hospital ward at night, cold teal-green fluorescent light, deep shadows, single red accent light, amber streetlight through rain-streaked windows, 35mm anamorphic lens, shallow depth of field, heavy film grain, photorealistic, tense medical thriller mood, no visible faces, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 103,
+  "seed": 214,
   "steps": 4
  },
  {
-  "out": "data/horror/ep1_reparto_7/img/s04_flebo.png",
-  "prompt": "First-person view looking down at your own body lying in a hospital bed, a right forearm with an IV cannula fixed by white tape and a thin clear tube rising out of frame, a hand lifting a pale blue patient gown to reveal a square white gauze dressing taped on the abdomen, vertical 9:16 cinematic film still, abandoned Italian hospital ward at night, cold teal-green fluorescent light, deep shadows, single red accent light, amber streetlight through rain-streaked windows, 35mm anamorphic lens, shallow depth of field, heavy film grain, photorealistic, tense medical thriller mood, no visible faces, no text, no letters, no watermark",
+  "out": "data/horror/ep1_reparto_7/img/s05_medicazione_b.png",
+  "prompt": "Close-up of one single square white gauze dressing taped on the right side of a man's bare belly as he lies in a hospital bed, pale blue patient gown pulled up, his fingertips hovering just above the dressing without touching it, vertical 9:16 cinematic film still, abandoned Italian hospital ward at night, cold teal-green fluorescent light, deep shadows, single red accent light, amber streetlight through rain-streaked windows, 35mm anamorphic lens, shallow depth of field, heavy film grain, photorealistic, tense medical thriller mood, no visible faces, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 104,
-  "steps": 4
- },
- {
-  "out": "data/horror/ep1_reparto_7/img/s05_medicazione.png",
-  "prompt": "Close-up of a square white gauze dressing taped on a man's bare abdomen, fingertips hovering above it without touching, pale blue patient gown pulled up, flickering light, vertical 9:16 cinematic film still, abandoned Italian hospital ward at night, cold teal-green fluorescent light, deep shadows, single red accent light, amber streetlight through rain-streaked windows, 35mm anamorphic lens, shallow depth of field, heavy film grain, photorealistic, tense medical thriller mood, no visible faces, no text, no letters, no watermark",
-  "w": 576,
-  "h": 1024,
-  "seed": 105,
+  "seed": 215,
   "steps": 4
  },
  {
@@ -64,11 +56,11 @@
   "steps": 4
  },
  {
-  "out": "data/horror/ep1_reparto_7/img/s10_piedi.png",
-  "prompt": "First-person view looking down while getting out of a hospital bed, one hand gripping a chrome wheeled IV pole, bare male feet on cold grey linoleum floor, a pair of white hospital clogs under the bed beside the feet, vertical 9:16 cinematic film still, abandoned Italian hospital ward at night, cold teal-green fluorescent light, deep shadows, single red accent light, amber streetlight through rain-streaked windows, 35mm anamorphic lens, shallow depth of field, heavy film grain, photorealistic, tense medical thriller mood, no visible faces, no text, no letters, no watermark",
+  "out": "data/horror/ep1_reparto_7/img/s10_piedi_b.png",
+  "prompt": "First-person view looking down while sitting on the edge of a hospital bed at night, one hand with a white plastic hospital wristband gripping a chrome wheeled IV pole, bare feet touching cold grey linoleum, a pair of white hospital clogs on the floor beside the feet, dark rainy window, vertical 9:16 cinematic film still, abandoned Italian hospital ward at night, cold teal-green fluorescent light, deep shadows, single red accent light, amber streetlight through rain-streaked windows, 35mm anamorphic lens, shallow depth of field, heavy film grain, photorealistic, tense medical thriller mood, no visible faces, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 109,
+  "seed": 216,
   "steps": 4
  },
  {

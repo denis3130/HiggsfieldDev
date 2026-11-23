@@ -69,8 +69,12 @@ def ritocchi(m, nome, lista):
     "scurisci" (una finestra col giorno che deve sembrare notte). box in frazioni, bordi sfumati."""
     big, dep = m.IMG[nome]; Hb, Wb = big.shape[:2]; f = big.astype(np.float32)
     for o in lista:
-        x0, y0, x1, y1 = o["box"]; mk = np.zeros((Hb, Wb), np.float32); mk[int(y0 * Hb):int(y1 * Hb), int(x0 * Wb):int(x1 * Wb)] = 1
-        mk = cv2.GaussianBlur(mk, (0, 0), o.get("bordo", 0.006) * Wb)[..., None]
+        if "ellisse" in o:                                                  # ellisse morbida (cx, cy, rx, ry): per mettere in ombra un volto
+            cx, cy, rx, ry = o["ellisse"]; YY, XX = np.mgrid[0:Hb, 0:Wb].astype(np.float32)
+            mk = np.exp(-((((XX / Wb - cx) / rx) ** 2 + ((YY / Hb - cy) / ry) ** 2) ** 1.6))[..., None]
+        else:
+            x0, y0, x1, y1 = o["box"]; mk = np.zeros((Hb, Wb), np.float32); mk[int(y0 * Hb):int(y1 * Hb), int(x0 * Wb):int(x1 * Wb)] = 1
+            mk = cv2.GaussianBlur(mk, (0, 0), o.get("bordo", 0.006) * Wb)[..., None]
         if o["tipo"] == "sfoca":
             alt = cv2.GaussianBlur(f, (0, 0), o.get("sigma", 4) * Wb / 576)
         elif o["tipo"] == "meno_rosso":                                     # un rosso troppo acceso (sembra una macchia) torna luce riflessa

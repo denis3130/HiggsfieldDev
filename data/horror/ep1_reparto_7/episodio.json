@@ -7,7 +7,7 @@
   {
    "id": 1,
    "voce": "Ti svegli in un letto d'ospedale. Sopra di te, un neon trema.",
-   "img": "s01_soffitto.png",
+   "img": "s01_soffitto_c.png",
    "mov": "apri_occhi"
   },
   {
@@ -73,14 +73,31 @@
   {
    "id": 4,
    "voce": "Nel braccio, una flebo.",
-   "img": "s04_flebo.png",
+   "img": "s04_flebo_c.png",
    "mov": "avanza_lento"
   },
   {
    "id": 5,
    "voce": "Sulla pancia, una medicazione. Ti hanno operato? Non ricordi nessuna operazione.",
-   "img": "s05_medicazione.png",
-   "mov": "scendi"
+   "img": "s05_medicazione_b.png",
+   "mov": "scendi",
+   "ritocchi": [
+    {
+     "tipo": "scurisci",
+     "ellisse": [
+      0.2,
+      0.432,
+      0.105,
+      0.05
+     ],
+     "forza": 0.9,
+     "tinta": [
+      1.0,
+      1.0,
+      1.0
+     ]
+    }
+   ]
   },
   {
    "id": 6,
@@ -134,7 +151,7 @@
   {
    "id": 10,
    "voce": "Ti alzi, aggrappato all'asta della flebo.",
-   "img": "s10_piedi.png",
+   "img": "s10_piedi_b.png",
    "mov": "mano"
   },
   {
