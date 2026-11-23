@@ -1,0 +1,8 @@
+# File intermedi del montaggio: non vanno sul branch (si rifanno con scripts/bivio/voce.py e monta.py)
+_voce/
+_muto.mp4
+anteprima/
+voce.wav
+mix.wav
+sub.ass
+il_bivio_ep*.mp4
