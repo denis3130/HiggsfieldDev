@@ -121,7 +121,196 @@
    "sfondo": "s14_bobine.png"
   }
  ],
- "ambiente": [],
+ "ambiente": [
+  {
+   "file": "bunker.mp3",
+   "da": 0,
+   "vol": 0.16
+  },
+  {
+   "file": "amb_slow.mp3",
+   "vol": [
+    0.05,
+    0.14
+   ]
+  }
+ ],
  "silenzi": [],
- "suoni": []
+ "suoni": [
+  {
+   "file": "respiro.mp3",
+   "riga": 1,
+   "da": 0.9,
+   "dur": 1.0,
+   "dopo": 0.05,
+   "vol": 0.3,
+   "sfuma": 0.2
+  },
+  {
+   "file": "gocce.mp3",
+   "riga": 1,
+   "da": 0.85,
+   "dur": 0.6,
+   "dopo": 1.9,
+   "vol": 0.18
+  },
+  {
+   "file": "luce_accensione.mp3",
+   "riga": 2,
+   "dopo": -0.5,
+   "vol": 0.32
+  },
+  {
+   "file": "luce_ronzio.mp3",
+   "riga": 2,
+   "dopo": 0.4,
+   "fino_alla_fine": true,
+   "vol": 0.07,
+   "sfuma": 0.4
+  },
+  {
+   "file": "gocce.mp3",
+   "riga": 2,
+   "da": 0.85,
+   "dur": 0.6,
+   "dopo": 3.0,
+   "vol": 0.14
+  },
+  {
+   "file": "branda.mp3",
+   "riga": 3,
+   "dopo": -0.45,
+   "vol": 0.42
+  },
+  {
+   "file": "passi.mp3",
+   "riga": 3,
+   "dopo": 0.8,
+   "vol": 0.42
+  },
+  {
+   "file": "rele.mp3",
+   "riga": 4,
+   "parola": "Parte",
+   "dopo": 0.0,
+   "vol": 0.55
+  },
+  {
+   "file": "tic.mp3",
+   "riga": 4,
+   "parola": "Parte",
+   "dopo": 0.0,
+   "fino_alla_fine": true,
+   "vol": 0.14,
+   "sfuma": 0.02
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 5,
+   "da": 2.8,
+   "dur": 3.4,
+   "dopo": 0.2,
+   "vol": 0.16,
+   "sfuma": 0.3
+  },
+  {
+   "file": "manette.mp3",
+   "riga": 6,
+   "dopo": 0.1,
+   "vol": 0.38
+  },
+  {
+   "file": "gocce.mp3",
+   "riga": 7,
+   "da": 0.85,
+   "dur": 0.6,
+   "dopo": 2.2,
+   "vol": 0.12
+  },
+  {
+   "file": "stoffa.mp3",
+   "riga": 8,
+   "dopo": 0.2,
+   "vol": 0.12
+  },
+  {
+   "file": "tasto_play.mp3",
+   "riga": 9,
+   "parola": "PLAY",
+   "dopo": -0.12,
+   "vol": 0.65
+  },
+  {
+   "file": "fruscio_nastro.mp3",
+   "riga": 9,
+   "parola": "PLAY",
+   "dopo": 0.25,
+   "fino_alla_fine": true,
+   "vol": 0.09,
+   "sfuma": 0.3
+  },
+  {
+   "file": "gocce.mp3",
+   "riga": 11,
+   "da": 0.85,
+   "dur": 0.6,
+   "dopo": 3.6,
+   "vol": 0.12
+  },
+  {
+   "file": "stoffa.mp3",
+   "riga": 12,
+   "dopo": 0.25,
+   "vol": 0.32
+  },
+  {
+   "file": "chiave.mp3",
+   "riga": 12,
+   "parola": "chiave",
+   "dopo": -0.05,
+   "vol": 0.55
+  },
+  {
+   "file": "manette.mp3",
+   "riga": 13,
+   "dopo": 0.0,
+   "vol": 0.6
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 13,
+   "da": 4.0,
+   "dur": 2.4,
+   "dopo": 0.9,
+   "vol": 0.22,
+   "sfuma": 0.2
+  },
+  {
+   "file": "heart60.mp3",
+   "riga": 14,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.3,
+    1
+   ],
+   "vol": 0.42,
+   "sfuma": 0.4
+  },
+  {
+   "file": "colpo.mp3",
+   "riga": 15,
+   "vol": 0.6
+  },
+  {
+   "file": "rise_long.mp3",
+   "riga": 15,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.2,
+    1
+   ],
+   "vol": 0.22,
+   "sfuma": 0.3
+  }
+ ]
 }
