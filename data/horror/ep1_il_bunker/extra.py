@@ -25,11 +25,14 @@ TIMER = {      # angoli del display (alto-sx, alto-dx, basso-dx, basso-sx)
 }
 BOBINE = {     # centro e raggio delle bobine: [cx, cy, r]
 }
-ETICHETTA = {  # segmenti d'inchiostro (polilinee) e spessore
+ETICHETTA = {  # inchiostro blu: polilinee [punti, spessore] in pixel dell'immagine; il nome sta sotto il pollice e non si vede
+    "s08_etichetta_pollice.png": {"linee": [[[[269.3, 665.7], [274.7, 661.6], [280.0, 657.5], [285.3, 653.4], [290.7, 649.3], [296.0, 645.1], [301.4, 641.0], [306.7, 637.0], [312.2, 633.0], [317.6, 629.0], [323.1, 625.2], [328.7, 621.3], [334.3, 617.6], [339.9, 613.8], [345.5, 610.1], [351.2, 606.4], [356.8, 602.7], [362.4, 598.9], [367.9, 595.1], [373.5, 591.3], [378.9, 587.3], [384.4, 583.4], [389.8, 579.3], [395.1, 575.2]], 3.8], [[[281.3, 665.3], [285.7, 661.9], [290.2, 658.6], [294.7, 655.4], [299.3, 652.2], [303.8, 649.0], [308.4, 645.8], [313.0, 642.7], [317.6, 639.6], [322.3, 636.5], [326.9, 633.4], [331.6, 630.3], [336.2, 627.2], [340.8, 624.1], [345.4, 621.0], [349.9, 617.8], [354.5, 614.6], [359.0, 611.3], [363.5, 608.0], [367.9, 604.7], [372.4, 601.3], [376.8, 598.0], [381.2, 594.6], [385.6, 591.2]], 3.3]],
+                                  "pollice": [[150, 560], [180, 548], [230, 536], [280, 528], [315, 531], [340, 544], [352, 566], [349, 590], [333, 614], [303, 640], [268, 660], [232, 680], [190, 700], [150, 712]], "sfoca": 0.6, "forza": 0.85},
 }
 RITOCCHI = {   # zone da cancellare: [x0, y0, x1, y1] ricostruita dai bordi, [x0, y0, x1, y1, dx, dy] copiata da (dx, dy) più in là.
     "s01_risveglio_timer.png": [[342, 422, 397, 530, 0, -112]],   # la porta blindata non ha maniglie
     "s04_timer_frontale.png": [[293, 664, 346, 724]],
+    "s08_etichetta_pollice.png": [[526, 52, 576, 140], [425, 600, 576, 735, 2.2]],   # cifre rosse inventate dal modello; segni sul registratore sfocati
 }
 
 # ---------- quale riga usa quale immagine e quando parte il timer
@@ -150,17 +153,15 @@ def inchiostro():
     for nome, cfg in ETICHETTA.items():
         if nome not in m.IMG:
             continue
-        big, dep = m.IMG[nome]; big = big.astype(np.float32)
-        s = 4; h, w = big.shape[:2]; ink = np.zeros((h, w), np.float32)
+        big, dep = m.IMG[nome]; big = big.astype(np.float32); h, w = big.shape[:2]; ink = np.zeros((h, w), np.float32)
         for linea, spess in cfg["linee"]:
-            p = (np.float32(linea) * K * s).astype(np.int32)
-            lay = np.zeros((h * s // s, w * s // s), np.float32)
-            cv2.polylines(ink, [(p / s).astype(np.int32)], False, 1.0, max(1, int(spess * K)), cv2.LINE_AA)
+            p = np.round(np.float32(linea) * K * 16).astype(np.int32)              # coordinate con 4 bit di frazione: tratto preciso
+            cv2.polylines(ink, [p], False, 1.0, max(1, int(round(spess * K))), cv2.LINE_AA, shift=4)
         if cfg.get("pollice"):                                         # il pollice copre l'inchiostro
             pm = np.zeros((h, w), np.float32); cv2.fillPoly(pm, [(np.float32(cfg["pollice"]) * K).astype(np.int32)], 1.0)
             ink *= 1 - cv2.GaussianBlur(pm, (0, 0), 2)
         ink = cv2.GaussianBlur(ink, (0, 0), cfg.get("sfoca", 0.7))[..., None] * cfg.get("forza", 0.8)
-        blu = np.array([150, 70, 35], np.float32)                      # penna blu (BGR), si moltiplica come inchiostro vero
+        blu = np.array([235, 120, 55], np.float32)                      # penna blu (BGR), si moltiplica come inchiostro vero
         big = big * (1 - ink) + big * (blu / 255) * ink
         m.IMG[nome] = (np.clip(big, 0, 255).astype(np.uint8), dep)
 
@@ -172,7 +173,10 @@ def ritocchi():
         big, dep = m.IMG[nome]; big = big.copy()
         for z in zone:
             x0, y0, x1, y1 = [int(v * K) for v in z[:4]]
-            if len(z) == 6:                                             # copia da un'altra parte della stessa superficie, bordi sfumati
+            if len(z) == 5:                                             # sfoca (segni che sembrano lettere)
+                a = np.zeros(big.shape[:2], np.float32); a[y0:y1, x0:x1] = 1; a = cv2.GaussianBlur(a, (0, 0), 3 * K)[..., None]
+                big = np.clip(big * (1 - a) + cv2.GaussianBlur(big, (0, 0), z[4] * K) * a, 0, 255).astype(np.uint8)
+            elif len(z) == 6:                                             # copia da un'altra parte della stessa superficie, bordi sfumati
                 dx, dy = int(z[4] * K), int(z[5] * K); a = np.zeros(big.shape[:2], np.float32); a[y0:y1, x0:x1] = 1
                 a = cv2.GaussianBlur(a, (0, 0), 4 * K)[..., None]; src = np.roll(big, (-dy, -dx), axis=(0, 1)).astype(np.float32)
                 fascia = (slice(y0, y1), slice(max(0, x0 - int(14 * K)), x0))          # stessa luce: si confronta la fascia a sinistra
