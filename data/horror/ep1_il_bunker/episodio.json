@@ -48,7 +48,7 @@
   },
   {
    "id": 8,
-   "voce": "Sull'etichetta, a penna: il tuo nome.",
+   "voce": "Sull'etichetta c'è scritto il tuo nome.",
    "img": "s08_etichetta_pollice.png",
    "mov": "avanza_lento"
   },
@@ -60,7 +60,7 @@
   },
   {
    "id": 10,
-   "voce": "Una voce dice:",
+   "voce": "",
    "lontana": "Quell'uomo ha investito una ragazza ed è scappato.",
    "img": "s10_altoparlante.png",
    "mov": "fermo"
@@ -87,7 +87,7 @@
   },
   {
    "id": 14,
-   "voce": "Il nastro:",
+   "voce": "",
    "lontana": "Non ascoltarlo. Mente bene.",
    "img": "s14_bobine.png",
    "mov": "fermo"
@@ -107,7 +107,7 @@
      ]
     },
     "b": {
-     "voce": "Oppure la B: ascolti il nastro fino in fondo.",
+     "voce": "Oppure la B: ascolti il nastro.",
      "testo": "Ascolti\nil nastro",
      "img": "s07_registratore_cassa.png",
      "ritaglio": [
