@@ -1,182 +1,183 @@
 {
-  "nota": "Registro delle Short pubblicate a mano/in sessione (canale stacappella). Serve a non ripubblicare la stessa clip. Orari in ora italiana.",
-  "pubblicate": [
-    {
-      "clip_id": "2622127348",
-      "creator": "Blur",
-      "fonte": "https://www.twitch.tv/tumblurr/clip/WiseDullPuddingPeteZarollTie-0iULygCDvIa_c0CB",
-      "titolo": "Blur nota un DETTAGLIO ASSURDO su GTA 6 🤯 #shorts",
-      "uscita": "2026-11-21T15:00:00+01:00",
-      "via": "vidiq",
-      "post_id": "814b5311-16c8-4f5a-b36b-625fffa8802d",
-      "youtube": "https://www.youtube.com/watch?v=r-QMu2KQ5Lw"
-    },
-    {
-      "clip_id": "4294133317",
-      "creator": "Blur",
-      "fonte": "https://www.twitch.tv/tumblurr/clip/RealStrongCheesePMSTwin-YCIuRsTMQ_yA9Vpo",
-      "titolo": "\"Un miliardo di gioco, Rockstar!\" Blur SCIOCCATO da GTA 6 🤯 #shorts",
-      "uscita": "2026-11-21T16:00:00+01:00",
-      "via": "vidiq",
-      "post_id": "41ffecd6-27ae-4747-a064-a454842721cf",
-      "youtube": "https://www.youtube.com/watch?v=rwBBLUYNZEE"
-    },
-    {
-      "clip_id": "2827144030",
-      "creator": "Blur",
-      "fonte": "https://www.twitch.tv/tumblurr/clip/SmilingClumsyMartenPJSugar-rlaIH8KwvDC1DdVJ",
-      "titolo": "Blur viene INVESTITO appena sceso dall'auto 😂 GTA 6 #shorts",
-      "uscita": "2026-11-21T17:00:00+01:00",
-      "via": "vidiq",
-      "post_id": "0f224cde-f3f5-44ce-9857-c815aee1cbd3",
-      "youtube": "https://www.youtube.com/watch?v=UhDnRxIZxZY"
-    },
-    {
-      "clip_id": "2902920368",
-      "creator": "Blur",
-      "titolo": "In GTA 6 c'è perfino la CELLULITE 😳 Blur #shorts",
-      "uscita": "2026-11-22T18:00:00+01:00",
-      "via": "vidiq",
-      "post_id": "39b4c387-2f05-46ae-abd7-e14a8a8cec34",
-      "youtube": "https://www.youtube.com/watch?v=F-KvUxFXMgw"
-    },
-    {
-      "clip_id": "4099124902",
-      "creator": "Blur",
-      "titolo": "Blur non ne può più di LUCIA 😂 GTA 6 #shorts",
-      "uscita": "2026-11-22T19:00:00+01:00",
-      "via": "vidiq",
-      "post_id": "6c07b895-eddb-4094-8920-160354ee5cd3",
-      "youtube": "https://www.youtube.com/watch?v=QQc9PXHcPM8"
-    },
-    {
-      "clip_id": "712066860",
-      "creator": "Blur",
-      "titolo": "Blur trova una barca ESPLOSA piena di… 😳 GTA 6 #shorts",
-      "uscita": "2026-11-22T20:00:00+01:00",
-      "via": "vidiq",
-      "post_id": "fa127bf6-9255-4f8a-877f-55ce0d2991b9",
-      "youtube": "https://www.youtube.com/watch?v=OtsOx-7DoPM"
-    }
-  ],
-  "scartate": {
-    "30172268": "debole",
-    "3333346964": "poco chiara",
-    "482436163": "doppione della barca",
-    "174332271": "doppione della clientela",
-    "3233911036": "n word",
-    "1385486373": "doppione della barca",
-    "4196923023": "bestemmie continue",
-    "1293824522": "doccia e battute 'gay'",
-    "3298746213": "non è gameplay",
-    "1322800781": "schermata di caricamento",
-    "1366936610": "bestemmie",
-    "2825205186": "battute sessuali",
-    "411622141": "debole",
-    "772775466": "bestemmia",
-    "942454473": "doppione di 4099124902",
-    "4164847914": "quasi senza parlato",
-    "2885253365": "debole",
-    "3662542658": "quasi senza commento (prima morte)",
-    "3283493283": "poco parlato, usata come immagini nella guida dettagli",
-    "10498826": "quasi tutta scena del gioco",
-    "462964797": "debole",
-    "4287492525": "debole, 15 s"
+ "nota": "Registro delle Short pubblicate a mano/in sessione (canale stacappella). Serve a non ripubblicare la stessa clip. Orari in ora italiana.",
+ "pubblicate": [
+  {
+   "clip_id": "2622127348",
+   "creator": "Blur",
+   "fonte": "https://www.twitch.tv/tumblurr/clip/WiseDullPuddingPeteZarollTie-0iULygCDvIa_c0CB",
+   "titolo": "Blur nota un DETTAGLIO ASSURDO su GTA 6 🤯 #shorts",
+   "uscita": "2026-11-21T15:00:00+01:00",
+   "via": "vidiq",
+   "post_id": "814b5311-16c8-4f5a-b36b-625fffa8802d",
+   "youtube": "https://www.youtube.com/watch?v=r-QMu2KQ5Lw"
   },
-  "limiti_gratuiti": {
-    "vidiq": "3 caricamenti YouTube al giorno (conteggio alla pubblicazione, si azzera alle 09:00 italiane); ogni bozza va approvata dall'utente",
-    "metricool": "20 post pubblicati al mese: finiti a novembre, ripartono il 1° dicembre"
+  {
+   "clip_id": "4294133317",
+   "creator": "Blur",
+   "fonte": "https://www.twitch.tv/tumblurr/clip/RealStrongCheesePMSTwin-YCIuRsTMQ_yA9Vpo",
+   "titolo": "\"Un miliardo di gioco, Rockstar!\" Blur SCIOCCATO da GTA 6 🤯 #shorts",
+   "uscita": "2026-11-21T16:00:00+01:00",
+   "via": "vidiq",
+   "post_id": "41ffecd6-27ae-4747-a064-a454842721cf",
+   "youtube": "https://www.youtube.com/watch?v=rwBBLUYNZEE"
   },
-  "metricool_21_11": {
-    "nota": "Tutte e tre fallite con 'You have reached your Metricool account limit' (post gratuiti di novembre finiti): nessuna è uscita, quindi le bozze vidIQ non sono doppioni.",
-    "18:00 clientela (581260434)": "ERRORE, post 436864572",
-    "19:00 senza colpi (1153898672)": "ERRORE, post 436887213",
-    "20:00 strip club (541182766)": "ERRORE, post 436661729"
+  {
+   "clip_id": "2827144030",
+   "creator": "Blur",
+   "fonte": "https://www.twitch.tv/tumblurr/clip/SmilingClumsyMartenPJSugar-rlaIH8KwvDC1DdVJ",
+   "titolo": "Blur viene INVESTITO appena sceso dall'auto 😂 GTA 6 #shorts",
+   "uscita": "2026-11-21T17:00:00+01:00",
+   "via": "vidiq",
+   "post_id": "0f224cde-f3f5-44ce-9857-c815aee1cbd3",
+   "youtube": "https://www.youtube.com/watch?v=UhDnRxIZxZY"
   },
-  "metricool_bozze_per_dicembre": {
-    "nota": "Non usare: l'utente non vuole Metricool. Restano come bozze ferme.",
-    "436891445": "cellulite",
-    "436891608": "barca"
+  {
+   "clip_id": "2902920368",
+   "creator": "Blur",
+   "titolo": "In GTA 6 c'è perfino la CELLULITE 😳 Blur #shorts",
+   "uscita": "2026-11-22T18:00:00+01:00",
+   "via": "vidiq",
+   "post_id": "39b4c387-2f05-46ae-abd7-e14a8a8cec34",
+   "youtube": "https://www.youtube.com/watch?v=F-KvUxFXMgw"
   },
-  "bozze_vidiq_approvate": [
-    {
-      "giorno": "2026-11-23",
-      "ora": "18:00",
-      "clip_id": "1153898672",
-      "titolo": "Blur SENZA COLPI nel momento peggiore 💀 GTA 6 #shorts",
-      "post_id": "e2bb862a-141d-47e7-9ca8-c34088a907ec",
-      "revision": "24184d2d",
-      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
-      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-    },
-    {
-      "giorno": "2026-11-23",
-      "ora": "19:00",
-      "clip_id": "516705677",
-      "titolo": "Blur prova a SCAPPARE ma è tutto scriptato 💀 GTA 6 #shorts",
-      "post_id": "32bb971b-f45e-4c0c-b4a6-1832ad52bfcf",
-      "revision": "7d4bfef7",
-      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
-      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-    },
-    {
-      "giorno": "2026-11-23",
-      "ora": "20:00",
-      "clip_id": "541182766",
-      "titolo": "Blur entra nello STRIP CLUB di GTA 6 😳 #shorts",
-      "post_id": "ad164edd-ec83-467d-9a54-24fe17ec31be",
-      "revision": "42a280c7",
-      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
-      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-    },
-    {
-      "giorno": "2026-11-24",
-      "ora": "18:00",
-      "clip_id": "2958549462",
-      "titolo": "Il problema del SALTINO in GTA 6 😂 Blur #shorts",
-      "post_id": "a749ec65-4c50-4cd8-ac07-6f3b10f0eefd",
-      "revision": "c65cdf77",
-      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
-      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-    },
-    {
-      "giorno": "2026-11-24",
-      "ora": "19:00",
-      "clip_id": "581260434",
-      "titolo": "La CLIENTELA dello strip club di GTA 6 😂 Blur #shorts",
-      "post_id": "8927af82-79f9-47fb-8082-27ab05c5120b",
-      "revision": "6e4ead89",
-      "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
-      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-    },
-    {
-      "giorno": "2026-11-24",
-      "ora": "20:00",
-      "tipo": "guida",
-      "titolo": "GTA 6: 3 modi per fare SOLDI subito 💰 #shorts",
-      "spec": "data/guide/soldi.json",
-      "post_id": "c06a4baa-648e-4c48-97f5-23eda64fe838",
-      "revision": "08087503",
-      "approvata": "2026-11-22 dall'utente: 'basta chiedermi autorizzazioni fai e basta'",
-      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-    },
-    {
-      "giorno": "2026-11-25",
-      "ora": "18:00",
-      "tipo": "guida",
-      "titolo": "5 DETTAGLI ASSURDI di GTA 6 che forse non hai notato 🤯 #shorts",
-      "spec": "data/guide/dettagli.json",
-      "post_id": "3cba41ef-cbe8-47d7-8a3f-fcd71e77187e",
-      "revision": "2d2e8729",
-      "approvata": "2026-11-22 dall'utente: 'basta chiedermi autorizzazioni fai e basta'",
-      "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-    }
-  ],
-  "regole_utente": [
-    "Pubblicare solo con vidIQ, niente Metricool (21/11)",
-    "Massimo 3 al giorno: 18:00, 19:00, 20:00",
-    "Stacco a tutto schermo su Blur quando fissa la camera o reagisce",
-    "Dal 22/11: non chiedere più approvazioni, preparare e pubblicare da soli e mandare solo un riepilogo",
-    "Niente crediti (Higgsfield, vidIQ o altri): solo strumenti gratuiti"
-  ]
+  {
+   "clip_id": "4099124902",
+   "creator": "Blur",
+   "titolo": "Blur non ne può più di LUCIA 😂 GTA 6 #shorts",
+   "uscita": "2026-11-22T19:00:00+01:00",
+   "via": "vidiq",
+   "post_id": "6c07b895-eddb-4094-8920-160354ee5cd3",
+   "youtube": "https://www.youtube.com/watch?v=QQc9PXHcPM8"
+  },
+  {
+   "clip_id": "712066860",
+   "creator": "Blur",
+   "titolo": "Blur trova una barca ESPLOSA piena di… 😳 GTA 6 #shorts",
+   "uscita": "2026-11-22T20:00:00+01:00",
+   "via": "vidiq",
+   "post_id": "fa127bf6-9255-4f8a-877f-55ce0d2991b9",
+   "youtube": "https://www.youtube.com/watch?v=OtsOx-7DoPM"
+  },
+  {
+   "clip_id": "1153898672",
+   "creator": "Blur",
+   "titolo": "Blur SENZA COLPI nel momento peggiore 💀 GTA 6 #shorts",
+   "uscita": "2026-11-23T18:00:00+01:00",
+   "via": "vidiq",
+   "post_id": "e2bb862a-141d-47e7-9ca8-c34088a907ec",
+   "youtube": "https://www.youtube.com/watch?v=ddx3g9yARKY"
+  },
+  {
+   "clip_id": "516705677",
+   "creator": "Blur",
+   "titolo": "Blur prova a SCAPPARE ma è tutto scriptato 💀 GTA 6 #shorts",
+   "uscita": "2026-11-23T19:00:00+01:00",
+   "via": "vidiq",
+   "post_id": "32bb971b-f45e-4c0c-b4a6-1832ad52bfcf",
+   "youtube": "https://www.youtube.com/watch?v=PbYgRPAuORM"
+  }
+ ],
+ "scartate": {
+  "30172268": "debole",
+  "3333346964": "poco chiara",
+  "482436163": "doppione della barca",
+  "174332271": "doppione della clientela",
+  "3233911036": "n word",
+  "1385486373": "doppione della barca",
+  "4196923023": "bestemmie continue",
+  "1293824522": "doccia e battute 'gay'",
+  "3298746213": "non è gameplay",
+  "1322800781": "schermata di caricamento",
+  "1366936610": "bestemmie",
+  "2825205186": "battute sessuali",
+  "411622141": "debole",
+  "772775466": "bestemmia",
+  "942454473": "doppione di 4099124902",
+  "4164847914": "quasi senza parlato",
+  "2885253365": "debole",
+  "3662542658": "quasi senza commento (prima morte)",
+  "3283493283": "poco parlato, usata come immagini nella guida dettagli",
+  "10498826": "quasi tutta scena del gioco",
+  "462964797": "debole",
+  "4287492525": "debole, 15 s"
+ },
+ "limiti_gratuiti": {
+  "vidiq": "3 caricamenti YouTube al giorno (conteggio alla pubblicazione, si azzera alle 09:00 italiane); ogni bozza va approvata dall'utente",
+  "metricool": "20 post pubblicati al mese: finiti a novembre, ripartono il 1° dicembre"
+ },
+ "metricool_21_11": {
+  "nota": "Tutte e tre fallite con 'You have reached your Metricool account limit' (post gratuiti di novembre finiti): nessuna è uscita, quindi le bozze vidIQ non sono doppioni.",
+  "18:00 clientela (581260434)": "ERRORE, post 436864572",
+  "19:00 senza colpi (1153898672)": "ERRORE, post 436887213",
+  "20:00 strip club (541182766)": "ERRORE, post 436661729"
+ },
+ "metricool_bozze_per_dicembre": {
+  "nota": "Non usare: l'utente non vuole Metricool. Restano come bozze ferme.",
+  "436891445": "cellulite",
+  "436891608": "barca"
+ },
+ "bozze_vidiq_approvate": [
+  {
+   "giorno": "2026-11-24",
+   "ora": "18:00",
+   "clip_id": "2958549462",
+   "titolo": "Il problema del SALTINO in GTA 6 😂 Blur #shorts",
+   "post_id": "a749ec65-4c50-4cd8-ac07-6f3b10f0eefd",
+   "revision": "c65cdf77",
+   "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+  },
+  {
+   "giorno": "2026-11-24",
+   "ora": "19:00",
+   "clip_id": "581260434",
+   "titolo": "La CLIENTELA dello strip club di GTA 6 😂 Blur #shorts",
+   "post_id": "8927af82-79f9-47fb-8082-27ab05c5120b",
+   "revision": "6e4ead89",
+   "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
+   "nota": "anche questa è nello strip club: controllare i fotogrammi prima di pubblicarla (regola: niente scene sessuali)"
+  },
+  {
+   "giorno": "2026-11-24",
+   "ora": "20:00",
+   "tipo": "guida",
+   "titolo": "GTA 6: 3 modi per fare SOLDI subito 💰 #shorts",
+   "spec": "data/guide/soldi.json",
+   "post_id": "c06a4baa-648e-4c48-97f5-23eda64fe838",
+   "revision": "08087503",
+   "approvata": "2026-11-22 dall'utente: 'basta chiedermi autorizzazioni fai e basta'",
+   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+  },
+  {
+   "giorno": "2026-11-25",
+   "ora": "18:00",
+   "tipo": "guida",
+   "titolo": "5 DETTAGLI ASSURDI di GTA 6 che forse non hai notato 🤯 #shorts",
+   "spec": "data/guide/dettagli.json",
+   "post_id": "3cba41ef-cbe8-47d7-8a3f-fcd71e77187e",
+   "revision": "2d2e8729",
+   "approvata": "2026-11-22 dall'utente: 'basta chiedermi autorizzazioni fai e basta'",
+   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+  }
+ ],
+ "regole_utente": [
+  "Pubblicare solo con vidIQ, niente Metricool (21/11)",
+  "Stacco a tutto schermo su Blur quando fissa la camera o reagisce",
+  "Dal 22/11: non chiedere più approvazioni, preparare e pubblicare da soli e mandare solo un riepilogo",
+  "Niente crediti (Higgsfield, vidIQ o altri): solo strumenti gratuiti",
+  "Caricamenti vidIQ: 3 al giorno in tutto. Da quando parte Il Bivio: stacappella 2 Short (18 e 19) + 1 episodio horror alle 21 sul canale Dr.. (CLAUDE.md, 22/11)"
+ ],
+ "tenute_fuori": [
+  {
+   "giorno": "2026-11-23",
+   "ora": "20:00",
+   "clip_id": "541182766",
+   "titolo": "Blur entra nello STRIP CLUB di GTA 6 😳 #shorts",
+   "post_id": "ad164edd-ec83-467d-9a54-24fe17ec31be",
+   "revision": "42a280c7",
+   "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+   "stato": "TENUTA FUORI il 23/11: nei primi secondi ballerine in perizoma (regola: niente scene sessuali). Lo slot delle 20 resta libero per Il Bivio."
+  }
+ ]
 }
