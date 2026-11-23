@@ -15,7 +15,8 @@
    "voce": "Sotto c'è scritto:",
    "citazione": "Elio, agosto del sessantaquattro.",
    "img": "s02_didascalia.png",
-   "mov": "avanza_lento"
+   "mov": "avanza_lento",
+   "fascio": true
   },
   {
    "id": 3,
@@ -46,7 +47,16 @@
    "id": 6,
    "voce": "È in bianco e nero. Ma la bicicletta era rossa: te lo ricordi.",
    "img": "s06_bicicletta.png",
-   "mov": "avanza_lento"
+   "mov": "avanza_lento",
+   "rosso_su": "rossa",
+   "rosso_no": [
+    [
+     0.53,
+     0.375,
+     0.09,
+     0.05
+    ]
+   ]
   },
   {
    "id": 7,
@@ -64,7 +74,13 @@
    "id": 9,
    "voce": "In cucina, la porta della cantina è chiusa.",
    "img": "s09_cucina.png",
-   "mov": "avanza"
+   "mov": "avanza",
+   "scurisci": [
+    0.07,
+    0.575,
+    0.1,
+    0.05
+   ]
   },
   {
    "id": 10,
@@ -90,7 +106,8 @@
    "img": "s10_serratura.png",
    "img_dopo": "s13_mandata.png",
    "scatto": "gira",
-   "mov": "fermo"
+   "mov": "fermo",
+   "scatto_dopo": 0.35
   },
   {
    "id": 14,
@@ -109,7 +126,7 @@
      "img": "sA_pugno.png",
      "ritaglio": [
       0.5,
-      0.5,
+      0.42,
       0.8
      ]
     },
@@ -119,8 +136,8 @@
      "img": "sB_soglia.png",
      "ritaglio": [
       0.5,
-      0.5,
-      0.8
+      0.55,
+      0.9
      ]
     }
    },
@@ -143,5 +160,175 @@
    "a_riga": 15
   }
  ],
- "suoni": []
+ "suoni": [
+  {
+   "file": "vento_soffitta.mp3",
+   "riga": 1,
+   "vol": 0.32,
+   "dur": 20,
+   "sfuma": 0.8
+  },
+  {
+   "file": "legno.mp3",
+   "riga": 1,
+   "dopo": 1.3,
+   "vol": 0.22
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 1,
+   "dur": 3.0,
+   "vol": 0.2
+  },
+  {
+   "file": "carta.mp3",
+   "riga": 2,
+   "dopo": 0.15,
+   "vol": 0.45
+  },
+  {
+   "file": "stoffa.mp3",
+   "riga": 3,
+   "dopo": 0.05,
+   "vol": 0.35
+  },
+  {
+   "file": "tessera.mp3",
+   "riga": 3,
+   "parola": "tasca",
+   "dopo": 0.3,
+   "vol": 0.55
+  },
+  {
+   "file": "tortora.mp3",
+   "riga": 4,
+   "dopo": 1.2,
+   "vol": 0.09
+  },
+  {
+   "file": "pagina.mp3",
+   "riga": 5,
+   "parola": "Giri",
+   "vol": 0.5,
+   "dur": 1.1
+  },
+  {
+   "file": "pagina.mp3",
+   "riga": 5,
+   "parola": "pozzo",
+   "dopo": -0.3,
+   "vol": 0.45,
+   "dur": 0.8
+  },
+  {
+   "file": "pagina.mp3",
+   "riga": 5,
+   "parola": "quercia",
+   "dopo": -0.3,
+   "vol": 0.45,
+   "dur": 0.6
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 5,
+   "parola": "sempre",
+   "da": 5.0,
+   "dur": 1.8,
+   "vol": 0.22
+  },
+  {
+   "file": "campanello.mp3",
+   "riga": 6,
+   "parola": "rossa",
+   "vol": 0.15
+  },
+  {
+   "file": "vento_soffitta.mp3",
+   "riga": 7,
+   "da": 20,
+   "vol": 0.25,
+   "dur": 6,
+   "sfuma": 0.6
+  },
+  {
+   "file": "bottiglia.mp3",
+   "riga": 7,
+   "parola": "rumore",
+   "dopo": -0.05,
+   "vol": 0.55
+  },
+  {
+   "file": "pantofole.mp3",
+   "riga": 8,
+   "vol": 0.42,
+   "dur": 3.5
+  },
+  {
+   "file": "frigo.mp3",
+   "riga": 9,
+   "vol": 0.22,
+   "dur": 20,
+   "sfuma": 0.03
+  },
+  {
+   "file": "gocce.mp3",
+   "riga": 9,
+   "dopo": 1.6,
+   "vol": 0.22
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 10,
+   "dopo": 0.2,
+   "dur": 3.0,
+   "vol": 0.28
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 11,
+   "da": 6.0,
+   "dur": 2.5,
+   "vol": 0.1
+  },
+  {
+   "file": "maniglia.mp3",
+   "riga": 12,
+   "parola": "maniglia",
+   "vol": 0.5
+  },
+  {
+   "file": "mandata.mp3",
+   "riga": 13,
+   "parola": "gira",
+   "dopo": 0.35,
+   "vol": 0.9
+  },
+  {
+   "file": "colpo.mp3",
+   "riga": 15,
+   "vol": 0.6
+  },
+  {
+   "file": "rise_long.mp3",
+   "riga": 15,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.2,
+    1
+   ],
+   "vol": 0.22,
+   "sfuma": 0.3
+  },
+  {
+   "file": "heart60.mp3",
+   "riga": 15,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.5,
+    1
+   ],
+   "vol": 0.45,
+   "sfuma": 0.4
+  }
+ ]
 }

@@ -1,10 +1,10 @@
 [
  {
   "out": "data/horror/ep1_casa_della_nonna/img/s01_foto_altalena.png",
-  "prompt": "first-person view looking down at an old black-and-white photograph with white scalloped edges on a black album page, held at one corner by a hand almost hidden inside an oversized bottle-green parka sleeve; in the photo a small child seen from behind sits on a rope swing under a huge oak, old Tuscan stone farmhouse behind, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
+  "prompt": "first-person view looking straight down from above at an open photo album lying on dusty attic floorboards; on the black album page an old black-and-white photograph with white scalloped edges: a small child seen from behind sits on a rope swing under a huge oak, an old Tuscan stone farmhouse behind; one corner of the photograph pinched by fingertips just peeking out of an oversized bottle-green parka sleeve, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
   "w": 576,
   "h": 1024,
-  "seed": 101,
+  "seed": 201,
   "steps": 4
  },
  {
@@ -17,10 +17,10 @@
  },
  {
   "out": "data/horror/ep1_casa_della_nonna/img/s03_tessera.png",
-  "prompt": "first-person view, oversized bottle-green parka sleeve placing a blank plastic ID card next to an old black-and-white photograph in a flashlight beam, the sleeve cuff covering the portrait area of the card, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
+  "prompt": "first-person view looking down at a black photo album page: a plain blank white plastic card lies next to an old black-and-white photograph with white scalloped edges, the left end of the card covered by the cuff of an oversized bottle-green parka sleeve, only two fingertips peeking out of the sleeve, flashlight beam, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
   "w": 576,
   "h": 1024,
-  "seed": 103,
+  "seed": 203,
   "steps": 4
  },
  {
@@ -41,26 +41,26 @@
  },
  {
   "out": "data/horror/ep1_casa_della_nonna/img/s06_bicicletta.png",
-  "prompt": "close-up of an old faded photograph: a small bright red child's bicycle leaning against a stone farmhouse wall, a child seen from behind with one hand on the saddle, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
+  "prompt": "close-up of an old faded color photograph from the 1960s with a white border, lying on a black album page: a small bright red child's bicycle leaning against a stone farmhouse wall in daylight, a small child standing behind it facing the wall, seen from behind, the back of his head to the camera, one hand on the saddle, the only vivid color is the bright red bicycle, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
   "w": 576,
   "h": 1024,
-  "seed": 106,
+  "seed": 206,
   "steps": 4
  },
  {
   "out": "data/horror/ep1_casa_della_nonna/img/s07_botola.png",
-  "prompt": "hooded figure in a bottle-green parka seen from behind, kneeling in a dusty attic, head turned toward a square black trapdoor opening in the floor, flashlight on the floorboards lighting the soles of his worn grey felt slippers, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
+  "prompt": "a hooded figure in a bottle-green parka seen from behind, kneeling on dusty attic floorboards next to an open photo album, turning his head toward the square black hole of an open trapdoor in the floor beside him, a metal flashlight lying on the floorboards lights the soles of his worn grey felt slippers, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
   "w": 576,
   "h": 1024,
-  "seed": 107,
+  "seed": 207,
   "steps": 4
  },
  {
   "out": "data/horror/ep1_casa_della_nonna/img/s08_scale.png",
-  "prompt": "first-person view looking down a steep old stone staircase, two feet in worn grey checked felt slippers on steps hollowed in the middle, flashlight beam pointing ahead, steps almost in darkness, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
+  "prompt": "first-person view looking down over one's own knees at a steep narrow old stone staircase descending into darkness below, the stone treads hollowed in the middle, two feet in worn grey checked felt slippers and brown corduroy trouser legs on the top step, a flashlight beam pointing down the stairs, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
   "w": 576,
   "h": 1024,
-  "seed": 108,
+  "seed": 208,
   "steps": 4
  },
  {
@@ -73,10 +73,10 @@
  },
  {
   "out": "data/horror/ep1_casa_della_nonna/img/s10_serratura.png",
-  "prompt": "macro shot of a rusty iron keyhole plate on a peeling green wooden door, the tip of a key inserted from the other side glinting inside the keyhole, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
+  "prompt": "extreme macro close-up of an antique keyhole in a rusty iron lock plate on a wooden door with peeling green paint, classic keyhole shape, the keyhole is plugged from the other side by the dark metal end of a key, a tiny glint of light on the key's tip deep inside the keyhole, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
   "w": 576,
   "h": 1024,
-  "seed": 110,
+  "seed": 210,
   "steps": 4
  },
  {
@@ -89,18 +89,18 @@
  },
  {
   "out": "data/horror/ep1_casa_della_nonna/img/s12_maniglia.png",
-  "prompt": "close-up of an oversized bottle-green parka sleeve resting on an old iron door handle, only fingertips visible, peeling green wood, raking light, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
+  "prompt": "close-up of an old black iron lever door handle on a wooden door with peeling green paint, the cuff of an oversized bottle-green parka sleeve resting on the iron lever, the hand hidden inside the sleeve, only fingertips curled over the handle, raking flashlight light, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
   "w": 576,
   "h": 1024,
-  "seed": 112,
+  "seed": 212,
   "steps": 4
  },
  {
   "out": "data/horror/ep1_casa_della_nonna/img/s13_mandata.png",
-  "prompt": "macro shot of a rusty iron keyhole plate on a peeling green wooden door, the tip of a key inserted from the other side turned sideways inside the keyhole, the key rotated a quarter turn, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
+  "prompt": "extreme macro close-up of an antique keyhole in a rusty iron lock plate on a wooden door with peeling green paint, classic keyhole shape, the dark metal end of a key inside the keyhole has turned sideways, a tiny glint of light on the key's tip deep inside the keyhole, cinematic film still, vertical 9:16, 35mm lens, shallow depth of field, low-key lighting, single warm amber flashlight beam against cold blue shadows, floating dust, heavy film grain, muted desaturated palette, photorealistic, no text, no watermark, no visible faces",
   "w": 576,
   "h": 1024,
-  "seed": 110,
+  "seed": 210,
   "steps": 4
  },
  {
