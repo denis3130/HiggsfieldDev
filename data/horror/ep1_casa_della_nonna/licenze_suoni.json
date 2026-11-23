@@ -1,0 +1,77 @@
+{
+ "nota": "Registrazioni vere CC0 da Freesound (trovate con l'API di Openverse). Tagliate e, dove indicato, filtrate con ffmpeg. I suoni comuni (amb_slow, legno, respiro, stoffa, gocce, colpo, rise_long, heart60) sono in scripts/bivio/sfx/ con le loro licenze.",
+ "sfx/vento_soffitta.mp3": {
+  "titolo": "Wind, interior, very slow howling, window, winter, cold, 10.",
+  "autore": "TRP",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/TRP/sounds/576970",
+  "nota": "ritaglio di 60 secondi da 0:02"
+ },
+ "sfx/carta.mp3": {
+  "titolo": "Paper Rustle",
+  "autore": "BenjaminNelan",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/BenjaminNelan/sounds/353125"
+ },
+ "sfx/tessera.mp3": {
+  "titolo": "card placed on table.wav",
+  "autore": "filmfan87",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/filmfan87/sounds/108395",
+  "nota": "un solo appoggio (da 6,28 s)"
+ },
+ "sfx/tortora.mp3": {
+  "titolo": "Eurasian Collared Dove",
+  "autore": "randomthoughts7",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/randomthoughts7/sounds/610563",
+  "nota": "passa-basso per farla sentire lontana"
+ },
+ "sfx/pagina.mp3": {
+  "titolo": "Page Turn",
+  "autore": "davidbain",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/davidbain/sounds/136778"
+ },
+ "sfx/campanello.mp3": {
+  "titolo": "Bicycle Bell C6.wav",
+  "autore": "gis_sweden",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/gis_sweden/sounds/536554",
+  "nota": "passa-basso ed eco: lontano, come un ricordo"
+ },
+ "sfx/bottiglia.mp3": {
+  "titolo": "bottle beer drop fall floor or concrete bounce roll beer pour out.wav",
+  "autore": "kyles",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/kyles/sounds/450781",
+  "nota": "passa-basso ed eco: due piani più giù"
+ },
+ "sfx/pantofole.mp3": {
+  "titolo": "01-20 Footsteps, Tile, Slippers, Slow Pace.wav",
+  "autore": "SpliceSound",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/SpliceSound/sounds/260120",
+  "nota": "ritaglio di 6 secondi da 0:02"
+ },
+ "sfx/frigo.mp3": {
+  "titolo": "Refrigerator Hum",
+  "autore": "katfolker",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/katfolker/sounds/426885",
+  "nota": "ritaglio di 60 secondi da 0:10"
+ },
+ "sfx/maniglia.mp3": {
+  "titolo": "door handle 7.wav",
+  "autore": "FenrirFangs",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/FenrirFangs/sounds/214002"
+ },
+ "sfx/mandata.mp3": {
+  "titolo": "Unlock Deadbolt",
+  "autore": "alegemaate",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/alegemaate/sounds/364683",
+  "nota": "solo lo scatto del catenaccio (da 1,16 s)"
+ }
+}

@@ -1,0 +1,147 @@
+{
+ "serie": "IL BIVIO",
+ "storia": "La casa della nonna",
+ "episodio": 1,
+ "titolo": "Le fotografie",
+ "righe": [
+  {
+   "id": 1,
+   "voce": "In questa fotografia ci sei tu.",
+   "img": "s01_foto_altalena.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 2,
+   "voce": "Sotto c'è scritto:",
+   "citazione": "Elio, agosto del sessantaquattro.",
+   "img": "s02_didascalia.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 3,
+   "voce": "La carta d'identità che hai in tasca dice:",
+   "citazione": "Nato nel novantasei.",
+   "img": "s03_tessera.png",
+   "mov": "fermo"
+  },
+  {
+   "id": 4,
+   "voce": "La nonna è morta da due settimane. La casa va svuotata.",
+   "img": "s04_soffitta.png",
+   "mov": "panoramica"
+  },
+  {
+   "id": 5,
+   "voce": "Giri le pagine. Il pozzo. La quercia. Sei sempre tu.",
+   "img": "s05_pagine.png",
+   "mov": "mano",
+   "scurisci": [
+    0.3,
+    0.83,
+    0.16,
+    0.06
+   ]
+  },
+  {
+   "id": 6,
+   "voce": "È in bianco e nero. Ma la bicicletta era rossa: te lo ricordi.",
+   "img": "s06_bicicletta.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 7,
+   "voce": "Poi, da sotto, un rumore.",
+   "img": "s07_botola.png",
+   "mov": "fermo"
+  },
+  {
+   "id": 8,
+   "voce": "Scendi. I piedi conoscono ogni gradino.",
+   "img": "s08_scale.png",
+   "mov": "scendi"
+  },
+  {
+   "id": 9,
+   "voce": "In cucina, la porta della cantina è chiusa.",
+   "img": "s09_cucina.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 10,
+   "voce": "Guardi nella serratura. C'è la chiave. Infilata dall'altra parte.",
+   "img": "s10_serratura.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 11,
+   "voce": "Chiusa da dentro. E in casa non dovrebbe esserci nessuno.",
+   "img": "s11_fessura.png",
+   "mov": "fermo"
+  },
+  {
+   "id": 12,
+   "voce": "Appoggi la mano sulla maniglia.",
+   "img": "s12_maniglia.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 13,
+   "voce": "La chiave gira. Un'altra mandata.",
+   "img": "s10_serratura.png",
+   "img_dopo": "s13_mandata.png",
+   "scatto": "gira",
+   "mov": "fermo"
+  },
+  {
+   "id": 14,
+   "voce": "",
+   "silenzio": 1.4,
+   "img": "s13_mandata.png",
+   "mov": "fermo"
+  },
+  {
+   "id": 15,
+   "voce": "Cosa fai?",
+   "opzioni": {
+    "a": {
+     "voce": "La A: bussi alla porta e chiami chi c'è.",
+     "testo": "Bussi\ne chiami",
+     "img": "sA_pugno.png",
+     "ritaglio": [
+      0.5,
+      0.5,
+      0.8
+     ]
+    },
+    "b": {
+     "voce": "Oppure la B: esci subito dalla casa.",
+     "testo": "Esci\ndalla casa",
+     "img": "sB_soglia.png",
+     "ritaglio": [
+      0.5,
+      0.5,
+      0.8
+     ]
+    }
+   },
+   "chiusura": "Scrivilo nei commenti.",
+   "sfondo": "s13_mandata.png"
+  }
+ ],
+ "ambiente": [
+  {
+   "file": "amb_slow.mp3",
+   "vol": [
+    0.05,
+    0.16
+   ]
+  }
+ ],
+ "silenzi": [
+  {
+   "da_riga": 13,
+   "a_riga": 15
+  }
+ ],
+ "suoni": []
+}
