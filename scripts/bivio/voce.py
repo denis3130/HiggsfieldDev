@@ -14,6 +14,7 @@ from voce_chatterbox import Voce
 from faster_whisper import WhisperModel
 
 SR = 24000; SEMI = int(os.environ.get("SEMI", 8)); CODA = 2.0
+ENF = float(os.environ.get("ENFASI", 0.6))      # espressività del narratore: 0,5 per una voce clonata più naturale, 0,6 per la voce sintetica
 RIF = os.environ.get("RIF") or str(B / "voci/narratore.wav"); RIF_ID = hashlib.sha1(Path(RIF).read_bytes()).hexdigest()[:10]
 CACHE = D / "_voce"; CACHE.mkdir(exist_ok=True)
 import time; _t = time.time()
@@ -143,7 +144,7 @@ ep = json.loads((D / "episodio.json").read_text()); tempi = []; parole = []; t =
 for r in ep["righe"]:
     print("riga", r["id"], flush=True); pz = []                    # pezzi: (tipo, audio, parole, pausa prima, pausa dopo)
     if r.get("voce"):
-        a, w = dici(r["voce"]); pz.append(("voce", forte(a), w, 0.0, 0.3 if r.get("opzioni") else 0.12))
+        a, w = dici(r["voce"], ENF); pz.append(("voce", forte(a), w, 0.0, 0.3 if r.get("opzioni") else 0.12))
     if r.get("grido"):                                            # urlo: enfasi al massimo (1,4), più forte, saturato, asciutto. Scriverlo con tre esclamazioni: «Sono qui! Sono qui! Aiuto!»
         a, w = dici(r["grido"], 1.4, r.get("sottotitolo_grido"), pause=None, lungo=True); pz.append(("grido", (np.tanh(a * 2.4) * 0.6).astype(np.float32), w, 0.0, 0.0))
     if r.get("citazione"):                                        # messaggio o scritta letta dal narratore
@@ -152,8 +153,8 @@ for r in ep["righe"]:
         a, w = dici(r["lontana"], 0.4); pz.append(("lontana", lowpass(forte(a), 2200) * 0.6, w, 0.4, 0.1))
     if r.get("opzioni"):
         for k in ("a", "b"):
-            a, w = dici(r["opzioni"][k]["voce"], 0.55); pz.append((k, forte(a), w, 0.0, 0.4))
-        a, w = dici(r["chiusura"], 0.6); pz.append(("chiusura", forte(a), w, 0.0, 0.2))
+            a, w = dici(r["opzioni"][k]["voce"], ENF - 0.05); pz.append((k, forte(a), w, 0.0, 0.4))
+        a, w = dici(r["chiusura"], ENF); pz.append(("chiusura", forte(a), w, 0.0, 0.2))
     st = t; info = []; pr = []; riga = []
     for tipo, a, w, prima, dopo in pz:
         t0 = st + sum(len(x) for x in riga) / SR + prima

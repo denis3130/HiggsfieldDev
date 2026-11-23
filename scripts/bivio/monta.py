@@ -436,6 +436,7 @@ def spezza(ws, corpo, larg):
     return min(cand, key=costo)
 
 
+CAP = []
 for i, (r, tr, ws) in enumerate(zip(righe, T, parole)):
     n0 = 0
     for p in tr.get("pezzi", []):
@@ -457,7 +458,12 @@ for i, (r, tr, ws) in enumerate(zip(righe, T, parole)):
             fs = corpo(" ".join(x[2] for x in g).upper(), base)
             for wi, (a, b, _) in enumerate(g):
                 b2 = g[wi + 1][0] if wi + 1 < len(g) else gfine
-                ass.append(f"Dialogue: 1,{ts(a)},{ts(b2)},{stile},,0,0,0,,{{\\pos({W // 2},{Y_CAP})\\fs{fs}}}{evidenzia(g, wi, col)}")
+                CAP.append((a, b2, stile, f"{{\\pos({W // 2},{Y_CAP})\\fs{fs}}}{evidenzia(g, wi, col)}"))
+CAP.sort(key=lambda c: c[0])                                               # un sottotitolo finisce sempre prima che inizi il successivo (niente scritte sovrapposte)
+for k, (a, b, stile, txt) in enumerate(CAP):
+    b = min(b, CAP[k + 1][0]) if k + 1 < len(CAP) else b
+    if b > a:
+        ass.append(f"Dialogue: 1,{ts(a)},{ts(b)},{stile},,0,0,0,,{txt}")
 (D / "sub.ass").write_text("\n".join(ass) + "\n", encoding="utf-8")
 filtro = lambda p: str(Path(p).resolve()).replace(":", "\\:").replace("'", "\\'")
 SUB = f"subtitles='{filtro(D / 'sub.ass')}'" + (f":fontsdir='{filtro(FONTS)}'" if FONTS.exists() else "")

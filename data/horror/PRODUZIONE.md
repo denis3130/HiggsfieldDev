@@ -33,6 +33,8 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
 - `python scripts/bivio/voce.py cartella_episodio` → `voce.wav`, `tempi.json`, `parole.json`. Modello `onnx-community/chatterbox-multilingual-ONNX`
   (si scarica da solo, 3 GB), più Whisper `medium` per il controllo. Caricamento 70 s, poi 10–20 s a frase.
 - Timbro: `scripts/bivio/voci/narratore.wav` (voce sintetica profonda, non una persona reale), uguale per tutta la serie.
+  Voce clonata dell'utente (23/11): la registrazione resta solo sulla macchina che lavora (mai nel repository). Si usa un pezzo pulito di circa 10 secondi
+  come riferimento (`RIF=...`) e `ENFASI=0.5`, più naturale della 0,6 usata con la voce sintetica.
   `RIF=altra_voce.wav` per cambiarlo. Se l'utente manda la propria voce da clonare, quel file resta solo sulla macchina: non va nel repository.
 - Il testo va passato al modello in minuscolo e con gli accenti scomposti (NFKD): con «È», «già», «lì» scritti normalmente sbaglia le parole.
   Lo fa `prepara()`; anche due punti e puntini diventano virgole.
