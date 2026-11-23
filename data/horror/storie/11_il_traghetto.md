@@ -37,7 +37,7 @@ Descrizioni da ripetere identiche in ogni immagine.
 - **Tessera**: plastica bianca con una banda blu notte; TESTO A SCHERMO: «512». È l'unica cosa che hai in tasca.
 - **Biglietto**: cartoncino color crema con una fascia blu notte in alto e una piccola rosa dei venti. TESTO A SCHERMO: «LINEE DEL MAESTRALE · M/N TRAMONTANA · LIVORNO → OLBIA · 22:30 · PASSEGGERO: FENU DARIO · CABINA 512». Sotto spunta il secondo: «PASSEGGERO: FENU EFISIO · CABINA 512».
 - **Tuo padre**: sempre di spalle o sotto la coperta. Coppola grigia, cappotto marrone, valigia rigida color cuoio. Negli ultimi episodi solo le mani: vecchie, grandi, con le vene in rilievo.
-- **La donna in rosso (Ilde Brau)**: anziana, impermeabile rosso lucido con il cappuccio alzato, sempre di spalle o di tre quarti da dietro. Borsa di pelle nera con un cartellino di cuoio; TESTO A SCHERMO: «I. BRAU».
+- **La donna in rosso (Ida Brau)**: anziana, impermeabile rosso lucido con il cappuccio alzato, sempre di spalle o di tre quarti da dietro. Borsa di pelle nera con un cartellino di cuoio; TESTO A SCHERMO: «I. BRAU».
 - **Il camionista**: massiccio, giubbotto arancione catarifrangente con due bande grigie, berretto di lana nero. Sempre di spalle o in controluce.
 - **Il ragazzo**: sui quindici anni, magro, felpa grigia con il cappuccio alzato che gli nasconde il viso, jeans, scarpe da ginnastica bianche sporche. Nessuna borsa.
 - **La nave vera (M/N Tramontana)**: scafo bianco con una fascia blu notte, fumaiolo blu con una rosa dei venti bianca. Interni: moquette verde bottiglia, pareti color crema, corrimano d'ottone, luce calda ambrata, gente sullo sfondo sempre sfocata.
@@ -67,23 +67,25 @@ Nessuna morte con riavvolgimento: la storia è una sola e ogni scelta cambia sol
 | # | Voce | Si vede | Suono |
 |---|---|---|---|
 | 1 | Hai un biglietto per la Sardegna. Non ci arriverai. | Soggettiva dall'alto: la tua mano sinistra (manica blu, orologio) regge due biglietti sovrapposti sotto la luce arancione dei lampioni del molo. Dietro, sfocato, il portellone aperto del traghetto. Lento avanzamento sui biglietti. TESTO A SCHERMO: «LINEE DEL MAESTRALE · M/N TRAMONTANA · LIVORNO → OLBIA · 22:30 · PASSEGGERO: FENU DARIO · CABINA 512»; sotto spunta «PASSEGGERO: FENU EFISIO». | Sirena lunga di nave, gabbiani lontani, motori al minimo. |
-| 2 | Livorno, ventidue e trenta. Sali a bordo con tuo padre. | Campo lungo dal basso della rampa: il traghetto bianco con la fascia blu, il portellone illuminato. Di spalle, un vecchio con coppola grigia, cappotto marrone e valigia color cuoio sale davanti a te. Sullo sfondo, tra i camion, una piccola sagoma col cappuccio grigio si infila sotto il telone di un rimorchio. Camera a mano che sale la rampa. | Passi sulla rampa di ferro, camion in manovra, catene. |
-| 3 | Cabina cinquecentododici. Lui si addormenta subito. Tu no. | Interno cabina stretta, luce calda della lampada da lettura: nella cuccetta bassa una sagoma sotto la coperta, girata verso la parete. Sul tavolino la coppola grigia. Sulla porta socchiusa la targhetta 512. Camera ferma, leggero rollio. | Ronzio dei motori, respiro lento di chi dorme, un cigolio. |
-| 4 | Prendi la tessera ed esci sul ponte. | Dettaglio: la tua mano prende dal tavolino una tessera bianca con la banda blu. TESTO A SCHERMO: «512». Stacco sulla porta della cabina che si chiude davanti all'obiettivo. | Clic della serratura, passi sulla moquette. |
-| 5 | Fuori c'è solo nebbia. | Soggettiva sul ponte esterno di poppa: le tue mani sul corrimano bagnato, oltre la ringhiera solo nebbia color latte accesa dai fari della nave. La camera avanza piano verso il vuoto. | Vento, mare contro lo scafo, corno da nebbia lontano. |
-| 6 | Poi dalla nebbia esce un'altra nave. Identica alla tua. Spenta. Vuota. | Campo lungo in soggettiva: dalla nebbia emerge la prua di un traghetto identico, bianco con la fascia blu, tutte le luci spente, oblò neri, ponti deserti. Scorre vicinissimo da destra a sinistra; la camera lo segue lentamente. | Nessun motore: solo acqua che scorre e un gemito di metallo. |
-| 7 | Ti sfiora in silenzio. E sparisce. | La poppa della nave spenta si scioglie nella nebbia. In primo piano le tue mani stringono il corrimano. I fari della tua nave sfarfallano una volta e diventano verdastri. | Il corno da nebbia si interrompe a metà. Silenzio, una goccia. |
-| 8 | Rientri. Il salone era pieno. Adesso non c'è nessuno. Nemmeno una valigia. | Soggettiva: spingi la porta a vetri. Salone poltrone deserto: file di poltrone vuote, nessuna borsa, nessuna coperta, solo luci d'emergenza verdastre e condensa sui vetri. Lento carrello in avanti lungo il corridoio centrale. | Porta pesante, ronzio di un neon, i tuoi passi soli. |
-| 9 | Corri alla cabina. La tessera non apre più. | Dettaglio: la tessera 512 passata sulla serratura della porta 512; il led si accende rosso. Dietro, fuori fuoco, il corridoio delle cabine lungo e stretto. | Passi di corsa, due bip di errore, fiato corto. |
-| 10 | Batti i pugni sulla porta: PAPÀ! PAPÀ, APRI! | Soggettiva: i tuoi pugni battono sulla porta color crema con la targhetta 512. La camera trema a ogni colpo. | Colpi su una porta di metallo, eco nel corridoio. |
-| 11 | — | Campo lungo dal fondo del corridoio: la tua sagoma di spalle, piccola, davanti alla porta. Una luce d'emergenza sfarfalla. Camera immobile. | Silenzio totale per due secondi. |
-| 12 | Risponde solo l'altoparlante: «La signora Ilde Brau è attesa alla reception.» | Dettaglio dal basso: l'altoparlante grigio a tromba sul soffitto del corridoio, la griglia vibra. Lento avanzamento. | Scarica elettrica, campanello a due toni dell'annuncio, fruscio. |
-| 13 | Un nome mai sentito. | La tua ombra sulla porta 512: la mano si stacca lentamente dalla maniglia. | Il fruscio dell'altoparlante si spegne. |
-| 14 | Cosa fai? A: sfondi la porta. B: corri alla reception. Scrivilo nei commenti. | Scheda di scelta, schermo diviso in due metà (vedi sotto). | Nota bassa tenuta, ticchettio di orologio. |
+| 2 | Livorno, ultima nave della sera. Sali a bordo con tuo padre. | Campo lungo dal basso della rampa: il traghetto bianco con la fascia blu, il portellone illuminato. Di spalle, un vecchio con coppola grigia, cappotto marrone e valigia color cuoio sale davanti a te. Sullo sfondo, tra i camion, una piccola sagoma col cappuccio grigio si infila sotto il telone di un rimorchio. Camera a mano che sale la rampa. | Passi sulla rampa di ferro, camion in manovra, catene. |
+| 3 | In cabina, lui si addormenta subito. Tu no. | Interno cabina stretta, luce calda della lampada da lettura: nella cuccetta bassa una sagoma sotto la coperta, girata verso la parete. Sul tavolino la coppola grigia. Sulla porta socchiusa la targhetta 512. Camera ferma, leggero rollio. | Ronzio dei motori, respiro lento di chi dorme, un cigolio. |
+| 4 | Prendi la tessera. | Dettaglio: la tua mano prende dal tavolino una tessera bianca con la banda blu. TESTO A SCHERMO: «512». Lento avanzamento. | Il cartoncino che scivola sul tavolino. |
+| 5 | Esci sul ponte. | Di spalle, in controluce: la tua sagoma esce da una porta di ferro sul ponte esterno, oltre la soglia solo nebbia illuminata. La camera ti segue. | Porta pesante, il vento che entra. |
+| 6 | Fuori c'è solo nebbia. | Soggettiva sul ponte esterno di poppa: le tue mani sul corrimano bagnato, oltre la ringhiera solo nebbia color latte accesa dai fari della nave. La camera avanza piano verso il vuoto. | Vento, mare contro lo scafo, corno da nebbia lontano. |
+| 7 | Dalla nebbia esce un'altra nave. Identica alla tua. Spenta. Vuota. | Campo lungo in soggettiva: dalla nebbia emerge la prua di un traghetto identico, bianco con la fascia blu, tutte le luci spente, oblò neri, ponti deserti. Scorre vicinissimo da destra a sinistra; la camera lo segue lentamente. | Nessun motore: solo acqua che scorre e un gemito di metallo. |
+| 8 | Ti sfiora in silenzio. E sparisce. | La poppa della nave spenta si scioglie nella nebbia. In primo piano le tue mani stringono il corrimano. I fari della tua nave sfarfallano una volta e diventano verdastri. | Il corno da nebbia si interrompe a metà. Silenzio, una goccia. |
+| 9 | Il salone era pieno. Adesso non c'è nessuno. Nemmeno una valigia. | Soggettiva: spingi la porta a vetri. Salone poltrone deserto: file di poltrone vuote, nessuna borsa, nessuna coperta, solo luci d'emergenza verdastre e condensa sui vetri. Lento carrello in avanti lungo il corridoio centrale. | Porta pesante, ronzio di un neon, i tuoi passi soli. |
+| 10 | Corri alla cabina. La tessera non apre più. | Dettaglio: la tessera 512 passata sulla serratura della porta 512; il led si accende rosso. Dietro, fuori fuoco, il corridoio delle cabine lungo e stretto. | Passi di corsa, due bip di errore, fiato corto. |
+| 11 | Batti i pugni sulla porta: PAPÀ! PAPÀ! APRI! | Soggettiva: i tuoi pugni battono sulla porta color crema con la targhetta 512. La camera trema a ogni colpo. | Colpi su una porta di metallo, eco nel corridoio. |
+| 12 | — | Campo lungo dal fondo del corridoio: la tua sagoma di spalle, piccola, davanti alla porta. Una luce d'emergenza sfarfalla. Camera immobile. | Silenzio totale, poi il campanello a due toni dell'annuncio. |
+| 13 | Risponde solo l'altoparlante: «La signora Ida Brau è attesa alla reception.» | Dettaglio dal basso: l'altoparlante grigio a tromba sul soffitto del corridoio, la griglia vibra. Lento avanzamento. | Scarica elettrica, campanello a due toni dell'annuncio, fruscio. |
+| 14 | Un nome mai sentito. | La tua ombra sulla porta 512: la mano si stacca lentamente dalla maniglia. | Il fruscio dell'altoparlante si spegne. |
+| 15 | Cosa fai? La A: sfondi la porta della cabina. Oppure la B: corri subito alla reception. Scrivilo nei commenti. | Scheda di scelta: due carte A/B con miniatura (vedi sotto); la camera prosegue sull'ultima inquadratura e va fuori fuoco. | Colpo, nota che sale, battito. |
 
-**Bivio:** A: sfondi la porta / B: corri alla reception
+**Bivio:** Sfondi / la porta · Corri alla / reception
+**Frase A:** «La A: sfondi la porta della cabina.» · **Frase B:** «Oppure la B: corri subito alla reception.»
 **Immagine A:** la tua spalla in controluce contro la porta 512, il led rosso acceso. **Immagine B:** in fondo al corridoio verdastro, il banco deserto della reception con il microfono nero.
-**Parole:** 111
+**Parole:** 120
 
 **Prompt immagini (inglese)**
 
@@ -142,7 +144,7 @@ Tutte le scritte (biglietti, «512», targhette) si aggiungono in montaggio.
 | C5 | Sul salvagente, il nome della nave è scritto al contrario. | Dettaglio: un salvagente arancione appeso alla ringhiera. TESTO A SCHERMO SPECCHIATO: «M/N TRAMONTANA». La tua mano lo sfiora. | Il salvagente che batte piano contro il ferro. |
 | C6 | Questa non è la tua nave. | Controcampo: dalla ringhiera verso l'interno, la nave spenta, buia, il fumaiolo senza fumo che sparisce nella nebbia. | Scricchiolio di lamiera. |
 | C7 | La tua se ne va. Con tuo padre. | Di nuovo le luci ambrate lontane: diventano un alone. In primo piano la tua mano tesa verso di loro. | Il corno da nebbia si perde. |
-| C8 | L'altoparlante: «Seconda chiamata per Ilde Brau.» | Dettaglio dal basso: l'altoparlante esterno sotto la tettoia, bagnato, la griglia vibra. | Campanello a due toni, voce distorta. |
+| C8 | L'altoparlante: «Seconda chiamata per Ida Brau.» | Dettaglio dal basso: l'altoparlante esterno sotto la tettoia, bagnato, la griglia vibra. | Campanello a due toni, voce distorta. |
 | C9 | La donna in rosso: «Mai sentita.» | Di tre quarti da dietro: il cappuccio rosso si muove appena, la donna scuote la testa. Stringe al petto una borsa di pelle nera. | Il fruscio dell'impermeabile. |
 | C10 | Cosa fai? A: calate la scialuppa. B: restate a bordo. Scrivilo nei commenti. | Scheda di scelta, schermo diviso in due metà. | Nota bassa tenuta, ticchettio. |
 
@@ -176,7 +178,7 @@ Tutte le scritte (biglietti, «512», targhette) si aggiungono in montaggio.
 
 | # | Voce | Si vede | Suono |
 |---|---|---|---|
-| C1 | Nel salone, l'altoparlante gracchia: «Ultima chiamata per la signora Ilde Brau.» | Dettaglio dal basso: l'altoparlante sopra le poltrone vuote, la griglia vibra. Luce verde d'emergenza. | Scarica, campanello a due toni, voce distorta. |
+| C1 | Nel salone, l'altoparlante gracchia: «Ultima chiamata per la signora Ida Brau.» | Dettaglio dal basso: l'altoparlante sopra le poltrone vuote, la griglia vibra. Luce verde d'emergenza. | Scarica, campanello a due toni, voce distorta. |
 | C2 | La donna in rosso alza le spalle. | Di spalle, seduta in una poltrona della prima fila: il cappuccio rosso, le spalle che si alzano e ricadono. La borsa nera sulle ginocchia. | Fruscio dell'impermeabile. |
 | C3 | Poi comincia a sfumare. I piedi. Le ginocchia. Le mani. Diventa nebbia. | Tre dettagli in dissolvenza: le scarpe che si sciolgono in fumo grigio sulla moquette; l'orlo rosso che si svuota; le mani sulla borsa che diventano trasparenti. Lento avanzamento. | Un soffio lungo, come aria che esce da una stanza. |
 | C4 | L'impermeabile rosso cade sulla poltrona. Vuoto. | L'impermeabile si affloscia sul sedile, il cappuccio si piega in avanti su niente. | Tela bagnata che cade. |

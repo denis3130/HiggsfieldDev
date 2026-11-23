@@ -58,7 +58,8 @@ def _altoparlante():
         if r.get("altoparlante"):
             for pz in t["pezzi"]:
                 if pz["tipo"] == "citazione":
-                    a, b = max(0, int((pz["inizio"] - 0.05) * sr)), min(len(x), int((pz["fine"] + 0.45) * sr))
+                    a = max(0, int((pz["inizio"] - 0.05) * sr))
+                    b = min(len(x), int((pz["fine"] + 0.45) * sr), int((t["fine"] - 0.02) * sr))     # non oltre la riga
                     x[a:b] = _filtro_altoparlante(x[a:b], sr)
     sf.write(v, x, sr)
     marca.write_text(hashlib.sha1(v.read_bytes()).hexdigest())
@@ -72,18 +73,6 @@ if __name__ != "__main__":
 # ---------------------------------------------------------------- effetti sulle inquadrature (chiamati da monta.py)
 def _indice(r, m):
     return next(k for k, x in enumerate(m.righe) if x is r)
-
-
-def _istanti(r, i, m, file):
-    """Secondi (dall'inizio della riga) in cui partono i suoni `file` di questa riga: stessa regola di quando() in monta.py."""
-    out = []
-    for s in m.ep.get("suoni", []):
-        if s["riga"] == r["id"] and s["file"] == file:
-            t = m.T[i]["inizio"]
-            if s.get("parola"):
-                t = next((w[0] for w in m.parole[i] if s["parola"].lower() in w[2].lower()), t)
-            out.append(t + s.get("dopo", 0.0) - m.T[i]["inizio"])
-    return sorted(out)
 
 
 def _sposta(fr, m, dx=0.0, dy=0.0, ang=0.0, sc=1.0):
@@ -121,28 +110,83 @@ def _vibra(fr, r, i, tau, m):
     return _sposta(fr, m, 1.8 * e * np.sin(2 * np.pi * 23 * tau), 1.4 * e * np.sin(2 * np.pi * 31 * tau + 1), 0, 1.006)
 
 
+def _suoni(r, i, m, file):
+    """(inizio dall'inizio della riga, durata) dei suoni `file` di questa riga: stessa regola di quando() in monta.py."""
+    out = []
+    for s in m.ep.get("suoni", []):
+        if s["riga"] == r["id"] and s["file"] == file:
+            t = m.T[i]["inizio"]
+            if s.get("parola"):
+                t = next((w[0] for w in m.parole[i] if s["parola"].lower() in w[2].lower()), t)
+            out.append((t + s.get("dopo", 0.0) - m.T[i]["inizio"], s.get("dur", 99.0)))
+    return sorted(out)
+
+
+COLPI_DENTRO = [0.09, 0.75, 1.45, 2.15, 2.93, 3.7]    # secondi dei colpi dentro sfx/pugni_porta.mp3 (misurati sul file)
+
+
 def _colpi(fr, r, i, tau, m):
     amp = 0.0; dx = dy = 0.0
-    for k, tk in enumerate(_istanti(r, i, m, "pugni_porta.mp3")):
-        for c in COLPI_DENTRO:                                          # più colpi dentro lo stesso file
+    for k, (tk, dur) in enumerate(_suoni(r, i, m, "pugni_porta.mp3")):
+        for j, c in enumerate(COLPI_DENTRO):
             d = tau - tk - c
-            if d >= 0:
+            if d >= 0 and c < dur:
                 e = np.exp(-d / 0.09); amp += e
-                dx += e * 16 * np.sin(3.7 * (k + c * 5) + 1); dy += e * 12 * np.cos(2.3 * (k + c * 5))
+                dx += e * 18 * np.sin(3.7 * (k + j) + 1); dy += e * 13 * np.cos(2.3 * (k + j) + 0.4)
     if amp < 1e-3:
         return fr
-    return _sposta(fr, m, dx, dy, 0.4 * dx / 16, 1.025 + 0.02 * min(amp, 1))
+    return _sposta(fr, m, dx, dy, 0.35 * dx / 18, 1.03 + 0.02 * min(amp, 1))
 
 
-COLPI_DENTRO = [0.0]                   # secondi dei colpi dentro pugni_porta.mp3 (si misurano sul file)
-LED = {}                               # riga → posizione del led nell'immagine generata (x, y in 576x1024)
-SPARISCE = {}                          # parametri della nave che si scioglie
+def _led(fr, r, i, tau, u, m):
+    """Il led della serratura: spento, poi rosso a ogni bip (due), poi resta rosso più piano."""
+    x, y, rag = r["led"]
+    def alone(big):
+        g = np.zeros((SH, SW), np.float32); cx, cy = x * K, y * K
+        yy, xx = np.mgrid[0:SH, 0:SW].astype(np.float32)
+        d2 = (xx - cx) ** 2 + (yy - cy) ** 2
+        g = np.exp(-d2 / (2 * (rag * K * 0.35) ** 2)) * 1.0 + np.exp(-d2 / (2 * (rag * K * 1.6) ** 2)) * 0.45
+        return np.dstack([g * 40, g * 55, g * 255]).astype(np.float32)          # BGR: rosso acceso
+    L = _strato("_led_" + r["img"], r["img"], alone, r, i, u, tau, m)
+    acceso = 0.0
+    for tb, _ in _suoni(r, i, m, "bip_errore.mp3"):
+        for c, dd in ((0.0, 0.16), (0.27, 0.16)):                               # i due bip dentro bip_errore.mp3
+            if tb + c <= tau < tb + c + dd + 0.05:
+                acceso = 1.0
+        if tau >= tb + 0.6:
+            acceso = max(acceso, 0.55 + 0.08 * np.sin(2 * np.pi * 1.3 * tau))
+    return fr + L * acceso
+
+
+def _sparisce(fr, r, i, tau, u, m):
+    """La poppa della nave spenta si scioglie nella nebbia (più lontano = prima); su «sparisce» i fari della tua nave
+    sfarfallano una volta e diventano verdastri."""
+    nome = r["img"]
+    def prof(big):
+        d = cv2.resize(m.IMG[nome][1], (SW, SH)); return np.dstack([d * 255] * 3).astype(np.float32)
+    P = _strato("_prof_" + nome, nome, prof, r, i, u, tau, m)[..., :1] / 255          # 1 = vicino
+    ts = next((w[0] for w in m.parole[i] if "sparisce" in w[2].lower()), m.T[i]["fine"] - 1.0) - m.T[i]["inizio"]
+    k = float(np.clip((tau - 0.2) / max(ts + 0.5, 0.5), 0, 1)); k = k * k * (3 - 2 * k)
+    lontano = np.clip((0.62 - P) / 0.4, 0, 1)
+    neb = cv2.GaussianBlur(fr, (0, 0), 9) * 0.35 + np.float32([150, 170, 140]) * 0.65   # nebbia color latte
+    fr = fr * (1 - lontano * k * 0.92) + neb * lontano * k * 0.92
+    d = tau - ts
+    lampo = 1.0
+    if 0 <= d < 0.42:                                                                 # sfarfallio: spento, acceso, spento, acceso
+        lampo = float(np.interp(d, [0, 0.05, 0.12, 0.2, 0.27, 0.35, 0.42], [1, 0.25, 0.25, 0.9, 0.35, 0.35, 1]))
+    verde = float(np.clip((d - 0.3) / 0.5, 0, 1))
+    tinta = np.float32([1.0, 1.0, 1.0]) * (1 - verde) + np.float32([0.92, 1.12, 0.62]) * verde
+    return fr * lampo * tinta
 
 
 def dopo(fr, r, tau, u, t, m):
     i = _indice(r, m)
     if r.get("rollio"):
         fr = _rollio(fr, t, m)
+    if r.get("sparisce"):
+        fr = _sparisce(fr, r, i, tau, u, m)
+    if r.get("led"):
+        fr = _led(fr, r, i, tau, u, m)
     if r.get("colpi"):
         fr = _colpi(fr, r, i, tau, m)
     if r.get("sfarfalla"):
@@ -300,6 +344,46 @@ def _tessera(big):
 
 
 SCRITTE["s04_tessera.png"] = _tessera
+
+
+def cancella_tratti(big, rett, soglia=8):
+    """Toglie dentro il rettangolo solo i tratti più chiari del fondo (le lettere finte), lasciando la targhetta."""
+    x0, y0, x1, y1 = (np.float32(rett) * K).astype(int)
+    z = cv2.cvtColor(np.clip(big[y0:y1, x0:x1], 0, 255).astype(np.uint8), cv2.COLOR_BGR2GRAY).astype(np.float32)
+    m = np.zeros(big.shape[:2], np.uint8)
+    m[y0:y1, x0:x1] = ((z > np.median(z) + soglia) * 255).astype(np.uint8)
+    m = cv2.dilate(m, np.ones((7, 7), np.uint8))
+    return cv2.inpaint(np.clip(big, 0, 255).astype(np.uint8), m, 9, cv2.INPAINT_TELEA).astype(np.float32)
+
+
+# --- inquadratura 13: l'altoparlante (via la finta marca sulla targhetta)
+SCRITTE["s13_altoparlante.png"] = lambda big: cancella_tratti(big, (200, 234, 377, 269))
+
+# --- inquadratura 14: l'ombra sulla porta: via il finto «100», «512» inciso sulla targhetta d'ottone
+P14 = [(224, 379), (349, 379), (349, 418), (224, 418)]
+
+
+def _ombra_porta(big):
+    big = cancella(big, (420, 104, 537, 177))
+    return stampa(big, disegno_numero("512", 600, 190, INCHIOSTRO, "Bold", 0.8), P14, luce=0.9)
+
+
+SCRITTE["s14_ombra_porta.png"] = _ombra_porta
+
+
+# --- miniatura A: la spalla contro la porta; il led della serratura diventa rosso
+def _led_rosso(big, cx, cy, r):
+    """Il led verde generato diventa rosso (stessa forma e alone)."""
+    b, g, rr = big[..., 0], big[..., 1], big[..., 2]
+    verde = np.clip((np.maximum(g, b) - rr) / 70, 0, 1)
+    d = np.sqrt(((np.arange(SW) / K - cx) ** 2)[None, :] + ((np.arange(SH) / K - cy) ** 2)[:, None])
+    m = (verde * np.clip((r - d) / (r * 0.4), 0, 1))[..., None]
+    luce = np.maximum(g, b)
+    rosso = np.dstack([luce * 0.22 + rr * 0.1, luce * 0.2 + rr * 0.1, np.maximum(luce, rr)])
+    return big * (1 - m) + rosso * m
+
+
+SCRITTE["sA_spalla_porta.png"] = lambda big: _led_rosso(_led_rosso(big, 466, 303, 55), 543, 313, 22)
 
 
 def scritte(solo=None):

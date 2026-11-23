@@ -1,0 +1,123 @@
+{
+ "nota": "Registrazioni vere CC0 da Freesound (trovate con l'API di Openverse, license=cc0), tagliate e mescolate col montaggio. Suoni comuni della serie (colpo, rise_long, heart60, respiro, legno, gocce, amb_slow): vedi scripts/bivio/sfx/licenze_suoni.json.",
+ "sfx/sirena.mp3": {
+  "titolo": "Ship Horn - Fog Horn - Cruise Ship Grand Princess",
+  "autore": "coalcon",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/coalcon/sounds/636075"
+ },
+ "sfx/gabbiani.mp3": {
+  "titolo": "harbour, seagulls-48k.wav",
+  "autore": "Further_Roman",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Further_Roman/sounds/208074",
+  "nota": "ritaglio di 22 s (da 0:20)"
+ },
+ "sfx/motori.mp3": {
+  "titolo": "170722_MediumFerry_BelowDeck_F.wav",
+  "autore": "blaukreuz",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/blaukreuz/sounds/398850",
+  "nota": "primi 45 s"
+ },
+ "sfx/passi_rampa.mp3": {
+  "titolo": "footsteps-metal-surface-01.wav",
+  "autore": "audioninja001",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/audioninja001/sounds/455053",
+  "nota": "ritaglio di 8 s (da 0:02), volume alzato"
+ },
+ "sfx/serratura.mp3": {
+  "titolo": "Door, close, modern, metal, punch, low, bass, lock click, in",
+  "autore": "fabuafrica",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/fabuafrica/sounds/331138"
+ },
+ "sfx/porta_pesante.mp3": {
+  "titolo": "Heavy Door Closing - 1",
+  "autore": "derneuere",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/derneuere/sounds/614574"
+ },
+ "sfx/vento.mp3": {
+  "titolo": "windy night at the beach",
+  "autore": "Yoyodaman234",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Yoyodaman234/sounds/331226",
+  "nota": "ritaglio di 40 s (da 0:04)"
+ },
+ "sfx/mare.mp3": {
+  "titolo": "waves lap at small boat hull motorboat +distant birds.flac",
+  "autore": "kyles",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/kyles/sounds/637980",
+  "nota": "primi 30 s"
+ },
+ "sfx/corno_lontano.mp3": {
+  "titolo": "Foghorn_GoldenGateBridge_0312.wav",
+  "autore": "exuberate",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/exuberate/sounds/140898",
+  "nota": "ritaglio di 7 s (da 0:58.6): un colpo di corno nella nebbia"
+ },
+ "sfx/corno.mp3": {
+  "titolo": "foghorn.WAV",
+  "autore": "phonoflora",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/phonoflora/sounds/500146",
+  "nota": "ritaglio di 6 s (da 0:02.5); nel montaggio si interrompe a metà"
+ },
+ "sfx/gemito.mp3": {
+  "titolo": "wood creaks deep door or ship hull quicker1.flac",
+  "autore": "kyles",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/kyles/sounds/452105",
+  "nota": "primi 11 s"
+ },
+ "sfx/neon.mp3": {
+  "titolo": "FXLM neon lights flicker bathroom.wav",
+  "autore": "LudwigMueller",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/LudwigMueller/sounds/202612",
+  "nota": "primi 22 s"
+ },
+ "sfx/corsa.mp3": {
+  "titolo": "Running Footsteps",
+  "autore": "pikachu09",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/pikachu09/sounds/204615"
+ },
+ "sfx/bip_errore.mp3": {
+  "titolo": "PC speaker error beep.wav",
+  "autore": "CZghost",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/CZghost/sounds/264823",
+  "nota": "un pezzo di 0,16 s del bip, ripetuto due volte (bip-bip)"
+ },
+ "sfx/pugni_porta.mp3": {
+  "titolo": "banging_metal_cabinet.wav",
+  "autore": "MikaF",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/MikaF/sounds/163362",
+  "nota": "ritaglio di 4,2 s (da 0:02): cinque colpi su metallo"
+ },
+ "sfx/scarica.mp3": {
+  "titolo": "Cell Phone Interference Noise 1.wav",
+  "autore": "RutgerMuller",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/RutgerMuller/sounds/50699"
+ },
+ "sfx/campanello.mp3": {
+  "titolo": "Subway MTA Door Close Chime",
+  "autore": "Ccomics88",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Ccomics88/sounds/434085",
+  "nota": "due toni; filtrato come da altoparlante, con un'eco corta"
+ },
+ "sfx/fruscio.mp3": {
+  "titolo": "FM Radio Static",
+  "autore": "caculo",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/caculo/sounds/347039"
+ }
+}

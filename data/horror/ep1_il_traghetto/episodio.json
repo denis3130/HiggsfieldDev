@@ -12,13 +12,13 @@
   },
   {
    "id": 2,
-   "voce": "Livorno, ventidue e trenta. Sali a bordo con tuo padre.",
+   "voce": "Livorno, ultima nave della sera. Sali a bordo con tuo padre.",
    "img": "s02_rampa.png",
    "mov": "mano"
   },
   {
    "id": 3,
-   "voce": "Cabina cinquecentododici. Lui si addormenta subito. Tu no.",
+   "voce": "In cabina, lui si addormenta subito. Tu no.",
    "img": "s03_cabina_scritte.png",
    "mov": "fermo",
    "rollio": true
@@ -43,7 +43,7 @@
   },
   {
    "id": 7,
-   "voce": "Poi dalla nebbia esce un'altra nave. Identica alla tua. Spenta. Vuota.",
+   "voce": "Dalla nebbia esce un'altra nave. Identica alla tua. Spenta. Vuota.",
    "img": "s07_nave_spenta.png",
    "mov": "panoramica"
   },
@@ -56,7 +56,7 @@
   },
   {
    "id": 9,
-   "voce": "Rientri. Il salone era pieno. Adesso non c'è nessuno. Nemmeno una valigia.",
+   "voce": "Il salone era pieno. Adesso non c'è nessuno. Nemmeno una valigia.",
    "img": "s09_salone.png",
    "mov": "avanza"
   },
@@ -72,12 +72,13 @@
    "grido": "Papà! Papà! Apri!",
    "sottotitolo_grido": "PAPÀ! PAPÀ! APRI!",
    "img": "s11_pugni_scritte.png",
-   "mov": "mano"
+   "mov": "mano",
+   "colpi": true
   },
   {
    "id": 12,
    "voce": "",
-   "silenzio": 2.0,
+   "silenzio": 1.6,
    "img": "s12_corridoio.png",
    "mov": "fermo",
    "sfarfalla": true
@@ -85,7 +86,7 @@
   {
    "id": 13,
    "voce": "Risponde solo l'altoparlante:",
-   "citazione": "La signora Ilde Brau è attesa alla reception.",
+   "citazione": "La signora Ida Brau è attesa alla reception.",
    "img": "s13_altoparlante.png",
    "mov": "avanza_lento",
    "altoparlante": true
@@ -101,7 +102,7 @@
    "voce": "Cosa fai?",
    "opzioni": {
     "a": {
-     "voce": "La A: sfondi la porta della cabina a spallate.",
+     "voce": "La A: sfondi la porta della cabina.",
      "testo": "Sfondi\nla porta",
      "img": "sA_spalla_porta_scritte.png",
      "ritaglio": [
@@ -111,7 +112,7 @@
      ]
     },
     "b": {
-     "voce": "Oppure la B: corri alla reception a chiedere aiuto.",
+     "voce": "Oppure la B: corri subito alla reception.",
      "testo": "Corri alla\nreception",
      "img": "sB_reception.png",
      "ritaglio": [
@@ -134,6 +135,238 @@
    ]
   }
  ],
- "silenzi": [],
- "suoni": []
+ "silenzi": [
+  {
+   "da_riga": 11,
+   "a_riga": 13
+  }
+ ],
+ "suoni": [
+  {
+   "file": "sirena.mp3",
+   "riga": 1,
+   "dopo": -0.45,
+   "vol": 0.4,
+   "sfuma": 0.5
+  },
+  {
+   "file": "gabbiani.mp3",
+   "riga": 1,
+   "dopo": -0.45,
+   "dur": 8.67,
+   "vol": 0.1,
+   "sfuma": 0.9
+  },
+  {
+   "file": "motori.mp3",
+   "riga": 1,
+   "dopo": -0.45,
+   "dur": 17.62,
+   "vol": 0.17,
+   "sfuma": 0.8
+  },
+  {
+   "file": "passi_rampa.mp3",
+   "riga": 2,
+   "dopo": 0.1,
+   "dur": 4.36,
+   "vol": 0.3,
+   "sfuma": 0.3
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 3,
+   "parola": "addormenta",
+   "dopo": -0.2,
+   "dur": 3.0,
+   "vol": 0.2,
+   "sfuma": 0.5
+  },
+  {
+   "file": "gemito.mp3",
+   "riga": 3,
+   "parola": "Tu",
+   "dopo": -0.3,
+   "da": 0.8,
+   "dur": 1.8,
+   "vol": 0.2,
+   "sfuma": 0.3
+  },
+  {
+   "file": "serratura.mp3",
+   "riga": 5,
+   "dopo": -0.25,
+   "vol": 0.3
+  },
+  {
+   "file": "porta_pesante.mp3",
+   "riga": 5,
+   "dopo": 0.2,
+   "vol": 0.38
+  },
+  {
+   "file": "vento.mp3",
+   "riga": 5,
+   "dopo": 0.3,
+   "dur": 11.4,
+   "vol": 0.26,
+   "sfuma": 0.15,
+   "cresce": [
+    0.55,
+    1.0
+   ]
+  },
+  {
+   "file": "mare.mp3",
+   "riga": 6,
+   "dopo": -0.2,
+   "dur": 10.1,
+   "vol": 0.22,
+   "sfuma": 0.15
+  },
+  {
+   "file": "corno_lontano.mp3",
+   "riga": 6,
+   "dopo": 0.0,
+   "dur": 6.0,
+   "vol": 0.3,
+   "sfuma": 0.3
+  },
+  {
+   "file": "gemito.mp3",
+   "riga": 7,
+   "parola": "Identica",
+   "dopo": -0.3,
+   "da": 5.5,
+   "dur": 2.6,
+   "vol": 0.38,
+   "sfuma": 0.3
+  },
+  {
+   "file": "corno.mp3",
+   "riga": 8,
+   "parola": "sfiora",
+   "dopo": -0.5,
+   "dur": 2.41,
+   "vol": 0.32,
+   "sfuma": 0.02
+  },
+  {
+   "file": "neon.mp3",
+   "riga": 8,
+   "parola": "sparisce",
+   "dopo": 0.0,
+   "da": 0.6,
+   "dur": 0.8,
+   "vol": 0.25,
+   "sfuma": 0.05
+  },
+  {
+   "file": "gocce.mp3",
+   "riga": 8,
+   "parola": "sparisce",
+   "dopo": 0.95,
+   "dur": 1.6,
+   "vol": 0.3
+  },
+  {
+   "file": "porta_pesante.mp3",
+   "riga": 9,
+   "dopo": -0.1,
+   "vol": 0.3
+  },
+  {
+   "file": "neon.mp3",
+   "riga": 9,
+   "dopo": 0.2,
+   "dur": 8.25,
+   "vol": 0.2,
+   "sfuma": 0.5
+  },
+  {
+   "file": "corsa.mp3",
+   "riga": 10,
+   "dopo": 0.0,
+   "dur": 2.2,
+   "vol": 0.42,
+   "sfuma": 0.2
+  },
+  {
+   "file": "bip_errore.mp3",
+   "riga": 10,
+   "parola": "apre",
+   "dopo": 0.15,
+   "vol": 0.4
+  },
+  {
+   "file": "respiro.mp3",
+   "riga": 10,
+   "parola": "più",
+   "dopo": 0.25,
+   "da": 5.0,
+   "dur": 1.6,
+   "vol": 0.28,
+   "sfuma": 0.3
+  },
+  {
+   "file": "pugni_porta.mp3",
+   "riga": 11,
+   "parola": "pugni",
+   "dopo": -0.05,
+   "dur": 2.93,
+   "vol": 0.62,
+   "sfuma": 0.05
+  },
+  {
+   "file": "campanello.mp3",
+   "riga": 13,
+   "dopo": -0.75,
+   "vol": 0.5
+  },
+  {
+   "file": "scarica.mp3",
+   "riga": 13,
+   "parola": "signora",
+   "dopo": -0.4,
+   "dur": 0.5,
+   "vol": 0.26,
+   "sfuma": 0.05
+  },
+  {
+   "file": "fruscio.mp3",
+   "riga": 13,
+   "parola": "signora",
+   "dopo": -0.3,
+   "dur": 5.11,
+   "vol": 0.09,
+   "sfuma": 0.7
+  },
+  {
+   "file": "heart60.mp3",
+   "riga": 14,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.3,
+    1
+   ],
+   "vol": 0.45,
+   "sfuma": 0.4
+  },
+  {
+   "file": "colpo.mp3",
+   "riga": 15,
+   "vol": 0.6
+  },
+  {
+   "file": "rise_long.mp3",
+   "riga": 15,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.2,
+    1
+   ],
+   "vol": 0.22,
+   "sfuma": 0.3
+  }
+ ]
 }
