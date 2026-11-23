@@ -370,7 +370,7 @@
   {
    "file": "vento_fessura.mp3",
    "da": 0,
-   "vol": 0.2
+   "vol": 0.15
   },
   {
    "file": "radio_fruscio.mp3",
@@ -390,8 +390,8 @@
    "file": "radio_fruscio.mp3",
    "riga": 1,
    "dopo": -0.45,
-   "dur": 3.3,
-   "vol": 0.2,
+   "dur": 3.31,
+   "vol": 0.07,
    "sfuma": 0.3
   },
   {
@@ -404,8 +404,8 @@
    "file": "bufera.mp3",
    "riga": 4,
    "dopo": -0.15,
-   "dur": 2.22,
-   "vol": 0.6,
+   "dur": 2.23,
+   "vol": 0.18,
    "sfuma": 0.25
   },
   {
@@ -417,8 +417,8 @@
   {
    "file": "ronzio.mp3",
    "riga": 6,
-   "dur": 3.64,
-   "vol": 0.15,
+   "dur": 3.24,
+   "vol": 0.1,
    "sfuma": 0.3
   },
   {
@@ -431,10 +431,10 @@
   {
    "file": "radio_fruscio.mp3",
    "riga": 7,
-   "dopo": 1.49,
+   "dopo": 1.41,
    "da": 5,
-   "dur": 10.22,
-   "vol": 0.2,
+   "dur": 10.21,
+   "vol": 0.07,
    "sfuma": 0.3
   },
   {
@@ -442,8 +442,8 @@
    "riga": 8,
    "dopo": -0.1,
    "da": 12,
-   "dur": 6.88,
-   "vol": 0.5,
+   "dur": 6.76,
+   "vol": 0.07,
    "sfuma": 0.3
   },
   {
@@ -484,7 +484,7 @@
    "dopo": -0.1,
    "da": 9,
    "dur": 2.82,
-   "vol": 0.2,
+   "vol": 0.07,
    "sfuma": 0.25
   },
   {

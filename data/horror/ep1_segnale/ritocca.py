@@ -1,16 +1,32 @@
 """Toglie dalle immagini generate le finte scritte (etichette, cifre) che il modello mette da solo: le zone elencate in ritocchi.json
-vengono ricostruite dai pixel vicini. Uso: python ritocca.py   (lavora su img/, tiene l'originale in img/_orig/ e riparte sempre da lì)."""
-import json, shutil
+vengono ricostruite dai pixel vicini. Uso: python ritocca.py [nomi...]   (lavora su img/, tiene l'originale in img/_orig/ e riparte sempre da lì).
+Le immagini salvate nel repository sono già ritoccate e img/_orig/ non c'è: per aggiungere zone a un'immagine passa solo il suo nome
+(es. python ritocca.py s01_ago.png), così le altre non vengono ritoccate due volte."""
+import json, shutil, sys
 from pathlib import Path
 import cv2, numpy as np
 
 D = Path(__file__).resolve().parent; (D / "img/_orig").mkdir(exist_ok=True)
 for nome, zone in json.loads((D / "ritocchi.json").read_text()).items():
+    if sys.argv[1:] and nome not in sys.argv[1:]:
+        continue
     src = D / "img/_orig" / nome
     if not src.exists():
         shutil.copy(D / "img" / nome, src)
     im = cv2.imread(str(src)); mk = np.zeros(im.shape[:2], np.uint8)
     for z in zone:                                  # [x0, y0, x1, y1] oppure un poligono [[x, y], ...]; {"spegni": [x0, y0, x1, y1]} spegne un fuoco (via il rosso, più buio)
+        if isinstance(z, dict) and "liscio" in z:   # {"liscio": [x0, y0, x1, y1], "r": 6}: via segni scuri sottili su un vetrino illuminato (finte cifre), resta la luce
+            x0, y0, x1, y1 = z["liscio"]; roi = im[y0:y1, x0:x1]; r = z.get("r", 6)
+            pulito = cv2.GaussianBlur(cv2.morphologyEx(roi, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * r + 1, 2 * r + 1))), (0, 0), r / 2).astype(np.float32)
+            yy, xx = np.mgrid[0:y1 - y0, 0:x1 - x0].astype(np.float32); k = np.clip(np.minimum.reduce([xx, yy, x1 - x0 - 1 - xx, y1 - y0 - 1 - yy]) / 3, 0, 1)[..., None]
+            im[y0:y1, x0:x1] = np.clip(roi * (1 - k) + pulito * k, 0, 255).astype(np.uint8)
+            continue
+        if isinstance(z, dict) and "grigio" in z:   # {"grigio": [x0, y0, x1, y1], "luce": 0.85}: via ogni colore (braci spente, cenere fredda), bordi sfumati
+            x0, y0, x1, y1 = z["grigio"]; roi = im[y0:y1, x0:x1].astype(np.float32)
+            yy, xx = np.mgrid[0:y1 - y0, 0:x1 - x0].astype(np.float32); k = np.clip(np.minimum.reduce([xx, yy, x1 - x0 - 1 - xx, y1 - y0 - 1 - yy]) / 6, 0, 1)[..., None]
+            grigio = roi.mean(-1, keepdims=True) * z.get("luce", 0.9) * np.float32(z.get("tinta", [1.04, 1.0, 0.97]))
+            im[y0:y1, x0:x1] = np.clip(roi * (1 - k) + grigio * k, 0, 255).astype(np.uint8)
+            continue
         if isinstance(z, dict) and "notte" in z:    # {"notte": [x0, y0, x1, y1]}: una finestra troppo chiara diventa notte (si scuriscono solo i pixel freddi e luminosi)
             x0, y0, x1, y1 = z["notte"]; roi = im[y0:y1, x0:x1].astype(np.float32); lum = roi.mean(-1)
             k = np.clip((roi[..., 0] - roi[..., 2] - 5) / 25, 0, 1) * np.clip((lum - 50) / 50, 0, 1)

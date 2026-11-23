@@ -17,10 +17,10 @@
  },
  {
   "out": "data/horror/ep1_segnale/img/s03_scrivania.png",
-  "prompt": "first-person point of view of a person sitting at a metal desk, in the foreground two hands in grey fingerless wool gloves and orange windbreaker sleeves resting on the desk, in front a vintage grey-green radio transceiver with a glowing amber meter, a desk lamp, behind it a frosted window with snow blowing outside in the dark, dark wood-panelled walls, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
+  "prompt": "first-person point of view of a person sitting at a metal desk at night, in the foreground two hands in grey fingerless wool gloves and orange windbreaker sleeves resting on the desk, in front of them a vintage grey-green radio transceiver with a small glowing amber meter and a desk lamp, behind it a small window showing only pitch-black night with white snowflakes streaking past the glass, bare dark wood-panelled walls, nothing else on the desk, cinematic horror film still, shot on 35mm anamorphic lens, remote mountain radio station in the Dolomites at night during a blizzard, warm amber lamp light against cold blue shadows, deep black shadows, shallow depth of field, subtle film grain, photorealistic",
   "w": 576,
   "h": 1024,
-  "seed": 103,
+  "seed": 403,
   "steps": 4
  },
  {
