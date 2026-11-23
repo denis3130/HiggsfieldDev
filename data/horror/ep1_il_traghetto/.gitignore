@@ -1,0 +1,11 @@
+# file di lavoro (si rifanno con voce.py, extra.py e monta.py)
+voce.wav
+voce_pulita.wav
+_voce/
+_voce_altoparlante.sha1
+mix.wav
+sub.ass
+_muto.mp4
+*.mp4
+anteprima/
+img/_prova/
