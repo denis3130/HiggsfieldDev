@@ -1,0 +1,139 @@
+{
+ "serie": "IL BIVIO",
+ "storia": "Il traghetto",
+ "episodio": 1,
+ "titolo": "Un'altra nave",
+ "righe": [
+  {
+   "id": 1,
+   "voce": "Hai un biglietto per la Sardegna. Non ci arriverai.",
+   "img": "s01_biglietti_scritte.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 2,
+   "voce": "Livorno, ventidue e trenta. Sali a bordo con tuo padre.",
+   "img": "s02_rampa.png",
+   "mov": "mano"
+  },
+  {
+   "id": 3,
+   "voce": "Cabina cinquecentododici. Lui si addormenta subito. Tu no.",
+   "img": "s03_cabina_scritte.png",
+   "mov": "fermo",
+   "rollio": true
+  },
+  {
+   "id": 4,
+   "voce": "Prendi la tessera.",
+   "img": "s04_tessera_scritte.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 5,
+   "voce": "Esci sul ponte.",
+   "img": "s05_porta_ponte.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 6,
+   "voce": "Fuori c'è solo nebbia.",
+   "img": "s06_ponte_nebbia.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 7,
+   "voce": "Poi dalla nebbia esce un'altra nave. Identica alla tua. Spenta. Vuota.",
+   "img": "s07_nave_spenta.png",
+   "mov": "panoramica"
+  },
+  {
+   "id": 8,
+   "voce": "Ti sfiora in silenzio. E sparisce.",
+   "img": "s08_poppa_nebbia.png",
+   "mov": "avanza_lento",
+   "sparisce": true
+  },
+  {
+   "id": 9,
+   "voce": "Rientri. Il salone era pieno. Adesso non c'è nessuno. Nemmeno una valigia.",
+   "img": "s09_salone.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 10,
+   "voce": "Corri alla cabina. La tessera non apre più.",
+   "img": "s10_serratura_scritte.png",
+   "mov": "mano"
+  },
+  {
+   "id": 11,
+   "voce": "Batti i pugni sulla porta:",
+   "grido": "Papà! Papà! Apri!",
+   "sottotitolo_grido": "PAPÀ! PAPÀ! APRI!",
+   "img": "s11_pugni_scritte.png",
+   "mov": "mano"
+  },
+  {
+   "id": 12,
+   "voce": "",
+   "silenzio": 2.0,
+   "img": "s12_corridoio.png",
+   "mov": "fermo",
+   "sfarfalla": true
+  },
+  {
+   "id": 13,
+   "voce": "Risponde solo l'altoparlante:",
+   "citazione": "La signora Ilde Brau è attesa alla reception.",
+   "img": "s13_altoparlante.png",
+   "mov": "avanza_lento",
+   "altoparlante": true
+  },
+  {
+   "id": 14,
+   "voce": "Un nome mai sentito.",
+   "img": "s14_ombra_porta_scritte.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 15,
+   "voce": "Cosa fai?",
+   "opzioni": {
+    "a": {
+     "voce": "La A: sfondi la porta della cabina a spallate.",
+     "testo": "Sfondi\nla porta",
+     "img": "sA_spalla_porta_scritte.png",
+     "ritaglio": [
+      0.5,
+      0.5,
+      0.8
+     ]
+    },
+    "b": {
+     "voce": "Oppure la B: corri alla reception a chiedere aiuto.",
+     "testo": "Corri alla\nreception",
+     "img": "sB_reception.png",
+     "ritaglio": [
+      0.5,
+      0.5,
+      0.8
+     ]
+    }
+   },
+   "chiusura": "Scrivilo nei commenti.",
+   "sfondo": "s14_ombra_porta_scritte.png"
+  }
+ ],
+ "ambiente": [
+  {
+   "file": "amb_slow.mp3",
+   "vol": [
+    0.05,
+    0.14
+   ]
+  }
+ ],
+ "silenzi": [],
+ "suoni": []
+}
