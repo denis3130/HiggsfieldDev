@@ -31,7 +31,7 @@ s("stufa.mp3", 5, 0.35, dur=round(ini(7) - ini(5) + 0.4, 2), sfuma=0.5)
 s("respiro.mp3", 6, 0.35, dopo=0.15, dur=2.6)
 # 7-8 la campana delle nove, poi scuri, travi e chiavistelli; l'ultimo rintocco si spegne nel silenzio
 s("vento.mp3", 7, 0.16, da=30.0, dur=round(vfine(8) - ini(7) + 0.2, 2), sfuma=0.4)
-s("campana.mp3", 7, 0.50, parola="nove", dopo=0.12, dur=round(vfine(8) - ini(7) - 0.4, 2), sfuma=0.5)
+s("campana.mp3", 7, 0.50, parola="nove", dopo=0.12, dur=round(vfine(8) - ini(7) - 0.4, 2), cresce=[1.0, 0.5], sfuma=0.5)
 s("scuri.mp3", 8, 0.40, dopo=0.15, dur=round(vfine(8) - ini(8) - 0.2, 2), sfuma=0.3)
 s("chiavistello.mp3", 8, 0.35, dopo=0.9)
 s("trave.mp3", 8, 0.35, dopo=1.6)
@@ -41,7 +41,8 @@ s("rintocco.mp3", 8, 0.50, dopo=round(vfine(8) - ini(8) - 0.1, 2), dur=round(ini
 s("vento.mp3", 10, 0.15, da=40.0, fino_alla_fine=True, sfuma=0.6)
 s("campanacci.mp3", 10, 0.45, dopo=0.2, dur=round(ini(12) - ini(10) + 0.5, 2), cresce=[0.12, 1.0], sfuma=0.4)
 s("stoffa.mp3", 11, 0.25, dopo=0.6)
-s("heart60.mp3", 12, 0.40, dopo=1.2, fino_alla_fine=True, cresce=[0.25, 1.0], sfuma=0.4)
+s("heart60.mp3", 12, 0.40, dopo=1.2, dur=round(ini(14) - ini(12) - 1.1, 2), cresce=[0.25, 0.7], sfuma=0.3)   # si ferma: i tre colpi da soli
+s("heart60.mp3", 15, 0.40, dopo=0.6, fino_alla_fine=True, cresce=[0.6, 1.0], sfuma=0.4)
 s("respiro.mp3", 13, 0.22, dopo=0.1, dur=2.0)
 # 14 i tre colpi al portone nel silenzio. 15 scheda finale
 s("tre_colpi.mp3", 14, 0.90, dopo=0.25)

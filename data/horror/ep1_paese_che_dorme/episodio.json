@@ -267,6 +267,10 @@
    "parola": "nove",
    "dopo": 0.12,
    "dur": 6.33,
+   "cresce": [
+    1.0,
+    0.5
+   ],
    "sfuma": 0.5
   },
   {
@@ -334,9 +338,21 @@
    "riga": 12,
    "vol": 0.4,
    "dopo": 1.2,
-   "fino_alla_fine": true,
+   "dur": 5.03,
    "cresce": [
     0.25,
+    0.7
+   ],
+   "sfuma": 0.3
+  },
+  {
+   "file": "heart60.mp3",
+   "riga": 15,
+   "vol": 0.4,
+   "dopo": 0.6,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.6,
     1.0
    ],
    "sfuma": 0.4

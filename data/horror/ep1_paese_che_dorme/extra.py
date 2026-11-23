@@ -200,6 +200,16 @@ def spegni_lampioni(im, lampioni, K, soglia=60):
     return im * (1 - w[..., None]) + bg * det * (1 - 0.5 * nucleo) * w[..., None]
 
 
+def ammorbidisci(big, zone, K):
+    """Sfoca e scurisce piccole zone (x, y, semiasse x, semiasse y, sfocatura, luce; coordinate 576x1024): finte scritte
+    generate dal modello (etichette, numeri di quadranti) che non devono leggersi."""
+    im = big.astype(np.float32); yy, xx = np.mgrid[0:im.shape[0], 0:im.shape[1]].astype(np.float32) / K
+    for cx, cy, ax, ay, sg, luce in zone:
+        mk = np.clip(1.5 - np.sqrt(((xx - cx) / ax) ** 2 + ((yy - cy) / ay) ** 2) * 1.5, 0, 1)[..., None]
+        im = im * (1 - mk) + cv2.GaussianBlur(im, (0, 0), sg * K) * luce * mk
+    return np.clip(im, 0, 255).astype(np.uint8)
+
+
 # ---------------------------------------------------------------- preparazione delle immagini (una volta sola)
 LETTERA = ["L'OROLOGIO", "DEL CAMPANILE", "SI FERMA SEMPRE", "ALLA STESSA ORA.", "VENGA LA SERA DEL 12.", "LA CHIAVE È", "ALLA LOCANDA."]
 BIGLIETTO = ["Qualunque cosa senti,", "non uscire."]
@@ -221,6 +231,7 @@ def prepara(m):
         m.IMG["s02_lettera.png"] = (su_foglio(big, [(137.5, 233.5), (474, 238.5), (478.5, 659), (127.5, 652.5)], a, (0.20, 0.17, 0.16), K, 0.8), dep)
     if "s03_ingresso.png" in m.IMG:                                           # manifesto e orologio dell'ingresso (21 meno 3)
         big, dep = m.IMG["s03_ingresso.png"]; quad = [(232.5, 350.5), (338, 350.5), (339, 483), (234.5, 482.5)]
+        big = ammorbidisci(big, [(457, 285, 24, 50, 2.5, 0.8)], K)              # quadrante della pendola in alto a destra: niente numeri finti
         st, pts = manifesto(); big2, _ = su_foglio_colore(big, quad, st, K)
         fondo = big[int(360 * K):int(470 * K), int(342 * K):int(352 * K)].reshape(-1, 3).mean(0)
         big2 = strappa(big2, quad, pts, st.shape[1], st.shape[0], K, fondo)
@@ -228,6 +239,7 @@ def prepara(m):
         m.IMG["s03_ingresso.png"] = (big2, dep)
     if "s04_bancone.png" in m.IMG:                                            # il biglietto legato alla chiave, già scritto
         big, dep = m.IMG["s04_bancone.png"]; w, h = 800, 600
+        big = ammorbidisci(big, [(548, 85, 44, 88, 6.0, 0.5)], K)               # etichetta con finte scritte sul barattolo in alto a destra
         a = corsivo(BIGLIETTO, w, h, 78, [(150, 230), (330, 340)], seme=4)
         m.IMG["s04_bancone.png"] = (su_foglio(big, [(323.75, 485), (493.75, 527), (464.5, 656.25), (289.5, 613)], a, (0.16, 0.15, 0.17), K, 0.6), dep)
     if "s05_biglietto.png" in m.IMG:                                          # il biglietto da vicino: corsivo elegante, inchiostro nero
