@@ -1,0 +1,14 @@
+{
+ "fonts/CoveredByYourGrace-Regular.ttf": {
+  "autore": "Kimberly Geswein",
+  "licenza": "SIL Open Font License 1.1 (fonts/OFL_CoveredByYourGrace.txt)",
+  "pagina": "https://fonts.google.com/specimen/Covered+By+Your+Grace",
+  "uso": "stampatello tremante della lettera"
+ },
+ "fonts/PinyonScript-Regular.ttf": {
+  "autore": "Nicole Fally (The PinyonScript Project Authors)",
+  "licenza": "SIL Open Font License 1.1 (fonts/OFL_PinyonScript.txt)",
+  "pagina": "https://fonts.google.com/specimen/Pinyon+Script",
+  "uso": "corsivo elegante del biglietto dell'oste"
+ }
+}

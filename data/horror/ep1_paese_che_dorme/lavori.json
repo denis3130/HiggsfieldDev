@@ -1,0 +1,130 @@
+[
+ {
+  "out": "img/s01_via.png",
+  "prompt": "Wide first-person view from the entrance of a small stone mountain village at night, the main cobbled street going uphill straight ahead, wet shiny cobblestones, old stone houses on both sides with small windows glowing warm amber, at the top of the street a square stone bell tower with a large round plain white clock face, a huge black mountain wall behind it hiding the stars, low fog on the ground, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 601,
+  "steps": 4
+ },
+ {
+  "out": "img/s02_lettera.png",
+  "prompt": "First-person view of a hand in a grey wool glove holding up a blank sheet of white letter paper close to the camera, the paper is completely empty and fills most of the frame, the sleeve of a charcoal grey wool coat, a blurred stone bell tower in cold night fog in the background, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 602,
+  "steps": 4
+ },
+ {
+  "out": "img/s03_ingresso.png",
+  "prompt": "Empty entrance hall of an old mountain inn seen from the doorway at night, a dark wooden counter, an antique pendulum clock hanging on the stone wall, one lit brass oil lamp on the counter, a large blank cream paper poster pinned on the stone wall, warm amber lamp light, deep shadows, nobody there, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 603,
+  "steps": 4
+ },
+ {
+  "out": "img/s04_bancone.png",
+  "prompt": "Top-down close-up of a dark wooden counter, an old iron key with a small blank brass tag lying next to a folded sheet of cream paper, warm oil lamp light, the shadow of a person falling across the wood, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 604,
+  "steps": 4
+ },
+ {
+  "out": "img/s05_biglietto.png",
+  "prompt": "Close-up of an open blank sheet of old cream paper held up by a hand in a grey wool glove, a brass oil lamp glowing behind the paper making it translucent, the paper is completely empty, dark background, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 605,
+  "steps": 4
+ },
+ {
+  "out": "img/s06_stufa.png",
+  "prompt": "Small old inn bedroom at night seen in first person from the door, a black cast iron wood stove with orange fire glowing behind its small glass door, an old iron bed frame, faded sage green floral wallpaper, warm amber light, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 606,
+  "steps": 4
+ },
+ {
+  "out": "img/s07_fiato.png",
+  "prompt": "First-person view of two hands in grey wool gloves stretched out toward a black cast iron wood stove with fire glowing inside, a white cloud of breath vapor in the cold air in front of the camera, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 607,
+  "steps": 4
+ },
+ {
+  "out": "img/s08_campanile.png",
+  "prompt": "View through an old wooden window frame at night of a square stone bell tower in thick fog, a large round plain white clock face on the tower, a dark mountain behind, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 608,
+  "steps": 4
+ },
+ {
+  "out": "img/s09_via_alto.png",
+  "prompt": "High angle view from a first-floor window looking down onto a narrow cobbled village street at night, old stone houses with wooden shutters on both sides, many small windows glowing warm amber along the street, wet cobblestones, fog, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 609,
+  "steps": 4
+ },
+ {
+  "out": "img/s11_luci_rosse.png",
+  "prompt": "Far end of a dark foggy village street at night, three small red lantern lights glowing low in the fog, dark hooded silhouettes barely visible, wet cobblestones, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 611,
+  "steps": 4
+ },
+ {
+  "out": "img/s12_fila.png",
+  "prompt": "High angle view of four tall figures in long black hooded wool cloaks walking uphill in single file on a wet cobbled street at night, each carrying a red glass lantern low, their heads bowed and hidden under the hoods, red light on the cobblestones, fog, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 612,
+  "steps": 4
+ },
+ {
+  "out": "img/s12_volto.png",
+  "prompt": "Extreme close-up of a smooth oval mask carved from dark walnut wood inside a black wool hood, two small round black eye holes, no mouth, no nose, the surface below the eye holes completely smooth and blank, lit in red from below by a lantern, darkness around, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 613,
+  "steps": 4
+ },
+ {
+  "out": "img/s13_sotto.png",
+  "prompt": "Straight-down top view from a high window of one figure in a long black hooded cloak standing alone on wet cobblestones and looking straight up at the camera, a smooth dark wooden oval mask with two round eye holes and no mouth, a red lantern in hand, blue fog around, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 614,
+  "steps": 4
+ },
+ {
+  "out": "img/s14_scala.png",
+  "prompt": "First-person view from a bedroom doorway looking down a dark narrow stone staircase, a heavy chestnut wooden door at the bottom with a thin line of red light glowing under it, a hand in a grey wool glove holding a brass oil lamp in the foreground, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 615,
+  "steps": 4
+ },
+ {
+  "out": "img/sA_portone.png",
+  "prompt": "View from the top of a stone staircase down to a heavy chestnut wooden door barred with a thick wooden beam, red light glowing under the door, darkness, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 616,
+  "steps": 4
+ },
+ {
+  "out": "img/sB_camera_buia.png",
+  "prompt": "Dark old inn bedroom at night, no lamp, horizontal stripes of red light coming through closed slatted wooden shutters and falling across an iron bed, cinematic film still, vertical 9:16, 35mm lens, low-key lighting, volumetric fog, heavy film grain, muted desaturated palette of cold blue-grey with warm amber lamp light and small red accents, 1950s Italian mountain village of grey stone, folk horror, photorealistic, no visible faces, no text, no watermark",
+  "w": 576,
+  "h": 1024,
+  "seed": 617,
+  "steps": 4
+ }
+]

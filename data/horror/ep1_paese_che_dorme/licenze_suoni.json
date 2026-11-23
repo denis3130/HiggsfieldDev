@@ -1,0 +1,115 @@
+{
+ "nota": "Registrazioni vere CC0 da Freesound (trovate con l'API di Openverse), tagliate e ritoccate con ffmpeg per questo episodio. I suoni comuni della serie (amb_slow, respiro, stoffa, colpo, rise_long, heart60) sono in scripts/bivio/sfx/ con le loro licenze.",
+ "sfx/vento.mp3": {
+  "titolo": "air tone cold constant light wind +distant winter",
+  "autore": "kyles",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/kyles/sounds/450140",
+  "nota": "75 secondi da 0:20"
+ },
+ "sfx/passi.mp3": {
+  "titolo": "Footsteps Stone sequence.wav",
+  "autore": "Wdomino",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Wdomino/sounds/517141"
+ },
+ "sfx/stoviglie.mp3": {
+  "titolo": "Ceramic Plate Set Down.wav",
+  "autore": "bbrocer",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/bbrocer/sounds/382643",
+  "nota": "primi 3,6 secondi, filtrati come dietro una finestra"
+ },
+ "sfx/cane.mp3": {
+  "titolo": "distant_dog.wav",
+  "autore": "Heigh-hoo",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Heigh-hoo/sounds/54545",
+  "nota": "3,2 secondi da 0:00.6, filtrati per la distanza"
+ },
+ "sfx/carta.mp3": {
+  "titolo": "Paper Rustle",
+  "autore": "BenjaminNelan",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/BenjaminNelan/sounds/353125"
+ },
+ "sfx/attrezzi.mp3": {
+  "titolo": "Iron Tools",
+  "autore": "LaurenPonder",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/LaurenPonder/sounds/635702"
+ },
+ "sfx/cigolio.mp3": {
+  "titolo": "Wooden door creaking",
+  "autore": "TheBuilder15",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/TheBuilder15/sounds/367052"
+ },
+ "sfx/pendola.mp3": {
+  "titolo": "Old pendulum clock.wav",
+  "autore": "Martineerok",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Martineerok/sounds/164080",
+  "nota": "primi 30 secondi"
+ },
+ "sfx/stufa.mp3": {
+  "titolo": "Fire in the stove",
+  "autore": "mcmikai",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/mcmikai/sounds/532191",
+  "nota": "primi 30 secondi"
+ },
+ "sfx/chiave.mp3": {
+  "titolo": "key_drop 04.wav",
+  "autore": "Ayavaron",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Ayavaron/sounds/126492"
+ },
+ "sfx/campana.mp3": {
+  "titolo": "R04-59-Short Bell Tolls.wav",
+  "autore": "craigsmith",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/craigsmith/sounds/479985",
+  "nota": "primi 14 secondi"
+ },
+ "sfx/rintocco.mp3": {
+  "titolo": "Church Bell.wav",
+  "autore": "MVMTech",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/MVMTech/sounds/569356"
+ },
+ "sfx/scuri.mp3": {
+  "titolo": "SHUTTERS CLOSING – 1",
+  "autore": "SamuelGremaud",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/SamuelGremaud/sounds/524800",
+  "nota": "8,7 secondi da 0:03.8"
+ },
+ "sfx/trave.mp3": {
+  "titolo": "Sliding wooden shutter with a clunk.wav",
+  "autore": "ross_sinc",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/ross_sinc/sounds/444793",
+  "nota": "2,4 secondi da 0:09.3"
+ },
+ "sfx/chiavistello.mp3": {
+  "titolo": "door bolt 5.wav",
+  "autore": "FenrirFangs",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/FenrirFangs/sounds/213996"
+ },
+ "sfx/campanacci.mp3": {
+  "titolo": "Cow_Goat Bell.wav",
+  "autore": "UncleSigmund",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/UncleSigmund/sounds/61497",
+  "nota": "primi 30 secondi"
+ },
+ "sfx/tre_colpi.mp3": {
+  "titolo": "wood door knock.wav",
+  "autore": "ripper351",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/ripper351/sounds/151088",
+  "nota": "i tre colpi della registrazione distanziati di 0,78 secondi, con eco"
+ }
+}

@@ -1,0 +1,148 @@
+{
+ "serie": "IL BIVIO",
+ "storia": "Il paese che dorme",
+ "episodio": 1,
+ "titolo": "Le nove in punto",
+ "righe": [
+  {
+   "id": 1,
+   "voce": "Tra cinque minuti, in questo paese, non ti risponderà più nessuno.",
+   "img": "s01_via.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 2,
+   "voce": "Pietrasonna, Abruzzo. Ti hanno chiamato per riparare l'orologio del campanile.",
+   "img": "s02_lettera.png",
+   "mov": "mano"
+  },
+  {
+   "id": 3,
+   "voce": "Stanotte è la festa dei Muti. Alla locanda non c'è nessuno.",
+   "img": "s03_ingresso.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 4,
+   "voce": "Sul bancone, una chiave e un biglietto:",
+   "img": "s04_bancone.png",
+   "mov": "scendi"
+  },
+  {
+   "id": 5,
+   "citazione": "Qualunque cosa senti, non uscire.",
+   "img": "s05_biglietto.png",
+   "mov": "fermo"
+  },
+  {
+   "id": 6,
+   "voce": "In camera la stufa è accesa.",
+   "img": "s06_stufa.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 7,
+   "voce": "Eppure il fiato ti si gela davanti alla bocca.",
+   "img": "s07_fiato.png",
+   "mov": "fermo",
+   "vapore": [
+    0.5,
+    0.45,
+    0.22
+   ]
+  },
+  {
+   "id": 8,
+   "voce": "Le nove. La campana.",
+   "img": "s08_campanile.png",
+   "mov": "fermo"
+  },
+  {
+   "id": 9,
+   "voce": "Sotto di te ogni porta si sbarra. Ogni luce si spegne.",
+   "img": "s09_via_alto.png",
+   "mov": "panoramica"
+  },
+  {
+   "id": 10,
+   "voce": "",
+   "silenzio": 3.0,
+   "img": "s09_via_alto.png",
+   "mov": "panoramica",
+   "tieni": true
+  },
+  {
+   "id": 11,
+   "voce": "Poi, dalla nebbia, i campanacci.",
+   "img": "s11_luci_rosse.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 12,
+   "voce": "Salgono in fila, lenti. Mantelli neri. Volti di legno, senza bocca.",
+   "img": "s12_fila.png",
+   "mov": "avanza_lento",
+   "stacco": {
+    "parola": "Volti",
+    "img": "s12_volto.png",
+    "mov": "avanza"
+   }
+  },
+  {
+   "id": 13,
+   "voce": "Uno si ferma sotto la tua finestra. E alza la testa.",
+   "img": "s13_sotto.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 14,
+   "voce": "Giù, alla porta della locanda: tre colpi.",
+   "img": "s14_scala.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 15,
+   "voce": "Cosa fai?",
+   "opzioni": {
+    "a": {
+     "voce": "La A: scendi a vedere chi bussa.",
+     "testo": "Scendi\nalla porta",
+     "img": "sA_portone.png",
+     "ritaglio": [
+      0.5,
+      0.6,
+      0.8
+     ]
+    },
+    "b": {
+     "voce": "Oppure la B: resti chiuso in camera, al buio.",
+     "testo": "Resti chiuso\nin camera",
+     "img": "sB_camera_buia.png",
+     "ritaglio": [
+      0.5,
+      0.55,
+      0.8
+     ]
+    }
+   },
+   "chiusura": "Scrivilo nei commenti.",
+   "sfondo": "s14_scala.png"
+  }
+ ],
+ "ambiente": [
+  {
+   "file": "amb_slow.mp3",
+   "vol": [
+    0.05,
+    0.16
+   ]
+  }
+ ],
+ "silenzi": [
+  {
+   "da_riga": 9,
+   "a_riga": 11
+  }
+ ],
+ "suoni": []
+}
