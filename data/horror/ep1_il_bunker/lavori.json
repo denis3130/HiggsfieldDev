@@ -8,19 +8,19 @@
   "steps": 4
  },
  {
-  "out": "data/horror/ep1_il_bunker/img/s02_soffitto_lampada.png",
-  "prompt": "first-person view looking up at a low raw concrete ceiling with horizontal formwork lines and damp stains, a caged industrial bulkhead lamp with a glowing bulb casting a narrow warm cone of light, windowless concrete walls with a peeling military-green painted band, dark corners, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
+  "out": "data/horror/ep1_il_bunker/img/s02_soffitto_lampada_v2.png",
+  "prompt": "first-person view lying on a cot and looking straight up at a low raw concrete ceiling with horizontal formwork lines and damp stains, in the centre a caged industrial bulkhead lamp with a glowing bulb casting a narrow warm cone of light, at the edges of the frame the tops of bare grey concrete walls with a peeling military-green painted band, dark corners, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 102,
+  "seed": 211,
   "steps": 4
  },
  {
-  "out": "data/horror/ep1_il_bunker/img/s03_branda_gambe.png",
-  "prompt": "POV shot looking down at my own legs in dark blue jeans and brown leather work boots, the boots stepping off a green canvas military folding cot onto a bare dusty concrete floor, warm light from above, dark room, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
+  "out": "data/horror/ep1_il_bunker/img/s03_branda_gambe_v2.png",
+  "prompt": "first-person POV looking down at my own legs as I stand up from a green canvas military folding cot: my knees in dark blue jeans and my brown leather work boots planted on a bare dusty concrete floor, the edge of the cot at the bottom of the frame, a single warm lamp light from above, dark room, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 103,
+  "seed": 212,
   "steps": 4
  },
  {
@@ -48,11 +48,11 @@
   "steps": 4
  },
  {
-  "out": "data/horror/ep1_il_bunker/img/s07_registratore_cassa.png",
-  "prompt": "high angle 45 degrees view of a wooden crate in the centre of a dark concrete room under a narrow cone of warm light from a caged lamp, on the crate a dark grey 1980s portable cassette recorder with a row of piano keys and a clear cassette door, a blank strip of white paper tape stuck on its lid, dust floating in the light, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
+  "out": "data/horror/ep1_il_bunker/img/s07_registratore_cassa_v2.png",
+  "prompt": "high angle 45 degrees view of a wooden crate in the centre of a dark concrete bunker room under a narrow cone of warm light from a caged lamp hanging above, on the crate a dark grey 1980s portable cassette tape recorder with a perforated speaker grille on the left, a cassette compartment with a clear plastic window showing a black cassette with two reels, a row of chunky blank mechanical push buttons along the top edge, a strip of white paper tape stuck on its top, dust floating in the light, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 107,
+  "seed": 214,
   "steps": 4
  },
  {
@@ -64,19 +64,19 @@
   "steps": 4
  },
  {
-  "out": "data/horror/ep1_il_bunker/img/s09_tasto_play.png",
-  "prompt": "macro shot of a single finger pressing a piano-style key on a dark grey 1980s cassette recorder, two tape reels visible behind the clear cassette door, warm light, shallow depth of field, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
+  "out": "data/horror/ep1_il_bunker/img/s09_tasto_play_v3.png",
+  "prompt": "macro shot of one fingertip pushing down a single chunky blank mechanical push button on the top edge of a dark grey 1980s portable cassette tape recorder, beside it the clear plastic window of the cassette compartment showing a black cassette with two reels, warm lamp light, shallow depth of field, plain unlabeled surfaces, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 109,
+  "seed": 225,
   "steps": 4
  },
  {
-  "out": "data/horror/ep1_il_bunker/img/s10_altoparlante.png",
-  "prompt": "close-up of the speaker grille and the turning tape reels of a dark grey 1980s cassette recorder in sharp focus, in the blurred background a man in an olive-green jacket sitting on the floor handcuffed to a pipe, head down, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
+  "out": "data/horror/ep1_il_bunker/img/s10_altoparlante_v2.png",
+  "prompt": "close-up of the perforated metal speaker grille and the clear cassette window with two tape reels of a dark grey 1980s portable cassette recorder in sharp focus on the left, in the blurred background an older grey-haired man in an olive-green jacket sitting on a concrete floor with his head bowed, his wrist handcuffed to a rusty pipe, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 110,
+  "seed": 216,
   "steps": 4
  },
  {
@@ -88,19 +88,19 @@
   "steps": 4
  },
  {
-  "out": "data/horror/ep1_il_bunker/img/s12_chiave_palmo.png",
-  "prompt": "first-person view looking down at an open bare palm coming out of the pocket of a dark navy work jacket with elastic cuffs, a small steel handcuff key lying on the palm, warm light from above, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
+  "out": "data/horror/ep1_il_bunker/img/s12_chiave_palmo_v2.png",
+  "prompt": "first-person view looking down at my own open bare palm just pulled out of the pocket of a dark navy work jacket with elastic cuffs, a single tiny plain silver metal key lying in the middle of the palm, warm light from a lamp above, dark concrete floor below, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 112,
+  "seed": 217,
   "steps": 4
  },
  {
-  "out": "data/horror/ep1_il_bunker/img/s13_mano_tesa.png",
-  "prompt": "medium shot of an older thin man with short grey hair and a short grey beard sitting on a concrete floor, lifting his head and stretching his free open hand toward the camera, his other arm pulled tight by a handcuff on a rusty vertical pipe, beard and hand lit by warm light, eyes lost in deep shadow, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
+  "out": "data/horror/ep1_il_bunker/img/s13_mano_tesa_v4.png",
+  "prompt": "medium shot from the front: a thin old man with short grey hair and a short grey beard sits on a concrete floor and reaches his right arm straight toward the camera, pleading, his open palm large in the foreground facing the camera with fingers spread, his face behind the hand lost in deep shadow, only the grey beard catching the warm light, his left wrist locked in a steel handcuff to a rusty orange vertical pipe at his side, olive-green field jacket, cinematic film still, vertical 9:16, abandoned Cold War concrete bunker room, low-key lighting, warm tungsten practical lamp and red LED glow, deep black shadows, dust in the air, 35mm film grain, muted grey-green palette, photorealistic, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 113,
+  "seed": 238,
   "steps": 4
  },
  {
