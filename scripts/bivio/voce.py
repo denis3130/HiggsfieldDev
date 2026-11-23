@@ -68,7 +68,8 @@ def dici(testo, enfasi=0.6, scritto=None, pause=0.42, lungo=False):
     chiave = hashlib.sha1(f"{RIF_ID}|{enfasi}|{testo}".encode()).hexdigest()[:16]; f = CACHE / f"{chiave}.npz"
     if f.exists():
         z = np.load(f, allow_pickle=True); a, heard = z["a"], [tuple(h) for h in z["heard"].tolist()]
-        print(f"  già fatto «{testo}»", flush=True)
+        pt = float(z["punti"]) if "punti" in z else 1.0
+        print(f"  già fatto{'' if pt >= 0.999 else ' (era QUASI: controllare)'} «{testo}» → «{' '.join(h[2] for h in heard)}»", flush=True)
         w = align(scritto or testo, [(float(s), float(e), w) for s, e, w in heard])
         return respiro(a, w, pause) if pause else (a, w)
     atteso = norm(testo); meglio = None; att = 0.3 + len(testo) / 14          # durata attesa: circa 14 caratteri al secondo
@@ -97,7 +98,7 @@ def dici(testo, enfasi=0.6, scritto=None, pause=0.42, lungo=False):
     punti, a, heard, seme, sim, dur = meglio
     print(f"  {'ok ' if punti >= 0.999 else 'quasi ' if punti >= 0.85 else 'DA RIFARE '}seme {seme} somiglianza {sim:.2f} {dur:.1f}s (attesi {att:.1f}) «{testo}» → «{' '.join(h[2] for h in heard)}»", flush=True)
     if punti >= 0.85:
-        np.savez(f, a=a, heard=np.array(heard, dtype=object))
+        np.savez(f, a=a, heard=np.array(heard, dtype=object), punti=punti)
     w = align(scritto or testo, heard)
     return respiro(a, w, pause) if pause else (a, w)
 

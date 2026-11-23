@@ -6,7 +6,12 @@
  },
  "02_nono_piano": {
   "sessione": "session_014XUVKscC89zAzvT5efyTwo",
-  "branch": "claude/il-bivio-02-nono-piano"
+  "branch": "claude/il-bivio-02-nono-piano",
+  "video": {
+   "sessione": "session_014XUVKumPZg2RuwFGXWz2b8",
+   "modello": "claude-opus-5-5",
+   "stato": "video consegnato il 22/11"
+  }
  },
  "03_ultima_corsa": {
   "sessione": "session_014XUVKuQoaCe8sWuLogFUht",
@@ -26,7 +31,12 @@
  },
  "07_baby_monitor": {
   "sessione": "session_014XUVKuJS66LFmg78eeuecU",
-  "branch": "claude/il-bivio-07-baby-monitor"
+  "branch": "claude/il-bivio-07-baby-monitor",
+  "video": {
+   "sessione": "session_014XUVKuJS66LFmg78eeuecU",
+   "modello": "claude-fable-5-2",
+   "stato": "video consegnato il 22/11"
+  }
  },
  "08_il_bunker": {
   "sessione": "session_014XUVKsXmiiYmv6JKukHYtU",
@@ -44,5 +54,6 @@
   "sessione": "session_014XUVKvaEPTeYY9PCD72RE3",
   "branch": "claude/il-bivio-11-il-traghetto"
  },
- "nota_video": "Dal 22/11 sera ogni sessione produce anche il video dell'Episodio 1 della propria storia con scripts/bivio/ (procedura in data/horror/PRODUZIONE.md) e lo consegna nella propria chat."
+ "nota_video": "Dal 22/11 sera ogni sessione produce anche il video dell'Episodio 1 della propria storia con scripts/bivio/ (procedura in data/horror/PRODUZIONE.md) e lo consegna nella propria chat.",
+ "nota_modelli": "Il 22/11 alle 19:48–20:02 UTC le sessioni Fable si sono fermate per il limite di utilizzo di Fable. Dal 23/11, su richiesta dell'utente, tutte le sessioni usano Opus 5.5 a impegno massimo."
 }

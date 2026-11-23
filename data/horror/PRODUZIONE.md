@@ -1,6 +1,6 @@
 # Il Bivio — come si produce un episodio (tutto gratis, in locale, senza Higgsfield)
 
-Stato al 22/11: 11 storie scritte (`data/horror/storie/`). Episodio 1 di «La voce nel bosco» montato come modello
+Stato al 23/11: 11 storie scritte (`data/horror/storie/`). Episodio 1 di «La voce nel bosco» montato come modello
 (`data/horror/ep1_voce_nel_bosco/`, non pubblicato). Gli script stanno in `scripts/bivio/`.
 
 Regole fisse: niente servizi a pagamento, niente Higgsfield. Una sola voce (il narratore). Suoni veri registrati (CC0), mai sintetici.
@@ -39,6 +39,8 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
 - Ogni pezzo (frase del narratore, grido, messaggio letto, voce lontana, opzione A, opzione B, chiusura) si genera da solo e si riascolta con Whisper:
   si tiene il primo seme in cui le parole sentite sono esattamente quelle del copione (fino a 8 tentativi). I pezzi buoni restano in `_voce/`
   e non si rifanno. Nel log: `ok` = identico, `quasi` = da controllare, `DA RIFARE` = cambiare il testo o riprovare.
+  Se una parola esce sbagliata in tutti i tentativi (es. «ninna» sentita «linda», «a chi lo do» → «a chi l'odo»), si riscrive la battuta
+  con parole equivalenti invece di accettare un `quasi`.
 - Le pause dopo punto, due punti e punto di domanda vengono allungate a 0,42 s: il modello legge di fila, il narratore deve lasciar cadere le frasi.
 - Nella riga: `voce` (narratore), `grido` + `sottotitolo_grido` (urlo del protagonista, detto dal narratore: più enfasi, più forte, saturato),
   `citazione` (messaggio o scritta letta), `lontana` (una voce lontana, sempre detta dal narratore: piano e ovattata), `silenzio` (secondi senza voce).
