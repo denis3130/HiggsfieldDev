@@ -73,11 +73,18 @@ def ritocca(nome, ops):
         elif tipo == "spegni":                                                   # pannello spento: colore uniforme con un filo di luce
             nuovo = big.astype(np.float32).copy(); g = np.linspace(1.08, 0.9, Y1 - Y0)[:, None, None]
             nuovo[Y0:Y1, X0:X1] = np.array(op[2], np.float32) * g + cv2.GaussianBlur(zona, (0, 0), 12) * 0.12
-        else:                                                                    # ripara: inpaint delle luci troppo forti
-            lum = zona.mean(2); luce = (lum > op[2]).astype(np.uint8) * 255
-            luce = cv2.dilate(luce, np.ones((7, 7), np.uint8))
-            pezzo = cv2.inpaint(big[Y0:Y1, X0:X1].copy(), luce, 9, cv2.INPAINT_TELEA).astype(np.float32)
-            nuovo = big.astype(np.float32).copy(); nuovo[Y0:Y1, X0:X1] = pezzo * 0.85
+        else:                                                                    # ripara: inpaint delle luci troppo forti (o solo di quelle verdi)
+            z = big[Y0:Y1, X0:X1]
+            if len(op) > 3 and op[3] == "verde":
+                zi = z.astype(np.int16); luce = (zi[..., 1] > zi[..., 2] + 35) & (zi[..., 1] > zi[..., 0] + 5) & (zi[..., 1] > op[2])
+            elif len(op) > 3 and op[3] == "rosso":
+                zi = z.astype(np.int16); luce = (zi[..., 2] > zi[..., 1] + 50) & (zi[..., 2] > zi[..., 0] + 40) & (zi[..., 2] > op[2])
+            else:
+                luce = zona.mean(2) > op[2]
+            luce = cv2.dilate(luce.astype(np.uint8) * 255, np.ones((7, 7), np.uint8))
+            pezzo = cv2.inpaint(z.copy(), luce, 9, cv2.INPAINT_TELEA).astype(np.float32)
+            ml = cv2.GaussianBlur(luce.astype(np.float32) / 255, (0, 0), 2)[..., None]
+            nuovo = big.astype(np.float32).copy(); nuovo[Y0:Y1, X0:X1] = zona * (1 - ml) + pezzo * (1 - 0.15 * ml) * ml
         big = np.clip(big * (1 - mk) + nuovo * mk, 0, 255).astype(np.uint8)
     m.IMG[nome] = (big, dep)
 
@@ -99,17 +106,26 @@ def cuoci_cartello(nome, q, righe_txt):
     S = 4; dst = quad_big(q); lw = int(np.linalg.norm(dst[1] - dst[0])); lh = int(np.linalg.norm(dst[3] - dst[0]))
     BI = (238, 244, 238, 255)
     st = Image.new("RGBA", (lw * S, lh * S), BI[:3] + (0,)); d = ImageDraw.Draw(st)        # fondo bianco trasparente: niente aloni scuri
-    f1 = m.font("Bold", int(lh * S * 0.175)); f13 = m.font("Black", int(lh * S * 0.25)); f2 = m.font("Medium", int(lh * S * 0.165))
-    f3 = m.font("Bold", int(lh * S * 0.17))
+    k1 = 1.0
+    while True:                                                                  # la prima riga (USCITA [13]) deve stare nell'82% della larghezza
+        f1 = m.font("Bold", int(lh * S * 0.15 * k1)); f13 = m.font("Black", int(lh * S * 0.21 * k1))
+        w1 = f1.getlength(righe_txt[0]); bw = f13.getlength(righe_txt[1]) + lh * S * 0.11 * k1; gap = lh * S * 0.06 * k1
+        if w1 + gap + bw <= lw * S * 0.82 or k1 < 0.5:
+            break
+        k1 -= 0.04
+    f2 = m.font("Medium", int(lh * S * 0.16)); f3 = m.font("Bold", int(lh * S * 0.16))
+    while f2.getlength(righe_txt[2]) > lw * S * 0.84:
+        f2 = m.font("Medium", int(f2.size * 0.95))
     # riga 1: USCITA [13]
-    w1 = f1.getlength(righe_txt[0]); bw = f13.getlength(righe_txt[1]) + lh * S * 0.14; gap = lh * S * 0.07
     x = (lw * S - (w1 + gap + bw)) / 2; yc = lh * S * 0.25
     d.text((x, yc), righe_txt[0], font=f1, fill=BI, anchor="lm")
-    bx0 = x + w1 + gap; bh = lh * S * 0.3
+    bx0 = x + w1 + gap
+    bh = lh * S * 0.26 * k1
     d.rounded_rectangle([bx0, yc - bh / 2, bx0 + bw, yc + bh / 2], int(lh * S * 0.04), fill=BI)
     d.text((bx0 + bw / 2, yc + lh * S * 0.005), righe_txt[1], font=f13, fill=VERDE_AUTOSTRADA + (255,), anchor="mm")
     d.text((lw * S / 2, lh * S * 0.55), righe_txt[2], font=f2, fill=BI, anchor="mm")
     d.text((lw * S / 2, lh * S * 0.80), righe_txt[3], font=f3, fill=BI, anchor="mm")
+    st = st.filter(ImageFilter.GaussianBlur(0.9 * S))                         # morbide come il resto della foto
     t = in_prospettiva(st, q)
     a = t[..., 3:] * faccia[..., None]
     lumf = np.clip(cv2.GaussianBlur(luce, (0, 0), 20), 0.65, 1.1)[..., None]
@@ -139,12 +155,14 @@ def cuoci_inchiostro(nome, q, disegna_su, soglia=None):
 
 def testo_cartoncino(voci):
     def disegna(d, lw, lh, S):
-        f0 = m.font("Bold", int(lh * 0.085)); fn = m.font("Black", int(lh * 0.13)); fs = m.font("Medium", int(lh * 0.088))
-        x0 = lw * 0.09
-        d.text((x0, lh * 0.11), "USCITE", font=f0, fill=(20, 22, 26, 235), anchor="lm")
-        d.line([(x0, lh * 0.175), (lw * 0.91, lh * 0.175)], fill=(20, 22, 26, 200), width=int(S * 2.2))
+        f0 = m.font("Bold", int(lh * 0.085)); fn = m.font("Black", int(lh * 0.135)); x0 = lw * 0.09; bw, bh = lw * 0.21, lh * 0.13
+        spazio = lw * 0.9 - (x0 + bw + lw * 0.05); fs = m.font("Bold", int(lh * 0.092))
+        while max(fs.getlength(nm) for _, nm in voci) > spazio:
+            fs = m.font("Bold", int(fs.size * 0.95))
+        d.text((x0, lh * 0.12), "USCITE", font=f0, fill=(20, 22, 26, 235), anchor="lm")
+        d.line([(x0, lh * 0.19), (lw * 0.91, lh * 0.19)], fill=(20, 22, 26, 200), width=int(S * 2.2))
         for k, (num, nome) in enumerate(voci):
-            yc = lh * (0.30 + 0.165 * k); bw, bh = lw * 0.2, lh * 0.125
+            yc = lh * (0.33 + 0.19 * k)
             d.rounded_rectangle([x0, yc - bh / 2, x0 + bw, yc + bh / 2], int(lh * 0.02), fill=VERDE_AUTOSTRADA + (245,))
             d.text((x0 + bw / 2, yc + lh * 0.004), num, font=fn, fill=(255, 255, 255, 255), anchor="mm")     # bianco = carta: il numero «buca» il verde
             d.text((x0 + bw + lw * 0.05, yc), nome, font=fs, fill=(20, 22, 26, 240), anchor="lm")
@@ -459,6 +477,9 @@ def applica(fr, r, tau, u, t, seme):
                 fl += a0 * np.exp(-(x - d0) / dec)
         base = c.get("base", 0.4)
         fr = fr * (base + fl * (1 - base)) * np.float32([1.0 + 0.12 * min(fl, 1), 1.0, 1.0 - 0.05 * min(fl, 1)])
+        if "buio" in c:                                                          # il fulmine dell'immagine resta al buio fino al lampo
+            cx, cy, rx, ry = c["buio"]["zona"]; mk = np.exp(-(((m.XN - cx) / rx) ** 2 + ((m.YN - cy) / ry) ** 2))[..., None]
+            fr = fr * (1 - mk * c["buio"].get("forza", 0.8) * (1 - min(fl, 1.0)))
     if "neon" in e:
         c = e["neon"]; f = tremolio(t, c.get("seme", 5)); cx, cy, rx, ry = c["zona"]
         mk = np.exp(-(((m.XN - cx) / rx) ** 2 + ((m.YN - cy) / ry) ** 2))[..., None]
@@ -468,7 +489,9 @@ def applica(fr, r, tau, u, t, seme):
     if "gocce" in s:
         lum = luce_locale(fr) if lum is None else lum
         vetro = linea_cruscotto(r, u, tau, seme) if "cruscotto" in e else None
-        fr = s["gocce"].disegna(fr, tau, lum, e["gocce"].get("forza", 1.0), vetro)
+        rif = e["gocce"].get("rif_riga")                                         # stesso vetro su due righe: l'orologio delle gocce prosegue
+        tg = t - m.T[next(k for k, x in enumerate(RIGHE) if x.get("id") == rif)]["inizio"] if rif else tau
+        fr = s["gocce"].disegna(fr, tg, lum, e["gocce"].get("forza", 1.0), vetro)
     if "tergi" in s:
         fr = s["tergi"].disegna(fr, tau, linea_cruscotto(r, u, tau, seme))
     if "crepa" in s:
@@ -533,8 +556,8 @@ def lancetta(v, R, D):
     S = 2; im = Image.new("RGBA", (D * S, D * S), (0, 0, 0, 0)); d = ImageDraw.Draw(im); c = D * S / 2
     a = np.radians(225 - v * 270 / 240); ux, uy = np.cos(a), -np.sin(a); nx, ny = -uy, ux
     pt = lambda r, w: (c + (ux * r + nx * w) * S, c + (uy * r + ny * w) * S)
-    d.polygon([pt(-70, 9), pt(R - 22, 2.5), pt(R - 22, -2.5), pt(-70, -9)], fill=(255, 84, 34, 255))
-    d.polygon([pt(-60, 3), pt(R - 30, 0.8), pt(R - 30, -0.8), pt(-60, -3)], fill=(255, 190, 140, 255))
+    d.polygon([pt(-42, 9), pt(R - 22, 2.5), pt(R - 22, -2.5), pt(-42, -9)], fill=(255, 84, 34, 255))
+    d.polygon([pt(-36, 3), pt(R - 30, 0.8), pt(R - 30, -0.8), pt(-36, -3)], fill=(255, 190, 140, 255))
     d.ellipse([c - 50 * S, c - 50 * S, c + 50 * S, c + 50 * S], fill=(20, 22, 24, 255), outline=(70, 76, 80, 255), width=3 * S)
     im = im.resize((D, D), Image.LANCZOS); a = np.asarray(im).astype(np.float32) / 255
     return np.dstack([a[..., 2::-1] * a[..., 3:], a[..., 3:]])
@@ -562,22 +585,32 @@ def tachimetro(r, tau, u, t):
     dst = np.float32([[cx - h * 0.47, cy - h * 0.44], [cx + h * 0.5, cy - h * 0.46], [cx + h * 0.53, cy + h * 0.5], [cx - h * 0.5, cy + h * 0.52]])
     P = cv2.getPerspectiveTransform(src, dst)
     st = cv2.warpPerspective(strato, P, (W, H), flags=cv2.INTER_LINEAR); gl = cv2.warpPerspective(glow, P, (W, H), flags=cv2.INTER_LINEAR)
-    fr = np.zeros((H, W, 3), np.float32)
-    fr += np.float32([10, 14, 12]) * (1 - m.YN[..., None] * 0.5)                  # cruscotto scuro, un filo di verde riflesso
+    if "fondo" not in TACH:                                                      # cruscotto: palpebra scura sopra il quadrante con un filo di luce sul bordo
+        fondo = np.zeros((H, W, 3), np.float32) + np.float32([9, 12, 11]) * (1 - m.YN[..., None] * 0.5)
+        pal = np.zeros((H, W), np.float32); cv2.ellipse(pal, (int(cx), int(cy - 40)), (640, 590), 0, 180, 360, 1.0, -1, cv2.LINE_AA)
+        pal = cv2.GaussianBlur(pal, (0, 0), 3); bordo = np.zeros((H, W), np.float32)
+        cv2.ellipse(bordo, (int(cx), int(cy - 40)), (640, 590), 0, 200, 340, 1.0, 5, cv2.LINE_AA)
+        fondo = fondo * (1 - pal[..., None] * 0.6) + cv2.GaussianBlur(bordo, (0, 0), 4)[..., None] * np.float32([40, 58, 48])
+        rifl = np.clip(1 - np.abs((m.XN * 0.8 + m.YN * 0.45) - 0.62) / 0.05, 0, 1) * np.exp(-((m.XX - cx) ** 2 + (m.YY - cy) ** 2) / (2 * 430 ** 2))
+        TACH["fondo"] = fondo; TACH["rifl"] = cv2.GaussianBlur(rifl.astype(np.float32), (0, 0), 18)[..., None]
+    fr = TACH["fondo"].copy()
     fr = fr * (1 - st[..., 3:4]) + st[..., :3] * 255 + gl * 255 * 0.8
+    fr = fr + TACH["rifl"] * np.float32([22, 26, 24])                            # riflesso sul vetro del quadrante
     # fuori fuoco ai bordi (lunghezza focale corta): nitido intorno alla lancetta
     d2 = ((m.XX - cx) / 520) ** 2 + ((m.YY - cy) / 560) ** 2
-    k = np.clip((d2 - 0.55) / 0.6, 0, 1)[..., None]
-    fr = fr * (1 - k) + cv2.GaussianBlur(fr, (0, 0), 9) * k
+    k = np.clip((d2 - 0.35) / 0.55, 0, 1)[..., None]
+    fr = fr * (1 - k) + cv2.GaussianBlur(fr, (0, 0), 10) * k
     if "specchio" in TACH:
         sp = TACH["specchio"]; hh, ww = sp.shape[:2]; x0, y0 = (W - ww) // 2, -int(hh * 0.18)
-        mk = np.zeros((H, W), np.float32); cv2.rectangle(mk, (x0, y0), (x0 + ww, y0 + hh), 1.0, -1)
-        mk = cv2.GaussianBlur(mk, (0, 0), 8)
+        def tondo(img, x0, y0, x1, y1, r, v, spess=-1):
+            p = Image.new("L", (W, H), 0); ImageDraw.Draw(p).rounded_rectangle([x0, y0, x1, y1], r, fill=None if spess > 0 else 255,
+                                                                              outline=255 if spess > 0 else None, width=max(spess, 1))
+            return np.asarray(p).astype(np.float32) / 255 * v
+        mk = cv2.GaussianBlur(tondo(None, x0, y0, x0 + ww, y0 + hh, 70, 1.0), (0, 0), 7)
         tela = np.zeros((H, W, 3), np.float32); ya, yb_ = max(0, y0), min(H, y0 + hh)
         tela[ya:yb_, x0:x0 + ww] = sp[ya - y0:yb_ - y0]
-        tela = cv2.GaussianBlur(tela, (0, 0), 5) * 0.9
-        cornice = np.zeros((H, W), np.float32); cv2.rectangle(cornice, (x0 - 14, y0 - 14), (x0 + ww + 14, y0 + hh + 14), 1.0, 28)
-        cornice = cv2.GaussianBlur(cornice, (0, 0), 6)[..., None]
+        tela = cv2.GaussianBlur(tela, (0, 0), 7) * 0.85
+        cornice = cv2.GaussianBlur(tondo(None, x0 - 16, y0 - 16, x0 + ww + 16, y0 + hh + 16, 84, 1.0, 30), (0, 0), 7)[..., None]
         fr = fr * (1 - mk[..., None]) + tela * mk[..., None]
         fr = fr * (1 - cornice * 0.9) + cornice * np.float32([14, 15, 16])
     fr = sposta(fr, 1.2 * np.sin(2 * np.pi * 13 * t), 1.4 * np.sin(2 * np.pi * 15.3 * t + 2))
@@ -612,12 +645,28 @@ def _muovi_con_effetti(nome, mov, u, tau, seme, oltre=False):
 m.muovi = _muovi_con_effetti
 
 
+def cuoci_lucchetto(nome, centro, lato):
+    """Pulsante della chiusura centralizzata acceso: lucchetto verde disegnato (al posto delle scritte inventate dal modello)."""
+    big, dep = m.IMG[nome]; b = big.astype(np.float32); S = 4
+    L = int(big_xy(lato, 0)[0]); im = Image.new("L", (L * S, L * S), 0); d = ImageDraw.Draw(im)
+    w = L * S
+    d.rounded_rectangle([w * 0.22, w * 0.45, w * 0.78, w * 0.9], int(w * 0.08), fill=255)                 # corpo
+    d.arc([w * 0.32, w * 0.12, w * 0.68, w * 0.62], 180, 360, fill=255, width=int(w * 0.09))              # arco
+    d.line([(w * 0.32 + w * 0.045, w * 0.37), (w * 0.32 + w * 0.045, w * 0.47)], fill=255, width=int(w * 0.09))
+    d.line([(w * 0.68 - w * 0.045, w * 0.37), (w * 0.68 - w * 0.045, w * 0.47)], fill=255, width=int(w * 0.09))
+    d.ellipse([w * 0.45, w * 0.58, w * 0.55, w * 0.68], fill=0)
+    a = np.asarray(im.resize((L, L), Image.LANCZOS)).astype(np.float32) / 255
+    cx, cy = map(int, big_xy(*centro)); x0, y0 = cx - L // 2, cy - L // 2
+    tela = np.zeros((SH, SW), np.float32); tela[y0:y0 + L, x0:x0 + L] = a
+    glow = cv2.GaussianBlur(tela, (0, 0), L * 0.12) * 1.6 + cv2.GaussianBlur(tela, (0, 0), L * 0.4) * 0.8
+    VE = np.float32([120, 255, 110])                                           # BGR: verde acceso
+    b = b * (1 - tela[..., None]) + tela[..., None] * VE + glow[..., None] * VE * 0.45
+    m.IMG[nome] = (np.clip(b, 0, 255).astype(np.uint8), dep)
+
+
 # ---------------------------------------------------------------- cottura (una volta, al caricamento)
-for r in RIGHE:
-    c = r.get("cuoci")
-    if not c:
-        continue
-    n = r["img"]
+_CUOCI = [(r["img"], r["cuoci"]) for r in RIGHE if r.get("cuoci")] + [(n, c) for n, c in m.ep.get("cuoci_extra", {}).items() if n in m.IMG]
+for n, c in _CUOCI:
     if c.get("ritocchi"):
         ritocca(n, [tuple(x) for x in c["ritocchi"]])
     if c.get("cartello"):
@@ -627,3 +676,6 @@ for r in RIGHE:
         cuoci_inchiostro(n, c["cartoncino"]["quad"], testo_cartoncino(c["cartoncino"]["voci"]), tuple(sg) if sg else None)
     if c.get("biglietto"):
         cuoci_inchiostro(n, c["biglietto"]["quad"], testo_biglietto(c["biglietto"]["righe"], c["biglietto"].get("sottolinea", -1)))
+    if c.get("lucchetto"):
+        cuoci_lucchetto(n, c["lucchetto"]["centro"], c["lucchetto"]["lato"])
+

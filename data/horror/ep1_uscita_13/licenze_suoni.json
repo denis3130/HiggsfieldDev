@@ -1,0 +1,100 @@
+{
+ "nota": "Registrazioni vere CC0 da Freesound (trovate con l'API di Openverse), tagliate con ffmpeg per questo episodio. Gli altri suoni (colpo, rise_long, heart60, amb_slow, stoffa) sono quelli comuni in scripts/bivio/sfx/ (licenze lì).",
+ "sfx/auto_pioggia.mp3": {
+  "titolo": "Drive Car in Rain Interior with Windshield wiper",
+  "autore": "Borgory",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Borgory/sounds/650763",
+  "nota": "60 secondi da 0:15"
+ },
+ "sfx/pioggia_tetto.mp3": {
+  "titolo": "Rain on car roof interior / Regen auf Autodach",
+  "autore": "Borgory",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Borgory/sounds/650774",
+  "nota": "60 secondi da 0:10"
+ },
+ "sfx/pioggia_pensilina.mp3": {
+  "titolo": "Rain falling on a metal roof - 96 kHz / 24 Bit",
+  "autore": "GregorQuendel",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/GregorQuendel/sounds/239939",
+  "nota": "primi 40 secondi"
+ },
+ "sfx/neon.mp3": {
+  "titolo": "metro subway Montreal fluorescent light neon hum buzz",
+  "autore": "kyles",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/kyles/sounds/450901",
+  "nota": "primi 30 secondi"
+ },
+ "sfx/tergicristallo.mp3": {
+  "titolo": "car windshield wipers seamless loop 3 slowest squeakier",
+  "autore": "RutgerMuller",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/RutgerMuller/sounds/50904",
+  "nota": "un passaggio (da 1,75 s)"
+ },
+ "sfx/telo.mp3": {
+  "titolo": "flag plastic garbage bag flap quick in wind1.wav",
+  "autore": "kyles",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/kyles/sounds/450827"
+ },
+ "sfx/tuono_vicino.mp3": {
+  "titolo": "Thunder, Close",
+  "autore": "Fission9",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Fission9/sounds/505113",
+  "nota": "6 secondi da 0,2 s"
+ },
+ "sfx/tuono_lontano.mp3": {
+  "titolo": "peal of thunder - distant",
+  "autore": "bastipictures",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/bastipictures/sounds/243782",
+  "nota": "6 secondi da 3,5 s"
+ },
+ "sfx/bussare.mp3": {
+  "titolo": "Car window knocking (inside).wav",
+  "autore": "Gutek",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Gutek/sounds/109199",
+  "nota": "nel montaggio si usano tre colpi singoli"
+ },
+ "sfx/motore_minimo.mp3": {
+  "titolo": "Car engine idle",
+  "autore": "Iridiuss",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Iridiuss/sounds/349170",
+  "nota": "filtrato (più lontano)"
+ },
+ "sfx/accelera.mp3": {
+  "titolo": "Auto Interior: Start, Shift & Accelerate",
+  "autore": "producerdan",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/producerdan/sounds/333320",
+  "nota": "4,5 secondi da 2,2 s"
+ },
+ "sfx/respiro_ragazza.mp3": {
+  "titolo": "Girl_Gasp_Heavy_Breathing.wav",
+  "autore": "tcrocker68",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/tcrocker68/sounds/235586",
+  "nota": "filtrato (dietro il vetro)"
+ },
+ "sfx/strada_bagnata.mp3": {
+  "titolo": "Passing Car (Wet road)",
+  "autore": "Breviceps",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Breviceps/sounds/462862",
+  "nota": "4,2 secondi da 1 s"
+ },
+ "fonts/Caveat-SemiBold.woff": {
+  "titolo": "Caveat (carattere scritto a mano del biglietto)",
+  "autore": "The Caveat Project Authors",
+  "licenza": "SIL Open Font License 1.1",
+  "pagina": "https://www.npmjs.com/package/@fontsource/caveat",
+  "nota": "testo della licenza in fonts/OFL_Caveat.txt"
+ }
+}

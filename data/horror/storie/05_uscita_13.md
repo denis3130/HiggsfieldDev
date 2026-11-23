@@ -78,15 +78,17 @@ Nessuna morte con riavvolgimento in questa storia: le scelte cambiano che cosa s
 | 11 | — | Soggettiva: il tuo finestrino appannato, gocce che colano illuminate dal neon; una macchia gialla entra da sinistra e tre nocche colpiscono il vetro. Camera ferma. | Tre colpi sul vetro. Poi silenzio totale per un secondo. |
 | 12 | Qualcuno bussa al finestrino. Una ragazza fradicia, con un impermeabile giallo. | Soggettiva attraverso il vetro bagnato: mezzo busto di una ragazza con l'impermeabile giallo lucido, cappuccio alzato, ciocche scure che gocciolano, viso in ombra; neon bianco alle sue spalle. Leggero avvicinamento. | Pioggia sull'impermeabile, il suo respiro corto. |
 | 13 | «Ti prego. Portami all'uscita tredici.» | Dettaglio: il palmo bagnato di lei aperto sul vetro, bordo della manica gialla; dietro, fuori fuoco, in fondo al piazzale, la sagoma della berlina nera. Fuoco che passa dalla mano alla berlina. | Voce attutita dal vetro (la dice il narratore), pioggia. |
-| 14 | Cosa fai? A: la fai salire. B: blocchi le portiere e riparti. Scrivilo nei commenti. | Scheda di scelta divisa in due metà (vedi Immagine A / Immagine B), sotto la pioggia; le lettere A e B in montaggio. | Un tuono; pioggia che continua sotto la scheda. |
+| 14 | Cosa fai? La A: apri la portiera e la fai salire. Oppure la B: blocchi le portiere e riparti subito. Scrivilo nei commenti. | Scheda finale: due carte con miniatura (vedi Immagine A / Immagine B) sopra l'ultima inquadratura che va fuori fuoco; si illumina la carta di cui parla il narratore. | Un tuono; pioggia che continua sotto la scheda. |
 
-**Bivio:** A: la fai salire / B: blocchi le portiere e riparti
+**Bivio:** A: La fai / salire · B: Blocchi tutto / e riparti
 
-**Immagine A:** soggettiva dall'interno, la portiera dietro che si apre sulla pioggia e una manica gialla che entra, neon bianco.
+**Frase A:** «La A: apri la portiera e la fai salire.» · **Frase B:** «Oppure la B: blocchi le portiere e riparti subito.»
 
-**Immagine B:** dettaglio del pulsante della chiusura centralizzata sulla portiera, illuminato dal verde, con la manica di velluto marrone sopra.
+**Immagine A:** soggettiva dall'interno, una manica gialla che entra nell'abitacolo dal sedile dietro, neon bianco oltre il vetro.
 
-**Parole:** 106
+**Immagine B:** dettaglio del pulsante della chiusura centralizzata sulla portiera, illuminato dal verde (lucchetto), con la manica di velluto marrone e il pollice che lo preme.
+
+**Parole:** 113
 
 **Prompt immagini (inglese)** — suffisso di stile uguale per tutte: `cinematic film still, vertical 9:16, night thriller, anamorphic lens, heavy rain, deep blacks, teal-green and blue-black palette with red and yellow accents, low-key motivated lighting, fine film grain, photorealistic, no text, no logos`
 

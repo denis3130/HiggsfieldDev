@@ -1,0 +1,741 @@
+{
+ "serie": "IL BIVIO",
+ "storia": "Uscita 13",
+ "episodio": 1,
+ "titolo": "Il cartello",
+ "righe": [
+  {
+   "id": 1,
+   "voce": "Uscita tredici. Su questa autostrada non esiste.",
+   "img": "s01_cartello.png",
+   "mov": "avanza",
+   "cuoci": {
+    "cartello": {
+     "quad": [
+      [
+       226,
+       351
+      ],
+      [
+       371,
+       350
+      ],
+      [
+       371,
+       487
+      ],
+      [
+       225,
+       488
+      ]
+     ],
+     "testo": [
+      "USCITA",
+      "13",
+      "Valdifosca",
+      "4 km"
+     ]
+    }
+   },
+   "effetti": {
+    "telo": [
+     225,
+     353,
+     478
+    ],
+    "pioggia": 0.55,
+    "cruscotto": 742,
+    "gocce": {
+     "seme": 1,
+     "n": 240,
+     "rmin": 2.0,
+     "rmax": 9.5,
+     "allung": 1.0,
+     "zona": [
+      0,
+      0.07,
+      1,
+      0.74
+     ]
+    },
+    "tergi": {
+     "perno": [
+      0.5,
+      0.8
+     ],
+     "r": [
+      0.08,
+      0.98
+     ],
+     "angoli": [
+      178,
+      60
+     ],
+     "inizio": 0.12,
+     "su": 0.45,
+     "giu": 0.5
+    },
+    "crepa": [
+     0.81,
+     0.655
+    ]
+   }
+  },
+  {
+   "id": 2,
+   "voce": "Fai questa strada da anni: dopo la dodici viene la quattordici.",
+   "img": "s02_cartoncino.png",
+   "mov": "avanza_lento",
+   "cuoci": {
+    "cartoncino": {
+     "quad": [
+      [
+       188,
+       470
+      ],
+      [
+       378,
+       403
+      ],
+      [
+       452,
+       612
+      ],
+      [
+       262,
+       668
+      ]
+     ],
+     "voci": [
+      [
+       "11",
+       "Sasso Grosso"
+      ],
+      [
+       "12",
+       "Pian del Falco"
+      ],
+      [
+       "14",
+       "Borgo Castellaccio"
+      ]
+     ],
+     "soglia": [
+      22,
+      40
+     ]
+    }
+   },
+   "effetti": {
+    "vibra": 1.0
+   }
+  },
+  {
+   "id": 3,
+   "voce": "La macchina non è tua. Nemmeno la giacca che hai addosso.",
+   "img": "s03_volante.png",
+   "mov": "fermo",
+   "effetti": {
+    "vibra": 1.3
+   }
+  },
+  {
+   "id": 4,
+   "voce": "C'era anche un biglietto:",
+   "citazione": "Mettila. Ed esci alla tredici.",
+   "img": "s04_biglietto.png",
+   "speciale": "camera",
+   "camera": {
+    "z": [
+     1.3,
+     1.36
+    ],
+    "py": [
+     300,
+     -300
+    ],
+    "kd": 0.04
+   },
+   "cuoci": {
+    "ritocchi": [
+     [
+      "sfoca",
+      [
+       0,
+       830,
+       22,
+       882
+      ],
+      7
+     ],
+     [
+      "sfoca",
+      [
+       45,
+       878,
+       232,
+       1024
+      ],
+      5
+     ],
+     [
+      "sfoca",
+      [
+       318,
+       978,
+       372,
+       1012
+      ],
+      6
+     ],
+     [
+      "sfoca",
+      [
+       430,
+       1004,
+       576,
+       1024
+      ],
+      6
+     ]
+    ],
+    "biglietto": {
+     "quad": [
+      [
+       134,
+       549
+      ],
+      [
+       538,
+       561
+      ],
+      [
+       526,
+       962
+      ],
+      [
+       101,
+       940
+      ]
+     ],
+     "righe": [
+      "Il riscaldamento",
+      "è rotto: metti",
+      "la mia giacca.",
+      "Esci alla 13.",
+      "Ti aspetto lì",
+      "per il saldo."
+     ],
+     "sottolinea": 3
+    }
+   },
+   "effetti": {
+    "vibra": 0.8
+   }
+  },
+  {
+   "id": 5,
+   "voce": "Trecento euro, per consegnarla prima dell'alba.",
+   "img": "s05_telefono.png",
+   "mov": "avanza_lento",
+   "schermo": "messaggio",
+   "schermo_dopo": 0.7,
+   "cuoci": {
+    "ritocchi": [
+     [
+      "sfoca",
+      [
+       85,
+       792,
+       262,
+       872
+      ],
+      6
+     ],
+     [
+      "sfoca",
+      [
+       505,
+       918,
+       572,
+       972
+      ],
+      7
+     ],
+     [
+      "sfoca",
+      [
+       18,
+       895,
+       70,
+       928
+      ],
+      6
+     ],
+     [
+      "sfoca",
+      [
+       160,
+       930,
+       200,
+       960
+      ],
+      6
+     ]
+    ]
+   },
+   "effetti": {
+    "vibra": 0.8
+   }
+  },
+  {
+   "id": 6,
+   "voce": "Nello specchietto, un'altra macchina. A fari spenti.",
+   "img": "s06_specchietto.png",
+   "mov": "avanza_lento",
+   "effetti": {
+    "lampo": {
+     "parola": "macchina",
+     "dopo": -0.3,
+     "base": 0.4,
+     "buio": {
+      "zona": [
+       0.13,
+       0.26,
+       0.21,
+       0.17
+      ],
+      "forza": 0.85
+     }
+    }
+   },
+   "cuoci": {
+    "ritocchi": [
+     [
+      "ripara",
+      [
+       318,
+       500,
+       404,
+       565
+      ],
+      95
+     ],
+     [
+      "ripara",
+      [
+       400,
+       424,
+       448,
+       458
+      ],
+      95
+     ],
+     [
+      "ripara",
+      [
+       288,
+       418,
+       452,
+       602
+      ],
+      45,
+      "rosso"
+     ]
+    ]
+   }
+  },
+  {
+   "id": 7,
+   "voce": "Ti segue da venti chilometri.",
+   "img": "s07_berlina_v2.png",
+   "mov": "arretra",
+   "effetti": {
+    "stop": [
+     0.15,
+     0.25
+    ],
+    "pioggia": 0.8
+   }
+  },
+  {
+   "id": 8,
+   "voce": "Acceleri: accelera. Rallenti: rallenta.",
+   "speciale": "tachimetro",
+   "specchio": {
+    "img": "s06_specchietto.png",
+    "ritaglio": [
+     120,
+     440,
+     560,
+     640
+    ]
+   }
+  },
+  {
+   "id": 9,
+   "voce": "Entri in un'area di servizio. Deserta.",
+   "img": "s09_area.png",
+   "speciale": "camera",
+   "camera": {
+    "z": [
+     1.12,
+     1.17
+    ],
+    "py": [
+     -170,
+     150
+    ],
+    "kd": 0.05
+   },
+   "cuoci": {
+    "ritocchi": [
+     [
+      "spegni",
+      [
+       480,
+       311,
+       526,
+       487
+      ],
+      [
+       46,
+       42,
+       34
+      ]
+     ],
+     [
+      "sfoca",
+      [
+       76,
+       503,
+       130,
+       588
+      ],
+      6
+     ],
+     [
+      "sfoca",
+      [
+       126,
+       553,
+       160,
+       597
+      ],
+      6
+     ]
+    ]
+   },
+   "effetti": {
+    "neon": {
+     "zona": [
+      0.62,
+      0.375,
+      0.09,
+      0.02
+     ],
+     "forza": 0.85,
+     "globale": 0.06
+    },
+    "pioggia": 0.7
+   }
+  },
+  {
+   "id": 10,
+   "voce": "La macchina buia si ferma all'ingresso. Non scende nessuno.",
+   "img": "s10_ingresso.png",
+   "mov": "avanza_lento",
+   "cuoci": {
+    "ritocchi": [
+     [
+      "ripara",
+      [
+       138,
+       603,
+       218,
+       650
+      ],
+      120
+     ],
+     [
+      "ripara",
+      [
+       376,
+       601,
+       454,
+       650
+      ],
+      120
+     ],
+     [
+      "sfoca",
+      [
+       282,
+       602,
+       314,
+       630
+      ],
+      5
+     ],
+     [
+      "spegni",
+      [
+       70,
+       499,
+       111,
+       561
+      ],
+      [
+       30,
+       26,
+       24
+      ]
+     ],
+     [
+      "sfoca",
+      [
+       36,
+       503,
+       72,
+       548
+      ],
+      6
+     ],
+     [
+      "sfoca",
+      [
+       546,
+       468,
+       576,
+       502
+      ],
+      6
+     ]
+    ]
+   },
+   "effetti": {
+    "neon": {
+     "zona": [
+      0.24,
+      0.235,
+      0.06,
+      0.02
+     ],
+     "forza": 0.85,
+     "globale": 0.05
+    },
+    "pioggia": 0.8
+   }
+  },
+  {
+   "id": 11,
+   "voce": "",
+   "silenzio": 1.5,
+   "img": "s11_nocche_v2.png",
+   "mov": "fermo",
+   "effetti": {
+    "colpi": [
+     0.3,
+     0.66,
+     1.02
+    ],
+    "gocce": {
+     "seme": 3,
+     "n": 170,
+     "rmin": 2.0,
+     "rmax": 8.0,
+     "allung": 1.25,
+     "colano": 6,
+     "rif_riga": 11
+    }
+   }
+  },
+  {
+   "id": 12,
+   "voce": "",
+   "silenzio": 0.8,
+   "img": "s11_nocche_v2.png",
+   "mov": "fermo",
+   "effetti": {
+    "gocce": {
+     "seme": 3,
+     "n": 170,
+     "rmin": 2.0,
+     "rmax": 8.0,
+     "allung": 1.25,
+     "colano": 6,
+     "rif_riga": 11
+    }
+   }
+  },
+  {
+   "id": 13,
+   "voce": "Qualcuno bussa al finestrino. Una ragazza fradicia, con un impermeabile giallo.",
+   "img": "s12_ragazza_v3.png",
+   "mov": "avanza_lento",
+   "effetti": {
+    "gocce": {
+     "seme": 5,
+     "n": 190,
+     "rmin": 2.0,
+     "rmax": 9.0,
+     "allung": 1.25,
+     "colano": 7
+    },
+    "pioggia": 0.4
+   },
+   "cuoci": {
+    "ritocchi": [
+     [
+      "ripara",
+      [
+       28,
+       556,
+       92,
+       604
+      ],
+      140
+     ]
+    ]
+   }
+  },
+  {
+   "id": 14,
+   "voce": "",
+   "lontana": "Ti prego. Portami all'uscita tredici.",
+   "img": "s13_palmo_v2.png",
+   "mov": "avanza_lento",
+   "effetti": {
+    "fuoco": [
+     0.4,
+     0.85
+    ],
+    "gocce": {
+     "seme": 7,
+     "n": 120,
+     "rmin": 2.0,
+     "rmax": 8.0,
+     "allung": 1.2,
+     "colano": 4
+    }
+   },
+   "cuoci": {
+    "ritocchi": [
+     [
+      "ripara",
+      [
+       520,
+       478,
+       572,
+       508
+      ],
+      150
+     ],
+     [
+      "sfoca",
+      [
+       0,
+       315,
+       55,
+       350
+      ],
+      5
+     ],
+     [
+      "sfoca",
+      [
+       130,
+       365,
+       215,
+       392
+      ],
+      5
+     ]
+    ]
+   }
+  },
+  {
+   "id": 15,
+   "voce": "Cosa fai?",
+   "opzioni": {
+    "a": {
+     "voce": "La A: apri la portiera e la fai salire.",
+     "testo": "La fai\nsalire",
+     "img": "sA_portiera.png",
+     "ritaglio": [
+      0.3,
+      0.56,
+      0.7
+     ]
+    },
+    "b": {
+     "voce": "Oppure la B: blocchi le portiere e riparti subito.",
+     "testo": "Blocchi tutto\ne riparti",
+     "img": "sB_sicura.png",
+     "ritaglio": [
+      0.4,
+      0.5,
+      0.72
+     ]
+    }
+   },
+   "chiusura": "Scrivilo nei commenti.",
+   "sfondo": "s13_palmo_v2.png"
+  }
+ ],
+ "telefono": {
+  "ora": "02:41",
+  "data": "lunedì 23 novembre",
+  "batteria": 41,
+  "rete": "Segnale debole",
+  "mittente": "Cliente",
+  "messaggio": [
+   "300 € alla consegna.",
+   "Entro le 5:00."
+  ],
+  "sfondo": "s05_telefono.png"
+ },
+ "ambiente": [],
+ "silenzi": [
+  {
+   "da_riga": 11,
+   "a_riga": 13
+  }
+ ],
+ "suoni": [],
+ "cuoci_extra": {
+  "sB_sicura.png": {
+   "ritocchi": [
+    [
+     "ripara",
+     [
+      300,
+      511,
+      331,
+      539
+     ],
+     70,
+     "verde"
+    ],
+    [
+     "ripara",
+     [
+      254,
+      560,
+      322,
+      597
+     ],
+     70,
+     "verde"
+    ]
+   ],
+   "lucchetto": {
+    "centro": [
+     323,
+     524
+    ],
+    "lato": 17
+   }
+  }
+ }
+}
