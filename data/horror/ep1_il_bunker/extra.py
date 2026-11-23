@@ -19,7 +19,7 @@ K = m.SW / 576.0                                 # immagine originale → immagi
 
 # ---------- dove stanno le cose in ogni immagine (misurate guardando le immagini)
 TIMER = {      # angoli del display (alto-sx, alto-dx, basso-dx, basso-sx)
-    "s01_risveglio_timer.png": [[0, 0], [1, 0], [1, 1], [0, 1]],
+    "s01_risveglio_timer.png": [[262, 174.5], [312, 174.5], [312, 204.5], [262, 204.5]],
     "s04_timer_frontale.png": [[0, 0], [1, 0], [1, 1], [0, 1]],
     "s11_porta_timer.png": [[0, 0], [1, 0], [1, 1], [0, 1]],
 }
@@ -94,13 +94,22 @@ def display(nome, testo):
         return _cache[key]
     img, acc = tela(testo)
     q = np.float32(TIMER[nome]) * K
-    A = cv2.getPerspectiveTransform(np.float32([[0, 0], [DW, 0], [DW, DH], [0, DH]]), q)
+    wq = (np.linalg.norm(q[1] - q[0]) + np.linalg.norm(q[2] - q[3])) / 2; hq = (np.linalg.norm(q[3] - q[0]) + np.linalg.norm(q[2] - q[1])) / 2
+    W2, H2 = int(DW * 1.12), int(DH * 1.25)                           # bordo scuro intorno alle cifre
+    if W2 / H2 > wq / hq:
+        H2 = int(W2 * hq / wq)                                          # schermo più alto delle cifre: le cifre stanno al centro
+    else:
+        W2 = int(H2 * wq / hq)
+    fondo = np.zeros((H2, W2, 3), np.float32) + np.array([9, 8, 14], np.float32); a2 = np.zeros((H2, W2), np.float32)
+    oy, ox = (H2 - DH) // 2, (W2 - DW) // 2
+    fondo[oy:oy + DH, ox:ox + DW] = img; a2[oy:oy + DH, ox:ox + DW] = acc; img, acc = fondo, a2
+    A = cv2.getPerspectiveTransform(np.float32([[0, 0], [W2, 0], [W2, H2], [0, H2]]), q)
     m_ = 70 * K                                                       # margine per l'alone
     x0, y0 = max(0, int(q[:, 0].min() - m_)), max(0, int(q[:, 1].min() - m_))
     x1, y1 = min(m.SW, int(q[:, 0].max() + m_)), min(m.SH, int(q[:, 1].max() + m_))
     A2 = np.float32([[1, 0, -x0], [0, 1, -y0], [0, 0, 1]]) @ A; w, h = x1 - x0, y1 - y0
     col = cv2.warpPerspective(img, A2, (w, h), flags=cv2.INTER_LINEAR)
-    msk = cv2.warpPerspective(np.ones((DH, DW), np.float32), A2, (w, h), flags=cv2.INTER_LINEAR)
+    msk = cv2.warpPerspective(np.ones((H2, W2), np.float32), A2, (w, h), flags=cv2.INTER_LINEAR)
     msk = cv2.GaussianBlur(msk, (0, 0), 0.8)[..., None]
     luce = cv2.warpPerspective(acc, A2, (w, h), flags=cv2.INTER_LINEAR)
     alone = (cv2.GaussianBlur(luce, (0, 0), 9 * K) * 1.6 + cv2.GaussianBlur(luce, (0, 0), 28 * K) * 2.2)[..., None] * np.array([18, 22, 150], np.float32)
