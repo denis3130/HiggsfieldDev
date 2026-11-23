@@ -43,7 +43,7 @@
   {
    "id": 7,
    "voce": "In mezzo, un registratore a cassette.",
-   "img": "s07_registratore_cassa.png",
+   "img": "s07_registratore_cassa_v2.png",
    "mov": "scendi"
   },
   {
@@ -109,11 +109,11 @@
     "b": {
      "voce": "Oppure la B: ascolti il nastro.",
      "testo": "Ascolti\nil nastro",
-     "img": "s07_registratore_cassa.png",
+     "img": "s07_registratore_cassa_v2.png",
      "ritaglio": [
-      0.5,
-      0.5,
-      0.8
+      0.483,
+      0.586,
+      0.52
      ]
     }
    },

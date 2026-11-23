@@ -36,6 +36,7 @@ RITOCCHI = {   # zone da sistemare: [x0, y0, x1, y1] ricostruita dai bordi, [x0,
     "s08_etichetta_pollice.png": [[526, 52, 576, 140], [425, 600, 576, 735, 2.2]],   # cifre rosse inventate dal modello; segni sul registratore sfocati
     "s11_porta_timer.png": [[355, 204, 388, 260, 1.6]],                              # segni sugli interruttori accanto al display sfocati
     "s14_bobine.png": [[36, 928, 224, 1024], [278, 886, 545, 924, 2.4], [248, 424, 302, 454, 1.6]],   # contatore inventato, scritte sfocate
+    "s07_registratore_cassa_v2.png": [[163, 534, 216, 553, 1.3], [354, 535, 392, 553, 1.3]],              # segni sul registratore sfocati
 }
 
 # ---------- quale riga usa quale immagine e quando parte il timer
