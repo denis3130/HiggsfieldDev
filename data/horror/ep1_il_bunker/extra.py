@@ -49,19 +49,19 @@ def inizio_parola(i, parola):
     return next((w[0] for w in m.parole[i] if parola.lower() in w[2].lower()), m.T[i]["inizio"])
 
 
-I_PARTE = next(i for i, r in enumerate(m.righe) if r.get("img") == "s04_timer_frontale.png")
-T_PARTE = inizio_parola(I_PARTE, "Parte")                     # il timer parte qui: 60:00 → 59:59
-I_PLAY = next(i for i, r in enumerate(m.righe) if r.get("img") == "s09_tasto_play.png")
-T_PLAY = inizio_parola(I_PLAY, "PLAY") + 0.15                 # le bobine cominciano a girare
+IDX = {r["id"]: i for i, r in enumerate(m.righe)}                 # id della riga → posizione
+ID = lambda nome: m.righe[RIGA[nome]]["id"] if nome in RIGA else None
+T_PARTE = inizio_parola(IDX[4], "Parte")                         # riga 4: il timer parte qui, 60:00 → 59:59
+T_PLAY = inizio_parola(IDX[9], "PLAY") + 0.15                    # riga 9: le bobine cominciano a girare
 
 
 def secondi_timer(nome, t):
-    """Secondi che restano sul display all'istante t (None = fermo a 60:00)."""
-    if nome == "s01_risveglio_timer.png" or t < T_PARTE and nome == "s04_timer_frontale.png":
+    """Secondi che restano sul display all'istante t."""
+    if ID(nome) == 1 or ID(nome) == 4 and t < T_PARTE:            # al risveglio è fermo a 60:00
         return 3600
     v = 3599 - int(np.floor(t - T_PARTE))
-    if nome == "s11_porta_timer.png":                            # stacco in avanti: all'inizio della riga segna 59:12
-        i = RIGA[nome]; v0 = 3599 - int(np.floor(m.T[i]["inizio"] - T_PARTE))
+    if ID(nome) == 11:                                             # stacco in avanti: all'inizio della riga segna 59:12
+        v0 = 3599 - int(np.floor(m.T[IDX[11]]["inizio"] - T_PARTE))
         v += 3552 - v0
     return max(0, v)
 
@@ -130,7 +130,7 @@ def display(nome, testo):
 def con_timer(big, nome, t):
     s = secondi_timer(nome, t); testo = f"{s // 60:02d}:{s % 60:02d}"
     y0, y1, x0, x1, col, msk, alone = display(nome, testo)
-    scatto = t - T_PARTE - np.floor(t - T_PARTE) if t >= T_PARTE and nome != "s01_risveglio_timer.png" else 9.0
+    scatto = t - T_PARTE - np.floor(t - T_PARTE) if t >= T_PARTE and ID(nome) != 1 else 9.0
     puls = 1.0 + 0.45 * np.exp(-scatto / 0.18)                         # il rosso pulsa sul muro a ogni scatto
     out = big.copy(); z = out[y0:y1, x0:x1].astype(np.float32)
     z = z * (1 - msk) + col * msk + alone * puls
@@ -207,9 +207,7 @@ def muovi(nome, mov, u, tau, seme, oltre=False):
         nuovo = con_timer(nuovo, nome, t)
     if nome in BOBINE:
         giri = 0.55 * 360                                              # gradi al secondo
-        ang = giri * max(0.0, t - T_PLAY) if nome == "s09_tasto_play.png" else giri * tau
-        if nome == "s09_tasto_play.png":
-            ang = giri * max(0.0, t - T_PLAY) ** 1.0
+        ang = giri * max(0.0, t - T_PLAY) if ID(nome) == 9 else giri * (t if ID(nome) is not None else tau)
         nuovo = con_bobine(nuovo, nome, ang)
     m.IMG[nome] = (nuovo, dep)
     try:
@@ -222,7 +220,7 @@ m.muovi = muovi
 
 
 # ---------- ritocchi sul fotogramma già mosso (prima di nebbia e grana)
-LAMPADA_TREMA = [(0.0, 0.0)]                                          # (istante, forza) dei tremolii, riempito sotto
+LAMPADA_TREMA = [(m.T[IDX[7]]["inizio"] + 1.3, 0.35), (m.T[IDX[10]]["inizio"] + 1.4, 0.25), (m.T[IDX[13]]["inizio"] + 2.6, 0.3)]   # (istante, forza)
 
 
 def lampada(t):
@@ -235,16 +233,15 @@ def lampada(t):
 
 
 def dopo(fr, r, tau, u, t, mm):
-    i = m.righe.index(r)
-    if r.get("img") == "s01_risveglio_timer.png":                       # risveglio: tutto sfocato, poi le cifre vanno a fuoco
+    if r["id"] == 1:                                                 # risveglio: tutto sfocato, poi le cifre vanno a fuoco
         s = 9.0 * (1 - m.ease(min(1.0, max(0.0, (tau - 0.3) / 1.6))))
         if s > 0.3:
             fr = cv2.GaussianBlur(fr, (0, 0), s)
         return fr
-    if r.get("img", "").startswith("s02_soffitto_lampada"):                      # la lampada si accende tremando
+    if r["id"] == 2:                                                 # la lampada si accende tremando
         tl = tau + 0.0
         liv = np.interp(tl, [0, 0.38, 0.42, 0.55, 0.6, 0.78, 0.82, 0.9, 0.95, 1.2], [0.12, 0.12, 1.0, 0.95, 0.22, 0.25, 0.9, 0.5, 1.0, 1.0])
         return fr * liv
-    if r.get("img") in ("s05_uomo_muro.png", "s07_registratore_cassa.png", "s10_altoparlante.png", "s13_mano_tesa.png", "s12_chiave_palmo.png"):
+    if r["id"] in (5, 7, 10, 12, 13):                                # stanza illuminata dalla lampada: ogni tanto trema
         return fr * lampada(t)
     return fr
