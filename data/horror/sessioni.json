@@ -15,19 +15,39 @@
  },
  "03_ultima_corsa": {
   "sessione": "session_014XUVKuQoaCe8sWuLogFUht",
-  "branch": "claude/il-bivio-03-ultima-corsa"
+  "branch": "claude/il-bivio-03-ultima-corsa",
+  "video": {
+   "sessione": "session_014XUVKvjH6eEEpiBcpQ8yjy",
+   "modello": "claude-opus-5-5",
+   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+  }
  },
  "04_reparto_7": {
   "sessione": "session_014XUVKsvBbw9FYzaTUS9GvT",
-  "branch": "claude/il-bivio-04-reparto-7"
+  "branch": "claude/il-bivio-04-reparto-7",
+  "video": {
+   "sessione": "session_014XUVKtwXyvBR4oZftZPmuf",
+   "modello": "claude-opus-5-5",
+   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+  }
  },
  "05_uscita_13": {
   "sessione": "session_014XUVKx1iLkvMH2h6uKi6T6",
-  "branch": "claude/il-bivio-05-uscita-13"
+  "branch": "claude/il-bivio-05-uscita-13",
+  "video": {
+   "sessione": "session_014XUVKwFPqgmTf5rxKx1QbX",
+   "modello": "claude-opus-5-5",
+   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+  }
  },
  "06_paese_che_dorme": {
   "sessione": "session_014XUVKu5agW2pmqGYk5dERK",
-  "branch": "claude/il-bivio-06-paese-che-dorme"
+  "branch": "claude/il-bivio-06-paese-che-dorme",
+  "video": {
+   "sessione": "session_014XUVKurdb8Gf4uRTUjzUJq",
+   "modello": "claude-opus-5-5",
+   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+  }
  },
  "07_baby_monitor": {
   "sessione": "session_014XUVKuJS66LFmg78eeuecU",
@@ -40,19 +60,39 @@
  },
  "08_il_bunker": {
   "sessione": "session_014XUVKsXmiiYmv6JKukHYtU",
-  "branch": "claude/il-bivio-08-il-bunker"
+  "branch": "claude/il-bivio-08-il-bunker",
+  "video": {
+   "sessione": "session_014XUVKt6G5pFSaoVQDAyUXr",
+   "modello": "claude-opus-5-5",
+   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+  }
  },
  "09_segnale": {
   "sessione": "session_014XUVKvvjBawhZ8rcTpHArH",
-  "branch": "claude/il-bivio-09-segnale"
+  "branch": "claude/il-bivio-09-segnale",
+  "video": {
+   "sessione": "session_014XUVKvcRbf4MjJW6uJTE9a",
+   "modello": "claude-opus-5-5",
+   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+  }
  },
  "10_casa_della_nonna": {
   "sessione": "session_014XUVKuVf2UDSvePNJF3s3y",
-  "branch": "claude/il-bivio-10-casa-della-nonna"
+  "branch": "claude/il-bivio-10-casa-della-nonna",
+  "video": {
+   "sessione": "session_014XUVKtdCuyGo9wViY3JpGf",
+   "modello": "claude-opus-5-5",
+   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+  }
  },
  "11_il_traghetto": {
   "sessione": "session_014XUVKvaEPTeYY9PCD72RE3",
-  "branch": "claude/il-bivio-11-il-traghetto"
+  "branch": "claude/il-bivio-11-il-traghetto",
+  "video": {
+   "sessione": "session_014XUVKwANxcKRkLTerxhK3y",
+   "modello": "claude-opus-5-5",
+   "stato": "avviata il 23/11 alle 06:05 UTC (la sessione Fable si era fermata per il limite)"
+  }
  },
  "nota_video": "Dal 22/11 sera ogni sessione produce anche il video dell'Episodio 1 della propria storia con scripts/bivio/ (procedura in data/horror/PRODUZIONE.md) e lo consegna nella propria chat.",
  "nota_modelli": "Il 22/11 alle 19:48–20:02 UTC le sessioni Fable si sono fermate per il limite di utilizzo di Fable. Dal 23/11, su richiesta dell'utente, tutte le sessioni usano Opus 5.5 a impegno massimo."
