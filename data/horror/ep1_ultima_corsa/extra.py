@@ -5,12 +5,18 @@ Tutto disegnato col codice, niente testo generato dal modello:
     prima del movimento di camera, così si muovono con l'inquadratura;
   - la lucina della mappa che lampeggia a metà di un tratto vuoto;
   - le luci della galleria che scorrono nel finestrino, rallentano e si fermano (riga con "galleria");
-  - il neon della fermata senza nome che trema (righe con "neon": forza 0-1);
+  - il neon della fermata senza nome che trema (righe con "neon": forza 0-1) esattamente quando crepita la registrazione
+    sfx/neon.mp3 messa nel copione; nelle inquadrature dal vagone trema solo la luce di fuori (la banchina, presa dalla profondità);
+  - le due ante della porta che scorrono e si aprono sulla banchina (riga con "porte": "aprono");
+  - l'uomo che sparisce nel buio: la banchina si spegne e la sua sagoma svanisce (riga con "sparisce"); la scheda finale,
+    che prosegue la stessa inquadratura, resta al buio;
   - il giornale del vecchio che si alza «un po' di più» (riga con "alza");
   - scritte e cifre finte uscite nelle immagini generate: coperte o cancellate (elenco in RITOCCHI).
 
-Chiavi nuove nelle righe di episodio.json: "galleria": true · "lampeggia": true · "neon": 0.6 · "alza": true · "spinta": 1.18
+Chiavi nuove nelle righe di episodio.json: "galleria": true · "lampeggia": true · "neon": 0.6 · "alza": true · "corsa": true
+· "porte": "aprono" · "sparisce": true
 """
+import subprocess
 import sys
 
 import cv2
@@ -178,6 +184,27 @@ def maschera_giornale():
     return cv2.merge([_u8(mk * 255)] * 3)
 
 
+NEON_FUORI = ("s07_banchina.png", "s09_soglia.png", "s14_sagoma.png")         # inquadrature dal vagone: trema solo la luce della banchina
+UOMO14 = ((262, 386), (304, 386), (326, 414), (346, 444), (352, 520), (336, 548), (326, 602), (250, 602), (246, 528), (250, 446))
+PORTA7 = (139, 232, 437, 813)                                                  # vano della porta in s07: x0, y0, x1, y1
+
+
+def maschera_fuori(dep, soglia=0.48, morbido=0.2):
+    """Dove c'è la banchina (lontano) in un'inquadratura presa dal vagone, dalla profondità; ingrandita come l'immagine,
+    così con muovi() segue la camera."""
+    d = cv2.resize(dep, (m.SW, m.SH), interpolation=cv2.INTER_LINEAR)
+    return cv2.merge([_u8(np.clip((soglia - d) / morbido, 0, 1) * 255)] * 3)
+
+
+def senza_uomo(big):
+    """s14 senza l'uomo: la sua sagoma riempita con quello che ha intorno (muro buio sopra, pavimento sotto)."""
+    mk = np.zeros(big.shape[:2], np.uint8); cv2.fillPoly(mk, [(np.array(UOMO14) * K).astype(np.int32)], 255)
+    mk = cv2.dilate(mk, np.ones((11, 11), np.uint8))
+    ys, xs = np.where(mk > 0); y0, y1, x0, x1 = ys.min() - 40, ys.max() + 40, xs.min() - 40, xs.max() + 40
+    out = big.copy(); out[y0:y1, x0:x1] = cv2.inpaint(big[y0:y1, x0:x1], mk[y0:y1, x0:x1], 9, cv2.INPAINT_TELEA)
+    return out
+
+
 FINESTRINI = [((0, 72), (322, 60), (366, 84), (386, 130), (392, 760), (376, 820), (332, 856), (0, 922)),
               ((478, 190), (502, 152), (576, 136), (576, 772), (520, 790), (482, 760))]
 
@@ -218,20 +245,44 @@ def prepara():
         I["s05_maschera"] = (maschera(FINESTRINI, 5), I["s05_finestrino.png"][1])
     if "s12_giornale.png" in I:
         I["s12_maschera"] = (maschera_giornale(), I["s12_giornale.png"][1])
+    for nome in NEON_FUORI:
+        if nome in I:
+            I[nome[:-4] + "_fuori"] = (maschera_fuori(I[nome][1]), I[nome][1])
+    if "s14_sagoma.png" in I:
+        big, dep = I["s14_sagoma.png"]
+        I["s14_vuota"] = (senza_uomo(big), dep); I["s14_uomo"] = (maschera([UOMO14], 7), dep)
     m.MOV["corsa"] = (1.0, 1.20, 0.08, 0, 0)                                  # discesa di corsa: spinta in avanti più forte di «scendi»
 
 
 prepara()
 
 # ---------- effetti nel tempo
-_rg = np.random.default_rng(7)
-NEON = np.ones(30 * 120, np.float32)                                          # quanto è acceso il neon, fotogramma per fotogramma
-_k = 16
-while _k < len(NEON) - 12:
-    _n = int(_rg.integers(2, 6)); NEON[_k:_k + _n] = _rg.uniform(0.35, 0.8, _n)
-    if _rg.random() < 0.4:
-        NEON[_k + _n + 2:_k + _n + 4] = _rg.uniform(0.5, 0.85)
-    _k += int(_rg.integers(14, 60))
+def _crepitii(nome, fps=30):
+    """Quanto crepita il suono `nome`, fotogramma per fotogramma (0-1): i colpi sopra il suo ronzio di fondo."""
+    p = next((c for c in (m.D / "sfx" / nome, m.B / "sfx" / nome) if c.exists()), None)
+    if p is None:
+        return np.zeros(1, np.float32)
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(p), "-ac", "1", "-ar", "16000", "-f", "f32le", "-"], capture_output=True, check=True).stdout
+    x = np.frombuffer(raw, np.float32).astype(np.float64); w = 16000 // fps; n = len(x) // w
+    db = 20 * np.log10(np.sqrt((x[:n * w].reshape(n, w) ** 2).mean(1)) + 1e-9)
+    return np.clip((db - np.median(db) - 4) / 10, 0, 1).astype(np.float32)
+
+
+ZAP = _crepitii("neon.mp3")
+_ID = {r["id"]: k for k, r in enumerate(m.righe)}
+NEON_POSTI = [(m.T[_ID[s["riga"]]]["inizio"] + s.get("dopo", 0.0), s.get("da", 0.0), None if s.get("fino_alla_fine") else s.get("dur"))
+              for s in m.ep.get("suoni", []) if s["file"] == "neon.mp3" and not s.get("parola")]
+
+
+def luce_neon(t):
+    """1 = neon acceso. Quando nella registrazione del neon c'è un crepitio, la luce cala e balbetta nello stesso istante."""
+    z = 0.0
+    for t0, da, dur in NEON_POSTI:
+        if t0 <= t and (dur is None or t < t0 + dur):
+            f = int(round((t - t0 + da) * 30))
+            if f < len(ZAP):
+                z = max(z, float(ZAP[f]))
+    return 1.0 if z <= 0 else 1 - 0.85 * z * (0.55 + 0.45 * np.sin(91.7 * t) ** 2)
 
 
 def _durata(i):
@@ -281,6 +332,86 @@ def alza(fr, r, tau, u, i, mov):
     return cv2.remap(fr, m.XX, (m.YY + 44.0 * k * mk).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
 
 
+def _anta(w, h, seme):
+    """Un'anta della porta vista da dentro (pixel dell'immagine ingrandita), con la guarnizione sul bordo destro:
+    pannello grigio-petrolio illuminato dall'alto dal neon del vagone, finestrino di vetro scuro, gomma nera. Ritorna colore e opacità."""
+    rg = np.random.default_rng(seme); y = np.linspace(0, 1, h, dtype=np.float32)[:, None, None]
+    col = np.array([30, 37, 8], np.float32) * (1.35 - 0.95 * y) * (1 + 0.05 * cv2.GaussianBlur(rg.standard_normal((h, w)).astype(np.float32), (0, 0), 3)[..., None])
+    al = np.ones((h, w), np.float32)
+    vx0, vx1, vy0, vy1, rr = int(0.2 * w), int(0.84 * w), int(0.09 * h), int(0.47 * h), int(0.12 * w)
+    vetro = np.zeros((h, w), np.uint8)
+    cv2.rectangle(vetro, (vx0 + rr, vy0), (vx1 - rr, vy1), 255, -1); cv2.rectangle(vetro, (vx0, vy0 + rr), (vx1, vy1 - rr), 255, -1)
+    for cx, cy in ((vx0 + rr, vy0 + rr), (vx1 - rr, vy0 + rr), (vx0 + rr, vy1 - rr), (vx1 - rr, vy1 - rr)):
+        cv2.circle(vetro, (cx, cy), rr, 255, -1, cv2.LINE_AA)
+    gomma = cv2.dilate(vetro, np.ones((15, 15), np.uint8)) > 0
+    col[gomma] = (5, 6, 2)
+    v = vetro > 127
+    riflesso = np.clip(1 - np.abs((np.arange(w)[None, :] - 0.55 * w) + 0.35 * (np.arange(h)[:, None] - vy0)) / (0.09 * w), 0, 1)
+    col[v] = (np.array([9, 12, 3], np.float32) + riflesso[v][:, None] * np.array([26, 34, 8], np.float32))
+    al[v] = 0.8                                                               # dal vetro scuro si intravede la banchina
+    col[:, w - 14:] = (4, 5, 2); col[:, w - 14:w - 11] = (40, 50, 12)       # guarnizione di gomma dove le ante si toccano
+    col[:, :6] *= 0.55
+    return col, al
+
+
+_ANTE = {}
+
+
+def _apertura(tau, t0, durata):
+    s = float(np.clip((tau - t0) / durata, 0, 1))
+    return s * s * (3 - 2 * s)
+
+
+def porte(fr, r, tau, u, i, mov, t0=0.12, durata=0.95):
+    """Le due ante scorrono dentro le pareti e scoprono la banchina (disegnate sull'immagine ingrandita, così seguono la camera)."""
+    s = _apertura(tau, t0, durata)
+    if s >= 1:
+        return fr
+    x0, y0, x1, y1 = [int(v * K) for v in PORTA7]; lw = (x1 - x0) // 2; h = y1 - y0
+    if not _ANTE:
+        c, a = _anta(lw, h, 3); _ANTE["sx"] = (c, a); _ANTE["dx"] = (c[:, ::-1].copy(), a[:, ::-1].copy())
+    big, dep = m.IMG[r["img"]]
+    C = np.zeros(big.shape, np.float32); A = np.zeros(big.shape[:2], np.float32); off = int(round(s * lw))
+    if off < lw:
+        c, a = _ANTE["sx"]; C[y0:y1, x0:x0 + lw - off] = c[:, off:]; A[y0:y1, x0:x0 + lw - off] = a[:, off:]
+        c, a = _ANTE["dx"]; C[y0:y1, x0 + lw + off:x0 + 2 * lw] = c[:, :lw - off]; A[y0:y1, x0 + lw + off:x0 + 2 * lw] = a[:, :lw - off]
+    C *= A[..., None]                                                         # colore premoltiplicato: il mosso non scurisce i bordi
+    kx = int(abs(s - _apertura(tau - 1 / 30, t0, durata)) * lw) | 1        # pixel fatti in un fotogramma: le ante a metà corsa sono mosse
+    if kx > 1:
+        C = cv2.blur(C, (kx, 1)); A = cv2.blur(A, (kx, 1))
+    m.IMG["_ante"] = (_u8(C), dep); m.IMG["_ante_a"] = (cv2.merge([_u8(A * 255)] * 3), dep)
+    Cm = MUOVI("_ante", mov, u, tau, float(i)); Am = MUOVI("_ante_a", mov, u, tau, float(i))[..., :1] / 255.0
+    return fr * (1 - Am) + Cm
+
+
+def sparisce(fr, mov, u, tau, seme, oltre=False, k_uomo=None, k_buio=None):
+    """s14: l'uomo svanisce nel buio e la banchina si spegne; le porte restano aperte sul nero (l'ombrello, vicino, resta)."""
+    if k_uomo is None:
+        k_uomo = float(np.clip((tau - 0.55) / 1.9, 0, 1)); k_uomo = k_uomo * k_uomo * (3 - 2 * k_uomo)
+        k_buio = float(np.clip((tau - 0.35) / 2.7, 0, 1)); k_buio = k_buio * k_buio * (3 - 2 * k_buio)
+    if k_uomo > 0:
+        U = MUOVI("s14_uomo", mov, u, tau, seme, oltre)[..., :1] / 255.0 * k_uomo
+        fr = fr * (1 - U) + MUOVI("s14_vuota", mov, u, tau, seme, oltre) * U
+    if k_buio > 0:
+        F = MUOVI("s14_sagoma_fuori", mov, u, tau, seme, oltre)[..., :1] / 255.0
+        fr = fr * (1 - 0.9 * k_buio * F)
+    return fr
+
+
+MUOVI = m.muovi                                                               # quello vero di monta.py
+
+
+def _muovi_scheda(nome, mov, u, tau, seme, oltre=False):
+    """La scheda finale prosegue l'inquadratura di s14 (oltre=True): lì l'uomo è già sparito e la banchina è buia."""
+    fr = MUOVI(nome, mov, u, tau, seme, oltre)
+    if oltre and nome == "s14_sagoma.png":
+        fr = sparisce(fr, mov, u, tau, seme, True, 1.0, 1.0)
+    return fr
+
+
+m.muovi = _muovi_scheda
+
+
 def dopo(fr, r, tau, u, t, mm):
     i = mm.righe.index(r); mov = r.get("mov", "avanza_lento")
     if r.get("lampeggia"):                                                    # la lucina del treno sulla mappa
@@ -293,6 +424,14 @@ def dopo(fr, r, tau, u, t, mm):
         fr = alza(fr, r, tau, u, i, mov)
     if r.get("corsa"):                                                        # si scende di corsa: la camera sobbalza a ogni gradino
         fr = _sposta(fr, 6 * np.sin(2 * np.pi * 1.5 * tau), 11 * abs(np.sin(2 * np.pi * 1.5 * tau)) - 5)      # tre gradini al secondo
+    if r.get("porte") == "aprono":
+        fr = porte(fr, r, tau, u, i, mov)
+    if r.get("sparisce"):
+        fr = sparisce(fr, mov, u, tau, float(i))
     if r.get("neon"):
-        fr = fr * (1 - float(r["neon"]) * (1 - NEON[int(t * 30) % len(NEON)]))
+        l = luce_neon(t)
+        if l < 1:
+            fuori = r["img"][:-4] + "_fuori"                                  # dal vagone trema solo la luce di fuori
+            peso = MUOVI(fuori, mov, u, tau, float(i))[..., :1] / 255.0 if fuori in mm.IMG else 1.0
+            fr = fr * (1 - float(r["neon"]) * (1 - l) * peso)
     return fr

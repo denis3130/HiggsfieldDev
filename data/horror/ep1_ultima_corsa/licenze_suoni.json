@@ -1,4 +1,5 @@
 {
+ "nota": "Usati anche suoni comuni della serie da scripts/bivio/sfx/ (amb_slow, stoffa, gocce, heart60, colpo, rise_long): licenze in scripts/bivio/sfx/licenze_suoni.json.",
  "interno_treno.mp3": {
   "titolo": "DC Metro - Interior 1",
   "autore": "crashoverride6",
@@ -102,5 +103,13 @@
   "pagina": "https://freesound.org/people/RutgerMuller/sounds/155858",
   "uso": "passi che si allontanano con l'eco",
   "nota": "ritaglio da 58 a 72 secondi della registrazione originale"
+ },
+ "pioggia_scala.mp3": {
+  "titolo": "Light rain from basement stairwell",
+  "autore": "dkaufman",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/dkaufman/sounds/726574",
+  "uso": "pioggia lontana che arriva dalla scala di Bastioni",
+  "nota": "primi 16 secondi della registrazione originale, in mono, con dissolvenza finale"
  }
 }

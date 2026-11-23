@@ -3,224 +3,224 @@
   {
    "id": 1,
    "inizio": 0.5,
-   "fine": 4.65,
-   "voce_fine": 4.4,
+   "fine": 4.567,
+   "voce_fine": 4.317,
    "pezzi": [
     {
      "tipo": "voce",
      "inizio": 0.5,
-     "fine": 4.28,
+     "fine": 4.197,
      "n": 10
     }
    ]
   },
   {
    "id": 2,
-   "inizio": 4.65,
-   "fine": 9.664,
-   "voce_fine": 9.414,
+   "inizio": 4.567,
+   "fine": 9.381,
+   "voce_fine": 9.131,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 4.65,
-     "fine": 9.294,
+     "inizio": 4.567,
+     "fine": 9.011,
      "n": 12
     }
    ]
   },
   {
    "id": 3,
-   "inizio": 9.664,
-   "fine": 14.541,
-   "voce_fine": 14.291,
+   "inizio": 9.381,
+   "fine": 14.402,
+   "voce_fine": 14.152,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 9.664,
-     "fine": 14.171,
+     "inizio": 9.381,
+     "fine": 14.032,
      "n": 10
     }
    ]
   },
   {
    "id": 4,
-   "inizio": 14.541,
-   "fine": 18.809,
-   "voce_fine": 18.559,
+   "inizio": 14.402,
+   "fine": 18.667,
+   "voce_fine": 18.417,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 14.541,
-     "fine": 18.439,
+     "inizio": 14.402,
+     "fine": 18.297,
      "n": 8
     }
    ]
   },
   {
    "id": 5,
-   "inizio": 18.809,
-   "fine": 21.471,
-   "voce_fine": 21.221,
+   "inizio": 18.667,
+   "fine": 21.331,
+   "voce_fine": 21.081,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 18.809,
-     "fine": 21.101,
+     "inizio": 18.667,
+     "fine": 20.961,
      "n": 7
     }
    ]
   },
   {
    "id": 6,
-   "inizio": 21.471,
-   "fine": 24.088,
-   "voce_fine": 23.838,
+   "inizio": 21.331,
+   "fine": 24.382,
+   "voce_fine": 24.132,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 21.471,
-     "fine": 23.718,
+     "inizio": 21.331,
+     "fine": 24.012,
      "n": 8
     }
    ]
   },
   {
    "id": 7,
-   "inizio": 24.088,
-   "fine": 27.17,
-   "voce_fine": 26.92,
+   "inizio": 24.382,
+   "fine": 27.607,
+   "voce_fine": 27.357,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 24.088,
-     "fine": 26.8,
+     "inizio": 24.382,
+     "fine": 27.237,
      "n": 9
     }
    ]
   },
   {
    "id": 8,
-   "inizio": 27.17,
-   "fine": 30.347,
-   "voce_fine": 30.097,
+   "inizio": 27.607,
+   "fine": 30.785,
+   "voce_fine": 30.535,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 27.17,
-     "fine": 29.977,
+     "inizio": 27.607,
+     "fine": 30.415,
      "n": 7
     }
    ]
   },
   {
    "id": 9,
-   "inizio": 30.347,
-   "fine": 31.761,
-   "voce_fine": 31.511,
+   "inizio": 30.785,
+   "fine": 32.209,
+   "voce_fine": 31.959,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 30.347,
-     "fine": 31.391,
+     "inizio": 30.785,
+     "fine": 31.839,
      "n": 2
     }
    ]
   },
   {
    "id": 10,
-   "inizio": 31.761,
-   "fine": 33.211,
-   "voce_fine": 32.961,
+   "inizio": 32.209,
+   "fine": 33.659,
+   "voce_fine": 33.409,
    "pezzi": []
   },
   {
    "id": 11,
-   "inizio": 33.211,
-   "fine": 35.469,
-   "voce_fine": 35.219,
+   "inizio": 33.659,
+   "fine": 35.926,
+   "voce_fine": 35.676,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 33.211,
-     "fine": 35.099,
+     "inizio": 33.659,
+     "fine": 35.556,
      "n": 5
     }
    ]
   },
   {
    "id": 12,
-   "inizio": 35.469,
-   "fine": 38.051,
-   "voce_fine": 37.801,
+   "inizio": 35.926,
+   "fine": 38.595,
+   "voce_fine": 38.345,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 35.469,
-     "fine": 37.681,
+     "inizio": 35.926,
+     "fine": 38.225,
      "n": 9
     }
    ]
   },
   {
    "id": 13,
-   "inizio": 38.051,
-   "fine": 41.689,
-   "voce_fine": 41.439,
+   "inizio": 38.595,
+   "fine": 42.158,
+   "voce_fine": 41.908,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 38.051,
-     "fine": 41.319,
+     "inizio": 38.595,
+     "fine": 41.788,
      "n": 8
     }
    ]
   },
   {
    "id": 14,
-   "inizio": 41.689,
-   "fine": 45.828,
-   "voce_fine": 45.578,
+   "inizio": 42.158,
+   "fine": 46.3,
+   "voce_fine": 46.05,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 41.689,
-     "fine": 45.458,
+     "inizio": 42.158,
+     "fine": 45.93,
      "n": 9
     }
    ]
   },
   {
    "id": 15,
-   "inizio": 45.828,
-   "fine": 55.542,
-   "voce_fine": 55.292,
+   "inizio": 46.3,
+   "fine": 55.97,
+   "voce_fine": 55.72,
    "pezzi": [
     {
      "tipo": "voce",
-     "inizio": 45.828,
-     "fine": 46.53,
+     "inizio": 46.3,
+     "fine": 46.992,
      "n": 2
     },
     {
      "tipo": "a",
-     "inizio": 46.83,
-     "fine": 49.722,
+     "inizio": 47.292,
+     "fine": 50.165,
      "n": 6
     },
     {
      "tipo": "b",
-     "inizio": 50.122,
-     "fine": 53.014,
+     "inizio": 50.565,
+     "fine": 53.44,
      "n": 9
     },
     {
      "tipo": "chiusura",
-     "inizio": 53.414,
-     "fine": 55.092,
+     "inizio": 53.84,
+     "fine": 55.52,
      "n": 3
     }
    ]
   }
  ],
- "totale": 57.542
+ "totale": 57.97
 }

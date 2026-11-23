@@ -38,7 +38,7 @@
   },
   {
    "id": 6,
-   "voce": "Ma sulla mappa, qui, non c'è nessuna fermata.",
+   "voce": "Guardi la mappa. Qui non c'è nessuna fermata.",
    "img": "s06_mappa.png",
    "mov": "avanza_lento",
    "lampeggia": true
@@ -48,12 +48,13 @@
    "voce": "Le porte si aprono su una banchina di cemento.",
    "img": "s07_banchina.png",
    "mov": "avanza_lento",
-   "neon": 0.45,
+   "neon": 0.6,
    "vapore": [
     0.5,
     0.5,
     0.18
-   ]
+   ],
+   "porte": "aprono"
   },
   {
    "id": 8,
@@ -67,7 +68,7 @@
    "voce": "Nessuno sale.",
    "img": "s09_soglia.png",
    "mov": "fermo",
-   "neon": 0.5
+   "neon": 0.6
   },
   {
    "id": 10,
@@ -75,7 +76,7 @@
    "silenzio": 1.2,
    "img": "s09_soglia.png",
    "mov": "fermo",
-   "neon": 0.5
+   "neon": 0.6
   },
   {
    "id": 11,
@@ -101,7 +102,8 @@
    "voce": "Sparisce nel buio, senza voltarsi. Le porte restano aperte.",
    "img": "s14_sagoma.png",
    "mov": "avanza_lento",
-   "neon": 0.4
+   "neon": 0.6,
+   "sparisce": true
   },
   {
    "id": 15,
@@ -109,7 +111,7 @@
    "opzioni": {
     "a": {
      "voce": "La A: scendi a riportargli l'ombrello.",
-     "testo": "Gli riporti\nl'ombrello",
+     "testo": "Scendi a\nriportarlo",
      "img": "s14_sagoma.png",
      "ritaglio": [
       0.5,
@@ -151,5 +153,201 @@
    "a_riga": 11
   }
  ],
- "suoni": []
+ "suoni": [
+  {
+   "file": "pioggia_scala.mp3",
+   "riga": 1,
+   "dopo": -0.5,
+   "dur": 10.98,
+   "vol": 0.24,
+   "sfuma": 0.9
+  },
+  {
+   "file": "scale_corsa.mp3",
+   "riga": 1,
+   "dopo": -0.35,
+   "vol": 0.5
+  },
+  {
+   "file": "scale_corsa.mp3",
+   "riga": 1,
+   "dopo": 1.85,
+   "vol": 0.45
+  },
+  {
+   "file": "bip_porte.mp3",
+   "riga": 2,
+   "parola": "chiudono",
+   "dopo": -4.15,
+   "vol": 0.3
+  },
+  {
+   "file": "porte_aprono.mp3",
+   "riga": 2,
+   "parola": "blocca",
+   "dopo": 0.15,
+   "dur": 1.6,
+   "vol": 0.5,
+   "sfuma": 0.3
+  },
+  {
+   "file": "porte_meccanica.mp3",
+   "riga": 3,
+   "dopo": 0.25,
+   "vol": 0.25
+  },
+  {
+   "file": "gocce.mp3",
+   "riga": 3,
+   "dopo": 1.0,
+   "da": 1.7,
+   "dur": 2.2,
+   "vol": 0.16
+  },
+  {
+   "file": "interno_treno.mp3",
+   "riga": 3,
+   "dopo": 2.3,
+   "dur": 9.52,
+   "vol": 0.22,
+   "sfuma": 1.1
+  },
+  {
+   "file": "stoffa.mp3",
+   "riga": 4,
+   "dopo": 0.05,
+   "vol": 0.3
+  },
+  {
+   "file": "frenata.mp3",
+   "riga": 5,
+   "dopo": -0.15,
+   "da": 5.97,
+   "dur": 2.63,
+   "vol": 0.24,
+   "sfuma": 0.25
+  },
+  {
+   "file": "frenata.mp3",
+   "riga": 5,
+   "dopo": 2.0,
+   "da": 9.62,
+   "dur": 0.65,
+   "vol": 0.3,
+   "sfuma": 0.03
+  },
+  {
+   "file": "porte_aprono.mp3",
+   "riga": 7,
+   "dopo": 0.0,
+   "dur": 2.2,
+   "vol": 0.55,
+   "sfuma": 0.3
+  },
+  {
+   "file": "neon.mp3",
+   "riga": 7,
+   "dopo": 0.9,
+   "da": 1.44,
+   "dur": 6.73,
+   "vol": 0.32,
+   "sfuma": 0.25
+  },
+  {
+   "file": "gocce.mp3",
+   "riga": 7,
+   "dopo": 1.6,
+   "da": 1.7,
+   "dur": 2.4,
+   "vol": 0.22
+  },
+  {
+   "file": "giornale.mp3",
+   "riga": 12,
+   "parola": "alza",
+   "dopo": -0.75,
+   "vol": 0.55
+  },
+  {
+   "file": "toc.mp3",
+   "riga": 13,
+   "parola": "accanto",
+   "dopo": -0.05,
+   "vol": 0.5
+  },
+  {
+   "file": "passi_cemento.mp3",
+   "riga": 13,
+   "parola": "scende",
+   "dopo": 0.0,
+   "dur": 2.4,
+   "vol": 0.4,
+   "sfuma": 0.3
+  },
+  {
+   "file": "passi_eco.mp3",
+   "riga": 14,
+   "dopo": -0.25,
+   "dur": 3.6,
+   "cresce": [
+    1.0,
+    0.05
+   ],
+   "vol": 0.45,
+   "sfuma": 0.3
+  },
+  {
+   "file": "neon.mp3",
+   "riga": 14,
+   "dopo": 0.1,
+   "da": 0.07,
+   "dur": 3.64,
+   "vol": 0.26,
+   "sfuma": 0.3
+  },
+  {
+   "file": "gocce.mp3",
+   "riga": 14,
+   "dopo": 2.8,
+   "da": 1.7,
+   "dur": 2.0,
+   "vol": 0.2
+  },
+  {
+   "file": "heart60.mp3",
+   "riga": 14,
+   "dopo": 1.8,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.25,
+    1
+   ],
+   "vol": 0.42,
+   "sfuma": 0.4
+  },
+  {
+   "file": "colpo.mp3",
+   "riga": 15,
+   "vol": 0.6
+  },
+  {
+   "file": "rise_long.mp3",
+   "riga": 15,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.2,
+    1
+   ],
+   "vol": 0.22,
+   "sfuma": 0.3
+  },
+  {
+   "file": "neon.mp3",
+   "riga": 15,
+   "dopo": 0.3,
+   "fino_alla_fine": true,
+   "vol": 0.12,
+   "sfuma": 0.5
+  }
+ ]
 }
