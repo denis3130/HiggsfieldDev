@@ -346,12 +346,13 @@ def _tessera(big):
 SCRITTE["s04_tessera.png"] = _tessera
 
 
-def cancella_tratti(big, rett, soglia=8):
-    """Toglie dentro il rettangolo solo i tratti più chiari del fondo (le lettere finte), lasciando la targhetta."""
+def cancella_tratti(big, rett, soglia=8, scuri=False):
+    """Toglie dentro il rettangolo solo i tratti più chiari (o più scuri) del fondo: le lettere finte, non la targhetta."""
     x0, y0, x1, y1 = (np.float32(rett) * K).astype(int)
     z = cv2.cvtColor(np.clip(big[y0:y1, x0:x1], 0, 255).astype(np.uint8), cv2.COLOR_BGR2GRAY).astype(np.float32)
     m = np.zeros(big.shape[:2], np.uint8)
-    m[y0:y1, x0:x1] = ((z > np.median(z) + soglia) * 255).astype(np.uint8)
+    tratti = (z < np.median(z) - soglia) if scuri else (z > np.median(z) + soglia)
+    m[y0:y1, x0:x1] = (tratti * 255).astype(np.uint8)
     m = cv2.dilate(m, np.ones((7, 7), np.uint8))
     return cv2.inpaint(np.clip(big, 0, 255).astype(np.uint8), m, 9, cv2.INPAINT_TELEA).astype(np.float32)
 
@@ -384,6 +385,60 @@ def _led_rosso(big, cx, cy, r):
 
 
 SCRITTE["sA_spalla_porta.png"] = lambda big: _led_rosso(_led_rosso(big, 466, 303, 55), 543, 313, 22)
+
+
+# --- inquadratura 8: la nave spenta se ne va: via le due luci che il modello le ha lasciato acceso
+def _spegni(big, punti):
+    """Le luci diventano nebbia: si riempiono col colore della nebbia intorno (inpaint) e si fondono piano."""
+    yy, xx = np.mgrid[0:SH, 0:SW].astype(np.float32)
+    m = np.zeros((SH, SW), np.uint8); a = np.zeros((SH, SW), np.float32)
+    for x, y, r in punti:
+        d2 = (xx - x * K) ** 2 + (yy - y * K) ** 2
+        m[d2 < (r * K) ** 2] = 255; a = np.maximum(a, np.exp(-d2 / (2 * (r * K * 0.55) ** 2)))
+    pic = cv2.resize(np.clip(big, 0, 255).astype(np.uint8), (SW // 4, SH // 4), interpolation=cv2.INTER_AREA)
+    nebbia = cv2.inpaint(pic, cv2.resize(m, (SW // 4, SH // 4)), 12, cv2.INPAINT_TELEA)
+    nebbia = cv2.GaussianBlur(cv2.resize(nebbia, (SW, SH), interpolation=cv2.INTER_CUBIC).astype(np.float32), (0, 0), 6)
+    return big * (1 - a[..., None]) + nebbia * a[..., None]
+
+
+SCRITTE["s08_poppa_nebbia.png"] = lambda big: _spegni(big, [(247, 517, 52), (377, 517, 52)])
+
+
+# --- inquadratura 10: la tessera davanti al lettore (via la finta scritta rossa sul muro, banda blu e «512» sulla tessera)
+T10 = [(245, 393), (434, 380), (445, 501), (255, 515)]
+
+
+def disegno_tessera(w=1000, h=640):
+    from PIL import Image, ImageDraw
+    im = Image.new("RGBA", (w, h), (0, 0, 0, 0)); d = ImageDraw.Draw(im)
+    d.rectangle([0, int(h * 0.56), w, int(h * 0.76)], fill=NAVY + (255,))
+    f = _adatta("512", "Black", h * 0.34, w * 0.5)
+    d.text((w / 2, h * 0.3), "512", font=f, fill=NAVY + (255,), anchor="mm")
+    return im
+
+
+def _serratura(big):
+    big = cancella(big, (499, 214, 523, 306))
+    m = maschera_carta(big, T10, pelle=4, morbido=1.5)
+    pollice = np.zeros((SH, SW), np.uint8)
+    cv2.fillPoly(pollice, [(np.float32([(286, 448), (350, 446), (352, 520), (284, 524)]) * K).astype(np.int32)], 1)
+    m = m * (1 - cv2.GaussianBlur(pollice.astype(np.float32), (0, 0), 2.5))
+    return stampa(big, disegno_tessera(), T10, m, luce=1.0)
+
+
+SCRITTE["s10_serratura.png"] = _serratura
+
+
+# --- inquadratura 11: i pugni sulla porta: la targhetta scura diventa «512» (via la finta scritta)
+P11 = [(247, 386), (346, 386), (346, 427), (247, 427)]
+
+
+def _pugni(big):
+    big = cancella_tratti(big, (250, 388, 344, 426), 10, scuri=True)
+    return stampa(big, disegno_numero("512", 600, 250, CREMA, "Bold", 0.78), P11, luce=1.6)
+
+
+SCRITTE["s11_pugni.png"] = _pugni
 
 
 def scritte(solo=None):

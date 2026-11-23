@@ -19,7 +19,7 @@
 
 **Indizi** (tutti visibili prima della rivelazione)
 - Ep. 1, inq. 1: sul biglietto c'è scritto FENU DARIO, cabina 512, e sotto c'è un secondo biglietto, FENU EFISIO. La voce non legge i nomi.
-- Ep. 1, inq. 2: sulla rampa, tra i camion, una sagoma col cappuccio grigio si infila sotto un telone (il clandestino).
+- Ep. 1, inq. 2: sulla rampa, tra i camion telonati, una piccola sagoma scura che non sale con gli altri (il clandestino).
 - Ep. 1, inq. 3–4: il padre dorme nella 512, la coppola è sul tavolino; in tasca ti porti solo la tessera 512.
 - Ep. 2: l'ultima volta che il narratore dice «tuo padre». Ep. 4: «stanotte cercavi qualcuno. Chi?».
 - Ep. 2: il traghetto illuminato che si allontana e il nome della nave scritto al contrario sul salvagente.
@@ -67,8 +67,8 @@ Nessuna morte con riavvolgimento: la storia è una sola e ogni scelta cambia sol
 | # | Voce | Si vede | Suono |
 |---|---|---|---|
 | 1 | Hai un biglietto per la Sardegna. Non ci arriverai. | Soggettiva dall'alto: la tua mano sinistra (manica blu, orologio) regge due biglietti sovrapposti sotto la luce arancione dei lampioni del molo. Dietro, sfocato, il portellone aperto del traghetto. Lento avanzamento sui biglietti. TESTO A SCHERMO: «LINEE DEL MAESTRALE · M/N TRAMONTANA · LIVORNO → OLBIA · 22:30 · PASSEGGERO: FENU DARIO · CABINA 512»; sotto spunta «PASSEGGERO: FENU EFISIO». | Sirena lunga di nave, gabbiani lontani, motori al minimo. |
-| 2 | Livorno, ultima nave della sera. Sali a bordo con tuo padre. | Campo lungo dal basso della rampa: il traghetto bianco con la fascia blu, il portellone illuminato. Di spalle, un vecchio con coppola grigia, cappotto marrone e valigia color cuoio sale davanti a te. Sullo sfondo, tra i camion, una piccola sagoma col cappuccio grigio si infila sotto il telone di un rimorchio. Camera a mano che sale la rampa. | Passi sulla rampa di ferro, camion in manovra, catene. |
-| 3 | In cabina, lui si addormenta subito. Tu no. | Interno cabina stretta, luce calda della lampada da lettura: nella cuccetta bassa una sagoma sotto la coperta, girata verso la parete. Sul tavolino la coppola grigia. Sulla porta socchiusa la targhetta 512. Camera ferma, leggero rollio. | Ronzio dei motori, respiro lento di chi dorme, un cigolio. |
+| 2 | Livorno, ultima nave della sera. Sali a bordo con tuo padre. | Campo lungo dal basso della rampa: il traghetto bianco con la fascia blu, il portellone illuminato. Di spalle, un vecchio con coppola grigia, cappotto marrone e valigia color cuoio sale davanti a te. Sullo sfondo, tra i camion telonati, una piccola sagoma scura che non sale con gli altri. Camera a mano che sale la rampa. | Passi sulla rampa di ferro, camion in manovra, catene. |
+| 3 | In cabina, lui si addormenta subito. Tu no. | Interno cabina stretta vista dalla porta, luce calda della lampada: nella cuccetta bassa una sagoma tutta sotto la coperta, girata verso la parete. In primo piano, sul tavolino, la coppola grigia. Camera ferma, leggero rollio. | Ronzio dei motori, respiro lento di chi dorme, un cigolio. |
 | 4 | Prendi la tessera. | Dettaglio: la tua mano prende dal tavolino una tessera bianca con la banda blu. TESTO A SCHERMO: «512». Lento avanzamento. | Il cartoncino che scivola sul tavolino. |
 | 5 | Esci sul ponte. | Di spalle, in controluce: la tua sagoma esce da una porta di ferro sul ponte esterno, oltre la soglia solo nebbia illuminata. La camera ti segue. | Porta pesante, il vento che entra. |
 | 6 | Fuori c'è solo nebbia. | Soggettiva sul ponte esterno di poppa: le tue mani sul corrimano bagnato, oltre la ringhiera solo nebbia color latte accesa dai fari della nave. La camera avanza piano verso il vuoto. | Vento, mare contro lo scafo, corno da nebbia lontano. |
@@ -94,22 +94,23 @@ Suffisso di stile, da aggiungere identico in coda a ogni prompt:
 
 Negativo comune: `face, portrait, crowd, text, letters, logo, extra fingers, deformed hands, cartoon, illustration, oversaturated`
 
-1. `POV from above of a single left hand in a dark navy wool sweater sleeve, steel wristwatch with black leather strap, holding two overlapping blank cream paper tickets with a midnight-blue band on top, orange sodium dock lamps, blurred open bow door of a white ferry in the background at night`
-2. `Low-angle wide shot from the bottom of a steel loading ramp at night, white car ferry with a midnight-blue stripe and a brightly lit open bow door, an old man seen from behind in a grey flat cap and brown overcoat carrying a tan hard suitcase walking up the ramp, parked trucks on the side, a small hooded figure in a grey hoodie slipping under a trailer tarpaulin far in the background`
-3. `Interior of a narrow ferry cabin, warm reading lamp, lower bunk with a sleeping figure under a blanket turned towards the wall, a grey flat cap on a small fold-down table, cream walls, half-open cabin door with a blank number plate`
+1. `POV looking down from above at a single left hand in a dark navy wool sweater sleeve with a steel wristwatch with black leather strap, holding two large overlapping blank cream paper tickets with a plain midnight-blue band along the top edge, the tickets held flat in the middle of the frame, orange sodium dock lamps, blurred open bow door of a white ferry in the background at night`
+2. `Low-angle wide shot from the bottom of a steel loading ramp at night, a white car ferry with a midnight-blue stripe and a brightly lit open bow door, an old man seen from behind in a grey flat cap and a long brown overcoat walking up the ramp away from the camera carrying a tan hard suitcase, parked truck trailers covered by grey tarpaulins on the right, far in the background between the trucks a tiny hooded figure in a grey hoodie crawling under a tarpaulin, half hidden in shadow`
+3. `Interior of a narrow ferry cabin at night seen from the door, warm reading lamp, a lower bunk with a sleeping person completely hidden under a grey wool blanket pulled over the head, only the shape of a body under the blanket turned towards the wall, a grey tweed flat cap lying on a small fold-down table in the foreground, cream walls, dark porthole`
 4. `Extreme close-up of a hand in a navy wool sleeve picking up a blank white plastic key card with a midnight-blue band from a small cabin table, warm lamp light, soft shadows`
-5. `POV on the open stern deck of a ferry at night, two hands in navy wool sleeves resting on a wet steel handrail, beyond the railing nothing but thick milk-white fog lit by the ship's floodlights, wet green deck`
-6. `POV wide shot from a ferry railing at night, the bow of an identical white ferry with a midnight-blue stripe emerging from dense fog very close, all its lights off, black portholes, empty decks, ghostly and silent, no wake`
-7. `The dark stern of an unlit ferry dissolving into thick fog at night, in the foreground two hands gripping a wet handrail, the floodlight glow turning sickly green`
-8. `POV through a glass door into a deserted ferry lounge, long rows of empty reclining seats, no luggage, no blankets, bottle-green carpet, only greenish emergency lights, condensation on the windows, central aisle vanishing into darkness`
-9. `Close-up of a hand holding a blank white key card against an electronic cabin door lock, small red LED glowing, cream door, long narrow cabin corridor out of focus behind, greenish emergency light`
-10. `POV of two fists in navy wool sleeves pounding on a cream ferry cabin door with a blank brass number plate, red LED on the lock, greenish emergency light, slight motion blur`
-11. `Wide shot from the far end of a long narrow ferry cabin corridor, bottle-green carpet, rows of identical closed doors, one small male silhouette seen from behind standing in front of a door, one flickering greenish emergency light, deep shadows`
-12. `Low-angle close-up of a grey horn loudspeaker with a metal grille mounted on the ceiling of a ferry corridor, greenish emergency light, dust in the air, condensation drops on the metal`
-13. `The shadow of a man cast on a cream cabin door with a blank number plate, a hand in a navy wool sleeve slowly letting go of the door handle, red LED on the lock, greenish light`
-14. Scheda di scelta — A: `Backlit shoulder and arm in a navy wool sweater braced against a cream cabin door, red lock LED glowing, greenish emergency light` · B: `At the end of a greenish-lit ferry corridor, a deserted dark wood reception desk with an empty key rack and a black desk microphone with a red button`
+5. `Seen from behind, a man in a dark navy wool sweater and dark jeans stepping out through a heavy open steel door onto the outer deck of a ferry at night, beyond the door only thick milk-white fog lit by floodlights, warm light from the corridor behind him`
+6. `POV on the open stern deck of a ferry at night, two hands in navy wool sleeves resting on a wet steel handrail, beyond the railing nothing but thick milk-white fog lit by the ship's floodlights, wet green deck`
+7. `POV from the railing of a ferry at night, very close alongside, the huge side of an identical white ferry with a midnight-blue stripe gliding past in dense fog, completely dark, no lights at all, rows of black empty portholes, deserted decks, the dark hull fills the right half of the frame and fades into the fog on the left, ghostly and silent`
+8. `The dark stern of an unlit ferry dissolving into thick fog at night, in the foreground two hands gripping a wet handrail, the floodlight glow turning sickly green`
+9. `POV through a glass door into a deserted ferry lounge, long rows of empty reclining seats, no luggage, no blankets, bottle-green carpet, only greenish emergency lights, condensation on the windows, central aisle vanishing into darkness`
+10. `Close-up of a hand pressing a blank white plastic key card flat against the electronic card reader of a cream cabin door, the small LED on the reader glowing red, long narrow ferry cabin corridor out of focus behind, greenish emergency light`
+11. `POV of two fists in navy wool sleeves pounding on a plain cream ferry cabin door, a small blank brass plate on the door at eye level, a simple card lock with a small red light under the handle, greenish emergency light, slight motion blur`
+12. `Wide shot from the far end of a long narrow ferry cabin corridor, bottle-green carpet, rows of identical closed doors, one small male silhouette seen from behind standing in front of a door, one flickering greenish emergency light, deep shadows`
+13. `Low-angle close-up of a grey horn loudspeaker with a metal grille mounted on the ceiling of a ferry corridor, greenish emergency light, dust in the air, condensation drops on the metal`
+14. `The shadow of a man cast on a cream cabin door with a blank brass number plate, a hand in a navy wool sleeve slowly letting go of the door handle, red LED on the lock, greenish light`
+15. Scheda di scelta — A: `Backlit shoulder and arm in a navy wool sweater braced against a cream cabin door, red lock LED glowing, greenish emergency light` · B: `At the end of a greenish-lit ferry corridor, a deserted dark wood reception desk with an empty key rack and a black desk microphone with a red button`
 
-Tutte le scritte (biglietti, «512», targhette) si aggiungono in montaggio.
+Tutte le scritte (biglietti, «512», targhette) si aggiungono in montaggio: `data/horror/ep1_il_traghetto/extra.py` (immagini *_scritte.png).
 
 ## Episodio 2 — Non è la tua nave
 

@@ -9,18 +9,18 @@
  },
  {
   "out": "data/horror/ep1_il_traghetto/img/s02_rampa.png",
-  "prompt": "Low-angle wide shot from the bottom of a steel loading ramp at night, a white car ferry with a midnight-blue stripe and a brightly lit open bow door, an old man seen from behind in a grey flat cap and brown overcoat carrying a tan hard suitcase walking up the ramp away from the camera, parked trucks on the side, far in the background a small hooded figure in a grey hoodie slipping under a trailer tarpaulin, cinematic film still, 35mm, anamorphic lens, shallow depth of field, heavy sea fog, wet surfaces, desaturated teal-green and sodium-amber palette, low-key motivated lighting, fine film grain, photorealistic, vertical 9:16, no people's faces, no text, no letters, no watermark",
+  "prompt": "Low-angle wide shot from the bottom of a steel loading ramp at night, a white car ferry with a midnight-blue stripe and a brightly lit open bow door, an old man seen from behind in a grey flat cap and a long brown overcoat walking up the ramp away from the camera carrying a tan hard suitcase, parked truck trailers covered by grey tarpaulins on the right, far in the background between the trucks a tiny hooded figure in a grey hoodie crawling under a tarpaulin, half hidden in shadow, cinematic film still, 35mm, anamorphic lens, shallow depth of field, heavy sea fog, wet surfaces, desaturated teal-green and sodium-amber palette, low-key motivated lighting, fine film grain, photorealistic, vertical 9:16, no people's faces, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 102,
+  "seed": 231,
   "steps": 4
  },
  {
   "out": "data/horror/ep1_il_traghetto/img/s03_cabina.png",
-  "prompt": "Interior of a narrow ferry cabin, warm reading lamp, lower bunk with a sleeping figure under a blanket turned towards the wall, a grey flat cap on a small fold-down table, cream walls, half-open cabin door with a blank brass number plate, cinematic film still, 35mm, anamorphic lens, shallow depth of field, heavy sea fog, wet surfaces, desaturated teal-green and sodium-amber palette, low-key motivated lighting, fine film grain, photorealistic, vertical 9:16, no people's faces, no text, no letters, no watermark",
+  "prompt": "Interior of a narrow ferry cabin at night seen from the door, warm reading lamp, a lower bunk with a sleeping person completely hidden under a grey wool blanket pulled over the head, only the shape of a body under the blanket turned towards the wall, a grey tweed flat cap lying on a small fold-down table in the foreground, cream walls, dark porthole, cinematic film still, 35mm, anamorphic lens, shallow depth of field, heavy sea fog, wet surfaces, desaturated teal-green and sodium-amber palette, low-key motivated lighting, fine film grain, photorealistic, vertical 9:16, no people's faces, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 103,
+  "seed": 222,
   "steps": 4
  },
  {
@@ -49,10 +49,10 @@
  },
  {
   "out": "data/horror/ep1_il_traghetto/img/s07_nave_spenta.png",
-  "prompt": "POV wide shot from a ferry railing at night, the bow of an identical white ferry with a midnight-blue stripe emerging from dense fog very close, all its lights off, black portholes, empty decks, ghostly and silent, no wake, cinematic film still, 35mm, anamorphic lens, shallow depth of field, heavy sea fog, wet surfaces, desaturated teal-green and sodium-amber palette, low-key motivated lighting, fine film grain, photorealistic, vertical 9:16, no people's faces, no text, no letters, no watermark",
+  "prompt": "POV from the railing of a ferry at night, very close alongside, the huge side of an identical white ferry with a midnight-blue stripe gliding past in dense fog, completely dark, no lights at all, rows of black empty portholes, deserted decks, the dark hull fills the right half of the frame and fades into the fog on the left, ghostly and silent, cinematic film still, 35mm, anamorphic lens, shallow depth of field, heavy sea fog, wet surfaces, desaturated teal-green and sodium-amber palette, low-key motivated lighting, fine film grain, photorealistic, vertical 9:16, no people's faces, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 107,
+  "seed": 213,
   "steps": 4
  },
  {
@@ -73,18 +73,18 @@
  },
  {
   "out": "data/horror/ep1_il_traghetto/img/s10_serratura.png",
-  "prompt": "Close-up of a hand holding a blank white key card against an electronic cabin door lock, small red LED glowing, cream door, long narrow cabin corridor out of focus behind, greenish emergency light, cinematic film still, 35mm, anamorphic lens, shallow depth of field, heavy sea fog, wet surfaces, desaturated teal-green and sodium-amber palette, low-key motivated lighting, fine film grain, photorealistic, vertical 9:16, no people's faces, no text, no letters, no watermark",
+  "prompt": "Close-up of a hand pressing a blank white plastic key card flat against the electronic card reader of a cream cabin door, the small LED on the reader glowing red, long narrow ferry cabin corridor out of focus behind, greenish emergency light, cinematic film still, 35mm, anamorphic lens, shallow depth of field, heavy sea fog, wet surfaces, desaturated teal-green and sodium-amber palette, low-key motivated lighting, fine film grain, photorealistic, vertical 9:16, no people's faces, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 110,
+  "seed": 205,
   "steps": 4
  },
  {
   "out": "data/horror/ep1_il_traghetto/img/s11_pugni.png",
-  "prompt": "POV of two fists in navy wool sleeves pounding on a cream ferry cabin door with a blank brass number plate, red LED on the lock, greenish emergency light, slight motion blur, cinematic film still, 35mm, anamorphic lens, shallow depth of field, heavy sea fog, wet surfaces, desaturated teal-green and sodium-amber palette, low-key motivated lighting, fine film grain, photorealistic, vertical 9:16, no people's faces, no text, no letters, no watermark",
+  "prompt": "POV of two fists in navy wool sleeves pounding on a plain cream ferry cabin door, a small blank brass plate on the door at eye level, a simple card lock with a small red light under the handle, greenish emergency light, slight motion blur, cinematic film still, 35mm, anamorphic lens, shallow depth of field, heavy sea fog, wet surfaces, desaturated teal-green and sodium-amber palette, low-key motivated lighting, fine film grain, photorealistic, vertical 9:16, no people's faces, no text, no letters, no watermark",
   "w": 576,
   "h": 1024,
-  "seed": 111,
+  "seed": 216,
   "steps": 4
  },
  {

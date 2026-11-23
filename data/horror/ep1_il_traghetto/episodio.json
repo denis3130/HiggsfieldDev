@@ -19,7 +19,7 @@
   {
    "id": 3,
    "voce": "In cabina, lui si addormenta subito. Tu no.",
-   "img": "s03_cabina_scritte.png",
+   "img": "s03_cabina.png",
    "mov": "fermo",
    "rollio": true
   },
@@ -50,7 +50,7 @@
   {
    "id": 8,
    "voce": "Ti sfiora in silenzio. E sparisce.",
-   "img": "s08_poppa_nebbia.png",
+   "img": "s08_poppa_nebbia_scritte.png",
    "mov": "avanza_lento",
    "sparisce": true
   },
@@ -64,7 +64,12 @@
    "id": 10,
    "voce": "Corri alla cabina. La tessera non apre più.",
    "img": "s10_serratura_scritte.png",
-   "mov": "mano"
+   "mov": "mano",
+   "led": [
+    500,
+    597,
+    8
+   ]
   },
   {
    "id": 11,
@@ -87,7 +92,7 @@
    "id": 13,
    "voce": "Risponde solo l'altoparlante:",
    "citazione": "La signora Ida Brau è attesa alla reception.",
-   "img": "s13_altoparlante.png",
+   "img": "s13_altoparlante_scritte.png",
    "mov": "avanza_lento",
    "altoparlante": true
   },
@@ -106,9 +111,9 @@
      "testo": "Sfondi\nla porta",
      "img": "sA_spalla_porta_scritte.png",
      "ritaglio": [
-      0.5,
-      0.5,
-      0.8
+      0.6,
+      0.38,
+      0.74
      ]
     },
     "b": {
@@ -116,8 +121,8 @@
      "testo": "Corri alla\nreception",
      "img": "sB_reception.png",
      "ritaglio": [
-      0.5,
-      0.5,
+      0.56,
+      0.64,
       0.8
      ]
     }
