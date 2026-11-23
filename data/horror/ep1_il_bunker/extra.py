@@ -58,31 +58,30 @@ def secondi_timer(nome, t):
 
 # ---------- display a sette segmenti
 SEG = {"0": "abcdef", "1": "bc", "2": "abdeg", "3": "abcdg", "4": "bcfg", "5": "acdfg", "6": "acdefg", "7": "abc", "8": "abcdefg", "9": "abcdfg"}
-DW, DH = 600, 230                                             # tela del display
+DW, DH = 700, 230                                             # tela del display
 
 
 def tela(testo):
     """Display (BGR float 0-255) e maschera dei segmenti accesi, per «MM:SS»."""
     acc = np.zeros((DH, DW), np.float32); spe = np.zeros((DH, DW), np.float32)
-    cw, ch, sp = 112, 170, 22; x0 = 38; y0 = (DH - ch) // 2; inc = 0.10              # cifra, spessore segmento, corsivo
-    xs = [x0, x0 + cw + 20, x0 + 2 * cw + 80, x0 + 3 * cw + 100]
+    cw, ch, sp, inc = 96, 164, 19, 0.08                       # larghezza e altezza della cifra, spessore segmento, corsivo
+    y0 = (DH - ch) // 2; xs = [44, 186, 386, 528]; xc = 343      # quattro cifre e i due punti
     for d, cx in zip(testo.replace(":", ""), xs):
-        on = SEG[d]
-        segs = {"a": [(sp, 0), (cw - sp, 0)], "d": [(sp, ch), (cw - sp, ch)], "g": [(sp, ch / 2), (cw - sp, ch / 2)],
-                "f": [(0, sp), (0, ch / 2 - sp / 2)], "e": [(0, ch / 2 + sp / 2), (0, ch - sp)],
-                "b": [(cw, sp), (cw, ch / 2 - sp / 2)], "c": [(cw, ch / 2 + sp / 2), (cw, ch - sp)]}
+        on = SEG[d]; g = sp * 0.75                            # piccolo stacco tra un segmento e l'altro
+        segs = {"a": [(g, 0), (cw - g, 0)], "d": [(g, ch), (cw - g, ch)], "g": [(g, ch / 2), (cw - g, ch / 2)],
+                "f": [(0, g), (0, ch / 2 - g)], "e": [(0, ch / 2 + g), (0, ch - g)],
+                "b": [(cw, g), (cw, ch / 2 - g)], "c": [(cw, ch / 2 + g), (cw, ch - g)]}
         for k, ((ax, ay), (bx, by)) in segs.items():
-            sh = lambda x, y: (int(cx + x + inc * (ch - y)), int(y0 + y))
+            sh = lambda x, y: (int(round(cx + x + inc * (ch - y))), int(round(y0 + y)))
             cv2.line(acc if k in on else spe, sh(ax, ay), sh(bx, by), 1.0, sp, cv2.LINE_AA)
-    xc = (xs[1] + cw + xs[2]) // 2 + 8
-    for yy in (y0 + ch * 0.32, y0 + ch * 0.70):
-        cv2.circle(acc, (int(xc + inc * (ch - (yy - y0))), int(yy)), 12, 1.0, -1, cv2.LINE_AA)
-    acc = cv2.GaussianBlur(acc, (0, 0), 1.2); spe = cv2.GaussianBlur(spe, (0, 0), 1.2)
-    rosso = np.array([40, 46, 255], np.float32); fondo = np.array([10, 8, 16], np.float32)
-    img = fondo + spe[..., None] * np.array([14, 12, 46], np.float32) + acc[..., None] * rosso
-    img += cv2.GaussianBlur(acc, (0, 0), 6)[..., None] * np.array([20, 30, 160], np.float32)       # bagliore dentro il vetro
-    nucleo = np.clip(acc - 0.55, 0, 1)[..., None] * np.array([120, 150, 160], np.float32)        # centro dei segmenti più chiaro
-    return np.clip(img + nucleo, 0, 255), acc
+    for yy in (y0 + ch * 0.3, y0 + ch * 0.72):
+        cv2.circle(acc, (int(xc + inc * (ch - (yy - y0))), int(yy)), 11, 1.0, -1, cv2.LINE_AA)
+    acc = cv2.GaussianBlur(acc, (0, 0), 1.0); spe = cv2.GaussianBlur(spe, (0, 0), 1.0)
+    fondo = np.array([9, 8, 14], np.float32)
+    img = fondo + spe[..., None] * np.array([10, 10, 38], np.float32) + acc[..., None] * np.array([28, 26, 225], np.float32)
+    img += cv2.GaussianBlur(acc, (0, 0), 7)[..., None] * np.array([8, 10, 120], np.float32)        # bagliore dentro il vetro
+    img += np.clip(acc - 0.6, 0, 1)[..., None] * np.array([40, 70, 75], np.float32)               # centro dei segmenti più acceso
+    return np.clip(img, 0, 255), acc
 
 
 _cache = {}
