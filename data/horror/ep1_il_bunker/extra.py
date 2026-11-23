@@ -243,6 +243,8 @@ def lampada(t):
 
 def dopo(fr, r, tau, u, t, mm):
     if r["id"] == 1:                                                 # risveglio: tutto sfocato, poi le cifre vanno a fuoco
+        A = np.float32([[1.15, 0, m.W / 2 * (1 - 1.15)], [0, 1.15, 600 - 300 * 1.15]])   # timer più giù: sopra c'è il titolo della serie
+        fr = cv2.warpAffine(fr, A, (m.W, m.H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
         s = 9.0 * (1 - m.ease(min(1.0, max(0.0, (tau - 0.3) / 1.6))))
         if s > 0.3:
             fr = cv2.GaussianBlur(fr, (0, 0), s)
@@ -251,6 +253,10 @@ def dopo(fr, r, tau, u, t, mm):
         tl = tau + 0.0
         liv = np.interp(tl, [0, 0.38, 0.42, 0.55, 0.6, 0.78, 0.82, 0.9, 0.95, 1.2], [0.12, 0.12, 1.0, 0.95, 0.22, 0.25, 0.9, 0.5, 1.0, 1.0])
         return fr * liv
+    if r["id"] == 9:                                                 # bobine più in alto, così il sottotitolo non le copre
+        return cv2.warpAffine(fr, np.float32([[1, 0, 0], [0, 1, -330]]), (m.W, m.H), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+    if r["id"] == 13:                                                # gli occhi dell'uomo restano nell'ombra, dietro la mano
+        fr = fr * (1 - 0.5 * np.exp(-(((m.XN - 0.5) / 0.17) ** 2 + ((m.YN - 0.32) / 0.055) ** 2)))[..., None]
     if r["id"] in (5, 7, 10, 12, 13):                                # stanza illuminata dalla lampada: ogni tanto trema
         return fr * lampada(t)
     return fr

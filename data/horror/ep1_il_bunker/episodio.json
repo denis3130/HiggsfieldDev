@@ -82,7 +82,7 @@
    "id": 13,
    "voce": "L'uomo alza la testa:",
    "citazione": "Non è andata così. Ti prego. Ascolta me.",
-   "img": "s13_mano_tesa.png",
+   "img": "s13_mano_tesa_v4.png",
    "mov": "arretra"
   },
   {
@@ -99,11 +99,11 @@
     "a": {
      "voce": "La A: ascolti la versione dell'uomo.",
      "testo": "Ascolti\nl'uomo",
-     "img": "s13_mano_tesa.png",
+     "img": "s13_mano_tesa_v4.png",
      "ritaglio": [
-      0.5,
-      0.5,
-      0.8
+      0.54,
+      0.55,
+      0.55
      ]
     },
     "b": {
@@ -112,8 +112,8 @@
      "img": "s07_registratore_cassa_v2.png",
      "ritaglio": [
       0.483,
-      0.586,
-      0.52
+      0.583,
+      0.47
      ]
     }
    },
