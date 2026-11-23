@@ -241,8 +241,9 @@ class Gocce:
         self.t1 = np.full(n, 1e9); self.vx = np.zeros(n); self.vy = np.zeros(n)
 
     def aggiungi(self, x, y, r, e, t0, t1=1e9, vx=0.0, vy=0.0):
+        n = np.size(x)
         for nm, v in (("x", x), ("y", y), ("r", r), ("e", e), ("t0", t0), ("t1", t1), ("vx", vx), ("vy", vy)):
-            setattr(self, nm, np.append(getattr(self, nm), v))
+            setattr(self, nm, np.append(getattr(self, nm), np.broadcast_to(np.asarray(v, float), (n,)) if np.ndim(v) == 0 else v))
 
     def colate(self, seme, n, tmin, tmax, vmin=60, vmax=180, rmin=4.5, rmax=8.0, zona=(0.05, 0.0, 0.95, 0.55)):
         """Gocce che colano giù lasciando dietro una scia di goccioline ferme."""
@@ -279,7 +280,7 @@ class Gocce:
         sf = cv2.GaussianBlur(fr, (0, 0), 3.0)
         ref = cv2.remap(sf, m.XX + OX, m.YY + OY, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
         Aa = A[..., None]
-        return fr * (1 - Aa) + (ref * SHD[..., None] * 1.1 + (HL * (25 + 0.9 * lum))[..., None]) * Aa
+        return fr * (1 - Aa) + (ref * SHD[..., None] * 1.1 + (HL * (40 + 1.1 * lum))[..., None]) * Aa
 
 
 # --- tergicristallo: una spazzola scura che passa davanti alla camera (mossa e fuori fuoco) e pulisce le gocce
@@ -315,7 +316,7 @@ class Tergi:
         gocce.aggiungi(nx, ny, gocce.r[ok] * g.uniform(0.6, 1.0, n), gocce.e[ok], giu[ok] + g.uniform(0.15, 4.5, n))
 
     def disegna(self, fr, tau, maschera):
-        n = 9; dt = 1 / m.FPS; acc = np.zeros((H // 2, W // 2), np.float32)
+        n = 9; dt = 0.5 / m.FPS; acc = np.zeros((H // 2, W // 2), np.float32)                   # otturatore a 180°: mezzo fotogramma di mosso
         angs = [self.angolo(tau - dt / 2 + dt * k / (n - 1)) for k in range(n)]
         if max(abs(a - self.ar) for a in angs) < 0.5:
             return fr
@@ -323,8 +324,8 @@ class Tergi:
             c, s = np.cos(np.radians(a)), -np.sin(np.radians(a)); lay = np.zeros_like(acc)
             p0 = self.P + np.float32([c, s]) * self.r0; p1 = self.P + np.float32([c, s]) * self.r1
             q0 = self.P + np.float32([c, s]) * (self.r0 * 0.4)
-            cv2.line(lay, tuple(int(v) for v in p0 / 2), tuple(int(v) for v in p1 / 2), 1.0, 9, cv2.LINE_AA)     # spazzola
-            cv2.line(lay, tuple(int(v) for v in q0 / 2), tuple(int(v) for v in (p0 + p1) / 4), 1.0, 5, cv2.LINE_AA)  # braccio
+            cv2.line(lay, tuple(int(v) for v in p0 / 2), tuple(int(v) for v in p1 / 2), 1.0, 15, cv2.LINE_AA)    # spazzola (vicina alla camera: larga)
+            cv2.line(lay, tuple(int(v) for v in q0 / 2), tuple(int(v) for v in (p0 + p1) / 4), 1.0, 8, cv2.LINE_AA)  # braccio
             acc += lay / n
         a = cv2.resize(cv2.GaussianBlur(acc, (0, 0), 2.2), (W, H))[..., None] * maschera[..., None]
         return fr * (1 - 0.93 * a) + a * np.float32([9, 9, 10])
@@ -351,7 +352,7 @@ def disegna_telo(fr, nome, mov, u, tau, t, seme, bordo):
     for j in range(6):
         yy = ya + (yb - ya) * (j / 5) ** 1.3 + g.normal(0, 2)
         X, Y = big_xy(xb + g.normal(0, 1.5), yy); ox, oy, sc = proietta(nome, mov, u, tau, seme, X, Y)
-        L = sc * big_xy(g.uniform(26, 62), 0)[0]; larg = sc * big_xy(g.uniform(5, 11), 0)[0]
+        L = sc * big_xy(g.uniform(22, 52), 0)[0]; larg = sc * big_xy(g.uniform(9, 17), 0)[0]
         base = np.radians(g.uniform(150, 215)); om = g.uniform(9, 15); fase = g.uniform(0, 6.3); amp = g.uniform(0.35, 0.6)
         N = 14; prev = None
         for i in range(N + 1):
@@ -364,7 +365,7 @@ def disegna_telo(fr, nome, mov, u, tau, t, seme, bordo):
             w = larg * (1 - 0.65 * s) * (0.8 + 0.4 * np.sin(13 * s + j)); nx, ny = -np.sin(ang) * w / 2, np.cos(ang) * w / 2
             if prev is not None:
                 lum = 0.5 + 0.5 * np.cos(om * t - 5.5 * s + fase)                # dove la plastica gira verso i fari luccica
-                c = tuple(int(v) for v in (np.float32([16, 15, 15]) * (1 - lum) + np.float32([88, 96, 92]) * lum * 0.8))
+                c = tuple(int(v) for v in (np.float32([9, 9, 10]) * (1 - lum) + np.float32([58, 64, 66]) * lum * 0.7))
                 poly = np.int32([[prev[0] + pn[0], prev[1] + pn[1]], [px + nx, py + ny], [px - nx, py - ny], [prev[0] - pn[0], prev[1] - pn[1]]])
                 cv2.fillConvexPoly(col, poly, c, cv2.LINE_AA); cv2.fillConvexPoly(alfa, poly, 245, cv2.LINE_AA)
             prev, pn = (px, py), (nx, ny)
@@ -500,8 +501,8 @@ def applica(fr, r, tau, u, t, seme):
     if "fuoco" in e:                                                             # il fuoco passa dalla mano (vicina) alla berlina (lontana)
         c = e["fuoco"]; f = smooth(u, c[0], c[1]); dep = m.IMG[r["img"]][1]
         vicino = smooth(dep, c[2] if len(c) > 2 else 0.5, c[3] if len(c) > 3 else 0.72)[..., None]
-        sf = cv2.GaussianBlur(fr, (0, 0), 7); nitido = fr + (fr - cv2.GaussianBlur(fr, (0, 0), 2.5)) * 0.8
-        v = fr * (1 - f) + sf * f * 0.85                                         # vicino: da nitido a sfocato (e un po' più scuro)
+        sf = cv2.GaussianBlur(fr, (0, 0), 11); nitido = fr + (fr - cv2.GaussianBlur(fr, (0, 0), 2.5)) * 1.1
+        v = fr * (1 - f) + sf * f * 0.8                                          # vicino: da nitido a sfocato (e un po' più scuro)
         l = (sf * 0.6 + fr * 0.4) * (1 - f) + nitido * f                         # lontano: da sfocato a più netto
         fr = v * vicino + l * (1 - vicino)
     if "vibra" in e:
@@ -571,6 +572,8 @@ def tachimetro(r, tau, u, t):
             big = m.IMG[sp["img"]][0].astype(np.float32); x0, y0, x1, y1 = sp["ritaglio"]
             X0, Y0 = map(int, big_xy(x0, y0)); X1, Y1 = map(int, big_xy(x1, y1))
             TACH["specchio"] = cv2.resize(big[Y0:Y1, X0:X1], (860, int(860 * (Y1 - Y0) / (X1 - X0))), interpolation=cv2.INTER_AREA)
+            if sp.get("specchia"):                                               # nello specchietto l'immagine è rovesciata
+                TACH["specchio"] = TACH["specchio"][:, ::-1].copy()
     fisso, R, D = TACH["fisso"], TACH["R"], TACH["D"]
     w = [x for x in m.parole[next(k for k, x in enumerate(RIGHE) if x is r)]]
     su = smooth(t, w[0][0] - 0.1, w[1][1]) if len(w) >= 2 else smooth(u, 0.05, 0.45)

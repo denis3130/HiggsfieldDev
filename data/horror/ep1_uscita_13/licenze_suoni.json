@@ -41,13 +41,6 @@
   "licenza": "CC0 1.0",
   "pagina": "https://freesound.org/people/kyles/sounds/450827"
  },
- "sfx/tuono_vicino.mp3": {
-  "titolo": "Thunder, Close",
-  "autore": "Fission9",
-  "licenza": "CC0 1.0",
-  "pagina": "https://freesound.org/people/Fission9/sounds/505113",
-  "nota": "6 secondi da 0,2 s"
- },
  "sfx/tuono_lontano.mp3": {
   "titolo": "peal of thunder - distant",
   "autore": "bastipictures",
@@ -96,5 +89,12 @@
   "licenza": "SIL Open Font License 1.1",
   "pagina": "https://www.npmjs.com/package/@fontsource/caveat",
   "nota": "testo della licenza in fonts/OFL_Caveat.txt"
+ },
+ "sfx/tuono_secco.mp3": {
+  "titolo": "230724 Thunder, close crack light rain, mixpreroof, Toronto",
+  "autore": "TRP",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/TRP/sounds/717909",
+  "nota": "5 secondi da 3,9 s"
  }
 }
