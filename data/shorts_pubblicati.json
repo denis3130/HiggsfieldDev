@@ -99,7 +99,30 @@
   "3283493283": "poco parlato, usata come immagini nella guida dettagli",
   "10498826": "quasi tutta scena del gioco",
   "462964797": "debole",
-  "4287492525": "debole, 15 s"
+  "4287492525": "debole, 15 s",
+  "3490329364": "nudità (donna nuda per strada)",
+  "1368306710": "nudità in camera da letto",
+  "378190362": "scena di sesso",
+  "2370184154": "perizoma in primo piano",
+  "2905752710": "debole",
+  "4286361370": "battute 'gay'",
+  "1757475597": "bikini e debole",
+  "3585040836": "bestemmie",
+  "1094558608": "bestemmie (solo immagini usate nella guida polizia)",
+  "1779998589": "debole",
+  "1147744407": "NPC in perizoma",
+  "231364335": "insulti alle donne",
+  "3153354716": "insulto razzista nei sottotitoli del gioco",
+  "266980688": "debole",
+  "512352880": "nudità",
+  "167491241": "parolacce (solo immagini usate nella guida polizia)",
+  "354110363": "debole (solo immagini usate nella guida polizia)",
+  "4039366620": "non è gameplay",
+  "2205122434": "filmato con volgarità",
+  "3924630265": "bestemmia",
+  "3993412115": "non è gameplay",
+  "2941154363": "nudità",
+  "2166550051": "nudità"
  },
  "limiti_gratuiti": {
   "vidiq": "3 caricamenti YouTube al giorno (conteggio alla pubblicazione, si azzera alle 09:00 italiane); ogni bozza va approvata dall'utente",
@@ -130,24 +153,14 @@
   {
    "giorno": "2026-11-24",
    "ora": "19:00",
-   "clip_id": "581260434",
-   "titolo": "La CLIENTELA dello strip club di GTA 6 😂 Blur #shorts",
-   "post_id": "8927af82-79f9-47fb-8082-27ab05c5120b",
-   "revision": "6e4ead89",
-   "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
-   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
-   "nota": "anche questa è nello strip club: controllare i fotogrammi prima di pubblicarla (regola: niente scene sessuali)"
-  },
-  {
-   "giorno": "2026-11-24",
-   "ora": "20:00",
    "tipo": "guida",
    "titolo": "GTA 6: 3 modi per fare SOLDI subito 💰 #shorts",
    "spec": "data/guide/soldi.json",
    "post_id": "c06a4baa-648e-4c48-97f5-23eda64fe838",
-   "revision": "08087503",
+   "revision": "9ad701d4",
    "approvata": "2026-11-22 dall'utente: 'basta chiedermi autorizzazioni fai e basta'",
-   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
+   "nota": "spostata dalle 20 alle 19 il 23/11 (al posto della clientela; alle 20 niente, slot per Il Bivio)"
   },
   {
    "giorno": "2026-11-25",
@@ -159,6 +172,48 @@
    "revision": "2d2e8729",
    "approvata": "2026-11-22 dall'utente: 'basta chiedermi autorizzazioni fai e basta'",
    "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+  },
+  {
+   "giorno": "2026-11-25",
+   "ora": "19:00",
+   "clip_id": "674620641",
+   "creator": "Blur",
+   "fonte": "https://www.twitch.tv/tumblurr/clip/CarelessFantasticLampChefFrank-oWgLzvauOWFiPrW0",
+   "titolo": "Il nuovo LOOK di Jason 😂 Blur dal barbiere di GTA 6 #shorts",
+   "post_id": "70f0dfd9-af22-4171-9da4-8e4f83460dc5",
+   "revision": "e774ab1c",
+   "approvata": "regola del 22/11: pubblicare senza chiedere",
+   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+  },
+  {
+   "giorno": "2026-11-26",
+   "ora": "18:00",
+   "tipo": "guida",
+   "titolo": "GTA 6: 3 TRUCCHI per seminare la POLIZIA 🚔 #shorts",
+   "spec": "data/guide/polizia.json",
+   "post_id": "ee90d651-41a3-47c8-8448-d939e5c55dd6",
+   "revision": "7abd6206",
+   "approvata": "regola del 22/11: pubblicare senza chiedere",
+   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
+   "fonti": [
+    "https://www.gamesradar.com/games/grand-theft-auto/gta-6-wanted-system-goes-up-to-6-stars-and-lets-police-track-your-face-your-clothes-and-your-car/",
+    "https://www.gtabase.com/articles/gta-6/gta-6-wanted-level-explained-police-system-guide",
+    "https://www.ibtimes.co.uk/gta-6-revolutionary-police-system-crime-evasion-1818769"
+   ],
+   "nota": "voce del narratore (Chatterbox) e musica/whoosh veri CC0 al posto di Kokoro e dei suoni generati"
+  },
+  {
+   "giorno": "2026-11-26",
+   "ora": "19:00",
+   "clip_id": "2965154166",
+   "creator": "Blur",
+   "fonte": "https://www.twitch.tv/tumblurr/clip/AdorableBlueNightingaleVoteNay-bIY87Ukg2knRNJrk",
+   "titolo": "Si fa un SELFIE mentre esplode tutto 💀 GTA 6 #shorts",
+   "post_id": "c1bb5195-886a-47b4-b3b9-4352f9f92fdb",
+   "revision": "9b83aa6f",
+   "approvata": "regola del 22/11: pubblicare senza chiedere",
+   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
+   "nota": "tagliata prima dei 19 s: subito dopo Blur dice «zio porco»"
   }
  ],
  "regole_utente": [
@@ -178,6 +233,16 @@
    "revision": "42a280c7",
    "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
    "stato": "TENUTA FUORI il 23/11: nei primi secondi ballerine in perizoma (regola: niente scene sessuali). Lo slot delle 20 resta libero per Il Bivio."
+  },
+  {
+   "giorno": "2026-11-24",
+   "ora": "19:00",
+   "clip_id": "581260434",
+   "titolo": "La CLIENTELA dello strip club di GTA 6 😂 Blur #shorts",
+   "post_id": "8927af82-79f9-47fb-8082-27ab05c5120b",
+   "revision": "6e4ead89",
+   "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
+   "stato": "TENUTA FUORI il 23/11: ballerine in bikini nello strip club e battuta volgare sottotitolata (regola: niente scene sessuali)."
   }
  ]
 }

@@ -1,0 +1,40 @@
+{
+ "engine": "chatterbox",
+ "title": "GTA 6: 3 TRUCCHI PER SEMINARE LA POLIZIA",
+ "credit": "Gameplay: Blur · twitch.tv/tumblurr",
+ "music": "scripts/suoni_cc0/base_hiphop.mp3",
+ "whoosh": "scripts/suoni_cc0/whoosh.mp3",
+ "music_vol": 0.16,
+ "out": "guida/polizia.mp4",
+ "segments": [
+  {
+   "text": "In GTA 6 la polizia non si semina più aspettando. Ecco tre trucchi.",
+   "clip": "clips_nov23/167491241.mp4",
+   "start": 11.0,
+   "say": "In gi ti a sei la polizia non si semina più aspettando. Ecco tre trucchi."
+  },
+  {
+   "text": "Uno: cambia look. La polizia cerca la tua descrizione: vestiti, auto e telecamere.",
+   "clip": "clips_nov23/674620641.mp4",
+   "start": 15.5,
+   "badge": "1"
+  },
+  {
+   "text": "Due: niente testimoni. Se nessuno ti vede e non scatta un allarme, nessuno chiama la polizia.",
+   "clip": "clips_nov23/1094558608.mp4",
+   "start": 14.0,
+   "badge": "2"
+  },
+  {
+   "text": "Tre: non tornare sul luogo del crimine. Resta una zona calda e il ricercato può tornare.",
+   "clip": "clips_nov23/167491241.mp4",
+   "start": 14.0,
+   "badge": "3"
+  },
+  {
+   "text": "E tu come scappi dalla polizia? Scrivilo nei commenti!",
+   "clip": "clips_nov23/354110363.mp4",
+   "start": 4.0
+  }
+ ]
+}

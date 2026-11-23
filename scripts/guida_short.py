@@ -1,7 +1,10 @@
 """Short "guida" 1080x1920: voce italiana (Kokoro, gratis), gameplay a tutto schermo, sottotitoli parola per parola,
 titolo fisso in alto, numeri dei punti, musica e whoosh generati col codice.
 Uso: python guida_short.py spec.json (il modello voce viene scaricato da solo la prima volta, accanto allo script)
-spec: voice, title, credit, out, segments=[{text, clip, start, badge?}]"""
+spec: voice, title, credit, out, segments=[{text, clip, start, badge?}]
+Facoltativi (consigliati): engine "chatterbox" = voce del narratore di Il Bivio (più naturale di Kokoro, ogni frase riascoltata con Whisper);
+music e whoosh = file di suoni veri (CC0) al posto di quelli generati col codice; music_vol (default 0,16).
+Un segmento può avere "say": il testo da far leggere alla voce quando è diverso da quello scritto (es. "gi ti a sei" per «GTA 6»)."""
 import json
 import subprocess
 import sys
@@ -41,6 +44,47 @@ def tts(segs, voice):
         a, sr = k.create(s["text"], voice=voice, speed=1.12, lang="it")
         out.append(np.asarray(a, np.float32))
     return out
+
+
+def tts_chatterbox(segs, rif=None, enfasi=0.65):
+    """Voce Chatterbox (MIT, in locale) col timbro del narratore della serie; ogni frase si rigenera finché Whisper sente le parole giuste."""
+    import difflib, re, unicodedata
+    bivio = Path(__file__).resolve().parent / "bivio"
+    if not (bivio / "voce_chatterbox.py").exists():
+        bivio = Path("/home/user/HiggsfieldDev/scripts/bivio")
+    sys.path.insert(0, str(bivio))
+    from voce_chatterbox import Voce
+    from faster_whisper import WhisperModel
+    v = Voce(rif or str(bivio / "voci" / "narratore.wav")); wq = WhisperModel("small", device="cpu", compute_type="int8")
+    norm = lambda t: re.sub(r"[^a-z0-9 ]", " ", "".join(c for c in unicodedata.normalize("NFKD", t.lower()) if not unicodedata.combining(c))).split()
+    prep = lambda t: unicodedata.normalize("NFKD", " ".join(t.lower().replace(":", ",").replace("…", ",").split()))
+    out = []
+    for s in segs:
+        best = None
+        for seme in range(6):
+            a = v.dici(prep(s.get("say", s["text"])), enfasi=enfasi, seme=seme)
+            nz = np.where(np.abs(a) > 0.01)[0]
+            if not len(nz):
+                continue
+            a = a[max(0, nz[0] - 500):nz[-1] + 1500]
+            r16 = np.interp(np.arange(0, len(a), 1.5), np.arange(len(a)), a).astype(np.float32)
+            segs_w, _ = wq.transcribe(r16, language="it", beam_size=5)
+            sim = difflib.SequenceMatcher(a=norm(s.get("say", s["text"])), b=norm(" ".join(x.text for x in segs_w)), autojunk=False).ratio()
+            if best is None or sim > best[0]:
+                best = (sim, a)
+            if sim >= 0.999:
+                break
+        print(f"  voce {best[0]:.2f} «{s['text']}»", flush=True)
+        out.append((best[1] / (np.abs(best[1]).max() + 1e-9) * 0.9).astype(np.float32))
+    return out
+
+
+def suono(path, dur=None):
+    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"], capture_output=True, check=True).stdout
+    x = np.frombuffer(raw, np.float32).copy()
+    if dur:
+        x = np.resize(x, int(dur * SR))
+    return x
 
 
 def align(text, heard):
@@ -163,7 +207,7 @@ def esc(s):
 def main():
     spec = json.loads(Path(sys.argv[1]).read_text())
     segs = spec["segments"]
-    voice = tts(segs, spec.get("voice", "im_nicola"))
+    voice = tts_chatterbox(segs) if spec.get("engine") == "chatterbox" else tts(segs, spec.get("voice", "im_nicola"))
     wt = words(voice, [s["text"] for s in segs])
     gap = 0.28
     starts, t = [], 0.35
@@ -178,11 +222,17 @@ def main():
         i = int(st * SR)
         vtrack[i:i + len(a)] += a
     fx = np.zeros(n, np.float32)
-    w = whoosh()
+    w = suono(spec["whoosh"]) * 0.25 if spec.get("whoosh") else whoosh()
     for st in starts[1:]:
         i = max(0, int((st - 0.25) * SR))
         fx[i:i + len(w)] += w[:n - i]
-    mix = vtrack / (np.abs(vtrack).max() + 1e-9) * 0.9 + fx + music(dur)
+    if spec.get("music"):                        # musica vera (CC0) in loop, sfumata, più bassa quando parla la voce
+        m = suono(spec["music"], dur); m = m / (np.sqrt(np.mean(m ** 2)) + 1e-9) * float(spec.get("music_vol", 0.16)) * 0.25
+        t_ = np.arange(n) / SR; m *= np.minimum(1, t_ / 0.6) * np.minimum(1, (dur - t_) / 1.2)
+        env = np.convolve(np.abs(vtrack), np.ones(4800) / 4800, mode="same"); m *= 1 - 0.35 * np.clip(env / 0.05, 0, 1)
+    else:
+        m = music(dur)
+    mix = vtrack / (np.abs(vtrack).max() + 1e-9) * 0.9 + fx + m
     sf.write(HERE / "mix.wav", np.clip(mix, -1, 1), SR)
     # --- sottotitoli ASS: titolo, parole a gruppi di 3 con la parola detta in giallo, numeri, credito
     ass = [f"""[Script Info]

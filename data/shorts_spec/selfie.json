@@ -1,0 +1,45 @@
+{
+ "clip": "clips_nov23/2965154166.mp4",
+ "cam": [
+  1545,
+  177,
+  375,
+  285
+ ],
+ "segments": [
+  [
+   0.0,
+   3.0
+  ],
+  [
+   9.4,
+   19.0
+  ]
+ ],
+ "hook": "SELFIE IN MEZZO AL CAOS 💀",
+ "credit": "Clip: Blur · twitch.tv/tumblurr",
+ "out": "shorts3/selfie.mp4",
+ "subs": [
+  [
+   3.8,
+   6.0,
+   "Momento selfie 📸"
+  ],
+  [
+   9.2,
+   10.4,
+   "BOOM 💥"
+  ],
+  [
+   10.6,
+   12.6,
+   "AHAHAHAHAH"
+  ]
+ ],
+ "focus": [
+  [
+   10.9,
+   12.6
+  ]
+ ]
+}
