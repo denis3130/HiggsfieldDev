@@ -20,12 +20,16 @@ K = m.SW / 576.0                                 # immagine originale → immagi
 # ---------- dove stanno le cose in ogni immagine (misurate guardando le immagini)
 TIMER = {      # angoli del display (alto-sx, alto-dx, basso-dx, basso-sx)
     "s01_risveglio_timer.png": [[262, 174.5], [312, 174.5], [312, 204.5], [262, 204.5]],
-    "s04_timer_frontale.png": [[0, 0], [1, 0], [1, 1], [0, 1]],
+    "s04_timer_frontale.png": [[191, 345], [392, 345], [392, 477], [191, 477]],
     "s11_porta_timer.png": [[0, 0], [1, 0], [1, 1], [0, 1]],
 }
 BOBINE = {     # centro e raggio delle bobine: [cx, cy, r]
 }
 ETICHETTA = {  # segmenti d'inchiostro (polilinee) e spessore
+}
+RITOCCHI = {   # zone da cancellare: [x0, y0, x1, y1] ricostruita dai bordi, [x0, y0, x1, y1, dx, dy] copiata da (dx, dy) più in là.
+    "s01_risveglio_timer.png": [[342, 422, 397, 530, 0, -112]],   # la porta blindata non ha maniglie
+    "s04_timer_frontale.png": [[293, 664, 346, 724]],
 }
 
 # ---------- quale riga usa quale immagine e quando parte il timer
@@ -161,6 +165,26 @@ def inchiostro():
         m.IMG[nome] = (np.clip(big, 0, 255).astype(np.uint8), dep)
 
 
+def ritocchi():
+    for nome, zone in RITOCCHI.items():
+        if nome not in m.IMG:
+            continue
+        big, dep = m.IMG[nome]; big = big.copy()
+        for z in zone:
+            x0, y0, x1, y1 = [int(v * K) for v in z[:4]]
+            if len(z) == 6:                                             # copia da un'altra parte della stessa superficie, bordi sfumati
+                dx, dy = int(z[4] * K), int(z[5] * K); a = np.zeros(big.shape[:2], np.float32); a[y0:y1, x0:x1] = 1
+                a = cv2.GaussianBlur(a, (0, 0), 4 * K)[..., None]; src = np.roll(big, (-dy, -dx), axis=(0, 1)).astype(np.float32)
+                fascia = (slice(y0, y1), slice(max(0, x0 - int(14 * K)), x0))          # stessa luce: si confronta la fascia a sinistra
+                gain = big[fascia].reshape(-1, 3).mean(0) / (src[fascia].reshape(-1, 3).mean(0) + 1e-3)
+                big = np.clip(big * (1 - a) + src * gain * a, 0, 255).astype(np.uint8)
+            else:
+                mask = np.zeros(big.shape[:2], np.uint8); mask[y0:y1, x0:x1] = 255
+                big = cv2.inpaint(big, mask, 9, cv2.INPAINT_TELEA)
+        m.IMG[nome] = (big, dep)
+
+
+ritocchi()
 inchiostro()
 
 # ---------- avvolge il movimento di camera: prima disegna sull'immagine, poi muove
