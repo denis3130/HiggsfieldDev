@@ -25,6 +25,7 @@ TIMER = {      # angoli del display (alto-sx, alto-dx, basso-dx, basso-sx)
 }
 BOBINE = {     # centro e raggio delle bobine: [cx, cy, r]
     "s14_bobine.png": [[204, 550, 54], [395, 545, 52]],
+    "s09_tasto_play_v3.png": [[255, 740, 40], [425, 715, 34]],
 }
 ETICHETTA = {  # inchiostro blu: polilinee [punti, spessore] in pixel dell'immagine; il nome sta sotto il pollice e non si vede
     "s08_etichetta_pollice.png": {"linee": [[[[269.3, 665.7], [274.7, 661.6], [280.0, 657.5], [285.3, 653.4], [290.7, 649.3], [296.0, 645.1], [301.4, 641.0], [306.7, 637.0], [312.2, 633.0], [317.6, 629.0], [323.1, 625.2], [328.7, 621.3], [334.3, 617.6], [339.9, 613.8], [345.5, 610.1], [351.2, 606.4], [356.8, 602.7], [362.4, 598.9], [367.9, 595.1], [373.5, 591.3], [378.9, 587.3], [384.4, 583.4], [389.8, 579.3], [395.1, 575.2]], 3.8], [[[281.3, 665.3], [285.7, 661.9], [290.2, 658.6], [294.7, 655.4], [299.3, 652.2], [303.8, 649.0], [308.4, 645.8], [313.0, 642.7], [317.6, 639.6], [322.3, 636.5], [326.9, 633.4], [331.6, 630.3], [336.2, 627.2], [340.8, 624.1], [345.4, 621.0], [349.9, 617.8], [354.5, 614.6], [359.0, 611.3], [363.5, 608.0], [367.9, 604.7], [372.4, 601.3], [376.8, 598.0], [381.2, 594.6], [385.6, 591.2]], 3.3]],
@@ -37,6 +38,7 @@ RITOCCHI = {   # zone da sistemare: [x0, y0, x1, y1] ricostruita dai bordi, [x0,
     "s11_porta_timer.png": [[355, 204, 388, 260, 1.6]],                              # segni sugli interruttori accanto al display sfocati
     "s14_bobine.png": [[36, 928, 224, 1024], [278, 886, 545, 924, 2.4], [248, 424, 302, 454, 1.6]],   # contatore inventato, scritte sfocate
     "s07_registratore_cassa_v2.png": [[163, 534, 216, 553, 1.3], [354, 535, 392, 553, 1.3]],              # segni sul registratore sfocati
+    "s09_tasto_play_v3.png": [[345, 822, 576, 1024, "buio"]],                                              # display con numeri inventati: al buio
 }
 
 # ---------- quale riga usa quale immagine e quando parte il timer
@@ -177,7 +179,10 @@ def ritocchi():
         big, dep = m.IMG[nome]; big = big.copy()
         for z in zone:
             x0, y0, x1, y1 = [int(v * K) for v in z[:4]]
-            if len(z) == 5:                                             # sfoca (segni che sembrano lettere)
+            if len(z) == 5 and z[4] == "buio":                          # zona spenta, nel buio
+                a = np.zeros(big.shape[:2], np.float32); a[y0:y1, x0:x1] = 1; a = cv2.GaussianBlur(a, (0, 0), 10 * K)[..., None]
+                big = np.clip(big * (1 - a) + cv2.GaussianBlur(big, (0, 0), 9 * K) * 0.05 * a, 0, 255).astype(np.uint8)
+            elif len(z) == 5:                                           # sfoca (segni che sembrano lettere)
                 a = np.zeros(big.shape[:2], np.float32); a[y0:y1, x0:x1] = 1; a = cv2.GaussianBlur(a, (0, 0), 3 * K)[..., None]
                 big = np.clip(big * (1 - a) + cv2.GaussianBlur(big, (0, 0), z[4] * K) * a, 0, 255).astype(np.uint8)
             elif len(z) == 6:                                             # copia da un'altra parte della stessa superficie, bordi sfumati
@@ -208,7 +213,10 @@ def muovi(nome, mov, u, tau, seme, oltre=False):
         nuovo = con_timer(nuovo, nome, t)
     if nome in BOBINE:
         giri = 0.55 * 360                                              # gradi al secondo
-        ang = giri * max(0.0, t - T_PLAY) if ID(nome) == 9 else giri * (t if ID(nome) is not None else tau)
+        if ID(nome) == 9:                                              # partono quando premi PLAY: mezzo secondo per prendere velocità
+            dt = max(0.0, t - T_PLAY); ang = giri * (dt * dt / 1.0 if dt < 0.5 else dt - 0.25)
+        else:
+            ang = giri * (t if ID(nome) is not None else tau)
         nuovo = con_bobine(nuovo, nome, ang)
     m.IMG[nome] = (nuovo, dep)
     try:
