@@ -27,7 +27,7 @@
 | Indizio | Dove |
 |---|---|
 | La foto è in bianco e nero, ma «la bicicletta era rossa: te lo ricordi» | Ep. 1, inq. 6 |
-| La data di nascita non la sai: la leggi sulla tessera «che hai in tasca» | Ep. 1, inq. 3 |
+| La data di nascita non la sai: la leggi sulla tessera «che tieni in tasca» | Ep. 1, inq. 3 |
 | Ai piedi hai pantofole di feltro; «i piedi conoscono ogni gradino» | Ep. 1, inq. 7–8, poi in ogni soggettiva |
 | Il giaccone è di due taglie più grande: le maniche ti coprono le mani | Ep. 1, inq. 1 e 12, poi sempre |
 | La luce elettrica ti fa male agli occhi | Ep. 2, comune, inq. 1 |
@@ -106,7 +106,7 @@ Struttura a rombo: ogni scelta cambia l'apertura dell'episodio dopo, poi la stor
 |---|------|---------|-------|
 | 1 | In questa fotografia ci sei tu. | Soggettiva dall'alto. Una fotografia in bianco e nero col bordo bianco seghettato, su una pagina di cartoncino nero. Un bambino di spalle su un'altalena di corda, sotto una grande quercia; dietro, la casa colonica. La tiene per un angolo una manica verde bottiglia troppo lunga: spuntano solo le punte delle dita. Luce: fascio giallo della torcia, polvere sospesa. Camera: lento avanzamento sul bambino. | Ambiente: soffitta, vento leggero sulle tegole, legno che scricchiola. Un respiro lento. |
 | 2 | Sotto c'è scritto: Elio, agosto del sessantaquattro. | Dettaglio stretto del margine sotto la foto. TESTO A SCHERMO (corsivo inclinato, penna stilografica blu): «Elio, agosto 1964». Il fascio della torcia scorre da sinistra a destra sulla scritta, come un dito che legge. | Fruscio di carta vecchia. |
-| 3 | La carta d'identità che hai in tasca dice: nato nel novantasei. | Soggettiva. La manica verde tira fuori dalla tasca del giaccone una tessera di plastica e la posa nel fascio di luce, accanto alla fotografia. L'orlo della manica copre il riquadro della foto-tessera. TESTO A SCHERMO sulla tessera: «SESTINI ELIO — nato il 12.03.1996». Camera ferma, la luce trema appena. | Stoffa imbottita che fruscia, plastica sul cartone. |
+| 3 | La carta d'identità che tieni in tasca dice: nato a marzo del novantasei. | Soggettiva. La manica verde tira fuori dalla tasca del giaccone una tessera di plastica e la posa nel fascio di luce, accanto alla fotografia. L'orlo della manica copre il riquadro della foto-tessera. TESTO A SCHERMO sulla tessera: «SESTINI ELIO — nato il 12.03.1996». Camera ferma, la luce trema appena. | Stoffa imbottita che fruscia, plastica sul cartone. |
 | 4 | La nonna è morta da due settimane. La casa va svuotata. | Campo largo della soffitta, da dietro una trave. Travi basse, ragnatele, un baule aperto, uno scatolone vuoto e un rotolo di sacchi neri. Al centro, di spalle, una sagoma accovacciata col cappuccio alzato; la torcia posata a terra disegna un cono giallo. Dalla finestrella entra il blu del tramonto nella nebbia. Camera: lenta carrellata laterale. | Vento nel sottotetto. Una tortora lontana. |
 | 5 | Giri le pagine. Il pozzo. La quercia. Sei sempre tu. | Soggettiva. Le pagine nere girano. Due foto in bianco e nero: il bambino, piccolo e lontano, accanto al pozzo con l'arco di ferro; il bambino di spalle che corre verso la quercia. Mai il viso. Camera: leggero zoom, il fascio della torcia balla. | Pagine che girano, sempre più in fretta. Il respiro si accorcia. |
 | 6 | È in bianco e nero. Ma la bicicletta era rossa: te lo ricordi. | Dettaglio di una foto: una piccola bicicletta grigia appoggiata al muro della casa, il bambino di spalle con la mano sul sellino. Camera: avanzamento lentissimo. Per mezzo secondo la bicicletta prende colore, rosso vivo, poi torna grigia (effetto in montaggio). | Silenzio. Lontanissimo, come un ricordo, un campanello di bicicletta. |
@@ -117,11 +117,14 @@ Struttura a rombo: ogni scelta cambia l'apertura dell'episodio dopo, poi la stor
 | 11 | Chiusa da dentro. E in casa non dovrebbe esserci nessuno. | Camera a filo del pavimento di cotto. La fessura sotto la porta verde: una lama sottile di luce bianca e fredda, diversa dal giallo della torcia. Nessuno la commenta. Camera fissa. | Il ronzio del frigorifero. Dietro il legno, appena percettibile, un respiro trattenuto. |
 | 12 | Appoggi la mano sulla maniglia. | Dettaglio. La manica troppo lunga si posa sulla maniglia di ferro; si vedono solo le punte delle dita. Camera fissa, luce radente. | Ferro freddo, un cigolio leggero. |
 | 13 | La chiave gira. Un'altra mandata. | Macro della serratura. La punta della chiave ruota di un giro, il catenaccio scatta (due fotogrammi: prima e dopo). Micro-scossa della camera allo scatto. | CLAC secco del catenaccio. Poi SILENZIO TOTALE. |
-| 14 | Cosa fai? A: bussi e chiami. B: esci dalla casa. Scrivilo nei commenti. | Scheda di scelta divisa in due metà (Immagine A / Immagine B). | Un battito di cuore lento, registrato. |
+| 14 | *(silenzio, un secondo)* | La serratura con la chiave girata, camera ferma. | SILENZIO TOTALE: niente frigorifero, niente ambiente. |
+| 15 | Cosa fai? La A: bussi forte e chiami chi c'è. Oppure la B: esci subito dalla casa. Scrivilo nei commenti. | Scheda finale: due carte (Immagine A / Immagine B); lo sfondo è la serratura che va fuori fuoco. | Colpo, poi un battito di cuore lento, registrato. |
 
-**Bivio:** A: bussi e chiami / B: esci dalla casa · **Immagine A:** il pugno chiuso dentro la manica verde, alzato a un palmo dalla porta verde, luce gialla della torcia. · **Immagine B:** il portone aperto sulla nebbia blu, la macchina grigia in fondo all'aia, la sagoma col cappuccio di spalle sulla soglia.
+**Bivio:** etichette «Bussi / e chiami» / «Esci / dalla casa» · **Frase A:** «La A: bussi forte e chiami chi c'è.» · **Frase B:** «Oppure la B: esci subito dalla casa.» · **Immagine A:** il pugno chiuso dentro la manica verde, alzato a un palmo dalla porta verde, luce gialla della torcia. · **Immagine B:** il portone aperto sulla nebbia blu, la macchina grigia in fondo all'aia, la sagoma col cappuccio di spalle sulla soglia.
 
-**Parole:** 119
+**Parole:** 128 (bivio compreso)
+
+*Produzione (23/11):* nella riga 3 «che hai in tasca» è diventato «che tieni in tasca» (la voce sintetica diceva «che ha») e «nato nel novantasei» è diventato «nato a marzo del novantasei» (come sulla tessera, 12.03.1996); nella A «bussi alla porta» è diventato «bussi forte» (si impappinava). Il video è montato in `data/horror/ep1_casa_della_nonna/`.
 
 **Prompt immagini (inglese)**
 

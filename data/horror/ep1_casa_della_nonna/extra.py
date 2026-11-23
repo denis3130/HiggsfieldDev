@@ -28,12 +28,14 @@ DIDASCALIE = {
 # le righe si scrivono su una carta piatta 856x540 (x, y, peso del carattere, corpo) e poi si piegano in prospettiva.
 TESSERE = {
     "s03_tessera.png": {"angoli": [[0.264, 0.553], [0.917, 0.527], [0.951, 0.750], [0.285, 0.777]],
-                        "righe": [(110, 92, "Medium", 40, "CARTA D'IDENTITÀ"), (110, 205, "Bold", 88, "SESTINI"),
-                                  (110, 312, "Bold", 88, "ELIO"), (110, 425, "Regular", 58, "nato il 12.03.1996")]},
+                        "righe": [(110, 82, "Medium", 40, "CARTA D'IDENTITÀ"), (110, 178, "Bold", 80, "SESTINI ELIO"),
+                                  (110, 278, "Regular", 62, "nato il 12.03.1996")]},       # tutto in alto: sotto passano i sottotitoli
 }
 # Scritte finte generate dal modello da cancellare (rettangoli x0, y0, x1, y1 in frazioni dell'immagine): si ricostruiscono dai dintorni.
+# Con un quinto valore "chiari" si toglie solo ciò che nel rettangolo è chiaro e poco colorato (la scritta, non il tubo rosso).
 TOGLI = {
     "s10_serratura.png": [[0.392, 0.286, 0.568, 0.322]],          # lettere incise sulla placca della serratura
+    "s06_bicicletta.png": [[0.564, 0.542, 0.639, 0.604, "chiari"]],  # finta marca sul tubo della bicicletta
 }
 _pronto = False
 
@@ -99,8 +101,14 @@ def _prepara(m):
     for nome, rett in TOGLI.items():
         if nome in m.IMG:
             big, dep = m.IMG[nome]; H, W = big.shape[:2]; mk = np.zeros((H, W), np.uint8)
-            for x0, y0, x1, y1 in rett:
-                mk[int(y0 * H):int(y1 * H), int(x0 * W):int(x1 * W)] = 255
+            hsv = cv2.cvtColor(big, cv2.COLOR_BGR2HSV)
+            for x0, y0, x1, y1, *modo in rett:
+                ys, xs = slice(int(y0 * H), int(y1 * H)), slice(int(x0 * W), int(x1 * W))
+                if modo:
+                    mk[ys, xs] = 255 * ((hsv[ys, xs, 1] < 160) & (hsv[ys, xs, 2] > 150))
+                else:
+                    mk[ys, xs] = 255
+            mk = cv2.dilate(mk, np.ones((5, 5), np.uint8))
             m.IMG[nome] = (cv2.inpaint(big, mk, 9, cv2.INPAINT_TELEA), dep)
     for r in m.righe:
         if r.get("rosso_su") and r["img"] in m.IMG:
@@ -144,11 +152,11 @@ def _rosso(fr, r, tau, u, t, m):
     a, _ = _parola(m, r, r["rosso_su"])
     k = float(np.interp(t, [a - 0.05, a + 0.1, a + 0.55, a + 0.85], [0, 1, 1, 0]))
     g = fr[..., 0] * 0.114 + fr[..., 1] * 0.587 + fr[..., 2] * 0.299
-    grigio = g[..., None] * np.array([0.94, 1.0, 1.05], np.float32)       # carta un po' calda sotto la torcia
+    grigio = g[..., None] * np.array([0.75, 0.8, 0.84], np.float32)       # carta un po' calda e in penombra, come il resto
     if k <= 0:
         return grigio
     rosso = m.muovi("_rosso_" + r["img"], r.get("mov", "avanza_lento"), u, tau, float(_indice(m, r)))[..., :1] / 255
-    vivo = fr * np.array([0.85, 0.85, 1.18], np.float32)                   # rosso vivo
+    vivo = fr * np.array([0.7, 0.7, 0.98], np.float32)                     # rosso vivo
     return grigio * (1 - k * rosso) + vivo * (k * rosso)
 
 

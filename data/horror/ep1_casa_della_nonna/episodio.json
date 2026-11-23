@@ -20,8 +20,8 @@
   },
   {
    "id": 3,
-   "voce": "La carta d'identità che hai in tasca dice:",
-   "citazione": "Nato nel novantasei.",
+   "voce": "La carta d'identità che tieni in tasca dice:",
+   "citazione": "Nato a marzo del novantasei.",
    "img": "s03_tessera.png",
    "mov": "fermo"
   },
@@ -37,10 +37,10 @@
    "img": "s05_pagine.png",
    "mov": "mano",
    "scurisci": [
-    0.3,
-    0.83,
-    0.16,
-    0.06
+    0.31,
+    0.81,
+    0.21,
+    0.075
    ]
   },
   {
@@ -76,10 +76,10 @@
    "img": "s09_cucina.png",
    "mov": "avanza",
    "scurisci": [
-    0.07,
-    0.575,
-    0.1,
-    0.05
+    0.06,
+    0.56,
+    0.14,
+    0.08
    ]
   },
   {
@@ -112,7 +112,7 @@
   {
    "id": 14,
    "voce": "",
-   "silenzio": 1.4,
+   "silenzio": 0.9,
    "img": "s13_mandata.png",
    "mov": "fermo"
   },
@@ -121,7 +121,7 @@
    "voce": "Cosa fai?",
    "opzioni": {
     "a": {
-     "voce": "La A: bussi alla porta e chiami chi c'è.",
+     "voce": "La A: bussi forte e chiami chi c'è.",
      "testo": "Bussi\ne chiami",
      "img": "sA_pugno.png",
      "ritaglio": [
@@ -165,7 +165,7 @@
    "file": "vento_soffitta.mp3",
    "riga": 1,
    "vol": 0.32,
-   "dur": 20,
+   "dur": 20.42,
    "sfuma": 0.8
   },
   {
@@ -247,7 +247,7 @@
    "riga": 7,
    "da": 20,
    "vol": 0.25,
-   "dur": 6,
+   "dur": 5.92,
    "sfuma": 0.6
   },
   {
@@ -267,7 +267,7 @@
    "file": "frigo.mp3",
    "riga": 9,
    "vol": 0.22,
-   "dur": 20,
+   "dur": 14.2,
    "sfuma": 0.03
   },
   {
