@@ -241,7 +241,7 @@ def dopo(fr, r, tau, u, t, mm):
         if s > 0.3:
             fr = cv2.GaussianBlur(fr, (0, 0), s)
         return fr
-    if r.get("img") == "s02_soffitto_lampada.png":                      # la lampada si accende tremando
+    if r.get("img", "").startswith("s02_soffitto_lampada"):                      # la lampada si accende tremando
         tl = tau + 0.0
         liv = np.interp(tl, [0, 0.38, 0.42, 0.55, 0.6, 0.78, 0.82, 0.9, 0.95, 1.2], [0.12, 0.12, 1.0, 0.95, 0.22, 0.25, 0.9, 0.5, 1.0, 1.0])
         return fr * liv

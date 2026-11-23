@@ -13,13 +13,13 @@
   {
    "id": 2,
    "voce": "Cemento. Una lampada in gabbia. Nessuna finestra.",
-   "img": "s02_soffitto_lampada.png",
+   "img": "s02_soffitto_lampada_v2.png",
    "mov": "panoramica"
   },
   {
    "id": 3,
    "voce": "Ti alzi dalla branda.",
-   "img": "s03_branda_gambe.png",
+   "img": "s03_branda_gambe_v2.png",
    "mov": "mano"
   },
   {
