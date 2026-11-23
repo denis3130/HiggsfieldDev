@@ -1,0 +1,211 @@
+"""«Il bunker», Episodio 1 — cose disegnate col codice solo per questa storia (monta.py le carica da sé).
+
+- Timer a LED rossi sopra la porta: quattro cifre a sette segmenti con i due punti, alone rosso sul cemento che
+  pulsa a ogni scatto. Parte da 60:00 sulla parola «Parte» e scende un secondo alla volta, a tempo col tic del suono.
+- Bobine del registratore che girano (da quando premi PLAY), anche nella miniatura della carta B.
+- Inchiostro blu sull'etichetta: la doppia riga sotto il tuo nome; il nome non si legge mai (pollice o troppo piccolo).
+- Lampada che si accende tremando e ogni tanto trema; messa a fuoco del primo risveglio.
+
+Le cifre, le bobine e l'inchiostro si disegnano sull'immagine PRIMA del movimento di camera (avvolgendo m.muovi),
+così restano attaccati alla scena in ogni inquadratura, nello sfondo della scheda e nelle miniature.
+Coordinate in pixel dell'immagine originale 576×1024."""
+import sys
+
+import cv2
+import numpy as np
+
+m = sys.modules["__main__"]                      # monta.py
+K = m.SW / 576.0                                 # immagine originale → immagine grande di monta.py
+
+# ---------- dove stanno le cose in ogni immagine (misurate guardando le immagini)
+TIMER = {      # angoli del display (alto-sx, alto-dx, basso-dx, basso-sx)
+    "s01_risveglio_timer.png": [[0, 0], [1, 0], [1, 1], [0, 1]],
+    "s04_timer_frontale.png": [[0, 0], [1, 0], [1, 1], [0, 1]],
+    "s11_porta_timer.png": [[0, 0], [1, 0], [1, 1], [0, 1]],
+}
+BOBINE = {     # centro e raggio delle bobine: [cx, cy, r]
+}
+ETICHETTA = {  # segmenti d'inchiostro (polilinee) e spessore
+}
+
+# ---------- quale riga usa quale immagine e quando parte il timer
+RIGA = {}
+for i, r in enumerate(m.righe):
+    if r.get("img"):
+        RIGA.setdefault(r["img"], i)
+
+
+def inizio_parola(i, parola):
+    return next((w[0] for w in m.parole[i] if parola.lower() in w[2].lower()), m.T[i]["inizio"])
+
+
+I_PARTE = next(i for i, r in enumerate(m.righe) if r.get("img") == "s04_timer_frontale.png")
+T_PARTE = inizio_parola(I_PARTE, "Parte")                     # il timer parte qui: 60:00 → 59:59
+I_PLAY = next(i for i, r in enumerate(m.righe) if r.get("img") == "s09_tasto_play.png")
+T_PLAY = inizio_parola(I_PLAY, "PLAY") + 0.15                 # le bobine cominciano a girare
+
+
+def secondi_timer(nome, t):
+    """Secondi che restano sul display all'istante t (None = fermo a 60:00)."""
+    if nome == "s01_risveglio_timer.png" or t < T_PARTE and nome == "s04_timer_frontale.png":
+        return 3600
+    v = 3599 - int(np.floor(t - T_PARTE))
+    if nome == "s11_porta_timer.png":                            # stacco in avanti: all'inizio della riga segna 59:12
+        i = RIGA[nome]; v0 = 3599 - int(np.floor(m.T[i]["inizio"] - T_PARTE))
+        v += 3552 - v0
+    return max(0, v)
+
+
+# ---------- display a sette segmenti
+SEG = {"0": "abcdef", "1": "bc", "2": "abdeg", "3": "abcdg", "4": "bcfg", "5": "acdfg", "6": "acdefg", "7": "abc", "8": "abcdefg", "9": "abcdfg"}
+DW, DH = 600, 230                                             # tela del display
+
+
+def tela(testo):
+    """Display (BGR float 0-255) e maschera dei segmenti accesi, per «MM:SS»."""
+    acc = np.zeros((DH, DW), np.float32); spe = np.zeros((DH, DW), np.float32)
+    cw, ch, sp = 112, 170, 22; x0 = 38; y0 = (DH - ch) // 2; inc = 0.10              # cifra, spessore segmento, corsivo
+    xs = [x0, x0 + cw + 20, x0 + 2 * cw + 80, x0 + 3 * cw + 100]
+    for d, cx in zip(testo.replace(":", ""), xs):
+        on = SEG[d]
+        segs = {"a": [(sp, 0), (cw - sp, 0)], "d": [(sp, ch), (cw - sp, ch)], "g": [(sp, ch / 2), (cw - sp, ch / 2)],
+                "f": [(0, sp), (0, ch / 2 - sp / 2)], "e": [(0, ch / 2 + sp / 2), (0, ch - sp)],
+                "b": [(cw, sp), (cw, ch / 2 - sp / 2)], "c": [(cw, ch / 2 + sp / 2), (cw, ch - sp)]}
+        for k, ((ax, ay), (bx, by)) in segs.items():
+            sh = lambda x, y: (int(cx + x + inc * (ch - y)), int(y0 + y))
+            cv2.line(acc if k in on else spe, sh(ax, ay), sh(bx, by), 1.0, sp, cv2.LINE_AA)
+    xc = (xs[1] + cw + xs[2]) // 2 + 8
+    for yy in (y0 + ch * 0.32, y0 + ch * 0.70):
+        cv2.circle(acc, (int(xc + inc * (ch - (yy - y0))), int(yy)), 12, 1.0, -1, cv2.LINE_AA)
+    acc = cv2.GaussianBlur(acc, (0, 0), 1.2); spe = cv2.GaussianBlur(spe, (0, 0), 1.2)
+    rosso = np.array([40, 46, 255], np.float32); fondo = np.array([10, 8, 16], np.float32)
+    img = fondo + spe[..., None] * np.array([14, 12, 46], np.float32) + acc[..., None] * rosso
+    img += cv2.GaussianBlur(acc, (0, 0), 6)[..., None] * np.array([20, 30, 160], np.float32)       # bagliore dentro il vetro
+    nucleo = np.clip(acc - 0.55, 0, 1)[..., None] * np.array([120, 150, 160], np.float32)        # centro dei segmenti più chiaro
+    return np.clip(img + nucleo, 0, 255), acc
+
+
+_cache = {}
+
+
+def display(nome, testo):
+    """Strato del display già deformato sull'immagine grande: (y0, y1, x0, x1, colore, maschera, alone)."""
+    key = (nome, testo)
+    if key in _cache:
+        return _cache[key]
+    img, acc = tela(testo)
+    q = np.float32(TIMER[nome]) * K
+    A = cv2.getPerspectiveTransform(np.float32([[0, 0], [DW, 0], [DW, DH], [0, DH]]), q)
+    m_ = 70 * K                                                       # margine per l'alone
+    x0, y0 = max(0, int(q[:, 0].min() - m_)), max(0, int(q[:, 1].min() - m_))
+    x1, y1 = min(m.SW, int(q[:, 0].max() + m_)), min(m.SH, int(q[:, 1].max() + m_))
+    A2 = np.float32([[1, 0, -x0], [0, 1, -y0], [0, 0, 1]]) @ A; w, h = x1 - x0, y1 - y0
+    col = cv2.warpPerspective(img, A2, (w, h), flags=cv2.INTER_LINEAR)
+    msk = cv2.warpPerspective(np.ones((DH, DW), np.float32), A2, (w, h), flags=cv2.INTER_LINEAR)
+    msk = cv2.GaussianBlur(msk, (0, 0), 0.8)[..., None]
+    luce = cv2.warpPerspective(acc, A2, (w, h), flags=cv2.INTER_LINEAR)
+    alone = (cv2.GaussianBlur(luce, (0, 0), 9 * K) * 1.6 + cv2.GaussianBlur(luce, (0, 0), 28 * K) * 2.2)[..., None] * np.array([18, 22, 150], np.float32)
+    _cache[key] = (y0, y1, x0, x1, col, msk, alone)
+    return _cache[key]
+
+
+def con_timer(big, nome, t):
+    s = secondi_timer(nome, t); testo = f"{s // 60:02d}:{s % 60:02d}"
+    y0, y1, x0, x1, col, msk, alone = display(nome, testo)
+    scatto = t - T_PARTE - np.floor(t - T_PARTE) if t >= T_PARTE and nome != "s01_risveglio_timer.png" else 9.0
+    puls = 1.0 + 0.45 * np.exp(-scatto / 0.18)                         # il rosso pulsa sul muro a ogni scatto
+    out = big.copy(); z = out[y0:y1, x0:x1].astype(np.float32)
+    z = z * (1 - msk) + col * msk + alone * puls
+    out[y0:y1, x0:x1] = np.clip(z, 0, 255).astype(np.uint8)
+    return out
+
+
+def con_bobine(big, nome, ang):
+    out = big.copy()
+    for cx, cy, r in BOBINE[nome]:
+        cx, cy, R = cx * K, cy * K, r * K; x0, y0 = int(cx - R - 4), int(cy - R - 4); x1, y1 = int(cx + R + 4), int(cy + R + 4)
+        reg = out[y0:y1, x0:x1].astype(np.float32)
+        A = cv2.getRotationMatrix2D((cx - x0, cy - y0), -ang, 1.0)
+        rot = cv2.warpAffine(reg, A, (x1 - x0, y1 - y0), flags=cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+        yy, xx = np.mgrid[y0:y1, x0:x1].astype(np.float32)
+        a = np.clip((R - np.sqrt((xx - cx) ** 2 + (yy - cy) ** 2)) / (0.12 * R), 0, 1)[..., None]
+        out[y0:y1, x0:x1] = np.clip(reg * (1 - a) + rot * a, 0, 255).astype(np.uint8)
+    return out
+
+
+# ---------- inchiostro sull'etichetta: si disegna una volta sola nell'immagine
+def inchiostro():
+    for nome, cfg in ETICHETTA.items():
+        if nome not in m.IMG:
+            continue
+        big, dep = m.IMG[nome]; big = big.astype(np.float32)
+        s = 4; h, w = big.shape[:2]; ink = np.zeros((h, w), np.float32)
+        for linea, spess in cfg["linee"]:
+            p = (np.float32(linea) * K * s).astype(np.int32)
+            lay = np.zeros((h * s // s, w * s // s), np.float32)
+            cv2.polylines(ink, [(p / s).astype(np.int32)], False, 1.0, max(1, int(spess * K)), cv2.LINE_AA)
+        if cfg.get("pollice"):                                         # il pollice copre l'inchiostro
+            pm = np.zeros((h, w), np.float32); cv2.fillPoly(pm, [(np.float32(cfg["pollice"]) * K).astype(np.int32)], 1.0)
+            ink *= 1 - cv2.GaussianBlur(pm, (0, 0), 2)
+        ink = cv2.GaussianBlur(ink, (0, 0), cfg.get("sfoca", 0.7))[..., None] * cfg.get("forza", 0.8)
+        blu = np.array([150, 70, 35], np.float32)                      # penna blu (BGR), si moltiplica come inchiostro vero
+        big = big * (1 - ink) + big * (blu / 255) * ink
+        m.IMG[nome] = (np.clip(big, 0, 255).astype(np.uint8), dep)
+
+
+inchiostro()
+
+# ---------- avvolge il movimento di camera: prima disegna sull'immagine, poi muove
+_muovi = m.muovi
+
+
+def muovi(nome, mov, u, tau, seme, oltre=False):
+    if nome not in TIMER and nome not in BOBINE:
+        return _muovi(nome, mov, u, tau, seme, oltre)
+    big, dep = m.IMG[nome]; i = RIGA.get(nome); t = (m.T[i]["inizio"] if i is not None else 0.0) + tau
+    nuovo = big
+    if nome in TIMER:
+        nuovo = con_timer(nuovo, nome, t)
+    if nome in BOBINE:
+        giri = 0.55 * 360                                              # gradi al secondo
+        ang = giri * max(0.0, t - T_PLAY) if nome == "s09_tasto_play.png" else giri * tau
+        if nome == "s09_tasto_play.png":
+            ang = giri * max(0.0, t - T_PLAY) ** 1.0
+        nuovo = con_bobine(nuovo, nome, ang)
+    m.IMG[nome] = (nuovo, dep)
+    try:
+        return _muovi(nome, mov, u, tau, seme, oltre)
+    finally:
+        m.IMG[nome] = (big, dep)
+
+
+m.muovi = muovi
+
+
+# ---------- ritocchi sul fotogramma già mosso (prima di nebbia e grana)
+LAMPADA_TREMA = [(0.0, 0.0)]                                          # (istante, forza) dei tremolii, riempito sotto
+
+
+def lampada(t):
+    """1 = luce normale; ogni tanto la lampada perde un colpo."""
+    f = 1.0 + 0.012 * np.sin(97 * t) * np.sin(13 * t)
+    for t0, k in LAMPADA_TREMA:
+        if 0 <= t - t0 < 0.32:
+            x = (t - t0) / 0.32; f -= k * (np.sin(np.pi * x) * (0.6 + 0.4 * np.sign(np.sin(40 * x))))
+    return f
+
+
+def dopo(fr, r, tau, u, t, mm):
+    i = m.righe.index(r)
+    if r.get("img") == "s01_risveglio_timer.png":                       # risveglio: tutto sfocato, poi le cifre vanno a fuoco
+        s = 9.0 * (1 - m.ease(min(1.0, max(0.0, (tau - 0.3) / 1.6))))
+        if s > 0.3:
+            fr = cv2.GaussianBlur(fr, (0, 0), s)
+        return fr
+    if r.get("img") == "s02_soffitto_lampada.png":                      # la lampada si accende tremando
+        tl = tau + 0.0
+        liv = np.interp(tl, [0, 0.38, 0.42, 0.55, 0.6, 0.78, 0.82, 0.9, 0.95, 1.2], [0.12, 0.12, 1.0, 0.95, 0.22, 0.25, 0.9, 0.5, 1.0, 1.0])
+        return fr * liv
+    if r.get("img") in ("s05_uomo_muro.png", "s07_registratore_cassa.png", "s10_altoparlante.png", "s13_mano_tesa.png", "s12_chiave_palmo.png"):
+        return fr * lampada(t)
+    return fr

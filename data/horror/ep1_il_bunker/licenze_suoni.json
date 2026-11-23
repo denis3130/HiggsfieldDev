@@ -1,0 +1,78 @@
+{
+ "nota": "Registrazioni vere CC0 1.0 da Freesound (trovate con l'API di Openverse), tagliate e ripetute in montaggio. I suoni comuni della serie (respiro, gocce, stoffa, colpo, rise_long, heart60, amb_slow) sono in scripts/bivio/sfx/ con le loro licenze.",
+ "sfx/luce_accensione.mp3": {
+  "titolo": "Lights flicker while turning on. Recorded with a Zoom H6 and stereo microphone (rode NTG2). OWI..wav",
+  "autore": "Khanyisile56",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Khanyisile56/sounds/707488"
+ },
+ "sfx/luce_ronzio.mp3": {
+  "titolo": "Fluorescent Light Hum",
+  "autore": "deleted_user_7146007",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/deleted_user_7146007/sounds/383657",
+  "nota": "ritaglio da 1,5 a 17,5 s ripetuto in ciclo con dissolvenze fino a 62 s"
+ },
+ "sfx/tic.mp3": {
+  "titolo": "Clock ticks close to mic.wav",
+  "autore": "BonnyOrbit",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/BonnyOrbit/sounds/380782",
+  "nota": "dalla posizione 0,45 s, così il primo tic cade subito"
+ },
+ "sfx/rele.mp3": {
+  "titolo": "A relay switch being activated.",
+  "autore": "bassmosphere",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/bassmosphere/sounds/384698"
+ },
+ "sfx/branda.mp3": {
+  "titolo": "sound of a cot bed , Russian 'raskladushka' with springs",
+  "autore": "bogenseeberg",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/bogenseeberg/sounds/551014",
+  "nota": "ritaglio da 4,4 a 7,2 s"
+ },
+ "sfx/passi.mp3": {
+  "titolo": "concrete_18a_trekkingboots_walk.wav",
+  "autore": "sturmankin",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/sturmankin/sounds/272249",
+  "nota": "ritaglio da 0,7 a 2,4 s (due passi)"
+ },
+ "sfx/manette.mp3": {
+  "titolo": "Handcuffs.wav",
+  "autore": "hollyjurbergs",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/hollyjurbergs/sounds/562848",
+  "nota": "ritaglio da 1,4 a 2,4 s"
+ },
+ "sfx/chiave.mp3": {
+  "titolo": "Keys jingling",
+  "autore": "Lightnessko",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Lightnessko/sounds/390324",
+  "nota": "ritaglio da 0,1 a 1,4 s"
+ },
+ "sfx/tasto_play.mp3": {
+  "titolo": "cassette tape action 2.wav",
+  "autore": "cognito perceptu",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/cognito%20perceptu/sounds/98329",
+  "nota": "ritaglio da 3,45 a 8,05 s: tasto e nastro che parte"
+ },
+ "sfx/fruscio_nastro.mp3": {
+  "titolo": "Tape Hiss",
+  "autore": "greenvwbeetle",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/greenvwbeetle/sounds/241415",
+  "nota": "ripetuto in ciclo con dissolvenze fino a 45 s"
+ },
+ "sfx/bunker.mp3": {
+  "titolo": "AMBIENCE | BUNKER",
+  "autore": "elchicolluvia",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/elchicolluvia/sounds/576115",
+  "nota": "ripetuto in ciclo con dissolvenze fino a 64 s"
+ }
+}

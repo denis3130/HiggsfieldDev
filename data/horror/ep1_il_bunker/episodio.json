@@ -1,0 +1,127 @@
+{
+ "serie": "IL BIVIO",
+ "storia": "Il bunker",
+ "episodio": 1,
+ "titolo": "Sessanta minuti",
+ "righe": [
+  {
+   "id": 1,
+   "voce": "Apri gli occhi. Sei sottoterra.",
+   "img": "s01_risveglio_timer.png",
+   "mov": "apri_occhi"
+  },
+  {
+   "id": 2,
+   "voce": "Cemento. Una lampada in gabbia. Nessuna finestra.",
+   "img": "s02_soffitto_lampada.png",
+   "mov": "panoramica"
+  },
+  {
+   "id": 3,
+   "voce": "Ti alzi dalla branda.",
+   "img": "s03_branda_gambe.png",
+   "mov": "mano"
+  },
+  {
+   "id": 4,
+   "voce": "Sul muro, un timer rosso: sessanta minuti. Parte.",
+   "img": "s04_timer_frontale.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 5,
+   "voce": "Di fronte a te, un uomo. Non l'hai mai visto.",
+   "img": "s05_uomo_muro.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 6,
+   "voce": "È ammanettato a un tubo.",
+   "img": "s06_manette_tubo.png",
+   "mov": "avanza"
+  },
+  {
+   "id": 7,
+   "voce": "In mezzo, un registratore a cassette.",
+   "img": "s07_registratore_cassa.png",
+   "mov": "scendi"
+  },
+  {
+   "id": 8,
+   "voce": "Sull'etichetta, a penna: il tuo nome.",
+   "img": "s08_etichetta_pollice.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 9,
+   "voce": "Premi PLAY.",
+   "img": "s09_tasto_play.png",
+   "mov": "fermo"
+  },
+  {
+   "id": 10,
+   "voce": "Una voce dice:",
+   "lontana": "Quell'uomo ha investito una ragazza ed è scappato.",
+   "img": "s10_altoparlante.png",
+   "mov": "fermo"
+  },
+  {
+   "id": 11,
+   "voce": "",
+   "lontana": "La chiave delle sue manette è nella tua tasca. Hai un'ora per decidere se esce con te.",
+   "img": "s11_porta_timer.png",
+   "mov": "avanza_lento"
+  },
+  {
+   "id": 12,
+   "voce": "Infili la mano in tasca. La chiave c'è.",
+   "img": "s12_chiave_palmo.png",
+   "mov": "mano"
+  },
+  {
+   "id": 13,
+   "voce": "L'uomo alza la testa:",
+   "citazione": "Non è andata così. Ti prego. Ascolta me.",
+   "img": "s13_mano_tesa.png",
+   "mov": "arretra"
+  },
+  {
+   "id": 14,
+   "voce": "Il nastro:",
+   "lontana": "Non ascoltarlo. Mente bene.",
+   "img": "s14_bobine.png",
+   "mov": "fermo"
+  },
+  {
+   "id": 15,
+   "voce": "Cosa fai?",
+   "opzioni": {
+    "a": {
+     "voce": "La A: ascolti la versione dell'uomo.",
+     "testo": "Ascolti\nl'uomo",
+     "img": "s13_mano_tesa.png",
+     "ritaglio": [
+      0.5,
+      0.5,
+      0.8
+     ]
+    },
+    "b": {
+     "voce": "Oppure la B: ascolti il nastro fino in fondo.",
+     "testo": "Ascolti\nil nastro",
+     "img": "s07_registratore_cassa.png",
+     "ritaglio": [
+      0.5,
+      0.5,
+      0.8
+     ]
+    }
+   },
+   "chiusura": "Scrivilo nei commenti.",
+   "sfondo": "s14_bobine.png"
+  }
+ ],
+ "ambiente": [],
+ "silenzi": [],
+ "suoni": []
+}
