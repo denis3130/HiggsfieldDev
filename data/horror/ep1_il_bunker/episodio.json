@@ -311,6 +311,18 @@
    ],
    "vol": 0.22,
    "sfuma": 0.3
+  },
+  {
+   "file": "tic.mp3",
+   "riga": 15,
+   "dopo": 0.32,
+   "fino_alla_fine": true,
+   "cresce": [
+    0.5,
+    1
+   ],
+   "vol": 0.2,
+   "sfuma": 0.02
   }
  ]
 }
