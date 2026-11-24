@@ -14,6 +14,8 @@ from voce_chatterbox import Voce
 from faster_whisper import WhisperModel
 
 SR = 24000; SEMI = int(os.environ.get("SEMI", 8)); CODA = 2.0
+PAUSA_FRASI = float(os.environ.get("PAUSA_FRASI", 0.42))   # pausa minima dopo un punto dentro una riga; 0 = ritmo continuo come il reel di riferimento
+PAUSA_RIGHE = float(os.environ.get("PAUSA_RIGHE", 0.25))   # silenzio tra una riga e l'altra; 0,08 = ritmo continuo
 ENF = float(os.environ.get("ENFASI", 0.45))     # voce 3A (scelta dall'utente il 24/11): 0,45 calma e naturale
 TEMP = float(os.environ.get("VOCE_TEMP", 0.65)); TOP_P = float(os.environ.get("VOCE_TOP_P", 0.9))   # non «TEMP»: è già la cartella temporanea del sistema      # 0,65 / 0,9: pronuncia più stabile e scandita
 CHIARA = int(os.environ.get("CHIARA", 4))       # >1: tra i tentativi con le parole giuste tiene quello che Whisper capisce meglio (più chiaro)
@@ -65,7 +67,7 @@ def prepara(t):
     return unicodedata.normalize("NFKD", t if t[-1:] in ".!?" else t + ".")      # accenti scomposti: con quelli uniti il modello sbaglia («già lì» → «gelù»)
 
 
-def dici(testo, enfasi=0.6, scritto=None, pause=0.42, lungo=False):
+def dici(testo, enfasi=0.6, scritto=None, pause=PAUSA_FRASI, lungo=False):
     """Genera un pezzo e tiene il seme migliore. Ritorna (audio a picco 0,9, parole del copione con tempi relativi al pezzo).
     Si ferma al primo seme in cui Whisper risente esattamente le parole del copione; i pezzi buoni restano in _voce/ e non si rifanno.
     lungo=True (gridi): prova 5 semi e tra quelli giusti tiene il più lungo, perché un grido tirato via non fa paura."""
@@ -188,7 +190,7 @@ for r in ep["righe"]:
         info.append({"tipo": tipo, "inizio": round(t0, 3), "fine": round(t0 + len(a) / SR, 3), "n": len(w)})
         pr += [[round(t0 + s, 3), round(t0 + e, 3), x] for s, e, x in w]
     a = np.concatenate(riga) if riga else np.zeros(int(r.get("silenzio", 2) * SR), np.float32)
-    pausa = 0.0 if r.get("grido") else 0.25
+    pausa = 0.0 if r.get("grido") else PAUSA_RIGHE
     buf += [a, np.zeros(int(pausa * SR), np.float32)]; t += len(a) / SR + pausa
     tempi.append({"id": r["id"], "inizio": round(st, 3), "fine": round(t, 3), "voce_fine": round(st + len(a) / SR, 3), "pezzi": info}); parole.append(pr)
 buf.append(np.zeros(int(CODA * SR), np.float32)); voce = np.concatenate(buf)

@@ -93,8 +93,9 @@ ease = lambda u: u * u * (3 - 2 * u)
 esce = lambda u: 1 - (1 - min(1.0, max(0.0, u))) ** 3
 
 
-def muovi(nome, mov, u, tau, seme, oltre=False):
-    """Fotogramma dell'immagine col movimento di camera. oltre=True: prosegue il movimento dopo la sua fine (per lo sfondo della scheda)."""
+def muovi(nome, mov, u, tau, seme, oltre=False, taglio=None):
+    """Fotogramma dell'immagine col movimento di camera. oltre=True: prosegue il movimento dopo la sua fine (per lo sfondo della scheda).
+    taglio=(zoom, cx, cy): un'altra inquadratura della stessa immagine (più stretta, centrata in cx, cy normalizzati)."""
     big, dep = IMG[nome]
     z0, z1, kd, pan, par = MOV[mov]
     uu = 1 - (1 - u) ** 2 if mov == "arretra" else ease(u)
@@ -104,10 +105,13 @@ def muovi(nome, mov, u, tau, seme, oltre=False):
     px = pan * (2 * min(uu, 1.0) - 1); py = 0.0
     if mov == "mano":
         px += 7 * np.sin(2.1 * tau + seme) + 4 * np.sin(5.3 * tau + 2 * seme); py += 6 * np.sin(1.7 * tau + 3 * seme) + 3 * np.sin(4.4 * tau + seme)
-    k = (SW / W) / (M * z)
+    k = (SW / W) / (M * z); ox = oy = 0.0
+    if taglio:
+        zz, cx, cy = taglio; k /= zz
+        ox = float(np.clip((cx - 0.5) * SW, -(SW - W * k) / 2, (SW - W * k) / 2)); oy = float(np.clip((cy - 0.5) * SH, -(SH - H * k) / 2, (SH - H * k) / 2))
     dd = dep - 0.5
-    mx = SW / 2 + GX * k * (1 - kd * dd * uu) + px + par * dd * (2 * min(uu, 1.0) - 1 if pan else np.sin(1.3 * tau + seme))
-    my = SH / 2 + GY * k * (1 - kd * dd * uu) + py
+    mx = SW / 2 + ox + GX * k * (1 - kd * dd * uu) + px + par * dd * (2 * min(uu, 1.0) - 1 if pan else np.sin(1.3 * tau + seme))
+    my = SH / 2 + oy + GY * k * (1 - kd * dd * uu) + py
     return cv2.remap(big, mx.astype(np.float32), my.astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT).astype(np.float32)
 
 
@@ -118,6 +122,48 @@ def atmosfera(fr, t, nebbia=0.13, grana=6.5):
     if grana:
         fr = fr + cv2.resize(rng.standard_normal((H // 2, W // 2)).astype(np.float32), (W, H))[..., None] * grana
     return np.clip(fr * VIGN * (1 + 0.012 * np.sin(31 * t)), 0, 255)
+
+
+FASE1 = (rumore(H, W, 6) * 2 * np.pi).astype(np.float32); FASE2 = (rumore(H, W, 4) * 2 * np.pi).astype(np.float32)
+_g = np.random.default_rng(11); LUCE = cv2.GaussianBlur(_g.standard_normal((1, int(TOT * 24) + 48)).astype(np.float32), (0, 0), 1.2)[0]
+POLV = _g.random((140, 6)).astype(np.float32)          # x, y, velocità, dimensione, luminosità, fase
+
+
+def anima(fr, r, tau, t, seme):
+    """Movimenti dentro l'inquadratura (riga «anima» di episodio.json):
+    vento {forza, zona: alto|basso|tutto|vicino} = rami ed erba che ondeggiano; respiro [cx, cy, raggio, ampiezza] = petto che si alza e abbassa;
+    luce ampiezza = la luce trema; polvere n = pulviscolo che fluttua; pioggia n = gocce che cadono."""
+    a = r.get("anima") or {}
+    dx = dy = None
+    if a.get("vento"):
+        v = a["vento"] if isinstance(a["vento"], dict) else {"forza": a["vento"]}; A = float(v.get("forza", 4)); z = v.get("zona", "tutto")
+        w = {"alto": np.clip(1 - YN * 1.4, 0, 1) ** 1.3, "basso": np.clip((YN - 0.35) / 0.65, 0, 1), "tutto": np.ones_like(YN),
+             "vicino": np.clip((IMG[r["img"]][1] - 0.45) * 2.2, 0, 1)}[z]
+        dx = A * w * (np.sin(2 * np.pi * 0.33 * t + FASE1) + 0.45 * np.sin(2 * np.pi * 0.87 * t + FASE2))
+        dy = 0.35 * A * w * np.sin(2 * np.pi * 0.52 * t + FASE2)
+    if a.get("respiro"):
+        cx, cy, rr, amp = a["respiro"]; sc = amp * np.sin(2 * np.pi * tau / 3.4)
+        g = np.exp(-(((XN - cx) / rr) ** 2 + ((YN - cy) * H / W / rr) ** 2)) * sc
+        bx, by = -(XX - cx * W) * g, -(YY - cy * H) * g
+        dx = bx if dx is None else dx + bx; dy = by if dy is None else dy + by
+    if dx is not None:
+        fr = cv2.remap(fr, (XX + dx).astype(np.float32), (YY + dy).astype(np.float32), cv2.INTER_LINEAR, borderMode=cv2.BORDER_REFLECT)
+    if a.get("luce"):
+        i = min(len(LUCE) - 1, int(t * 24)); fr = fr * (1 + float(a["luce"]) * float(np.clip(LUCE[i], -1.5, 1.5)))
+    if a.get("polvere") or a.get("pioggia"):
+        ov = np.zeros((H // 2, W // 2), np.float32)
+        for k in range(int(a.get("polvere", 0))):
+            x0, y0, vel, dim, lum, ph = POLV[k % len(POLV)]
+            x = ((x0 + 0.012 * np.sin(0.7 * t + ph * 6) + 0.004 * t * (vel - 0.5)) % 1) * W / 2
+            y = ((y0 - 0.01 * t * (0.3 + vel)) % 1) * H / 2
+            cv2.circle(ov, (int(x), int(y)), 1 + int(dim * 2.5), float(40 + 90 * lum * (0.6 + 0.4 * np.sin(2 * t + ph * 9))), -1, cv2.LINE_AA)
+        for k in range(int(a.get("pioggia", 0))):
+            x0, y0, vel, dim, lum, ph = POLV[k % len(POLV)]
+            y = ((y0 + t * (1.4 + vel)) % 1.1 - 0.05) * H / 2; x = ((x0 + 0.08 * t) % 1) * W / 2; L = 14 + 18 * dim
+            cv2.line(ov, (int(x), int(y)), (int(x - 0.18 * L), int(y - L)), float(30 + 60 * lum), 1, cv2.LINE_AA)
+        ov = cv2.resize(cv2.GaussianBlur(ov, (0, 0), 0.8), (W, H))[..., None]
+        fr = fr + ov * np.array([1.0, 1.0, 0.95], np.float32)
+    return fr
 
 
 def vapore(fr, tau, cx=0.5, cy=0.62, r=0.2):
@@ -345,7 +391,13 @@ def fotogramma(t):
             scr = S_BLOCCO
         fr = np.clip(telefono(scr, t, 0.7) * VIGN + rng.standard_normal((H, W, 1)).astype(np.float32) * 3, 0, 255)
     else:
-        fr = muovi(r["img"], r.get("mov", "avanza_lento"), u, tau, float(i))
+        tg = None
+        for tl in r.get("tagli", []):                                 # [da_frazione, zoom, cx, cy]: stacco su un'altra inquadratura della stessa immagine
+            if u >= tl[0]:
+                tg = tuple(tl[1:])
+        fr = muovi(r["img"], r.get("mov", "avanza_lento"), u, tau, float(i), taglio=tg)
+        if r.get("anima"):
+            fr = anima(fr, r, tau, t, float(i))
         if r.get("scurisci"):
             cx, cy, rx, ry = r["scurisci"]; fr = fr * (1 - 0.85 * np.exp(-(((XN - cx) / rx) ** 2 + ((YN - cy) / ry) ** 2)))[..., None]
         if r.get("vapore"):
@@ -383,8 +435,11 @@ Style: Frase,Roboto,84,&H00FFFFFF,&H00FFFFFF,&H00000000,&H96000000,1,0,0,0,100,1
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """]
-ass.append(f"Dialogue: 3,{ts(0.3)},{ts(3.4)},Serie,,0,0,0,,{{\\fad(500,600)}}{esc(ep['serie'])}")
-ass.append(f"Dialogue: 3,{ts(0.6)},{ts(3.4)},Sotto,,0,0,0,,{{\\fad(500,600)}}DECIDI TU COME CONTINUA")
+REEL = ep.get("sottotitoli") == "reel"
+if not REEL:
+    ass.append(f"Dialogue: 3,{ts(0.3)},{ts(3.4)},Serie,,0,0,0,,{{\\fad(500,600)}}{esc(ep['serie'])}")
+    ass.append(f"Dialogue: 3,{ts(0.6)},{ts(3.4)},Sotto,,0,0,0,,{{\\fad(500,600)}}DECIDI TU COME CONTINUA")
+ass[0] = ass[0].replace("\n\n[Events]", "\nStyle: Reel,Roboto,72,&H00FFFFFF,&H00FFFFFF,&H64000000,&H00000000,0,0,0,0,100,100,0,0,1,2.5,2,8,90,90,0,1\n\n[Events]")
 STILE = {"grido": ("Grido", ROSSO), "lontana": ("Lontana", AZZ)}
 Y_CAP, Y_ALTO = int(H * 0.74), 318
 
@@ -436,6 +491,35 @@ def spezza(ws, corpo, larg):
     return min(cand, key=costo)
 
 
+def frasi_reel(ws, tipo, mx=6):
+    """Pezzi di frase come nel reel: si chiudono a punto, virgola o due punti, al massimo mx parole."""
+    g = [[]]
+    for w in ws:
+        g[-1].append(w)
+        if len(g[-1]) >= mx or w[2][-1:] in ".!?:;,…":
+            g.append([])
+    g = [x for x in g if x]; out = []
+    for x in g:
+        if out and len(x) == 1 and len(out[-1]) < mx:
+            out[-1] = out[-1] + x
+        else:
+            out.append(x)
+    return out
+
+
+def parole_reel(g, wi, maiuscolo=False):
+    """Parole già dette in grigio chiaro, quella detta adesso in grassetto bianco, quelle che arrivano appena accennate."""
+    f = (lambda s: esc(s.upper())) if maiuscolo else esc; out = []
+    for k, x in enumerate(g):
+        if k < wi:
+            out.append(f"{{\\b0\\alpha&H00&\\c&HD8D8D8&}}{f(x[2])}")
+        elif k == wi:
+            out.append(f"{{\\b1\\alpha&H00&\\c&HFFFFFF&}}{f(x[2])}")
+        else:
+            out.append(f"{{\\b0\\alpha&HC0&\\c&HFFFFFF&}}{f(x[2])}")
+    return " ".join(out)
+
+
 CAP = []
 for i, (r, tr, ws) in enumerate(zip(righe, T, parole)):
     n0 = 0
@@ -451,6 +535,12 @@ for i, (r, tr, ws) in enumerate(zip(righe, T, parole)):
                 a2 = p["inizio"] if wi == 0 else a; b2 = wp[wi + 1][0] if wi + 1 < len(wp) else fine_p
                 fad = "\\fad(120,0)" if wi == 0 else ""
                 ass.append(f"Dialogue: 2,{ts(a2)},{ts(b2)},{stile},,0,0,0,,{{\\an5\\q2\\pos({W // 2},{Y_ALTO}){fad}}}{evidenzia(wp, wi, col, p['tipo'] == 'voce', capo)}")
+            continue
+        if REEL:
+            for g in frasi_reel(wp, p["tipo"]):
+                for wi, (a, b, _) in enumerate(g):
+                    b2 = g[wi + 1][0] if wi + 1 < len(g) else min(g[-1][1] + 0.35, p["fine"] + 0.35)
+                    CAP.append((a, b2, "Reel", f"{{\\an8\\pos({W // 2},{int(H * 0.145)}){'\\i1' if p['tipo'] == 'lontana' else ''}}}{parole_reel(g, wi, p['tipo'] == 'grido')}"))
             continue
         stile, col = STILE.get(p["tipo"], ("Cap", ROSSO)); gr = gruppi(wp); base = {"Cap": 84, "Grido": 108, "Lontana": 76}[stile]
         for gi, g in enumerate(gr):

@@ -71,6 +71,13 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
 - Per ogni immagine: profondità (Depth-Anything piccolo, ONNX, si scarica da solo) e movimento di camera 2,5D (`mov`: avanza, avanza_lento,
   arretra, scendi, panoramica, mano, fermo, apri_occhi). Sopra: nebbia che scorre, grana, vignettatura; `vapore` per il fiato, `scurisci` per
   nascondere un volto, `apri_occhi` per le palpebre che si aprono.
+- **Movimento continuo come nel reel di riferimento (24/11)**: niente deve restare fermo. Per ogni riga:
+  `"anima": {"vento": {"forza": 3-6, "zona": "alto|basso|tutto|vicino"}, "respiro": [cx, cy, raggio, 0.02], "luce": 0.05, "polvere": 30, "pioggia": 80}`
+  (rami ed erba che ondeggiano, petto che respira, luce che trema, pulviscolo, pioggia) e `"tagli": [[0.5, 1.4, cx, cy]]` per staccare a metà riga
+  su un'inquadratura più stretta della stessa immagine (nel reel l'immagine cambia ogni 2 secondi circa).
+- **Sottotitoli come il reel**: `"sottotitoli": "reel"` in episodio.json → in alto, lettere normali, parola detta in grassetto bianco, parole già dette
+  in grigio chiaro, quelle che arrivano appena accennate; pezzi di frase che si chiudono a punto o virgola (massimo 6 parole). Niente titolo iniziale.
+- **Ritmo della voce come il reel**: `PAUSA_FRASI=0 PAUSA_RIGHE=0.08 python scripts/bivio/voce.py cartella` → racconto continuo, circa 3 parole al secondo.
 - Schermo del telefono disegnato col codice: righe con `schermo: "blocco" | "messaggio"`, testi in `telefono` (ora, data, batteria, rete, mittente, messaggio).
 - Cose che servono a una storia sola (display dell'ascensore, monitor, citofono, cartelli, radio, pioggia, luce che trema): si scrivono in
   `cartella_episodio/extra.py`, senza toccare gli script comuni, e si disegnano sempre col codice (mai testo generato dal modello).
