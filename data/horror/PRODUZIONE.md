@@ -105,10 +105,10 @@ Immagini 40–45 minuti (13–15 immagini), voce 8–10 minuti, montaggio 6–7 
 
 ## 7. Video veri (dal 24/11: per l'utente è la parte più importante)
 Il reel di riferimento è fatto di veri video 3D (personaggi che camminano, porte che si aprono, camera che si sposta), non di immagini con effetti.
-Stile scelto: **3D cartone come il reel**. I video si fanno sul PC dell'utente con ComfyUI (gratis, in locale, con la sua scheda video),
-collegato a questa sessione con Remote Control (cartella ComfyUI-Models). Il 24/11 la cartella non era ancora raggiungibile dalle sessioni cloud.
+Stile scelto: **3D cartone come il reel**. Il reel è fatto tutto con Claude: le scene si costruiscono col codice in three.js e si renderizzano
+fotogramma per fotogramma (`scripts/bivio/3d/`, vedi LEGGIMI.md). Niente PC dell'utente e niente modelli video.
 
-Riserva su questa macchina (solo CPU): `scripts/bivio/ltx_video.py` con LTX-Video 2B int8 per OpenVINO, da un'immagine (la prima inquadratura resta
+Prova scartata (24/11, «non mi piace»): `scripts/bivio/ltx_video.py` con LTX-Video 2B int8 per OpenVINO, da un'immagine (la prima inquadratura resta
 quella, poi la scena si muove) o solo dal testo.
 - Modello: `rahmanbazarov/LTX-Video-int8-ov` (licenza LTX-Video Open Weights) scaricato senza `text_encoder/openvino_model.*`: il codificatore
   del testo è lo stesso T5-XXL di FLUX, quindi `text_encoder/openvino_model.xml|bin` sono collegamenti a quelli di `flux-schnell-int4/text_encoder_2/`.
