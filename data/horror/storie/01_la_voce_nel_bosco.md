@@ -381,3 +381,23 @@ B. a large fallen tree trunk covered in moss seen from ground level, dark ferns 
 | 14 | Sul cartello del sentiero scrivi, in rosso: NON RISPONDERE A CHI TI CHIAMA. | Un cartello di legno «VALSORDA»; il dito sporco di vernice rossa finisce la scritta. TESTO A SCHERMO dipinto a dito. | Nota finale. |
 
 **Parole:** 112
+
+---
+
+## Formato da 2 minuti (dal 24/11) — Episodio 1, bozza da approvare
+Come il reel di riferimento: racconto continuo (circa 2,9 parole al secondo), gancio nella prima frase, un mistero che cresce ogni 10 secondi, colpo di scena e bivio. Riunisce gli episodi 1 e 2 della versione da 1 minuto.
+
+Ti svegli di notte in un bosco che non conosci, e qualcuno ti chiama con la voce di tuo fratello. Ma tuo fratello è sparito un anno fa. Proprio in questo bosco.
+Sei sdraiato nell'erba bagnata e non ricordi niente: né come ci sei arrivato, né perché. La gamba sinistra ti brucia. Qualcuno l'ha fasciata con una garza pulita, chiusa con un nodo perfetto. Qualcuno ti ha medicato. Ma chi?
+Provi ad alzarti e lo scarpone scivola nel fango. Sotto le unghie hai della vernice rossa, secca.
+Gridi con tutte le tue forze: «C'è qualcuno? Aiuto!»
+Il grido non torna indietro. Nessuna eco. È come se il bosco se lo fosse mangiato. Resta solo il silenzio, e il tuo cuore che batte forte.
+In tasca il telefono vibra. Sono le tre e diciassette, batteria al tre per cento, nessuna rete. Eppure c'è un messaggio, da un numero sconosciuto: «Non rispondere a chi ti chiama.»
+Ti guardi intorno. Nei tronchi ci sono dei buchi neri, a forma di bocca. E da uno di questi esce un filo di vapore bianco, come un respiro.
+Poi la senti. Dagli alberi, piano, una voce dice il tuo nome. È Marco, tuo fratello. Riconosceresti la sua voce tra mille: «Sono qui… vieni a prendermi.»
+Fai un passo verso di lui, e il telefono vibra di nuovo. Stesso numero: «Ogni volta che rispondi, il bosco ti prende un ricordo.»
+Su un faggio vedi una striscia rossa, fatta con le dita. Poi un'altra, più avanti, lontano dalla voce. E un'altra ancora. Guardi le tue unghie. È la stessa vernice. Quei segni li hai fatti tu. Ma quando?
+«Perché non mi rispondi?» La voce di Marco adesso è dietro di te. Vicinissima.
+Cosa fai? La A: rispondi a Marco e vai verso la sua voce. Oppure la B: resti in silenzio e segui i segni rossi. Scrivilo nei commenti, e seguimi per vedere come continua.
+
+**Parole:** 312 (circa 1 minuto e 50 secondi di voce, più la scheda finale)

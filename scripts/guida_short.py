@@ -46,38 +46,53 @@ def tts(segs, voice):
     return out
 
 
-def tts_chatterbox(segs, rif=None, enfasi=0.55):
-    """Voce Chatterbox (MIT, in locale) col timbro del narratore della serie; ogni frase si rigenera finché Whisper sente le parole giuste."""
-    import difflib, re, unicodedata
+def tts_chatterbox(segs, rif=None, enfasi=0.55, tentativi=8):
+    """Voce Chatterbox (MIT, in locale) col timbro del narratore della serie.
+    Ogni frase si rigenera finché Whisper medium, senza suggerimenti, sente esattamente il testo SCRITTO (non la grafia di "say":
+    "say" serve solo a far pronunciare bene, es. «GTA 6» -> "gi ti a sei"). Le frasi buone restano in guida/_voce/ e non si rifanno."""
+    import difflib, hashlib, re, unicodedata
     bivio = Path(__file__).resolve().parent / "bivio"
     if not (bivio / "voce_chatterbox.py").exists():
         bivio = Path("/home/user/HiggsfieldDev/scripts/bivio")
     sys.path.insert(0, str(bivio))
+    rif = rif or str(bivio / "voci" / "narratore.wav")
+    cache = Path(__file__).resolve().parent / "_voce"; cache.mkdir(exist_ok=True)
+    rid = hashlib.sha1(Path(rif).read_bytes()).hexdigest()[:10]
+    chiave = lambda s: cache / (hashlib.sha1(f"{rid}|{s['text']}|{s.get('say', '')}|{enfasi}".encode()).hexdigest()[:16] + ".npy")
+    out = [np.load(chiave(s)) if chiave(s).exists() else None for s in segs]
+    if all(a is not None for a in out):
+        return out
     from voce_chatterbox import Voce
     from faster_whisper import WhisperModel
-    v = Voce(rif or str(bivio / "voci" / "narratore.wav")); wq = WhisperModel("small", device="cpu", compute_type="int8")
-    norm = lambda t: re.sub(r"[^a-z0-9 ]", " ", "".join(c for c in unicodedata.normalize("NFKD", t.lower()) if not unicodedata.combining(c))).split()
+    v = Voce(rif); wq = WhisperModel("medium", device="cpu", compute_type="int8")
+    numeri = "zero uno due tre quattro cinque sei sette otto nove dieci".split()
+    def norm(t):
+        t = "".join(c for c in unicodedata.normalize("NFKD", t.lower()) if not unicodedata.combining(c))
+        t = re.sub(r"\b(10|[0-9])\b", lambda m: " " + numeri[int(m.group(1))] + " ", t)
+        return re.sub(r"[^a-z0-9 ]", " ", t).split()
     prep = lambda t: unicodedata.normalize("NFKD", " ".join(t.lower().replace(":", ",").replace("…", ",").split()))
-    out = []
-    for s in segs:
+    for i, s in enumerate(segs):
+        if out[i] is not None:
+            continue
         best = None
-        for seme in range(6):
+        for seme in range(tentativi):
             a = v.dici(prep(s.get("say", s["text"])), enfasi=enfasi, seme=seme, temp=0.65, top_p=0.9)
             nz = np.where(np.abs(a) > 0.01)[0]
             if not len(nz):
                 continue
             a = a[max(0, nz[0] - 500):nz[-1] + 1500]
             r16 = np.interp(np.arange(0, len(a), 1.5), np.arange(len(a)), a).astype(np.float32)
-            segs_w, _ = wq.transcribe(r16, language="it", beam_size=5)
-            sim = difflib.SequenceMatcher(a=norm(s.get("say", s["text"])), b=norm(" ".join(x.text for x in segs_w)), autojunk=False).ratio()
+            sentito = " ".join(x.text for x in wq.transcribe(r16, language="it", beam_size=5)[0])
+            sim = difflib.SequenceMatcher(a=norm(s["text"]), b=norm(sentito), autojunk=False).ratio()
             if best is None or sim > best[0]:
-                best = (sim, a)
+                best = (sim, a, sentito.strip())
             if sim >= 0.999:
                 break
-        print(f"  voce {best[0]:.2f} «{s['text']}»", flush=True)
-        out.append((best[1] / (np.abs(best[1]).max() + 1e-9) * 0.9).astype(np.float32))
+        print(f"  voce {best[0]:.2f} «{s['text']}»" + ("" if best[0] >= 0.999 else f"  (sentito: «{best[2]}»)"), flush=True)
+        out[i] = (best[1] / (np.abs(best[1]).max() + 1e-9) * 0.9).astype(np.float32)
+        if best[0] >= 0.999:
+            np.save(chiave(s), out[i])
     return out
-
 
 def suono(path, dur=None):
     raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1", "-ar", str(SR), "-f", "f32le", "-"], capture_output=True, check=True).stdout
