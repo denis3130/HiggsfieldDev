@@ -75,6 +75,24 @@
    "via": "vidiq",
    "post_id": "32bb971b-f45e-4c0c-b4a6-1832ad52bfcf",
    "youtube": "https://www.youtube.com/watch?v=PbYgRPAuORM"
+  },
+  {
+   "clip_id": "2958549462",
+   "creator": "Blur",
+   "titolo": "Il problema del SALTINO in GTA 6 😂 Blur #shorts",
+   "uscita": "2026-11-24T18:00:00+01:00",
+   "via": "vidiq",
+   "post_id": "a749ec65-4c50-4cd8-ac07-6f3b10f0eefd",
+   "youtube": "https://www.youtube.com/watch?v=J8zNBla5UZg"
+  },
+  {
+   "clip_id": null,
+   "creator": "Blur",
+   "titolo": "GTA 6: 3 modi per fare SOLDI subito 💰 #shorts",
+   "uscita": "2026-11-24T19:00:00+01:00",
+   "via": "vidiq",
+   "post_id": "c06a4baa-648e-4c48-97f5-23eda64fe838",
+   "youtube": "https://www.youtube.com/watch?v=CMZPR2fW9PQ"
   }
  ],
  "scartate": {
@@ -140,28 +158,6 @@
   "436891608": "barca"
  },
  "bozze_vidiq_approvate": [
-  {
-   "giorno": "2026-11-24",
-   "ora": "18:00",
-   "clip_id": "2958549462",
-   "titolo": "Il problema del SALTINO in GTA 6 😂 Blur #shorts",
-   "post_id": "a749ec65-4c50-4cd8-ac07-6f3b10f0eefd",
-   "revision": "c65cdf77",
-   "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
-   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
-  },
-  {
-   "giorno": "2026-11-24",
-   "ora": "19:00",
-   "tipo": "guida",
-   "titolo": "GTA 6: 3 modi per fare SOLDI subito 💰 #shorts",
-   "spec": "data/guide/soldi.json",
-   "post_id": "c06a4baa-648e-4c48-97f5-23eda64fe838",
-   "revision": "9ad701d4",
-   "approvata": "2026-11-22 dall'utente: 'basta chiedermi autorizzazioni fai e basta'",
-   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
-   "nota": "spostata dalle 20 alle 19 il 23/11 (al posto della clientela; alle 20 niente, slot per Il Bivio)"
-  },
   {
    "giorno": "2026-11-25",
    "ora": "18:00",
