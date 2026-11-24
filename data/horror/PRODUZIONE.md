@@ -102,3 +102,18 @@ Immagini 40–45 minuti (13–15 immagini), voce 8–10 minuti, montaggio 6–7 
 2. Log della voce: tutti `ok` (o `quasi` verificati), durata totale circa 2 minuti (formato dal 24/11; prima 50–60 secondi).
 3. Anteprime: sottotitoli dentro la zona sicura, scheda finale leggibile, etichette che non escono dalle carte.
 4. Video finale riguardato a campione (inizio, grido o colpo di scena, scheda finale).
+
+## 7. Video veri (dal 24/11: per l'utente è la parte più importante)
+Il reel di riferimento è fatto di veri video 3D (personaggi che camminano, porte che si aprono, camera che si sposta), non di immagini con effetti.
+Stile scelto: **3D cartone come il reel**. I video si fanno sul PC dell'utente con ComfyUI (gratis, in locale, con la sua scheda video),
+collegato a questa sessione con Remote Control (cartella ComfyUI-Models). Il 24/11 la cartella non era ancora raggiungibile dalle sessioni cloud.
+
+Riserva su questa macchina (solo CPU): `scripts/bivio/ltx_video.py` con LTX-Video 2B int8 per OpenVINO, da un'immagine (la prima inquadratura resta
+quella, poi la scena si muove) o solo dal testo.
+- Modello: `rahmanbazarov/LTX-Video-int8-ov` (licenza LTX-Video Open Weights) scaricato senza `text_encoder/openvino_model.*`: il codificatore
+  del testo è lo stesso T5-XXL di FLUX, quindi `text_encoder/openvino_model.xml|bin` sono collegamenti a quelli di `flux-schnell-int4/text_encoder_2/`.
+  Cartella del modello in `LTX_DIR`.
+- Lo script carica un pezzo del modello alla volta e decodifica a tessere: con la pipeline pronta di OpenVINO GenAI la decodifica del video
+  intero finisce la RAM.
+- `cond_noise` 0,15 (un po' di rumore sul fotogramma di partenza) e descrizioni del movimento esplicite danno più movimento.
+- Tempi (4 vCPU): clip da 2 secondi (49 fotogrammi) a 384×672 con 20 passi in circa 5 minuti; il risultato è morbido e va ingrandito.
