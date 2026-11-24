@@ -2,10 +2,10 @@
  "engine": "chatterbox",
  "title": "GTA 6: 3 TRUCCHI PER SEMINARE LA POLIZIA",
  "credit": "Gameplay: Blur · twitch.tv/tumblurr",
- "music": "scripts/suoni_cc0/base_hiphop.mp3",
- "whoosh": "scripts/suoni_cc0/whoosh.mp3",
+ "music": "musica_cc0/base_hiphop.mp3",
+ "whoosh": "musica_cc0/whoosh.mp3",
  "music_vol": 0.16,
- "out": "guida/polizia.mp4",
+ "out": "guida/polizia2.mp4",
  "segments": [
   {
    "text": "In GTA 6 la polizia non si semina più aspettando. Ecco tre trucchi.",

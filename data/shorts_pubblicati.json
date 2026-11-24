@@ -165,9 +165,10 @@
    "titolo": "5 DETTAGLI ASSURDI di GTA 6 che forse non hai notato 🤯 #shorts",
    "spec": "data/guide/dettagli.json",
    "post_id": "3cba41ef-cbe8-47d7-8a3f-fcd71e77187e",
-   "revision": "2d2e8729",
+   "revision": "58c67f48",
    "approvata": "2026-11-22 dall'utente: 'basta chiedermi autorizzazioni fai e basta'",
-   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
+   "voce": "voce nuova 2 «più chiara» (24/11), ogni frase controllata con Whisper medium sul testo scritto"
   },
   {
    "giorno": "2026-11-25",
@@ -188,7 +189,7 @@
    "titolo": "GTA 6: 3 TRUCCHI per seminare la POLIZIA 🚔 #shorts",
    "spec": "data/guide/polizia.json",
    "post_id": "ee90d651-41a3-47c8-8448-d939e5c55dd6",
-   "revision": "7abd6206",
+   "revision": "a6825265",
    "approvata": "regola del 22/11: pubblicare senza chiedere",
    "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
    "fonti": [
@@ -196,7 +197,8 @@
     "https://www.gtabase.com/articles/gta-6/gta-6-wanted-level-explained-police-system-guide",
     "https://www.ibtimes.co.uk/gta-6-revolutionary-police-system-crime-evasion-1818769"
    ],
-   "nota": "voce del narratore (Chatterbox) e musica/whoosh veri CC0 al posto di Kokoro e dei suoni generati"
+   "nota": "voce del narratore (Chatterbox) e musica/whoosh veri CC0 al posto di Kokoro e dei suoni generati",
+   "voce": "voce nuova 2 «più chiara» (24/11), ogni frase controllata con Whisper medium sul testo scritto"
   },
   {
    "giorno": "2026-11-26",
@@ -218,7 +220,7 @@
    "titolo": "GTA 6: 3 TRUCCHI per RUBARE le auto 🚗 #shorts",
    "spec": "data/guide/auto.json",
    "post_id": "4d0e7a59-00fd-41e9-ad07-0bdabbfc1526",
-   "revision": "4ccbca95",
+   "revision": "408ccd72",
    "approvata": "regola del 22/11: pubblicare senza chiedere",
    "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
    "fonti": [
@@ -226,7 +228,8 @@
     "https://www.shacknews.com/article/151427/disable-vehicle-trackers-gta6",
     "https://www.videogameschronicle.com/guide/gta-6-car-alarms-explained-how-to-steal-cars-with-alarms-in-gta-6/"
    ],
-   "nota": "voce del narratore (Chatterbox, campo say per «GTA 6» e «Waink»), controllata con Whisper medium"
+   "nota": "nella voce «l'app del telefono» al posto di «Waink»: la voce lo pronunciava «Wank»; il nome resta nella descrizione",
+   "voce": "voce nuova 2 «più chiara» (24/11), ogni frase controllata con Whisper medium sul testo scritto"
   },
   {
    "giorno": "2026-11-27",

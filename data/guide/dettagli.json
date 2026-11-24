@@ -1,13 +1,14 @@
 {
- "voice": "im_nicola",
+ "engine": "chatterbox",
  "title": "5 DETTAGLI ASSURDI DI GTA 6",
  "credit": "Gameplay: Blur · twitch.tv/tumblurr",
- "out": "guida/dettagli.mp4",
+ "out": "guida/dettagli2.mp4",
  "segments": [
   {
    "text": "Cinque dettagli assurdi di GTA 6 che forse non hai notato.",
    "clip": "clips_dl2/712066860.mp4",
-   "start": 46.0
+   "start": 46.0,
+   "say": "Cinque dettagli assurdi di gi ti a sei che forse non hai notato."
   },
   {
    "text": "Uno: i vestiti. Guarda le cuciture: sono perfette, lungo tutto l'orlo.",
@@ -37,12 +38,16 @@
    "text": "Cinque: i cani. Puoi accarezzarli, come Joker, un pastore belga malinois.",
    "clip": "clips_dl2/4099124902.mp4",
    "start": 0.5,
-   "badge": "5"
+   "badge": "5",
+   "say": "Cinque: i cani. Puoi accarezzarli, come giòker, un pastore belga malinuà."
   },
   {
    "text": "Quale ti ha stupito di più? Scrivilo nei commenti!",
    "clip": "clips_dl2/2613844660.mp4",
    "start": 30.0
   }
- ]
+ ],
+ "music": "musica_cc0/base_hiphop.mp3",
+ "whoosh": "musica_cc0/whoosh.mp3",
+ "music_vol": 0.16
 }
