@@ -210,6 +210,37 @@
    "approvata": "regola del 22/11: pubblicare senza chiedere",
    "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
    "nota": "tagliata prima dei 19 s: subito dopo Blur dice «zio porco»"
+  },
+  {
+   "giorno": "2026-11-27",
+   "ora": "18:00",
+   "tipo": "guida",
+   "titolo": "GTA 6: 3 TRUCCHI per RUBARE le auto 🚗 #shorts",
+   "spec": "data/guide/auto.json",
+   "post_id": "4d0e7a59-00fd-41e9-ad07-0bdabbfc1526",
+   "revision": "4ccbca95",
+   "approvata": "regola del 22/11: pubblicare senza chiedere",
+   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
+   "fonti": [
+    "https://www.gtabase.com/articles/gta-6/gta-6-car-stealing-guide-how-to-steal-sell-keep-vehicles",
+    "https://www.shacknews.com/article/151427/disable-vehicle-trackers-gta6",
+    "https://www.videogameschronicle.com/guide/gta-6-car-alarms-explained-how-to-steal-cars-with-alarms-in-gta-6/"
+   ],
+   "nota": "voce del narratore (Chatterbox, campo say per «GTA 6» e «Waink»), controllata con Whisper medium"
+  },
+  {
+   "giorno": "2026-11-27",
+   "ora": "19:00",
+   "clip_id": "2456999236",
+   "creator": "tminnzy",
+   "fonte": "https://www.twitch.tv/tminnzy/clip/RudeBlueStapleResidentSleeper-hN6aHqGrcSgwB2Dl",
+   "titolo": "Preme TRIANGOLO e Jason salta dall'aereo 💀 GTA 6 #shorts",
+   "spec": "data/shorts_spec/aereo.json",
+   "post_id": "f7339e56-3775-431d-a8a8-6c80d105c2d8",
+   "revision": "35b941e4",
+   "approvata": "regola del 22/11: pubblicare senza chiedere",
+   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
+   "nota": "streamer inglese, sottotitoli tradotti in italiano; game_box esclude i sottotitoli del gioco"
   }
  ],
  "regole_utente": [

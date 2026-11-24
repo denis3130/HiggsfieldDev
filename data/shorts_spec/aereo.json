@@ -1,0 +1,57 @@
+{
+ "clip": "clips_en/2456999236.mp4",
+ "cam": [
+  1480,
+  280,
+  370,
+  350
+ ],
+ "game_box": [
+  579,
+  0,
+  762,
+  860
+ ],
+ "segments": [
+  [
+   10.5,
+   24.0
+  ],
+  [
+   28.0,
+   30.0
+  ]
+ ],
+ "hook": "SALTA DALL'AEREO PER SBAGLIO 💀",
+ "credit": "Clip: tminnzy · twitch.tv/tminnzy",
+ "out": "shorts3/aereo.mp4",
+ "subs": [
+  [
+   3.9,
+   5.4,
+   "Aspetta…"
+  ],
+  [
+   5.5,
+   7.7,
+   "Cosa ho premuto? Triangolo?"
+  ],
+  [
+   8.3,
+   10.2,
+   "Ho premuto davvero triangolo?!"
+  ],
+  [
+   13.8,
+   15.4,
+   "Stavo andando alla grande, chat…"
+  ]
+ ],
+ "focus": [
+  [
+   8.2,
+   10.4
+  ]
+ ],
+ "focus_cx": 1610
+}

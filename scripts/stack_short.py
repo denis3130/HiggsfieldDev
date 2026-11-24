@@ -4,7 +4,8 @@ Al posto di start/end si può dare segments=[[a,b],[c,d],...]: i pezzi vengono m
 focus=[[t0,t1],...]: in quei tratti lo schermo passa tutto sulla webcam (inquadratura 9:16 sul volto, lento zoom in avanti),
 poi torna webcam sopra / gioco sotto. Serve per le reazioni: quando lo streamer fissa la camera, ride, resta a bocca aperta.
 focus_cx (facoltativo): x fissa del volto nel video sorgente; se manca, l'inquadratura segue il volto da sola (riconoscimento del volto).
-I tempi di sottotitoli e focus sono relativi al video finale (cioè all'inizio del primo pezzo)."""
+I tempi di sottotitoli e focus sono relativi al video finale (cioè all'inizio del primo pezzo).
+game_box (facoltativo) = [x, y, w, h] del ritaglio di gioco, con w:h circa 1080:1220 (es. [535, 0, 850, 960] toglie la fascia bassa dei sottotitoli del gioco)."""
 import json
 import subprocess
 import sys
@@ -165,14 +166,16 @@ def main():
     sub = Path(spec["out"]).with_suffix(".ass")
     ass(spec, dur, focus, sub)
     gw = round(1080 * W / GAME_H / 2) * 2          # larghezza del ritaglio di gioco (altezza piena 1080)
-    gx = (1920 - gw) // 2
+    gx, gy, gh = (1920 - gw) // 2, 0, 1080
+    if spec.get("game_box"):                       # [x, y, w, h]: ritaglio del gioco diverso (es. senza la fascia dei sottotitoli del gioco in basso)
+        gx, gy, gw, gh = spec["game_box"]
     sub_arg = str(sub).replace(":", "\\:").replace("'", "\\'")
     cut = "".join(f"[0:v]trim=start={a:.3f}:end={b:.3f},setpts=PTS-STARTPTS[v{i}];"
                   f"[0:a]atrim=start={a:.3f}:end={b:.3f},asetpts=PTS-STARTPTS[a{i}];"
                   for i, (a, b) in enumerate(segs))
     cut += "".join(f"[v{i}][a{i}]" for i in range(len(segs))) + f"concat=n={len(segs)}:v=1:a=1[vc][ac];"
     base = (f"[c]crop={w}:{h}:{x}:{y},scale={W}:-2:flags=lanczos,crop={W}:{CAM_H}:0:(ih-{CAM_H})*0.3[cam];"
-            f"[g]crop={gw}:1080:{gx}:0,scale={W}:{GAME_H}:flags=lanczos[game];"
+            f"[g]crop={gw}:{gh}:{gx}:{gy},scale={W}:{GAME_H}:flags=lanczos[game];"
             f"[cam][game]vstack,drawbox=x=0:y={CAM_H - 3}:w={W}:h=6:color=black@0.9:t=fill[base];")
     if focus:
         fw = int(round(h * 9 / 16 / 2) * 2)
@@ -183,7 +186,7 @@ def main():
             tracks = face_track(spec["clip"], (x, y, w, h), focus, segs, fw)
         x0 = tracks[0][0][1]
         terms = [f"gte(t,{t0:.3f})*lt(t,{t1:.3f})*({c0 - x0:.1f}+({c1 - c0:.1f})*(t-{t0:.3f})/{t1 - t0:.3f})"
-                 for tr in tracks for (t0, c0), (t1, c1) in zip(tr, tr[1:]) if t1 > t0]
+                 for tr in tracks for (t0, c0), (t1, c1) in zip(tr, tr[1:]) if t1 - t0 > 0.005]   # niente tratti di durata zero: «/0.000» renderebbe x NaN e il ritaglio finirebbe al centro
         fxe = f"{x0:.1f}+" + "+".join(terms)
         ramp = "+".join(f"between(on/30,{a:.3f},{b:.3f})*(on/30-{a:.3f})/{b - a:.3f}" for a, b in focus)
         enable = "+".join(f"between(t,{a:.3f},{b:.3f})" for a, b in focus)
