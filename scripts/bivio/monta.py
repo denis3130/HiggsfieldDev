@@ -398,8 +398,11 @@ def fotogramma(t):
         fr = muovi(r["img"], r.get("mov", "avanza_lento"), u, tau, float(i), taglio=tg)
         if r.get("anima"):
             fr = anima(fr, r, tau, t, float(i))
-        if r.get("scurisci"):
-            cx, cy, rx, ry = r["scurisci"]; fr = fr * (1 - 0.85 * np.exp(-(((XN - cx) / rx) ** 2 + ((YN - cy) / ry) ** 2)))[..., None]
+        if r.get("scurisci"):                                         # volto nascosto: segue anche gli stacchi su un'inquadratura più stretta
+            cx, cy, rx, ry = r["scurisci"]
+            if tg:
+                cx, cy, rx, ry = 0.5 + (cx - tg[1]) * tg[0], 0.5 + (cy - tg[2]) * tg[0], rx * tg[0], ry * tg[0]
+            fr = fr * (1 - 0.85 * np.exp(-(((XN - cx) / rx) ** 2 + ((YN - cy) / ry) ** 2)))[..., None]
         if r.get("vapore"):
             fr = vapore(fr, tau, *(r["vapore"] if isinstance(r["vapore"], list) else []))
         if EXTRA is not None and hasattr(EXTRA, "dopo"):
