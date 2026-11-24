@@ -46,7 +46,7 @@ def tts(segs, voice):
     return out
 
 
-def tts_chatterbox(segs, rif=None, enfasi=0.65):
+def tts_chatterbox(segs, rif=None, enfasi=0.55):
     """Voce Chatterbox (MIT, in locale) col timbro del narratore della serie; ogni frase si rigenera finché Whisper sente le parole giuste."""
     import difflib, re, unicodedata
     bivio = Path(__file__).resolve().parent / "bivio"
@@ -62,7 +62,7 @@ def tts_chatterbox(segs, rif=None, enfasi=0.65):
     for s in segs:
         best = None
         for seme in range(6):
-            a = v.dici(prep(s.get("say", s["text"])), enfasi=enfasi, seme=seme)
+            a = v.dici(prep(s.get("say", s["text"])), enfasi=enfasi, seme=seme, temp=0.65, top_p=0.9)
             nz = np.where(np.abs(a) > 0.01)[0]
             if not len(nz):
                 continue

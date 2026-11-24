@@ -32,7 +32,9 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
 ## 2. Voce: Chatterbox multilingue (MIT), ONNX, senza torch
 - `python scripts/bivio/voce.py cartella_episodio` → `voce.wav`, `tempi.json`, `parole.json`. Modello `onnx-community/chatterbox-multilingual-ONNX`
   (si scarica da solo, 3 GB), più Whisper `medium` per il controllo. Caricamento 70 s, poi 10–20 s a frase.
-- Timbro: `scripts/bivio/voci/narratore.wav` (voce sintetica profonda, non una persona reale), uguale per tutta la serie.
+- Timbro: `scripts/bivio/voci/narratore.wav`, uguale per tutta la serie. Dal 24/11 è la **voce 3A** scelta dall'utente: voce sintetica
+  Kokoro `bm_lewis` che legge in italiano a velocità 0,82, abbassata di un semitono con Rubber Band (non è una persona reale).
+  Impostazioni predefinite di voce.py per questa voce: ENFASI 0,45, TEMP 0,65, TOP_P 0,9, CHIARA 4, nessun rallentamento.
   Voce clonata dell'utente (23/11): la registrazione resta solo sulla macchina che lavora (mai nel repository). Si usa un pezzo pulito di circa 10 secondi
   come riferimento (`RIF=...`) e `ENFASI=0.5`, più naturale della 0,6 usata con la voce sintetica.
   `RIF=altra_voce.wav` per cambiarlo. Se l'utente manda la propria voce da clonare, quel file resta solo sulla macchina: non va nel repository.

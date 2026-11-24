@@ -14,9 +14,9 @@ from voce_chatterbox import Voce
 from faster_whisper import WhisperModel
 
 SR = 24000; SEMI = int(os.environ.get("SEMI", 8)); CODA = 2.0
-ENF = float(os.environ.get("ENFASI", 0.6))
-TEMP = float(os.environ.get("TEMP", 0.8)); TOP_P = float(os.environ.get("TOP_P", 0.95))      # 0,65 / 0,9: pronuncia più stabile e scandita
-CHIARA = int(os.environ.get("CHIARA", 1))       # >1: tra i tentativi con le parole giuste tiene quello che Whisper capisce meglio (più chiaro)
+ENF = float(os.environ.get("ENFASI", 0.45))     # voce 3A (scelta dall'utente il 24/11): 0,45 calma e naturale
+TEMP = float(os.environ.get("TEMP", 0.65)); TOP_P = float(os.environ.get("TOP_P", 0.9))      # 0,65 / 0,9: pronuncia più stabile e scandita
+CHIARA = int(os.environ.get("CHIARA", 4))       # >1: tra i tentativi con le parole giuste tiene quello che Whisper capisce meglio (più chiaro)
 RALLENTA = float(os.environ.get("RALLENTA", 1.0))   # es. 1.07: ogni pezzo più lento del 7% senza cambiare il tono (serve rubberband)      # espressività del narratore: 0,5 per una voce clonata più naturale, 0,6 per la voce sintetica
 RIF = os.environ.get("RIF") or str(B / "voci/narratore.wav"); RIF_ID = hashlib.sha1(Path(RIF).read_bytes()).hexdigest()[:10]
 CACHE = D / "_voce"; CACHE.mkdir(exist_ok=True)
@@ -69,7 +69,7 @@ def dici(testo, enfasi=0.6, scritto=None, pause=0.42, lungo=False):
     """Genera un pezzo e tiene il seme migliore. Ritorna (audio a picco 0,9, parole del copione con tempi relativi al pezzo).
     Si ferma al primo seme in cui Whisper risente esattamente le parole del copione; i pezzi buoni restano in _voce/ e non si rifanno.
     lungo=True (gridi): prova 5 semi e tra quelli giusti tiene il più lungo, perché un grido tirato via non fa paura."""
-    extra = "" if (TEMP, TOP_P, CHIARA, RALLENTA) == (0.8, 0.95, 1, 1.0) else f"|{TEMP}|{TOP_P}|{CHIARA}|{RALLENTA}"
+    extra = f"|{TEMP}|{TOP_P}|{CHIARA}|{RALLENTA}"
     chiave = hashlib.sha1(f"{RIF_ID}|{enfasi}|{testo}{extra}".encode()).hexdigest()[:16]; f = CACHE / f"{chiave}.npz"
     if f.exists():
         z = np.load(f, allow_pickle=True); a, heard = z["a"], [tuple(h) for h in z["heard"].tolist()]
