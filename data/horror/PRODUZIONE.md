@@ -34,7 +34,7 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
   (si scarica da solo, 3 GB), più Whisper `medium` per il controllo. Caricamento 70 s, poi 10–20 s a frase.
 - Timbro: `scripts/bivio/voci/narratore.wav`, uguale per tutta la serie. Dal 24/11 è la **voce 3A** scelta dall'utente: voce sintetica
   Kokoro `bm_lewis` che legge in italiano a velocità 0,82, abbassata di un semitono con Rubber Band (non è una persona reale).
-  Impostazioni predefinite di voce.py per questa voce: ENFASI 0,45, TEMP 0,65, TOP_P 0,9, CHIARA 4, nessun rallentamento.
+  Impostazioni predefinite di voce.py per questa voce: ENFASI 0,45, VOCE_TEMP 0,65, VOCE_TOP_P 0,9, CHIARA 4, nessun rallentamento.
   Voce clonata dell'utente (23/11): la registrazione resta solo sulla macchina che lavora (mai nel repository). Si usa un pezzo pulito di circa 10 secondi
   come riferimento (`RIF=...`) e `ENFASI=0.5`, più naturale della 0,6 usata con la voce sintetica.
   `RIF=altra_voce.wav` per cambiarlo. Se l'utente manda la propria voce da clonare, quel file resta solo sulla macchina: non va nel repository.
@@ -46,7 +46,7 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
   Se una parola esce sbagliata in tutti i tentativi (es. «ninna» sentita «linda», «a chi lo do» → «a chi l'odo»), si riscrive la battuta
   con parole equivalenti invece di accettare un `quasi`.
 - Le pause dopo punto, due punti e punto di domanda vengono allungate a 0,42 s: il modello legge di fila, il narratore deve lasciar cadere le frasi.
-- Pronuncia più scandita (24/11): `TEMP=0.65 TOP_P=0.9` rendono il campionamento più stabile; `CHIARA=4` fa generare ogni frase finché ci sono
+- Pronuncia più scandita (24/11): `VOCE_TEMP=0.65 VOCE_TOP_P=0.9` rendono il campionamento più stabile; `CHIARA=4` fa generare ogni frase finché ci sono
   4 versioni con le parole giuste e tiene quella che Whisper capisce con più sicurezza; `RALLENTA=1.07` rallenta ogni pezzo del 7% senza cambiare
   il tono (serve `apt-get install -y rubberband-cli`). Il campione di riferimento deve leggere in italiano: con un campione inglese l'accento
   peggiora la pronuncia («Apri gli occhi. È notte.» non usciva giusta in 4 tentativi su 4).
