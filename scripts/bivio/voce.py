@@ -14,12 +14,12 @@ from voce_chatterbox import Voce
 from faster_whisper import WhisperModel
 
 SR = 24000; SEMI = int(os.environ.get("SEMI", 8)); CODA = 2.0
-PAUSA_FRASI = float(os.environ.get("PAUSA_FRASI", 0.42))   # pausa minima dopo un punto dentro una riga; 0 = ritmo continuo come il reel di riferimento
-PAUSA_RIGHE = float(os.environ.get("PAUSA_RIGHE", 0.25))   # silenzio tra una riga e l'altra; 0,08 = ritmo continuo
-ENF = float(os.environ.get("ENFASI", 0.45))     # voce 3A (scelta dall'utente il 24/11): 0,45 calma e naturale
-TEMP = float(os.environ.get("VOCE_TEMP", 0.65)); TOP_P = float(os.environ.get("VOCE_TOP_P", 0.9))   # non «TEMP»: è già la cartella temporanea del sistema      # 0,65 / 0,9: pronuncia più stabile e scandita
+PAUSA_FRASI = float(os.environ.get("PAUSA_FRASI", 0))      # pausa minima dopo un punto dentro una riga: 0 = ritmo continuo del reel (formato dal 24/11); 0,42 = narratore lento
+PAUSA_RIGHE = float(os.environ.get("PAUSA_RIGHE", 0.08))   # silenzio tra una riga e l'altra: 0,08 = ritmo continuo del reel; 0,25 = narratore lento
+ENF = float(os.environ.get("ENFASI", 0.5))      # espressività: 0,5 = voce nuova 2 «più chiara» come nella prova scelta dall'utente il 24/11
+TEMP = float(os.environ.get("VOCE_TEMP", 0.65)); TOP_P = float(os.environ.get("VOCE_TOP_P", 0.9))   # 0,65 / 0,9: pronuncia più stabile e scandita (non «TEMP»: è già la cartella temporanea del sistema)
 CHIARA = int(os.environ.get("CHIARA", 4))       # >1: tra i tentativi con le parole giuste tiene quello che Whisper capisce meglio (più chiaro)
-RALLENTA = float(os.environ.get("RALLENTA", 1.0))   # es. 1.07: ogni pezzo più lento del 7% senza cambiare il tono (serve rubberband)      # espressività del narratore: 0,5 per una voce clonata più naturale, 0,6 per la voce sintetica
+RALLENTA = float(os.environ.get("RALLENTA", 1.0))   # es. 1.07: ogni pezzo più lento del 7% senza cambiare il tono (serve rubberband)
 RIF = os.environ.get("RIF") or str(B / "voci/narratore.wav"); RIF_ID = hashlib.sha1(Path(RIF).read_bytes()).hexdigest()[:10]
 CACHE = D / "_voce"; CACHE.mkdir(exist_ok=True)
 import time; _t = time.time()

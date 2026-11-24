@@ -1,6 +1,6 @@
 # IL BIVIO — bibbia della serie (formato obbligatorio per ogni storia)
 
-Serie horror/thriller interattiva per Short di YouTube, in italiano. Ogni storia = 8 episodi da 50–60 secondi.
+Serie horror/thriller interattiva per Short di YouTube, in italiano. Ogni storia = 8 episodi da circa 2 minuti (formato del reel di riferimento, dal 24/11; i primi episodi di prova erano da 50–60 secondi).
 Alla fine di ogni episodio il pubblico sceglie A o B nei commenti; l'episodio dopo segue la scelta più votata.
 Obiettivo: qualità da cinema. Chi scorre deve fermarsi nei primi 2 secondi e voler vedere l'episodio dopo.
 
@@ -9,12 +9,14 @@ Obiettivo: qualità da cinema. Chi scorre deve fermarsi nei primi 2 secondi e vo
 - Anche le battute e le urla del protagonista le dice il narratore, dentro la narrazione; le urla in MAIUSCOLO
   (es. «Gridi con tutte le tue forze: SONO QUI! SONO QUI, AIUTO!»). Le frasi degli altri le riferisce lui tra «».
 - Frasi brevi, italiano parlato, concreto. Niente spiegoni: una rivelazione per episodio.
-- Lettura lenta (2,4 parole al secondo): ogni episodio pubblicato ha 100–125 parole in tutto, bivio compreso.
+- Ritmo del reel: racconto continuo, circa 3 parole al secondo, con la voce nuova 2 «più chiara» (l'unica scelta dall'utente).
+  Ogni episodio pubblicato ha circa 330 parole in tutto, bivio compreso.
 
 ## 2. Immagini: si deve vedere ogni cosa
 - Ogni battuta del narratore ha la sua inquadratura, e l'inquadratura mostra esattamente quello che la voce dice
   (se dice «la gamba fasciata ti brucia» si vede la gamba fasciata; se dice «l'erba bagnata ti fa scivolare» si vede lo scarpone che scivola sull'erba bagnata).
-- 11–15 inquadrature per episodio, una ogni 3–5 secondi. Al massimo 2 inquadrature senza voce (solo suono), per dare respiro.
+- Come nel reel, l'inquadratura cambia ogni 2–3 secondi (immagine nuova o stacco più stretto sulla stessa immagine) e niente resta mai fermo:
+  vento, respiro, luce che trema, pulviscolo, pioggia, camera che si muove. Al massimo 2 inquadrature senza voce (solo suono), per dare respiro.
 - Linguaggio da film: soggettiva (POV), dettagli ravvicinati, campi lunghi, lenti avanzamenti, luce motivata (torcia, luna, lanterna, schermo). Scrivi sempre cosa si vede, da dove, come si muove la camera e che luce c'è.
 - Il protagonista è chi guarda: si vede in soggettiva (mani, gambe, ombra) o di spalle/in silhouette. Mai il volto.
 - Scheda visiva: vestiti e oggetti del protagonista, luoghi, colori e motivi ricorrenti descritti una volta e ripetuti identici, così le immagini restano coerenti.

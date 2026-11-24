@@ -32,11 +32,12 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
 ## 2. Voce: Chatterbox multilingue (MIT), ONNX, senza torch
 - `python scripts/bivio/voce.py cartella_episodio` → `voce.wav`, `tempi.json`, `parole.json`. Modello `onnx-community/chatterbox-multilingual-ONNX`
   (si scarica da solo, 3 GB), più Whisper `medium` per il controllo. Caricamento 70 s, poi 10–20 s a frase.
-- Timbro: `scripts/bivio/voci/narratore.wav`, uguale per tutta la serie. Dal 24/11 è la **voce 3A** scelta dall'utente: voce sintetica
-  Kokoro `bm_lewis` che legge in italiano a velocità 0,82, abbassata di un semitono con Rubber Band (non è una persona reale).
-  Impostazioni predefinite di voce.py per questa voce: ENFASI 0,45, VOCE_TEMP 0,65, VOCE_TOP_P 0,9, CHIARA 4, nessun rallentamento.
-  Voce clonata dell'utente (23/11): la registrazione resta solo sulla macchina che lavora (mai nel repository). Si usa un pezzo pulito di circa 10 secondi
-  come riferimento (`RIF=...`) e `ENFASI=0.5`, più naturale della 0,6 usata con la voce sintetica.
+- Timbro: `scripts/bivio/voci/narratore.wav`, uguale per tutta la serie e per le guide di stacappella. Dal 24/11 è la **voce nuova 2 «più chiara»**,
+  l'unica tenuta dall'utente (scartate la 3A, la «calda» e la fusione delle due): voce sintetica Kokoro `bm_daniel` che legge in italiano
+  a velocità 0,95, senza cambi di tono (non è una persona reale). Il riferimento si rifà così:
+  `Kokoro(...).create(testo_italiano, voice=<voices/bm_daniel.bin da onnx-community/Kokoro-82M-v1.0-ONNX>, speed=0.95, lang="it")`.
+  Impostazioni predefinite di voce.py per questa voce: ENFASI 0,5, VOCE_TEMP 0,65, VOCE_TOP_P 0,9, CHIARA 4, nessun rallentamento,
+  ritmo continuo del reel (PAUSA_FRASI 0, PAUSA_RIGHE 0,08): circa 3 parole al secondo.
   `RIF=altra_voce.wav` per cambiarlo. Se l'utente manda la propria voce da clonare, quel file resta solo sulla macchina: non va nel repository.
 - Il testo va passato al modello in minuscolo e con gli accenti scomposti (NFKD): con «È», «già», «lì» scritti normalmente sbaglia le parole.
   Lo fa `prepara()`; anche due punti e puntini diventano virgole.
@@ -45,7 +46,8 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
   e non si rifanno. Nel log: `ok` = identico, `quasi` = da controllare, `DA RIFARE` = cambiare il testo o riprovare.
   Se una parola esce sbagliata in tutti i tentativi (es. «ninna» sentita «linda», «a chi lo do» → «a chi l'odo»), si riscrive la battuta
   con parole equivalenti invece di accettare un `quasi`.
-- Le pause dopo punto, due punti e punto di domanda vengono allungate a 0,42 s: il modello legge di fila, il narratore deve lasciar cadere le frasi.
+- Ritmo: dal 24/11 racconto continuo come nel reel (nessuna pausa aggiunta dopo i punti, 0,08 s tra le righe). Per il narratore lento dei primi
+  episodi: `PAUSA_FRASI=0.42 PAUSA_RIGHE=0.25`.
 - Pronuncia più scandita (24/11): `VOCE_TEMP=0.65 VOCE_TOP_P=0.9` rendono il campionamento più stabile; `CHIARA=4` fa generare ogni frase finché ci sono
   4 versioni con le parole giuste e tiene quella che Whisper capisce con più sicurezza; `RALLENTA=1.07` rallenta ogni pezzo del 7% senza cambiare
   il tono (serve `apt-get install -y rubberband-cli`). Il campione di riferimento deve leggere in italiano: con un campione inglese l'accento
@@ -77,7 +79,7 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
   su un'inquadratura più stretta della stessa immagine (nel reel l'immagine cambia ogni 2 secondi circa).
 - **Sottotitoli come il reel**: `"sottotitoli": "reel"` in episodio.json → in alto, lettere normali, parola detta in grassetto bianco, parole già dette
   in grigio chiaro, quelle che arrivano appena accennate; pezzi di frase che si chiudono a punto o virgola (massimo 6 parole). Niente titolo iniziale.
-- **Ritmo della voce come il reel**: `PAUSA_FRASI=0 PAUSA_RIGHE=0.08 python scripts/bivio/voce.py cartella` → racconto continuo, circa 3 parole al secondo.
+- **Ritmo della voce come il reel**: è quello predefinito di voce.py dal 24/11 → racconto continuo, circa 3 parole al secondo.
 - Schermo del telefono disegnato col codice: righe con `schermo: "blocco" | "messaggio"`, testi in `telefono` (ora, data, batteria, rete, mittente, messaggio).
 - Cose che servono a una storia sola (display dell'ascensore, monitor, citofono, cartelli, radio, pioggia, luce che trema): si scrivono in
   `cartella_episodio/extra.py`, senza toccare gli script comuni, e si disegnano sempre col codice (mai testo generato dal modello).
@@ -97,6 +99,6 @@ Immagini 40–45 minuti (13–15 immagini), voce 8–10 minuti, montaggio 6–7 
 
 ## 6. Controlli prima di consegnare
 1. Ogni immagine mostra quello che dice la battuta; nessun volto in primo piano, nessun testo generato.
-2. Log della voce: tutti `ok` (o `quasi` verificati), durata totale 50–60 secondi.
+2. Log della voce: tutti `ok` (o `quasi` verificati), durata totale circa 2 minuti (formato dal 24/11; prima 50–60 secondi).
 3. Anteprime: sottotitoli dentro la zona sicura, scheda finale leggibile, etichette che non escono dalle carte.
 4. Video finale riguardato a campione (inizio, grido o colpo di scena, scheda finale).
