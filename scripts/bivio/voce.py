@@ -3,7 +3,7 @@ Uso: RIF=voce_di_riferimento.wav python voce.py cartella_episodio      (senza RI
 Ogni pezzo (frase del narratore, grido, messaggio letto, voce lontana, opzione A, opzione B, chiusura) si genera da solo
 e si riascolta con Whisper: se non corrisponde al copione o ha una durata strana si rigenera con un altro seme.
 Scrive voce.wav (24 kHz), tempi.json (righe con i loro pezzi) e parole.json (parole del copione con i tempi)."""
-import difflib, hashlib, json, os, re, sys, unicodedata
+import difflib, hashlib, json, os, re, shutil, subprocess, sys, unicodedata
 from pathlib import Path
 
 import numpy as np
@@ -14,7 +14,10 @@ from voce_chatterbox import Voce
 from faster_whisper import WhisperModel
 
 SR = 24000; SEMI = int(os.environ.get("SEMI", 8)); CODA = 2.0
-ENF = float(os.environ.get("ENFASI", 0.6))      # espressività del narratore: 0,5 per una voce clonata più naturale, 0,6 per la voce sintetica
+ENF = float(os.environ.get("ENFASI", 0.6))
+TEMP = float(os.environ.get("TEMP", 0.8)); TOP_P = float(os.environ.get("TOP_P", 0.95))      # 0,65 / 0,9: pronuncia più stabile e scandita
+CHIARA = int(os.environ.get("CHIARA", 1))       # >1: tra i tentativi con le parole giuste tiene quello che Whisper capisce meglio (più chiaro)
+RALLENTA = float(os.environ.get("RALLENTA", 1.0))   # es. 1.07: ogni pezzo più lento del 7% senza cambiare il tono (serve rubberband)      # espressività del narratore: 0,5 per una voce clonata più naturale, 0,6 per la voce sintetica
 RIF = os.environ.get("RIF") or str(B / "voci/narratore.wav"); RIF_ID = hashlib.sha1(Path(RIF).read_bytes()).hexdigest()[:10]
 CACHE = D / "_voce"; CACHE.mkdir(exist_ok=True)
 import time; _t = time.time()
@@ -66,7 +69,8 @@ def dici(testo, enfasi=0.6, scritto=None, pause=0.42, lungo=False):
     """Genera un pezzo e tiene il seme migliore. Ritorna (audio a picco 0,9, parole del copione con tempi relativi al pezzo).
     Si ferma al primo seme in cui Whisper risente esattamente le parole del copione; i pezzi buoni restano in _voce/ e non si rifanno.
     lungo=True (gridi): prova 5 semi e tra quelli giusti tiene il più lungo, perché un grido tirato via non fa paura."""
-    chiave = hashlib.sha1(f"{RIF_ID}|{enfasi}|{testo}".encode()).hexdigest()[:16]; f = CACHE / f"{chiave}.npz"
+    extra = "" if (TEMP, TOP_P, CHIARA, RALLENTA) == (0.8, 0.95, 1, 1.0) else f"|{TEMP}|{TOP_P}|{CHIARA}|{RALLENTA}"
+    chiave = hashlib.sha1(f"{RIF_ID}|{enfasi}|{testo}{extra}".encode()).hexdigest()[:16]; f = CACHE / f"{chiave}.npz"
     if f.exists():
         z = np.load(f, allow_pickle=True); a, heard = z["a"], [tuple(h) for h in z["heard"].tolist()]
         pt = float(z["punti"]) if "punti" in z else 1.0
@@ -74,14 +78,16 @@ def dici(testo, enfasi=0.6, scritto=None, pause=0.42, lungo=False):
         w = align(scritto or testo, [(float(s), float(e), w) for s, e, w in heard])
         return respiro(a, w, pause) if pause else (a, w)
     atteso = norm(testo); meglio = None; att = 0.3 + len(testo) / 14          # durata attesa: circa 14 caratteri al secondo
+    esatti = []
     for seme in range(SEMI):
-        a = v.dici(prepara(testo), enfasi=enfasi, seme=seme)
+        a = v.dici(prepara(testo), enfasi=enfasi, seme=seme, temp=TEMP, top_p=TOP_P)
         nz = np.where(np.abs(a) > 0.012)[0]
         if not len(nz):
             continue
         a = a[max(0, nz[0] - 700):nz[-1] + 2200]; a = a / (np.abs(a).max() + 1e-9) * 0.9
-        segs, _ = wq.transcribe(r16(a), language="it", word_timestamps=True, beam_size=5)
+        segs, _ = wq.transcribe(r16(a), language="it", word_timestamps=True, beam_size=5); segs = list(segs)
         heard = [(w.start, w.end, w.word.strip()) for s in segs for w in s.words]
+        chiarezza = float(np.mean([s.avg_logprob for s in segs])) if segs else -9.0
         if not heard:
             continue
         i0, i1 = max(0, int((heard[0][0] - 0.25) * SR)), min(len(a), int((heard[-1][1] + 0.35) * SR))      # via fiati e rumori prima e dopo le parole
@@ -94,14 +100,34 @@ def dici(testo, enfasi=0.6, scritto=None, pause=0.42, lungo=False):
             punti += 0.1 * min(dur / att, 1.5)
         if meglio is None or punti > meglio[0]:
             meglio = (punti, a, heard, seme, sim, dur)
+        if punti >= 0.999 and not lungo:
+            esatti.append((chiarezza, punti, a, heard, seme, sim, dur))
+        if CHIARA > 1 and not lungo:
+            if len(esatti) >= CHIARA:
+                break
+            continue
         if punti >= 0.999 and not lungo or lungo and seme >= 4 and meglio[0] >= 0.999:
             break
+    if CHIARA > 1 and esatti:
+        chiarezza, *meglio = max(esatti, key=lambda e: e[0]); meglio = tuple(meglio)
     punti, a, heard, seme, sim, dur = meglio
+    if RALLENTA != 1.0 and shutil.which("rubberband"):
+        a, heard = stira(a, heard, RALLENTA)
     print(f"  {'ok ' if punti >= 0.999 else 'quasi ' if punti >= 0.85 else 'DA RIFARE '}seme {seme} somiglianza {sim:.2f} {dur:.1f}s (attesi {att:.1f}) «{testo}» → «{' '.join(h[2] for h in heard)}»", flush=True)
     if punti >= 0.85:
         np.savez(f, a=a, heard=np.array(heard, dtype=object), punti=punti)
     w = align(scritto or testo, heard)
     return respiro(a, w, pause) if pause else (a, w)
+
+
+def stira(a, heard, fattore):
+    """Rallenta un pezzo senza cambiare il tono (Rubber Band, motore fine) e sposta i tempi delle parole di conseguenza."""
+    import tempfile
+    with tempfile.TemporaryDirectory() as d:
+        sf.write(f"{d}/in.wav", a, SR)
+        subprocess.run(["rubberband", "-q", "--fine", "-t", str(fattore), f"{d}/in.wav", f"{d}/out.wav"], check=True)
+        b, _ = sf.read(f"{d}/out.wav", dtype="float32")
+    return b.astype(np.float32), [(s * fattore, e * fattore, w) for s, e, w in heard]
 
 
 def respiro(a, parole, minimo=0.42):

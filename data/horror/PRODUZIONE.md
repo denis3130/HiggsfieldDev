@@ -44,6 +44,10 @@ Modello da copiare: `data/horror/ep1_voce_nel_bosco/episodio.json`.
   Se una parola esce sbagliata in tutti i tentativi (es. «ninna» sentita «linda», «a chi lo do» → «a chi l'odo»), si riscrive la battuta
   con parole equivalenti invece di accettare un `quasi`.
 - Le pause dopo punto, due punti e punto di domanda vengono allungate a 0,42 s: il modello legge di fila, il narratore deve lasciar cadere le frasi.
+- Pronuncia più scandita (24/11): `TEMP=0.65 TOP_P=0.9` rendono il campionamento più stabile; `CHIARA=4` fa generare ogni frase finché ci sono
+  4 versioni con le parole giuste e tiene quella che Whisper capisce con più sicurezza; `RALLENTA=1.07` rallenta ogni pezzo del 7% senza cambiare
+  il tono (serve `apt-get install -y rubberband-cli`). Il campione di riferimento deve leggere in italiano: con un campione inglese l'accento
+  peggiora la pronuncia («Apri gli occhi. È notte.» non usciva giusta in 4 tentativi su 4).
 - Nella riga: `voce` (narratore), `grido` + `sottotitolo_grido` (urlo del protagonista, detto dal narratore: più enfasi, più forte, saturato),
   `citazione` (messaggio o scritta letta), `lontana` (una voce lontana, sempre detta dal narratore: piano e ovattata), `silenzio` (secondi senza voce).
 
