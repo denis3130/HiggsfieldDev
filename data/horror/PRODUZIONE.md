@@ -115,6 +115,8 @@ e chiusa davvero su quello che tocca, lisciata e dipinta, e messa accanto a una 
 i passi stanno sul ramo principale del repository: `scripts/bivio/3d/cast/sets/mano_mesh.js` e «Come si fa un modello» in
 `scripts/bivio/3d/LEGGIMI.md`. Una sessione aperta prima del 25/11 lavora su un suo ramo, che non li ha: prima di costruire un modello li
 prende dal ramo principale (`git fetch origin claude/gta6-auto-clipping-system-p29knx`).
+Dalla sera del 25/11 («ok migliora scarpe e vestiti corpo dei pg come con la mano») anche corpo, vestiti e scarpe dei personaggi sono modellati
+veri: `scripts/bivio/3d/cast/sets/corpo_mesh.js`, dati e licenze in `cast/sets/corpi/`, come si fa in «Corpo, vestiti e scarpe modellati» del LEGGIMI.
 
 Prova scartata (24/11, «non mi piace»): `scripts/bivio/ltx_video.py` con LTX-Video 2B int8 per OpenVINO, da un'immagine (la prima inquadratura resta
 quella, poi la scena si muove) o solo dal testo.

@@ -31,6 +31,8 @@ function deforma(geo, k, r = 1) {
   }
   geo.computeVertexNormals(); return geo;
 }
+// quanto un punto (nello spazio della testa, in metri) sta dentro la testa: < 1 dentro, 1 = sulla pelle (serve a chi ci infila un collo modellato)
+export function raggioTesta(T, x, y, z) { const S = T.S; let qx = x / S[0], qz = z / S[2]; const qy = y / S[1], [fx, fz] = fattori(qy, T.k); qx /= qz > 0 ? fx : 1 - (1 - fx) * 0.85; qz /= qz > 0 ? fz : T.k.back; return Math.hypot(qx, qy, qz); }
 // funzione liscia per punti chiave [[x, y], …] (x crescente)
 export function chiavi(pts) {
   return (x) => {
@@ -319,7 +321,7 @@ export const ciocche = (base, chiaro, scuro, n = 90, seme = 5) => tex(256, 256, 
 // Posa: { dita: [indice, medio, anulare, mignolo] 0..1, pollice 0 (aperto di lato) .. 1 (chiuso davanti al palmo), apri (dita allargate),
 //         k: [nocca, falange, punta] (quanto piega ogni giuntura, in radianti a dita = 1), fletti (pieghe del pollice, se diverse da pollice),
 //         pv: [metacarpo, falange, punta] (le direzioni dei tre pezzi del pollice, nello spazio della mano, per le prese precise), pb (verso dell'unghia) }
-const POSE_MANO = {
+export const POSE_MANO = {
   rilassata: { dita: [0.2, 0.26, 0.32, 0.4], pollice: 0.3, apri: 0.3 }, aperta: { dita: [0.03, 0.02, 0.03, 0.05], pollice: 0, apri: 1 }, piatta: { dita: [0.05, 0.05, 0.06, 0.08], pollice: 0.14, apri: 0.15 },
   pugno: { dita: [1, 1, 1, 1], pollice: 0.95, apri: 0 }, indice: { dita: [0.02, 1, 1, 1], pollice: 0.95, apri: 0 }, presa: { dita: [0.5, 0.56, 0.6, 0.66], pollice: 0.45, apri: 0.2 }, pizzico: { dita: [0.62, 0.78, 0.86, 0.92], pollice: 0.72, apri: 0 },
   // le dita avvolgono una sbarra orizzontale (maniglia, ringhiera): la sbarra passa sotto le nocche, a y = -0.095 e z = -0.0245 della mano; il pollice chiude da sotto
@@ -329,7 +331,7 @@ const POSE_MANO = {
   tessera: { dita: [0.03, 0.02, 0.03, 0.05], pollice: 1, apri: 0.05, pv: [[-0.3, -0.6, -0.74], [0.279, -0.953, 0.114], [0.35, -0.93, 0.05]], pb: [-0.2, 0, -1] },
   leva: { dita: [0.95, 1, 1, 1], pollice: 1, apri: 0, k: [0.72, 1.62, 1.0], pv: [[-0.42, -0.62, -0.66], [-0.083, -0.639, -0.766], [0.3, -0.93, 0.05]], pb: [-0.8, 0.1, -0.3] },
 };
-const K_DITA = [1.35, 1.5, 1.1];
+export const K_DITA = [1.35, 1.5, 1.1];
 const D_POLLICE = [V(-0.76, -0.64, -0.1), V(-0.3, -0.76, -0.58)], B_POLLICE = [V(-0.28, 0.12, 0.95), V(-0.88, 0.1, 0.46)];
 export function mano(skinM, nailM, s = 1) {
   const g = new THREE.Group(), h = new THREE.Group(); g.add(h); h.scale.setScalar(s);
@@ -380,11 +382,11 @@ export function braccio(upper, side, o) {
   const gH = new THREE.Group(); upper.add(gH);
   const hand = mano(o.skin, o.nail, o.mano || 1); if (side < 0) hand.scale.x = -1; gH.add(hand);
   const riposo = [side * (o.sx + 0.035), o.sy - (L1 + L2) * 0.985, (o.sz || 0) + 0.035];
-  const B = new THREE.Matrix4(), zf = V(0, 0, 0), yf = V(0, 0, 0);
+  const B = new THREE.Matrix4(), zf = V(0, 0, 0), yf = V(0, 0, 0), polo = V(0, 0, -1);      // polo: verso del gomito (per chi veste il braccio con una pelle vera)
   function a(q = {}) {
     const T = V(...(q.a || riposo)), d = T.clone().sub(S), len = M.clamp(d.length(), Math.abs(L1 - L2) + 0.01, L1 + L2 - 0.003), dir = d.normalize();
     const aa = (L1 * L1 - L2 * L2 + len * len) / (2 * len), hh = Math.sqrt(Math.max(0, L1 * L1 - aa * aa));
-    const pole = V(...(q.gomito || [side * 0.6, -0.3, -0.75])); pole.addScaledVector(dir, -pole.dot(dir)).normalize();
+    const pole = V(...(q.gomito || [side * 0.6, -0.3, -0.75])); pole.addScaledVector(dir, -pole.dot(dir)).normalize(); polo.copy(pole);
     const E = S.clone().addScaledVector(dir, aa).addScaledVector(pole, hh), Wp = S.clone().addScaledVector(dir, len);
     gU.position.copy(S); gU.quaternion.setFromUnitVectors(DOWN, E.clone().sub(S).normalize());
     const fd = Wp.clone().sub(E).normalize();
@@ -394,10 +396,11 @@ export function braccio(upper, side, o) {
     yf.copy(fd).negate(); zf.copy(zh).addScaledVector(yf, -zh.dot(yf)); if (zf.lengthSq() < 1e-4) { zf.copy(yh).addScaledVector(yf, -yh.dot(yf)); } zf.normalize();
     gF.position.copy(E); gF.quaternion.setFromRotationMatrix(B.makeBasis(yf.clone().cross(zf), yf, zf));
     gH.position.copy(Wp); gH.quaternion.setFromRotationMatrix(B.makeBasis(yh.clone().cross(zh), yh, zh));
-    hand.userData.pose(q.mano || 'rilassata');
+    hand.userData.pose(q.mano || 'rilassata'); out.posaMano = q.mano || 'rilassata';
   }
+  const out = { a, gU, gH, gF, hand, S, riposo, side, L1, L2, r1: o.r1, liscio: !!o.polsoZ, polo, posaMano: 'rilassata' };
   a({});
-  return { a, gH, gF, hand, S, riposo, side, L2, r1: o.r1, liscio: !!o.polsoZ };
+  return out;
 }
 
 // ------------------------------------------------------------------ gamba (anca + ginocchio) con la scarpa

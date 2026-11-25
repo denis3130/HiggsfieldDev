@@ -6,6 +6,7 @@ import * as G from '../lib/gl.js';
 import * as M from '../lib/motion.js';
 import { THREE, V, rnd, tex, mat, piatto as basic, sfera, add, loft, tra, ombre, alone } from './stile.js';
 import { testa, capelli, chioma, ciuffi, braccio, gamba, chiavi, mix } from './pupazzi.js';
+import { CORPI, misure, vesti, texture, appoggiaSulleDita, presaPiatta } from './corpo_mesh.js';
 
 // mondo: il punto da raggiungere in coordinate della scena. Le direzioni dita/dorso/gomito sono nel verso del PERSONAGGIO (z = davanti a lui);
 // per darle nel verso della scena si usano ditaM/dorsoM/gomitoM (se il personaggio è girato le due cose non coincidono).
@@ -24,13 +25,15 @@ function braccia(upper, AL, AR, p) {
 }
 
 // o: { k (statura: 1 = 1,78 m), largo (spalle), C (colori), F (faccia), torso (materiale), manica, manica2, polsino, capelli(T), extra(parti), cappotto, mano,
-//      polso, polsoZ (mezza larghezza e mezzo spessore del polso), gomitoM + orlo (maniche al gomito: gomito di pelle e orlo della manica) }
+//      polso, polsoZ (mezza larghezza e mezzo spessore del polso), gomitoM + orlo (maniche al gomito: gomito di pelle e orlo della manica),
+//      corpo (nome del corpo MODELLATO in corpi/: pelle, vestiti e scarpe veri al posto dei pezzi a pupazzo, che restano come ossa), materiali (del corpo modellato) }
 function uomo(o) {
   const k = o.k || 1, L = o.largo || 1, C = o.C, root = new THREE.Group();
+  const mis = o.corpo && CORPI[o.corpo] ? misure(o.corpo, 1.406 * k) : null;                // le misure del corpo modellato alla statura del personaggio
   const skinM = mat(C.skin), nailM = mat(C.unghie || '#EBC6B3'), pantM = mat(C.pant);
   const fianchi = new THREE.Group(); root.add(fianchi);
   add(fianchi, loft([{ y: 0.8 * k, rx: 0.1 * k, rz: 0.09 * k }, { y: 0.87 * k, rx: 0.165 * k, rz: 0.115 * k }, { y: 0.96 * k, rx: 0.172 * k, rz: 0.118 * k }, { y: 1.07 * k, rx: 0.165 * k, rz: 0.112 * k }], 40), pantM);
-  const go = { hx: 0.09 * k, hy: 0.93 * k, T1: 0.43 * k, T2: 0.42 * k, r0: 0.085 * k, r1: 0.062 * k, r2: 0.046 * k, mat: pantM, scarpa: mat(C.scarpa), suola: mat(C.suola), piede: k };
+  const go = mis ? { hx: mis.hx, hy: mis.T1 + mis.T2 + mis.caviglia, T1: mis.T1, T2: mis.T2 } : { hx: 0.09 * k, hy: 0.93 * k, T1: 0.43 * k, T2: 0.42 * k }; Object.assign(go, { r0: 0.085 * k, r1: 0.062 * k, r2: 0.046 * k, mat: pantM, scarpa: mat(C.scarpa), suola: mat(C.suola), piede: k });
   const GL = gamba(fianchi, -1, go), GR = gamba(fianchi, 1, go);
   const upper = new THREE.Group(); upper.position.y = 1.05 * k; fianchi.add(upper);
   const sec = [[-0.1, 0.178, 0.124, 0.124, 2], [0.05, 0.167, 0.112, 0.112, 2], [0.2, 0.185 * L, 0.125, 0.118, 2.2], [0.33, 0.21 * L, 0.13, 0.12, 2.4], [0.405, 0.218 * L, 0.115, 0.115, 2.8], [0.44, 0.16 * L, 0.1, 0.1, 2], [0.462, 0.075, 0.075, 0.075, 2], [0.47, 0.055, 0.06, 0.06, 2]];
@@ -38,12 +41,17 @@ function uomo(o) {
   if (o.cappotto) add(upper, loft([{ y: -0.52 * k, rx: 0.205 * k, rz: 0.155 * k, pieghe: 0.012, nPieghe: 6 }, { y: -0.3 * k, rx: 0.192 * k, rz: 0.142 * k }, { y: -0.07 * k, rx: 0.172 * k, rz: 0.119 * k }], 48), o.cappotto);
   if (o.cappotto) { const fondo = add(upper, new THREE.CircleGeometry(1, 28), pantM, V(0, -0.5 * k, 0), [0.2 * k, 0.15 * k, 1]); fondo.rotation.x = Math.PI / 2; fondo.material = mat(C.pant, { side: THREE.DoubleSide }); }   // il fondo del cappotto, per non vederci dentro
   tra(upper, V(0, 0.455 * k, 0.004), V(0, 0.54 * k, 0.012), 0.052 * k, 0.048 * k, mat(mix(C.skin, '#8E553F', 0.22)));
-  const collo = new THREE.Group(); collo.position.set(0, 0.505 * k, 0.008); upper.add(collo);
+  const collo = new THREE.Group(); collo.position.set(0, 0.505 * k, mis ? mis.colloZ(1.555 * k) : 0.008); upper.add(collo);
   const T = testa(o.F); T.head.position.set(0, 0.094 * k, 0.012); T.head.scale.setScalar(k * (o.testa || 1)); collo.add(T.head);
   if (o.capelli) o.capelli(T);
-  const bo = { sx: 0.196 * L * k, sy: 0.356 * k, L1: 0.3 * k, L2: 0.265 * k, r0: 0.054 * k, r1: 0.045 * k, r2: (o.polso ?? 0.037) * k, polsoZ: o.polsoZ ? o.polsoZ * k : 0, gomitoM: o.gomitoM, orlo: o.orlo, manica: o.manica, manica2: o.manica2, polsino: o.polsino, skin: o.guanti ? mat(o.guanti) : skinM, nail: o.guanti ? mat(o.guanti) : nailM, mano: 1.05 * k };
+  const bo = { sx: 0.196 * L * k, sy: 0.356 * k, sz: mis ? mis.spallaZ : 0, L1: 0.3 * k, L2: 0.265 * k, r0: 0.054 * k, r1: 0.045 * k, r2: (o.polso ?? 0.037) * k, polsoZ: o.polsoZ ? o.polsoZ * k : 0, gomitoM: o.gomitoM, orlo: o.orlo, manica: o.manica, manica2: o.manica2, polsino: o.polsino, skin: o.guanti ? mat(o.guanti) : skinM, nail: o.guanti ? mat(o.guanti) : nailM, mano: 1.05 * k };
   const AL = braccio(upper, -1, bo), AR = braccio(upper, 1, bo);
-  const parti = { root, fianchi, upper, collo, T, AL, AR, k };
+  const parti = { root, fianchi, upper, collo, T, AL, AR, GL, GR, k, C };
+  let abito = null;
+  if (mis) {                                             // il corpo modellato: i pezzi a pupazzo (tranne la testa) restano solo come ossa
+    fianchi.traverse((x) => { if (!x.isMesh) return; for (let p = x; p; p = p.parent) if (p === T.head) return; x.visible = false; });
+    abito = vesti(parti, o.corpo, { materiali: o.materiali || {}, skin: C.skin, unghia: C.unghie || '#EBC6B3', pelleMani: o.guanti || null }); parti.abito = abito;
+  }
   if (o.extra) o.extra(parti);
   ombre(root);
   function pose(p = {}) {
@@ -56,16 +64,17 @@ function uomo(o) {
     GL.set({ avanti: 1.5 * sit + (g.aL || 0), ginocchio: 1.5 * sit + (g.gL || 0), apri: 0.05 * sit });
     GR.set({ avanti: 1.5 * sit + (g.aR || 0), ginocchio: 1.5 * sit + (g.gR || 0), apri: 0.05 * sit });
     const pos = p.pos || [0, 0, 0];
-    root.position.set(pos[0], pos[1] - sit * (0.93 * k - (p.sedile ?? 0.46) - 0.085), pos[2]); root.rotation.y = p.yaw || 0; root.updateMatrixWorld(true);
+    root.position.set(pos[0], pos[1] - sit * (go.hy - (p.sedile ?? 0.46) - 0.085), pos[2]); root.rotation.y = p.yaw || 0; root.updateMatrixWorld(true);
     braccia(upper, AL, AR, p);
     if (o.posa) o.posa(p, parti);
+    if (abito) { abito.aggiorna(); if (o.dopo) o.dopo(p, parti); }
   }
   pose({});
-  return { group: root, pose, head: T.head, upper, AL, AR, parti, altezza: 1.78 * k };
+  return { group: root, pose, head: T.head, upper, AL, AR, parti, abito, altezza: 1.78 * k };
 }
 
 // ------------------------------------------------------------------ TU, il testimone
-export function testimone() {
+export function testimone({ modellato = true } = {}) {
   const C = { skin: '#D9A583', pant: '#27304A', scarpa: '#8E9099', suola: '#7C7E86', maglia: '#A9ADB3', magliaDk: '#8B8F96', capelli: '#2E221B' };
   const F = { S: [0.08, 0.116, 0.096], forma: { jaw: 0.2, jawP: 1.9, cheek: 0.015, chinIn: 0.08 }, skin: C.skin, ombra: '#BF8869', linea: '#8A5743',
     eye: { x: 0.0325, y: 0.006, w: 0.0158, h: 0.0092, hl: 0.0048, tilt: 0.03, ir: 0.0064, iris: '#5E4330', lash: '#2A1C16', lashW: 0.002, open0: 0.84 },
@@ -84,13 +93,14 @@ export function testimone() {
       spessore: (th, ph) => 0.05 + 0.095 * Math.exp(-(((th - 0.72) / 0.36) ** 2)) * Math.exp(-(((ph - 0.18) / 0.8) ** 2)) + 0.02 * Math.exp(-((th / 0.5) ** 2)),
       solchi: { k: 38, amp: 0.014 }, base: C.capelli, chiaro: '#4E3A2B', scuro: '#17100C', n: 260, seme: 9 });
   };
-  return uomo({ k: 1, C, F, polso: 0.0295, polsoZ: 0.0205, torso: mat(0xffffff, { map: magliaT }), manica: mat(C.maglia), manica2: mat(C.skin), gomitoM: mat(C.skin), orlo: mat(C.magliaDk), polsino: null,
+  return uomo({ k: 1, C, F, corpo: modellato ? 'testimone' : null,
+    polso: 0.0295, polsoZ: 0.0205, torso: mat(0xffffff, { map: magliaT }), manica: mat(C.maglia), manica2: mat(C.skin), gomitoM: mat(C.skin), orlo: mat(C.magliaDk), polsino: null,
     capelli: pettina,
-    extra: ({ upper, k }) => { const cl = add(upper, new THREE.TorusGeometry(0.054 * k, 0.007 * k, 10, 36), mat(C.magliaDk), V(0, 0.463 * k, 0.008)); cl.rotation.x = Math.PI / 2 + 0.2; cl.scale.set(1.08, 1, 1); } });
+    extra: ({ upper, k, abito }) => { if (abito) return; const cl = add(upper, new THREE.TorusGeometry(0.054 * k, 0.007 * k, 10, 36), mat(C.magliaDk), V(0, 0.463 * k, 0.008)); cl.rotation.x = Math.PI / 2 + 0.2; cl.scale.set(1.08, 1, 1); } });
 }
 
 // ------------------------------------------------------------------ L'ISPETTORE DARIO RIVA
-export function ispettore({ guanti = false } = {}) {
+export function ispettore({ guanti = false, modellato = true } = {}) {
   const C = { skin: '#D2A07E', pant: '#22242B', scarpa: '#17171A', suola: '#0D0D0F', cappotto: '#30323A', cappottoDk: '#1E2026', camicia: '#B9C2CC', cravatta: '#141519', oro: '#D2A842' };
   const F = { S: [0.083, 0.12, 0.1], forma: { jaw: 0.14, jawP: 2.2, cheek: 0, chinIn: 0.06 }, skin: C.skin, ombra: '#B58263', linea: '#7E4E3C',
     eye: { x: 0.033, y: 0.008, w: 0.0152, h: 0.0078, hl: 0.0042, tilt: -0.02, ir: 0.006, iris: '#4E6A78', lash: '#241A16', lashW: 0.002, hood: true, borse: true, open0: 0.72 },
@@ -109,18 +119,21 @@ export function ispettore({ guanti = false } = {}) {
     c.lineWidth = 4; for (const s of [-1, 1]) { c.beginPath(); c.moveTo(w / 2 + s * 44, 420); c.lineTo(w / 2 + s * 96, 412); c.stroke(); } });
   const capM = mat(C.cappotto), capD = mat(C.cappottoDk);
   const lim = chiavi([[0, 0.82], [0.25, 0.76], [0.52, 0.6], [0.78, 0.84], [1.0, 1.36], [1.2, 1.56], [1.42, 1.7], [1.6, 1.5], [1.85, 1.95], [2.2, 2.2], [3.15, 2.22]]);
-  return uomo({ k: 1.05, largo: 1.06, C, F, torso: mat(0xffffff, { map: cappT }), manica: capM, manica2: capM, polsino: capD, cappotto: mat(C.cappotto, { side: THREE.DoubleSide }), guanti: guanti ? '#17171A' : null,
+  return uomo({ k: 1.05, largo: 1.06, C, F, corpo: modellato ? 'ispettore' : null, torso: mat(0xffffff, { map: cappT }), manica: capM, manica2: capM, polsino: capD, cappotto: mat(C.cappotto, { side: THREE.DoubleSide }), guanti: guanti ? '#17171A' : null,
     capelli: (T) => capelli(T, { polo: [0.15, 0.85, -0.5], scala: 1.03, limite: (ph) => lim(Math.abs(ph)), base: '#6E6C69', chiaro: '#A9A6A1', scuro: '#3B3A38', n: 760, seme: 15 }),
-    extra: ({ upper, AL, AR, k }) => {
+    extra: ({ upper, AL, AR, k, abito }) => {
       // colletto del cappotto alzato dietro al collo
-      add(upper, loft([{ y: 0.43 * k, rx: 0.12 * k, rz: 0.1 * k }, { y: 0.5 * k, rx: 0.085 * k, rz: 0.088 * k }], 20, { a0: 1.9, a1: Math.PI * 2 - 1.9 }), mat(C.cappottoDk, { side: THREE.DoubleSide }));
+      if (!abito) add(upper, loft([{ y: 0.43 * k, rx: 0.12 * k, rz: 0.1 * k }, { y: 0.5 * k, rx: 0.085 * k, rz: 0.088 * k }], 20, { a0: 1.9, a1: Math.PI * 2 - 1.9 }), mat(C.cappottoDk, { side: THREE.DoubleSide }));
       // distintivo in un portafoglio di pelle (di base nascosto): sta davanti alle dita, il pollice lo ferma sul davanti (posa della mano «tessera»)
       const d = new THREE.Group(); d.visible = false; AL.gH.add(d);
-      add(d, new THREE.BoxGeometry(0.084, 0.125, 0.008), mat('#3A2416'), V(0, -0.1425, -0.02));
-      const sc = add(d, new THREE.PlaneGeometry(0.062, 0.078), mat(0xffffff, { map: tex(128, 160, (c, w, h) => { c.clearRect(0, 0, w, h); c.fillStyle = C.oro; c.beginPath(); c.moveTo(64, 8); c.lineTo(112, 26); c.lineTo(108, 92); c.quadraticCurveTo(100, 136, 64, 154); c.quadraticCurveTo(28, 136, 20, 92); c.lineTo(16, 26); c.closePath(); c.fill();
+      if (abito) { const di = new THREE.Group(); di.position.set(0, 0.1425, 0.02); d.add(di); d.userData.dentro = di; }      // con la mano modellata il portafoglio si appoggia alle dita (vedi dopo)
+      const dd = d.userData.dentro || d;
+      add(dd, new THREE.BoxGeometry(0.084, 0.125, 0.008), mat('#3A2416'), V(0, -0.1425, -0.02));
+      const sc = add(dd, new THREE.PlaneGeometry(0.062, 0.078), mat(0xffffff, { map: tex(128, 160, (c, w, h) => { c.clearRect(0, 0, w, h); c.fillStyle = C.oro; c.beginPath(); c.moveTo(64, 8); c.lineTo(112, 26); c.lineTo(108, 92); c.quadraticCurveTo(100, 136, 64, 154); c.quadraticCurveTo(28, 136, 20, 92); c.lineTo(16, 26); c.closePath(); c.fill();
         c.strokeStyle = '#8A6A1E'; c.lineWidth = 5; c.stroke(); c.fillStyle = '#8A6A1E'; c.beginPath(); for (let i = 0; i < 10; i++) { const a = (i / 10) * Math.PI * 2 - Math.PI / 2, rr = i % 2 ? 11 : 26; c.lineTo(64 + Math.cos(a) * rr, 72 + Math.sin(a) * rr); } c.closePath(); c.fill();
         c.fillStyle = '#5E4712'; c.font = '700 15px Display'; c.textAlign = 'center'; c.fillText('POLIZIA', 64, 124); }), transparent: true }), V(0, -0.152, -0.0245)); sc.rotation.set(0, Math.PI, Math.PI);
       upper.userData.distintivo = d;
+      if (abito) AL.poseProprie = { tessera: presaPiatta(d, AL.manoMesh, 'tessera', { spessore: 0.004, verso: 0.0, inclina: 0.1 }) };      // la mano modellata tiene il portafoglio: dita dietro, pollice davanti
       // nell'altra mano: il fazzoletto bianco, la radio, il bagliore di una lama (solo un luccichio: la violenza resta lontana)
       const fz = add(AR.gH, sfera(1, 12), mat('#F3F1EA'), V(0, -0.085, -0.035), [0.062, 0.075, 0.03]); fz.visible = false;
       const rd = new THREE.Group(); rd.visible = false; AR.gH.add(rd);
@@ -156,9 +169,12 @@ export function elena() {
 
 // il telefono in mano (schermo acceso verso chi lo tiene): torna { g, schermo }
 export function telefono(P, lato = 'AR', colore = '#BFD6FF', dy = 0) {
-  const g = new THREE.Group(); P[lato].gH.add(g);
-  add(g, new THREE.BoxGeometry(0.072, 0.148, 0.009), mat('#15171B'), V(0, -0.085 + dy, -0.03));
-  const schermo = add(g, new THREE.PlaneGeometry(0.064, 0.136), basic(colore), V(0, -0.085 + dy, -0.0352)); schermo.rotation.y = Math.PI;
-  add(g, new THREE.CircleGeometry(0.011, 16), basic('#2C3038'), V(-0.018, -0.135 + dy, -0.0252)); add(g, new THREE.CircleGeometry(0.006, 12), basic('#0A0B0E'), V(-0.018, -0.135 + dy, -0.0251));   // l'obiettivo sul retro
+  const A = P[lato], g = new THREE.Group(); A.gH.add(g);
+  // con la mano modellata il telefono si appoggia alle dita (dal lato del palmo) e il pollice sta sullo schermo: i pezzi stanno in un gruppo interno centrato sul telefono
+  const d = A.manoMesh ? new THREE.Group() : g; if (A.manoMesh) { d.position.set(0, 0.085 - dy, 0.03); g.add(d); }
+  add(d, new THREE.BoxGeometry(0.072, 0.148, 0.009), mat('#15171B'), V(0, -0.085 + dy, -0.03));
+  const schermo = add(d, new THREE.PlaneGeometry(0.064, 0.136), basic(colore), V(0, -0.085 + dy, -0.0352)); schermo.rotation.y = Math.PI;
+  add(d, new THREE.CircleGeometry(0.011, 16), basic('#2C3038'), V(-0.018, -0.135 + dy, -0.0252)); add(d, new THREE.CircleGeometry(0.006, 12), basic('#0A0B0E'), V(-0.018, -0.135 + dy, -0.0251));   // l'obiettivo sul retro
+  if (A.manoMesh) A.poseProprie = { ...(A.poseProprie || {}), filma: presaPiatta(g, A.manoMesh, 'filma', { spessore: 0.0045, largo: 0.072, alto: 0.148, verso: 0.012, dove: 0.3, inclina: 0.2 }) };
   return { g, schermo };
 }

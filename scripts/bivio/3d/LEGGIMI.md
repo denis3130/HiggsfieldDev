@@ -167,12 +167,52 @@ che per le sessioni precedenti e future, devi fare i modelli in quel modo». Val
 
 Cosa ne ho dedotto io (non sono parole sue, da correggere se dice altro):
 - «I modelli» sono prima di tutto le mani; lo stesso metodo vale per ogni parte del corpo o oggetto che si vede da vicino.
-- Lo stile dei personaggi che ha già approvato (versione 3, variante adulta) resta com'è finché non lo dice lui.
-- Dal prossimo episodio le mani si fanno così in tutte le scene. Nell'episodio 1 la mano modellata c'è solo nella carta A; le altre scene
-  hanno la mano a pezzi e non le ha contestate. Per farlo servono: le pose che oggi sono solo della mano a pezzi (telefono, distintivo,
-  bocca, dito sulle labbra) riscritte per `cinematica` e provate in `prova_mesh/`; la mano sinistra (`attacca(T.AR)` la specchia, ma
-  finora si è vista solo la destra); il tempo per fotogramma nelle scene in movimento, da misurare prima di un render intero (la mano si
-  ricalcola a ogni fotogramma: ossa, suddivisione, normali).
+- Teste, facce disegnate e capelli (già approvati) restano come sono; corpo, vestiti e scarpe li ha poi chiesti lui (sezione qui sotto).
+- Fatto la sera stessa (vedi «Corpo, vestiti e scarpe modellati»): la mano modellata sta su tutti e due i polsi in tutte le scene, con le
+  pose della mano a pezzi tradotte (`posaDaPupazzo`) e gli oggetti (distintivo, telefono) appoggiati alle dita vere.
+
+## Corpo, vestiti e scarpe modellati (25/11 sera): «ok migliora scarpe e vestiti corpo dei pg come con la mano»
+
+Dopo la mano, l'utente ha chiesto lo stesso per corpo, vestiti e scarpe. Teste, facce e capelli restano quelli di prima (non li ha nominati).
+- **Da dove vengono i modelli.** Corpo umano, vestiti e scarpe sono di MakeHuman, licenza CC0 (`cast/sets/corpi/LICENZE.md`: fonti, autori,
+  come riscaricare). Il corpo (maglia «hm08», forme, scheletro) sta nel pacchetto Python `anny`; i vestiti in dotazione a MakeHuman nel
+  pacchetto npm `makehuman-data`. GitHub da qui non si raggiunge (solo il repository del progetto), i registri npm e PyPI sì.
+- **Il convertitore** (`cast/sets/corpi/converti_corpo.py <mpfb2> <vestiti> <uscita> [personaggio]`, con `mh.py`, `maglia.py`, `pittura.py`):
+  dà la forma al corpo (uomo giovane per il testimone, più anziano e pesante per l'ispettore), adatta i vestiti al corpo (ogni vertice di un
+  vestito è legato a tre vertici del corpo: ne segue la forma e ne eredita i pesi delle ossa), toglie la pelle sotto i vestiti (ma la lascia
+  per 4-5 cm oltre i bordi, un filo più in dentro: niente buchi al colletto), toglie testa e mani, riduce le 163 ossa di MakeHuman a 34,
+  liscia (Catmull-Clark) e scrive `<personaggio>.json` + `.bin`. I personaggi e i loro vestiti sono in `PERSONAGGI` in cima al file.
+- **Il cappotto dell'ispettore** (serve alla storia: «un uomo con un cappotto scuro») è la giacca del completo allungata (`cappotto()`):
+  dall'orlo della giacca, dagli stessi vertici, scende una falda fino al ginocchio; lo spacco dietro continua, l'incavo davanti si chiude.
+  La falda si DISEGNA con le gambe dritte e poi si riporta nella posa di riposo (gambe larghe) col contrario del movimento delle ossa: se la
+  si disegna a gambe larghe viene una campana. Il completo non si liscia (`'vestito': 0`): lisciando, la camicia buca i risvolti.
+- **I colori** (`pittura.py`, `dipingi()` nel convertitore): le texture originali sono foto; si ridipingono coi colori piatti del
+  personaggio tenendo del disegno solo cuciture, tasche, lacci e suole. La maglietta è a tinta unita con colletto e orli più scuri disegnati
+  lungo i bordi veri della maglia; la cravatta è dipinta dove l'originale ha le righe; falda del cappotto e pezzi a tinta unita usano un
+  quadratino di colore messo in un angolo libero della texture (`tinta()`). Le pieghe dei jeans e della maglietta sono la mappa delle normali originale.
+- **Sul pupazzo** (`cast/sets/corpo_mesh.js`, `vesti()`): il pupazzo di `pupazzi.js`/`adulti.js` resta, invisibile, e fa da ossa: stesse pose e
+  stessi comandi delle scene. `uomo({ corpo: 'testimone' })` in `adulti.js` lo veste; `testimone({ modellato: false })` ridà quello vecchio.
+  Le gambe del pupazzo prendono le misure del corpo modellato; braccia, busto e testa restano i suoi (il braccio modellato viene allungato
+  del 18%). Ogni osso ha un telaio a riposo (dai giunti di MakeHuman) e uno in posa (dal pupazzo); la pelle è la somma pesata. Braccio e
+  avambraccio hanno due ossa ciascuno: in alto non torcono, in basso seguono gomito e mano (così la manica non si attorciglia). Busto e
+  collo si piegano a tratti attorno ai due perni del pupazzo. Le normali si calcolano sui punti, non sui vertici: le cuciture degli uv non si vedono.
+- **Collo e testa**: il collo modellato entra nella testa disegnata. Quel che della testa modellata sporgerebbe (mento, mascella) viene tirato
+  dentro la forma della testa (`raggioTesta` in `pupazzi.js`) e i triangoli che finiscono dentro si tolgono.
+- **Mani e polsi**: su tutti e due i polsi c'è la mano modellata (`manoMesh({ taglio: true })`); tra il bordo della mano e il bordo
+  dell'avambraccio c'è un raccordo di pelle che parte dai vertici dell'una e arriva sui lati dell'altro (`fasce` in `vesti()`), con le
+  normali dei due bordi: nessuna riga al polso, nemmeno quando si piega. Le pose della mano a pezzi (`rilassata`, `presa`, `pugno`…) sono
+  tradotte da `posaDaPupazzo` in `mano_mesh.js`. La carta A resta fatta con `attacca()` (mano e avambraccio suoi), identica a quella approvata.
+- **Oggetti in mano** (`presaPiatta`, `appoggiaSulleDita` in `corpo_mesh.js`): distintivo e telefono si appoggiano alle dita dal lato del
+  palmo e il pollice si chiude sulla faccia davanti; un po' inclinati, perché il palmo non è piatto. Con le posizioni pensate per la mano a
+  pezzi le dita li attraversavano.
+- **Laboratori**: `prova_corpo/` (testimone) e `prova_ispettore/` (stesso `film.js`, in `film.json` c'è `"chi": "ispettore"`): da 0 a 10 s
+  le pose da sei punti, da 10 a 20 collo e mani, da 20 a 30 polso e spalla, da 30 a 40 cappotto in chiaro e oggetti in mano.
+  `cast4/` + `scheda_corpi.py`: la scheda prima/dopo mandata all'utente.
+- **Confronto con foto vere**: `cerca.py` (nella cartella di lavoro `foto_rif/`) scarica da Openverse foto CC0 di scarpe, maglietta e jeans;
+  messe accanto ai provini: suola, lacci e punta delle scarpe, lunghezza delle maniche, dove arriva l'orlo della maglietta, pieghe.
+- **Errori da non rifare**: tagliare il collo coi pesi della testa (sotto il mento resta un buco: i pesi della testa scendono fin lì);
+  lisciare il completo; disegnare la falda nella posa di riposo; usare per gli oggetti le posizioni della mano a pezzi; un quadratino di
+  tinta messo a caso nella texture (finiva su una manica).
 
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 

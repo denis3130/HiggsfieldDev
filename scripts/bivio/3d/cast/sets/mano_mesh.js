@@ -5,6 +5,7 @@
 // Spazio del modello (mano DESTRA): dita verso -y, dorso verso +x, pollice verso -z; il polso è in POLSO. Angoli in gradi.
 import { THREE, V } from './stile.js';
 import DATI from './mani/mano_destra.js';
+import { POSE_MANO, K_DITA } from './pupazzi.js';
 
 const NOMI = DATI.ossa, K = Object.fromEntries(NOMI.map((n, i) => [n, i])), NO = NOMI.length, NV = DATI.pos.length / 3;
 const m4 = (a) => new THREE.Matrix4().fromArray(a), RIP = DATI.riposo.map(m4), INV = DATI.inversa.map(m4);
@@ -55,6 +56,16 @@ function cuciAvambraccio(av, fine, idxFine, { anelli = 34, spicchi = 44, raccord
   const fuori = (a, b, c) => { const A = P3(a), Bq = P3(b), C = P3(c), ux = Bq[0] - A[0], uy = Bq[1] - A[1], uz = Bq[2] - A[2], vx = C[0] - A[0], vy = C[1] - A[1], vz = C[2] - A[2], nx = uy * vz - uz * vy, nz = ux * vy - uy * vx; return nx * ((A[0] + Bq[0] + C[0]) / 3 - AX) + nz * ((A[2] + Bq[2] + C[2]) / 3 - AZ) > 0; };
   const gira = !fuori(nuovi[0], nuovi[1], nuovi[2]); for (let t = 0; t < nuovi.length; t += 3) idx.push(nuovi[t], gira ? nuovi[t + 2] : nuovi[t + 1], gira ? nuovi[t + 1] : nuovi[t + 2]);
   return { pos: Float32Array.from(pos), idx: Uint32Array.from(idx), bordo: `${nb}/${vicini.size}` };
+}
+// Solo il TAGLIO del moncone del polso (per il corpo modellato: il polso lo continua corpo_mesh.js): i triangoli sotto YT e il giro del bordo, in ordine.
+function tagliaPolso(fine, idxFine) {
+  const YT = 0.06, nf = fine.length / 3, tenuti = [], lati = new Map();
+  for (let t = 0; t < idxFine.length; t += 3) { const a = idxFine[t], b = idxFine[t + 1], c = idxFine[t + 2]; if (fine[a * 3 + 1] > YT || fine[b * 3 + 1] > YT || fine[c * 3 + 1] > YT) continue; tenuti.push(a, b, c);
+    for (const [u, w] of [[a, b], [b, c], [c, a]]) { const k = u < w ? u * nf + w : w * nf + u; lati.set(k, (lati.get(k) || 0) + 1); } }
+  const vicini = new Map(); for (const [k, n] of lati) if (n === 1) { const u = Math.floor(k / nf), w = k % nf; for (const [p, q] of [[u, w], [w, u]]) { if (!vicini.has(p)) vicini.set(p, []); vicini.get(p).push(q); } }
+  const visti = new Set(); let bordo = [];
+  for (const v0 of vicini.keys()) { if (visti.has(v0)) continue; const giro = [v0]; visti.add(v0); let prev = -1, cur = v0; for (;;) { const nx = vicini.get(cur).find((q) => q !== prev && !visti.has(q)); if (nx === undefined) break; giro.push(nx); visti.add(nx); prev = cur; cur = nx; } if (giro.length > bordo.length) bordo = giro; }
+  return { idx: Uint32Array.from(tenuti), bordo };
 }
 const LOC = RIP.map(() => null);                                   // ogni osso rispetto a quello prima nella catena, a riposo
 Object.values(CATENE).forEach((c) => c.forEach((k, i) => { if (i) LOC[k] = RIP[c[i - 1]].clone().invert().multiply(RIP[k]); }));
@@ -193,15 +204,16 @@ function pittura(livelli, skin, unghia, o = {}) {
 }
 
 // La mano pronta: un gruppo nello spazio del modello. userData.posa(P) la piega; userData.ossa = matrici delle ossa nella posa attuale.
-export function manoMesh({ skin = '#D9A583', unghia = '#EBC6B3', livelli = 2, pittura: op = {}, materiale = null, avambraccio = null, allunga = false, rilievo = 1 } = {}) {
+export function manoMesh({ skin = '#D9A583', unghia = '#EBC6B3', livelli = 2, pittura: op = {}, materiale = null, avambraccio = null, allunga = false, rilievo = 1, taglio = false } = {}) {
   const g = new THREE.Group(), geo = new THREE.BufferGeometry(), POSA = RIP.map((m) => m.clone()), base = new Float32Array(NV * 3), P0 = posizioni(allunga && !avambraccio);
   let tmp = [new Float32Array((T0.nv + T0.ne) * 3), new Float32Array((T1.nv + T1.ne) * 3), new Float32Array((T2.nv + T2.ne) * 3)];
   const nfin = livelli ? TOPO[livelli - 1].nv + TOPO[livelli - 1].ne : NV, colori = pittura(livelli, skin, unghia, op);
   const tubo = avambraccio ? cuciAvambraccio(avambraccio, liscia(Float32Array.from(DATI.pos), livelli), INDICI[livelli]) : null, nt = tubo ? tubo.pos.length / 3 : 0;
+  const tag = !avambraccio && taglio ? tagliaPolso(liscia(Float32Array.from(DATI.pos), livelli), INDICI[livelli]) : null;
   const attr = new THREE.BufferAttribute(new Float32Array((nfin + nt) * 3), 3), col = new Float32Array((nfin + nt) * 3); col.set(colori); if (nt) { const c = new THREE.Color(skin); for (let v = nfin; v < nfin + nt; v++) { col[v * 3] = c.r; col[v * 3 + 1] = c.g; col[v * 3 + 2] = c.b; } }
-  geo.setAttribute('position', attr); geo.setAttribute('color', new THREE.BufferAttribute(col, 3)); geo.setIndex(new THREE.BufferAttribute(tubo ? tubo.idx : INDICI[livelli], 1));
+  geo.setAttribute('position', attr); geo.setAttribute('color', new THREE.BufferAttribute(col, 3)); geo.setIndex(new THREE.BufferAttribute(tubo ? tubo.idx : tag ? tag.idx : INDICI[livelli], 1));
   const mesh = new THREE.Mesh(geo, materiale || new THREE.MeshLambertMaterial({ color: 0xffffff, vertexColors: true })); mesh.frustumCulled = false; g.add(mesh);
-  g.userData.ossa = POSA; g.userData.mesh = mesh; g.userData.pezzi = [mesh]; g.userData.bordo = tubo ? tubo.bordo : 0;
+  g.userData.ossa = POSA; g.userData.mesh = mesh; g.userData.pezzi = [mesh]; g.userData.bordo = tubo ? tubo.bordo : 0; g.userData.bordoPolso = tag ? tag.bordo : null;
   g.userData.posa = (P = {}) => { cinematica(P, POSA); let p = pelle(POSA, P0, base); for (let i = 0; i < livelli; i++) p = suddividi(p, TOPO[i], tmp[i]); const a = attr.array; a.set(p);
     if (nt) { const e = SK[K.wrist].elements, q = tubo.pos; for (let v = 0; v < nt; v++) { const x = q[v * 3], y = q[v * 3 + 1], z = q[v * 3 + 2], o = (nfin + v) * 3; a[o] = e[0] * x + e[4] * y + e[8] * z + e[12]; a[o + 1] = e[1] * x + e[5] * y + e[9] * z + e[13]; a[o + 2] = e[2] * x + e[6] * y + e[10] * z + e[14]; } }
     if (rilievo) { const cen = [];                    // le nocche: la pelle si alza sopra le giunture delle dita (di più a pugno chiuso)
@@ -219,14 +231,16 @@ export const INFO = { vertici: NV, triangoli: DATI.idx.length / 3, lisciati: [T0
 // e il dorso verso +z; il modello è la mano destra (braccio con side -1), l'altro braccio la usa allo specchio. Scala 1,1: una mano adulta di 19,5 cm.
 // Con braccio: true (maniche corte) la mano modellata fa anche l'avambraccio, fino al gomito, e quello a pezzi sparisce: nessuna giuntura al polso.
 export function attacca(A, { scala = 1.1, braccio = true, ...o } = {}) {
+  const prima = [A.hand.visible, A.gF.children[0].visible, A.gF.children[1] ? A.gF.children[1].visible : false];
   if (braccio && A.liscio) { o.avambraccio = { lungo: A.L2 / scala, gomito: A.r1 * 0.94 / scala }; A.gF.children[0].visible = false; A.gF.children[1].visible = false; } else o.allunga = true;      // l'avambraccio lo fa la mano modellata
   const m = manoMesh(o), X = new THREE.Matrix4().makeBasis(V(0, 0, 1), V(0, 1, 0), V(-1, 0, 0)).scale(V(scala, scala, scala)); X.setPosition(POLSO.clone().applyMatrix4(X).negate());
   if (A.side > 0) X.premultiply(new THREE.Matrix4().makeScale(-1, 1, 1));
+  m.userData.prima = prima;
   m.matrixAutoUpdate = false; m.matrix.copy(X); A.gH.add(m); A.hand.visible = false; m.userData.scala = scala; m.userData.braccio = A;
   return m;
 }
 // Toglie la mano modellata e rimette il braccio com'era (per un set che serve anche ad altre inquadrature).
-export function stacca(m) { const A = m.userData.braccio; A.gH.remove(m); A.hand.visible = true; if (A.liscio) { A.gF.children[0].visible = true; A.gF.children[1].visible = true; } for (const x of m.userData.pezzi) { x.geometry.dispose(); x.material.dispose(); } }
+export function stacca(m) { const A = m.userData.braccio, pr = m.userData.prima || [true, true, true]; A.gH.remove(m); A.hand.visible = pr[0]; if (A.liscio) { A.gF.children[0].visible = pr[1]; A.gF.children[1].visible = pr[2]; } for (const x of m.userData.pezzi) { x.geometry.dispose(); x.material.dispose(); } }
 // La presa «a pugno» su un bastone: dove passa il suo asse rispetto alle nocche, per l'indice e (un po' meno, k) per il mignolo.
 // u = verso le punte delle dita, v = verso il palmo (metri del modello). Più v è grande più le nocche si alzano e le dita avvolgono.
 const N_INDICE = V(0.0318, -0.0328, -0.0144), N_MIGNOLO = V(0.0254, -0.0181, 0.0442);
@@ -246,4 +260,28 @@ export function nelModello(m, a, b, r) {
   m.updateWorldMatrix(true, false); mi.copy(m.matrixWorld).invert(); const A = m.userData.braccio, s = m.userData.scala;
   A.gF.getWorldPosition(e1); A.gH.getWorldPosition(e2); const av = e2.sub(e1).normalize().transformDirection(mi).toArray();
   return { leva: a ? { a: V(...a).applyMatrix4(mi).toArray(), b: V(...b).applyMatrix4(mi).toArray(), r: r / s } : null, avambraccio: av };
+}
+
+// ---- le pose della mano a pezzi (pupazzi.js: nome o { dita, pollice, apri, k }) tradotte per la mano modellata: così le scene non cambiano.
+const R2G = 180 / Math.PI;
+const POSE_PROPRIE = {
+  // un tesserino tenuto contro le dita distese, il pollice lo ferma sul davanti
+  tessera: { indice: { mcp: 4, pip: 3, dip: 2, ab: 4 }, medio: { mcp: 3, pip: 2, dip: 2 }, anulare: { mcp: 4, pip: 3, dip: 2 }, mignolo: { mcp: 6, pip: 4, dip: 3, ab: -5 }, pollice: { ab: 52, fl: 26, roll: 55, mcp: 12, ip: 8 } },
+  // un telefono tenuto in mano per filmare: appoggiato alle dita appena piegate, il pollice sullo schermo (lo chiude presaPiatta di corpo_mesh.js)
+  filma: { indice: { mcp: 8, pip: 10, dip: 8, ab: 3 }, medio: { mcp: 8, pip: 10, dip: 8 }, anulare: { mcp: 9, pip: 11, dip: 8 }, mignolo: { mcp: 10, pip: 12, dip: 8, ab: -4 }, pollice: { ab: 48, fl: 22, roll: 55, mcp: 8, ip: 12 } },
+  // le dita attorno a una sbarra (maniglia): per la presa precisa su una maniglia vera si usa afferra()
+  leva: { indice: { mcp: 44, pip: 92, dip: 58 }, medio: { mcp: 46, pip: 94, dip: 60 }, anulare: { mcp: 46, pip: 94, dip: 60 }, mignolo: { mcp: 46, pip: 92, dip: 58 }, pollice: { ab: 45, fl: 34, roll: 75, mcp: 30, ip: 40 } },
+};
+export function posaDaPupazzo(p = 'rilassata') {
+  if (typeof p === 'string' && POSE_PROPRIE[p]) return POSE_PROPRIE[p];
+  if (p && typeof p === 'object' && (p.indice || p.pollice?.ab !== undefined)) return p;                    // già una posa della mano modellata
+  const P = typeof p === 'string' ? POSE_MANO[p] || POSE_MANO.rilassata : { ...POSE_MANO.rilassata, ...p }, k = P.k || K_DITA, Q = {};
+  QUATTRO.forEach((f, i) => { const c = P.dita[i]; Q[f] = { mcp: Math.min(88, c * k[0] * R2G), pip: Math.min(108, c * k[1] * R2G), dip: Math.min(72, c * k[2] * R2G), ab: (1.5 - i) * 0.075 * (P.apri ?? 0.3) * R2G }; });
+  const tc = P.pollice ?? 0.3, fl = P.fletti ?? tc; Q.pollice = { ab: 10 + 21 * tc, fl: 23 * tc, roll: 0, mcp: 5 + 26 * fl, ip: 5 + 42 * fl };
+  return Q;
+}
+// la matrice che mette la mano modellata (destra) nel gruppo della mano di un braccio del pupazzo (lato -1 = destra; l'altra allo specchio)
+export function matriceMano(lato, scala = 1.1) {
+  const X = new THREE.Matrix4().makeBasis(V(0, 0, 1), V(0, 1, 0), V(-1, 0, 0)).scale(V(scala, scala, scala)); X.setPosition(POLSO.clone().applyMatrix4(X).negate());
+  if (lato > 0) X.premultiply(new THREE.Matrix4().makeScale(-1, 1, 1)); return X;
 }
