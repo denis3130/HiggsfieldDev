@@ -38,6 +38,7 @@ const POSE = [
   { nome: 'telefonata a terra', centro: [0.05, 0.5, 0.05], raggio: 2.3, posa: TERRA },
   { nome: 'telefonata in piedi (spalla)', centro: [0.2, 1.42, 0.02], raggio: 1.5, posa: { telefono: 1, armR: TERRA.armR } },
   ...[[1, -0.6, 0.0], [1, -0.3, -0.2], [0.8, -1, -0.1], [1, -0.8, 0.2]].map((g) => ({ nome: 'telefonata, gomito ' + g.join(' '), centro: [0.2, 1.42, 0.02], raggio: 1.5, posa: { telefono: 1, armR: { ...TERRA.armR, gomito: g } } })),
+  { nome: 'fianco destro (la borsa di Elena)', centro: [-0.16, 1.0, -0.04], raggio: 1.3, posa: {} },
 ];
 function scatto(c, set, o, x, y, wd, hg) { c.save(); c.translate(x, y); c.beginPath(); c.rect(0, 0, wd, hg); c.clip(); set.camera.aspect = wd / hg; c.scale(wd / W, hg / H); G.renderSet(c, set, 0, 0, o); c.restore(); }
 M.film({ fonts: [M.font(20, 700, 'Display')], samples: 1,
