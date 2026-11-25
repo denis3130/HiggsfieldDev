@@ -8,7 +8,7 @@
 import * as G from '../lib/gl.js';
 import * as M from '../lib/motion.js';
 import { THREE, V, rnd, tex, mat, piatto as basic, sfera, add, tra, luci, ombre, alone, PI } from './stile.js';
-import { testimone, ispettore } from './adulti.js';
+import { testimone, ispettore , telefono } from './adulti.js';
 import { assi } from './cucina3.js';
 import { mix } from './pupazzi.js';
 
@@ -82,8 +82,7 @@ export function ingressoSet() {
   const lExtra = new THREE.PointLight('#FFE6C4', 0, 2.4, 1.2); scene.add(lExtra);          // una luce in più da mettere dove serve (le immagini delle carte)
   const T = testimone(); scene.add(T.group);
   // il telefono nella sua mano (schermo acceso verso di lui)
-  const tel = new THREE.Group(); T.AR.gH.add(tel);
-  add(tel, new THREE.BoxGeometry(0.072, 0.148, 0.009), mat('#15171B'), V(0, -0.085, -0.03)); const sch = add(tel, new THREE.PlaneGeometry(0.064, 0.136), basic('#BFD6FF'), V(0, -0.085, -0.0352)); sch.rotation.y = Math.PI;
+  const tel = telefono(T, 'AR').g;
   const tmp = V(0, 0, 0);
   return { scene, camera: cam, bloom: 0, T,
     update(t, u, o = {}) {
@@ -94,6 +93,7 @@ export function ingressoSet() {
       P.visible = o.porta !== false; alOcchio.visible = P.visible; lOcchio.intensity = o.occhio || 0;
       L.A.intensity = (o.amb ?? 0.2) * PI; L.F.intensity = (o.fronte ?? 0.1) * PI;
       if (o.luce) { lExtra.position.set(...o.luce.pos); lExtra.intensity = o.luce.k ?? 1; lExtra.color.set(o.luce.colore || '#FFE6C4'); } else lExtra.intensity = 0;
+      tel.visible = (o.telefono ?? 1) > 0;                    // prima della posa: la mano modellata prende la presa del telefono se si vede
       T.pose(o.tu || { pos: [0, 0, -0.9], yaw: Math.PI });
       T.AR.gH.getWorldPosition(tmp); lTel.position.set(tmp.x, tmp.y + 0.08, tmp.z - 0.05); lTel.intensity = 0.3 * (o.telefono ?? 1);
       tel.visible = (o.telefono ?? 1) > 0;

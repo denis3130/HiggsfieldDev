@@ -180,10 +180,11 @@ function sequenza() {
   sc(r(17) - 0.15, (t, k) => { const c = t < buio ? 1 : 0, via = io(prog(t, r(17), buio));
     return { set: 'F', id: 'spegni', pioggia: 1, cucina: c, tenda: 1, telTu: 1, telFuori: 1, cam: camGiu, look: [WX, FY + 1.55, 0], fov: lerp(12.5, 11.5, k), fronte: 0.1, riva: lontano, elena: { nascosta: true },
       tu: tuTel(t, { pos: [WX + 0.04 + 0.5 * via, FY, -0.52 - 0.5 * via], headPitch: 0.1, armR: undefined }) }; });
+  // (il telefono all'orecchio: di traverso nella mano, le dita lo avvolgono da dietro: posa «orecchio»)
   const tuTerra = (t, x = {}) => ({ pos: [WX + 0.12, FY, -0.5], yaw: Math.PI - 0.35, sit: 1, sedile: 0.03, gambe: { aL: 0.62, gL: 0.85, aR: 0.5, gR: 0.72 }, lean: 0.14, breathe: Math.sin(t * 4.2), blink: battito(t, 5), fear: 0.8, browUp: 0.4,
-    armR: { a: [0.118, 0.555, 0.045], gomito: [1, -0.7, 0.3], dita: [0, 1, -0.15], dorso: [1, 0, 0], mano: 'presa' }, armL: { a: [-0.1, 0.06, 0.3], gomito: [-1, -0.4, 0], mano: 'presa' }, ...x });
+    armR: { a: [0.112, 0.56, 0.14], gomito: [0.55, -1, 0.35], dita: [0, 0.33, -0.94], dorso: [1, 0, 0], mano: 'orecchio' }, armL: { a: [-0.1, 0.06, 0.3], gomito: [-1, -0.4, 0], mano: 'presa' }, ...x });
   sc(r(18) - 0.2, (t, k) => ({ set: 'F', id: 'terra', interno: 1, cucina: 0, telTu: 1, fronte: 0.2, cam: v3([WX - 0.75, FY + 0.78, -2.5], [WX - 0.6, FY + 0.78, -2.25], io(k)), look: [WX + 0.1, FY + 0.6, -0.6], fov: 38,
-    tu: tuTerra(t, { mouth: 0.18 + 0.16 * Math.sin(t * 13) * Math.sin(t * 5.1), headYaw: 0.25 * Math.sin(t * 1.3) }) }));
+    tu: tuTerra(t, { yaw: Math.PI + 0.22, mouth: 0.18 + 0.16 * Math.sin(t * 13) * Math.sin(t * 5.1), headYaw: -0.12 + 0.25 * Math.sin(t * 1.3) }) }));      // girato verso la camera: il braccio del telefono si vede di fronte
   const agente = w(20, 'agente') - 0.15;
   sc(r(19) - 0.1, (t, k) => { const sol = io(prog(t, w(20, 'fortunato'), w(20, 'fortunato', 1) + 0.3));
     return { set: 'F', id: 'ascolta', interno: 1, cucina: 0, telTu: 1, fronte: 0.26, cam: v3([WX + 0.58, FY + 0.92, -1.8], [WX + 0.5, FY + 0.92, -1.62], io(k)), look: [WX + 0.14, FY + 0.84, -0.6], fov: 30,

@@ -162,6 +162,7 @@ export function fuoriSet() {
       L.F.intensity = PI * (o.fronte ?? (dn ? (k > 0.5 ? 0.3 : 0.12) : 0.15));
       SP.intensity = 15 * (o.lampione ?? 1); cono.material.opacity = 0.055 * (o.lampione ?? 1);
       grigia.cofano(o.cofano || 0);
+      tel.g.visible = M.clamp(o.telTu ?? 0) > 0; tel.g.rotation.z = o.telFuori ? -Math.PI / 2 : 0;          // prima della posa: la mano modellata prende la presa dell'oggetto che si vede
       T.pose(o.tu || { pos: [WX, FY, -0.55] });
       R.pose(o.riva || { pos: [ZUFFA[0] - 0.35, 0, ZUFFA[2]], yaw: Math.PI / 2 });
       const e = o.elena || { pos: [ZUFFA[0] + 0.35, 0, ZUFFA[2]], yaw: -Math.PI / 2 };
@@ -173,6 +174,7 @@ export function fuoriSet() {
       // telFuori: il telefono che filma. Sta dritto, di traverso dietro le dita (posa della mano «filma», dita orizzontali e dorso verso fuori):
       // da fuori si vedono il dorso della mano, le dita sul retro del telefono e l'obiettivo che sporge sopra l'indice
       const tk = M.clamp(o.telTu ?? 0), tf = !!o.telFuori; tel.g.visible = tk > 0; tel.g.rotation.z = tf ? -Math.PI / 2 : 0; tel.g.position.set(tf ? 0.055 : 0, tf ? -0.128 : 0, tf ? 0.0145 : 0); T.group.updateMatrixWorld(true);
-      tel.schermo.getWorldPosition(tmp); tel.schermo.getWorldDirection(dir); LT.position.copy(tmp).addScaledVector(dir, 0.24); LT.intensity = (o.telFuori ? 0.5 : 0.8) * tk;
+      tel.schermo.getWorldPosition(tmp); tel.schermo.getWorldDirection(dir); const orecchio = T.AR.posaMano === 'orecchio';      // all'orecchio lo schermo è contro la testa: fa solo un po' di chiarore
+      LT.position.copy(tmp).addScaledVector(dir, orecchio ? -0.1 : 0.24); LT.intensity = (orecchio ? 0.12 : o.telFuori ? 0.5 : 0.8) * tk;
     } };
 }

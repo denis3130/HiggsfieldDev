@@ -178,10 +178,27 @@ Dopo la mano, l'utente ha chiesto lo stesso per corpo, vestiti e scarpe. Teste, 
   come riscaricare). Il corpo (maglia «hm08», forme, scheletro) sta nel pacchetto Python `anny`; i vestiti in dotazione a MakeHuman nel
   pacchetto npm `makehuman-data`. GitHub da qui non si raggiunge (solo il repository del progetto), i registri npm e PyPI sì.
 - **Il convertitore** (`cast/sets/corpi/converti_corpo.py <mpfb2> <vestiti> <uscita> [personaggio]`, con `mh.py`, `maglia.py`, `pittura.py`):
-  dà la forma al corpo (uomo giovane per il testimone, più anziano e pesante per l'ispettore), adatta i vestiti al corpo (ogni vertice di un
-  vestito è legato a tre vertici del corpo: ne segue la forma e ne eredita i pesi delle ossa), toglie la pelle sotto i vestiti (ma la lascia
-  per 4-5 cm oltre i bordi, un filo più in dentro: niente buchi al colletto), toglie testa e mani, riduce le 163 ossa di MakeHuman a 34,
-  liscia (Catmull-Clark) e scrive `<personaggio>.json` + `.bin`. I personaggi e i loro vestiti sono in `PERSONAGGI` in cima al file.
+  dà la forma al corpo (uomo giovane per il testimone, più anziano e pesante per l'ispettore, donna giovane per Elena), adatta i vestiti al
+  corpo (ogni vertice di un vestito è legato a tre vertici del corpo: ne segue la forma e ne eredita i pesi delle ossa), toglie la pelle
+  sotto i vestiti (ma ne lascia un giro oltre i bordi, un filo più in dentro: niente buchi al colletto e all'orlo delle maniche), toglie
+  testa e mani, riduce le 163 ossa di MakeHuman a 38, liscia (Catmull-Clark) e scrive `<personaggio>.json` + `.bin`. I personaggi e i loro
+  vestiti sono in `PERSONAGGI` in cima al file. Rifatta due volte, la conversione dà file identici byte per byte.
+- **Elena** (la donna del parcheggio) è fatta allo stesso modo: corpo di donna, lo stesso completo adattato al suo corpo e dipinto come
+  cappotto rosso su maglia scura, scarpe nere. La **borsa a tracolla** è un modello suo (`tracolla()` nel convertitore, niente di scaricato):
+  corpo morbido e patta (due gabbie lisciate), appesa al fianco destro un po' indietro, e la cinghia che passa sulla spalla sinistra. La
+  cinghia corre come una cinghia tesa: nel suo piano fa il giro più corto attorno al busto (l'involucro convesso del cappotto tagliato da
+  quel piano), appoggiata alla stoffa coi due bordi; si muove col cappotto (stessi pesi delle ossa), la borsa col bacino.
+- **Spalle a tappe** (`catena_spalla()` nel convertitore, `TAPPE` in `corpo_mesh.js`). Tra il busto, che sta fermo, e il braccio, che gira
+  del tutto, i pesi di MakeHuman sfumano in linea retta: col braccio portato in avanti di 60-70 gradi (una telefonata) la stoffa a metà
+  strada rientrava e si accartocciava, e la spalla sembrava una palla staccata dal busto. Ora la sfumatura passa per tre ossa intermedie
+  (`spalla25`, `spalla`, `spalla75`) che fanno un quarto, metà e tre quarti della rotazione del braccio attorno alla spalla: ogni punto gira
+  della sua frazione lungo l'arco. `stringi` (1,8) concentra il movimento verso il braccio: vicino al collo la stoffa non viene più
+  trascinata. In più: `ammorbidisci()` liscia i pesi attorno alle spalle lungo la maglia del vestito; `maniche` (0,55 per il testimone)
+  avvicina la manica al braccio (larga, a braccio alzato sembrava gonfia), tenendola almeno 4 mm sopra la pelle.
+- **Quale pelle sta sotto la stoffa.** Oltre ai vertici che il vestito dice di nascondere si tolgono quelli che hanno stoffa lungo la loro
+  normale entro 3,5 cm (semiretta contro i triangoli del vestito: il punto di stoffa più vicino non basta, con una manica aderente sta di
+  lato). Della pelle nascosta resta sempre il giro di vertici che tocca quella visibile: sul braccio la maglia del corpo è rada e una
+  distanza fissa (2 cm) lasciava un buco tra la pelle e l'orlo della manica.
 - **Il cappotto dell'ispettore** (serve alla storia: «un uomo con un cappotto scuro») è la giacca del completo allungata (`cappotto()`):
   dall'orlo della giacca, dagli stessi vertici, scende una falda fino al ginocchio; lo spacco dietro continua, l'incavo davanti si chiude.
   La falda si DISEGNA con le gambe dritte e poi si riporta nella posa di riposo (gambe larghe) col contrario del movimento delle ossa: se la
@@ -202,17 +219,29 @@ Dopo la mano, l'utente ha chiesto lo stesso per corpo, vestiti e scarpe. Teste, 
   dell'avambraccio c'è un raccordo di pelle che parte dai vertici dell'una e arriva sui lati dell'altro (`fasce` in `vesti()`), con le
   normali dei due bordi: nessuna riga al polso, nemmeno quando si piega. Le pose della mano a pezzi (`rilassata`, `presa`, `pugno`…) sono
   tradotte da `posaDaPupazzo` in `mano_mesh.js`. La carta A resta fatta con `attacca()` (mano e avambraccio suoi), identica a quella approvata.
-- **Oggetti in mano** (`presaPiatta`, `appoggiaSulleDita` in `corpo_mesh.js`): distintivo e telefono si appoggiano alle dita dal lato del
-  palmo e il pollice si chiude sulla faccia davanti; un po' inclinati, perché il palmo non è piatto. Con le posizioni pensate per la mano a
-  pezzi le dita li attraversavano.
-- **Laboratori**: `prova_corpo/` (testimone) e `prova_ispettore/` (stesso `film.js`, in `film.json` c'è `"chi": "ispettore"`): da 0 a 10 s
-  le pose da sei punti, da 10 a 20 collo e mani, da 20 a 30 polso e spalla, da 30 a 40 cappotto in chiaro e oggetti in mano.
-  `cast4/` + `scheda_corpi.py`: la scheda prima/dopo mandata all'utente.
+- **Oggetti in mano** (`presaPiatta`, `appoggiaSulleDita`, `oggettoInMano` in `corpo_mesh.js`): distintivo e telefono si appoggiano alle
+  dita dal lato del palmo e il pollice si chiude sulla faccia davanti; un po' inclinati, perché il palmo non è piatto. Con le posizioni
+  pensate per la mano a pezzi le dita li attraversavano. Finché l'oggetto si vede (`g.visible`) la mano prende la sua presa, qualunque posa
+  chieda la scena: per questo le scene accendono o spengono l'oggetto PRIMA di `pose()`. Il telefono (`telefono()` in `adulti.js`) ha tre
+  prese: dritto (per guardarlo), di traverso (per filmare), all'orecchio (posa della mano `orecchio`, per la telefonata). Il fazzoletto
+  dell'ispettore è stoffa appallottolata (`stoffaInPugno()`), non una palla liscia.
+- **La telefonata a terra** (episodio 1): chi telefona ha per forza il braccio portato in avanti (il polso sta a un palmo dalla spalla: il
+  gomito non può scendere lungo il fianco). Vista di tre quarti da quel lato, la spalla resta il punto debole del modello; nella scena lui è
+  girato verso la camera (`yaw` in `tuTerra`), così il braccio si vede di fronte e la posa si legge subito.
+- **Laboratori**: `prova_corpo/` (testimone), `prova_ispettore/` e `prova_elena/` (stesso `film.js`: sono cartelle con i collegamenti a
+  `prova_corpo` e un `film.json` con `"chi"`): da 0 a 10 s le pose da sei punti, da 10 a 20 collo e mani, da 20 a 30 polso e spalla, da 30
+  a 40 vestiti in chiaro e oggetti in mano, dal secondo 40 le pose prese dalle scene viste da vicino (la telefonata, con varie posizioni
+  del gomito). `cast4/` + `scheda_corpi.py`: la scheda prima/dopo mandata all'utente.
+- **Tempi**: con i corpi modellati un fotogramma costa circa 1,7 s con 3 processi (prima la metà). L'episodio intero (4019 fotogrammi) si
+  rende in due metà insieme, `--range 0:67` e `--range 67:133.963333` con 2 processi ciascuna (un comando in background non può durare più
+  di due ore), poi si uniscono con ffmpeg (`-f concat`, `-c copy`).
 - **Confronto con foto vere**: `cerca.py` (nella cartella di lavoro `foto_rif/`) scarica da Openverse foto CC0 di scarpe, maglietta e jeans;
   messe accanto ai provini: suola, lacci e punta delle scarpe, lunghezza delle maniche, dove arriva l'orlo della maglietta, pieghe.
 - **Errori da non rifare**: tagliare il collo coi pesi della testa (sotto il mento resta un buco: i pesi della testa scendono fin lì);
   lisciare il completo; disegnare la falda nella posa di riposo; usare per gli oggetti le posizioni della mano a pezzi; un quadratino di
-  tinta messo a caso nella texture (finiva su una manica).
+  tinta messo a caso nella texture (finiva su una manica); aggiungere un commento in mezzo a una riga con più istruzioni (tutto quel che
+  segue diventa commento: è successo in `film.js` e nel convertitore, dove ha spento un pezzo di `cappotto()` senza dare errore); guardare
+  le pose solo in piccolo: la spalla accartocciata della telefonata si vedeva soltanto a grandezza piena.
 
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 

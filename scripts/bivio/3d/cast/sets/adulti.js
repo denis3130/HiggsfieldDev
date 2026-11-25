@@ -6,7 +6,7 @@ import * as G from '../lib/gl.js';
 import * as M from '../lib/motion.js';
 import { THREE, V, rnd, tex, mat, piatto as basic, sfera, add, loft, tra, ombre, alone } from './stile.js';
 import { testa, capelli, chioma, ciuffi, braccio, gamba, chiavi, mix } from './pupazzi.js';
-import { CORPI, misure, vesti, texture, appoggiaSulleDita, presaPiatta } from './corpo_mesh.js';
+import { CORPI, misure, vesti, texture, oggettoInMano } from './corpo_mesh.js';
 
 // mondo: il punto da raggiungere in coordinate della scena. Le direzioni dita/dorso/gomito sono nel verso del PERSONAGGIO (z = davanti a lui);
 // per darle nel verso della scena si usano ditaM/dorsoM/gomitoM (se il personaggio è girato le due cose non coincidono).
@@ -99,6 +99,15 @@ export function testimone({ modellato = true } = {}) {
     extra: ({ upper, k, abito }) => { if (abito) return; const cl = add(upper, new THREE.TorusGeometry(0.054 * k, 0.007 * k, 10, 36), mat(C.magliaDk), V(0, 0.463 * k, 0.008)); cl.rotation.x = Math.PI / 2 + 0.2; cl.scale.set(1.08, 1, 1); } });
 }
 
+// un fazzoletto di stoffa appallottolato in mano: non una palla liscia, ma pieghe larghe e grinze (la forma si schiaccia poi con la scala)
+function stoffaInPugno() {
+  const g = new THREE.SphereGeometry(1, 36, 26), p = g.attributes.position, n = V(0, 0, 0);
+  for (let i = 0; i < p.count; i++) { n.fromBufferAttribute(p, i).normalize(); const a = Math.atan2(n.z, n.x), b = Math.asin(Math.max(-1, Math.min(1, n.y))), c = Math.cos(b);
+    const d = 0.17 * Math.sin(3 * a + 1.3 * Math.sin(2 * b)) * c + 0.09 * Math.sin(7 * a + 4 * b + 0.7) * c + 0.06 * Math.sin(5 * b + 2 * a) * c + 0.05 * Math.sin(11 * a - 3 * b) * c * c;
+    p.setXYZ(i, n.x * (1 + d), n.y * (1 + d), n.z * (1 + d)); }
+  g.computeVertexNormals(); return g;
+}
+
 // ------------------------------------------------------------------ L'ISPETTORE DARIO RIVA
 export function ispettore({ guanti = false, modellato = true } = {}) {
   const C = { skin: '#D2A07E', pant: '#22242B', scarpa: '#17171A', suola: '#0D0D0F', cappotto: '#30323A', cappottoDk: '#1E2026', camicia: '#B9C2CC', cravatta: '#141519', oro: '#D2A842' };
@@ -133,9 +142,9 @@ export function ispettore({ guanti = false, modellato = true } = {}) {
         c.strokeStyle = '#8A6A1E'; c.lineWidth = 5; c.stroke(); c.fillStyle = '#8A6A1E'; c.beginPath(); for (let i = 0; i < 10; i++) { const a = (i / 10) * Math.PI * 2 - Math.PI / 2, rr = i % 2 ? 11 : 26; c.lineTo(64 + Math.cos(a) * rr, 72 + Math.sin(a) * rr); } c.closePath(); c.fill();
         c.fillStyle = '#5E4712'; c.font = '700 15px Display'; c.textAlign = 'center'; c.fillText('POLIZIA', 64, 124); }), transparent: true }), V(0, -0.152, -0.0245)); sc.rotation.set(0, Math.PI, Math.PI);
       upper.userData.distintivo = d;
-      if (abito) AL.poseProprie = { tessera: presaPiatta(d, AL.manoMesh, 'tessera', { spessore: 0.004, verso: 0.0, inclina: 0.1 }) };      // la mano modellata tiene il portafoglio: dita dietro, pollice davanti
+      if (abito) oggettoInMano(AL, { g: d, varianti: { base: { posa: 'tessera', spessore: 0.004, verso: 0.0, inclina: 0.1 } } });      // la mano modellata tiene il portafoglio: dita dietro, pollice davanti
       // nell'altra mano: il fazzoletto bianco, la radio, il bagliore di una lama (solo un luccichio: la violenza resta lontana)
-      const fz = add(AR.gH, sfera(1, 12), mat('#F3F1EA'), V(0, -0.085, -0.035), [0.062, 0.075, 0.03]); fz.visible = false;
+      const fz = add(AR.gH, stoffaInPugno(), mat('#F3F1EA'), V(0, -0.085, -0.035), [0.064, 0.078, 0.034]); fz.visible = false;
       const rd = new THREE.Group(); rd.visible = false; AR.gH.add(rd);
       add(rd, new THREE.BoxGeometry(0.062, 0.13, 0.034), mat('#3B3F47'), V(0, -0.125, -0.04)); add(rd, new THREE.CylinderGeometry(0.006, 0.006, 0.1, 8), mat('#16181C'), V(0.02, -0.235, -0.04)); add(rd, sfera(0.008, 8), basic('#FF3B30'), V(-0.018, -0.175, -0.058));
       const lama = new THREE.Sprite(new THREE.SpriteMaterial({ map: alone(), color: '#FFFFFF', transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending })); lama.position.set(0, -0.2, -0.03); lama.scale.set(0.42, 0.42, 1); lama.visible = false; AR.gH.add(lama);
@@ -145,7 +154,7 @@ export function ispettore({ guanti = false, modellato = true } = {}) {
 }
 
 // ------------------------------------------------------------------ ELENA MARCHI (si vede solo da lontano, nel parcheggio): cappotto rosso, capelli lunghi, borsa a tracolla
-export function elena() {
+export function elena({ modellato = true } = {}) {
   const C = { skin: '#E3B596', pant: '#1E1F26', scarpa: '#16161A', suola: '#0C0C0E', cappotto: '#B5252C', cappottoDk: '#861A20', capelli: '#5E3F26' };
   const F = { S: [0.076, 0.11, 0.092], forma: { jaw: 0.3, jawP: 1.7, cheek: 0.02, chinIn: 0.1 }, skin: C.skin, ombra: '#C99072', linea: '#96604C',
     eye: { x: 0.031, y: 0.004, w: 0.0165, h: 0.0105, hl: 0.005, tilt: 0.06, ir: 0.0068, iris: '#5A4632', lash: '#221612', lashW: 0.0024, ala: true, open0: 0.9 },
@@ -160,21 +169,26 @@ export function elena() {
     c.fillStyle = '#3A0D10'; for (const y of [210, 300]) { c.beginPath(); c.arc(w / 2 - 14, y, 7, 0, 7); c.fill(); } });
   const capM = mat(C.cappotto), capD = mat(C.cappottoDk), hairM = mat(C.capelli);
   const lim = chiavi([[0, 0.98], [0.5, 0.96], [0.8, 1.2], [1.05, 1.95], [1.4, 2.35], [3.15, 2.55]]);
-  return uomo({ k: 0.93, largo: 0.84, C, F, torso: mat(0xffffff, { map: capT }), manica: capM, manica2: capM, polsino: capD, cappotto: mat(C.cappotto, { side: THREE.DoubleSide }),
+  return uomo({ k: 0.93, largo: 0.84, C, F, corpo: modellato ? 'elena' : null, torso: mat(0xffffff, { map: capT }), manica: capM, manica2: capM, polsino: capD, cappotto: mat(C.cappotto, { side: THREE.DoubleSide }),
     capelli: (T) => { capelli(T, { polo: [-0.2, 0.9, -0.4], scala: 1.05, limite: (ph) => lim(Math.abs(ph)), base: C.capelli, chiaro: '#8A6240', scuro: '#3A2616', n: 700, seme: 31 });
       add(T.head, sfera(1, 22), hairM, V(0, -0.085, -0.05), [0.086, 0.16, 0.058]); },
-    extra: ({ upper, k }) => { const bg = mat('#3B2A1E');
+    extra: ({ upper, k, abito }) => { if (abito) return; const bg = mat('#3B2A1E');      // col corpo modellato la borsa a tracolla è una parte del modello (corpi/converti_corpo.py, tracolla)
       add(upper, new THREE.BoxGeometry(0.06, 0.2, 0.26), bg, V(-0.21 * k, -0.12 * k, 0.02)); tra(upper, V(-0.2 * k, -0.02 * k, 0.03), V(0.14 * k, 0.4 * k, 0.05), 0.008, 0.008, bg); } });
 }
 
 // il telefono in mano (schermo acceso verso chi lo tiene): torna { g, schermo }
 export function telefono(P, lato = 'AR', colore = '#BFD6FF', dy = 0) {
-  const A = P[lato], g = new THREE.Group(); A.gH.add(g);
-  // con la mano modellata il telefono si appoggia alle dita (dal lato del palmo) e il pollice sta sullo schermo: i pezzi stanno in un gruppo interno centrato sul telefono
-  const d = A.manoMesh ? new THREE.Group() : g; if (A.manoMesh) { d.position.set(0, 0.085 - dy, 0.03); g.add(d); }
+  const A = P[lato], g = new THREE.Group(); A.gH.add(g); let d = g, gp = null, gr = null;
+  // Con la mano modellata il telefono si appoggia alle dita (dal lato del palmo) col pollice sullo schermo. Le scene continuano a comandare g
+  // (acceso/spento, girato di traverso per filmare), ma le posizioni che gli danno erano per la mano a pezzi: g resta fermo e il posto lo decide la presa.
+  if (A.manoMesh) { g.matrixAutoUpdate = false; gp = new THREE.Group(); gr = new THREE.Group(); d = new THREE.Group(); g.add(gp); gp.add(gr); gr.add(d); d.position.set(0, 0.085 - dy, 0.03); }
   add(d, new THREE.BoxGeometry(0.072, 0.148, 0.009), mat('#15171B'), V(0, -0.085 + dy, -0.03));
   const schermo = add(d, new THREE.PlaneGeometry(0.064, 0.136), basic(colore), V(0, -0.085 + dy, -0.0352)); schermo.rotation.y = Math.PI;
   add(d, new THREE.CircleGeometry(0.011, 16), basic('#2C3038'), V(-0.018, -0.135 + dy, -0.0252)); add(d, new THREE.CircleGeometry(0.006, 12), basic('#0A0B0E'), V(-0.018, -0.135 + dy, -0.0251));   // l'obiettivo sul retro
-  if (A.manoMesh) A.poseProprie = { ...(A.poseProprie || {}), filma: presaPiatta(g, A.manoMesh, 'filma', { spessore: 0.0045, largo: 0.072, alto: 0.148, verso: 0.012, dove: 0.3, inclina: 0.2 }) };
+  // tre prese: dritto (in mano, per guardarlo), traverso (la scena lo gira per filmare), orecchio (posa della mano «orecchio»: la telefonata)
+  if (A.manoMesh) oggettoInMano(A, { g, gp, gr, scegli: () => (A.posaMano === 'orecchio' ? 'orecchio' : Math.abs(g.rotation.z) > 0.1 ? 'traverso' : 'dritto'), varianti: {
+    dritto: { posa: 'telefono', spessore: 0.0045, largo: 0.072, alto: 0.148, verso: 0.012, dove: 0.3, inclina: 0.2 },
+    traverso: { posa: 'filma', spessore: 0.0045, largo: 0.148, alto: 0.072, verso: -0.005, dove: 0.15, inclina: 0.04, lato: -0.028, rz: Math.PI / 2 },
+    orecchio: { posa: 'orecchio', spessore: 0.0045, largo: 0.148, alto: 0.072, verso: 0.004, dove: 0.1, inclina: 0.0, lato: -0.012, rz: Math.PI / 2 } } });
   return { g, schermo };
 }

@@ -15,7 +15,7 @@ async function leggi(nome) {
   } catch (e) { console.error(`corpo «${nome}» non caricato: ${e.message}`); return null; }
 }
 async function immagine(file) { try { const im = new Image(); im.src = new URL('tex/' + file, QUI).href; await im.decode(); return im; } catch { console.error(`texture «${file}» non caricata`); return null; } }
-export const CORPI = {}; for (const n of ['testimone', 'ispettore']) CORPI[n] = await leggi(n);
+export const CORPI = {}; for (const n of ['testimone', 'ispettore', 'elena']) CORPI[n] = await leggi(n);
 const FILE_TEX = [...new Set(Object.values(CORPI).filter(Boolean).flatMap((d) => d.parti.flatMap((p) => [p.texture, p.pieghe])).filter(Boolean))];
 const IMG = Object.fromEntries(await Promise.all(FILE_TEX.map(async (f) => [f, await immagine(f)])));
 const _tex = {};
@@ -75,6 +75,7 @@ export function misure(nome, spalleY) {
   return { u, P, hx: P('coscia1S').x, T1: d('coscia1S', 'gamba1S'), T2: d('gamba1S', 'piedeS'), caviglia: P('piedeS').y, spallaZ: P('brac1S').z,
     colloZ: (y) => { const a = P('collo1'), b = P('testa'), t = THREE.MathUtils.clamp((y - a.y) / (b.y - a.y), 0, 1); return a.z + (b.z - a.z) * t; } };
 }
+const TAPPE = [['spalla25', 0.25], ['spalla', 0.5], ['spalla75', 0.75]];      // le ossa intermedie tra busto e braccio e la frazione della rotazione che fanno
 const RX = (a) => new THREE.Matrix4().makeRotationX(a), RZ = (a) => new THREE.Matrix4().makeRotationZ(a), TR = (v) => new THREE.Matrix4().makeTranslation(v.x, v.y, v.z);
 const base3 = (x, y, z) => new THREE.Matrix4().makeBasis(x, y, z);
 // l'anca del pupazzo ruota Rx(-avanti)·Rz(lato·apri) e la coscia va lungo -y: gli angoli che la mettono sulla direzione d
@@ -87,7 +88,7 @@ function telaiBraccio(S, E, W, h) {
 }
 // Veste il pupazzo: parti = { root, fianchi, upper, collo, AL, AR, GL, GR, k } (da uomo() in adulti.js). Torna { corpo, aggiorna() }: aggiorna va chiamata dopo ogni posa.
 export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani = true, livelliMano = 2, skin = '#D9A583', unghia = '#EBC6B3', pelleMani = null } = {}) {
-  const { root, upper, collo, AL, AR, GL, GR, k = 1 } = parti, C = corpoMesh(nome, { materiali, skin }), D = C.D, K = D.K, mis = misure(nome, upper.position.y + AL.S.y), u = mis.u, P = mis.P;
+  const { root, fianchi, upper, collo, AL, AR, GL, GR, k = 1 } = parti, C = corpoMesh(nome, { materiali, skin }), D = C.D, K = D.K, mis = misure(nome, upper.position.y + AL.S.y), u = mis.u, P = mis.P;
   for (let i = 0; i < C.riposo.length; i++) C.riposo[i] *= u;
   root.add(C.group);
   // ---- il collo entra nella testa disegnata: quel che della testa modellata sporgerebbe (mento, mascella) viene tirato dentro, e i triangoli
@@ -107,7 +108,7 @@ export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani 
   const perno = upper.position.clone(), pernoCollo = perno.clone().add(collo.position), lati = [['D', -1, AL, GL], ['S', 1, AR, GR]], R0 = {};
   for (const n of ['bacino', 'spina5', 'spina4', 'spina3', 'spina2', 'spina1', 'collo1', 'collo2', 'collo3', 'testa']) lega(n, I4);
   for (const [s, lato, A, Gm] of lati) {
-    lega('clav' + s, I4); lega('spalla' + s, I4);
+    lega('clav' + s, I4); for (const n of TAPPE) if (K[n[0] + s] !== undefined) lega(n[0] + s, I4);
     const S = P('brac1' + s), E = P('ava1' + s), W = P('mano' + s), h = E.clone().sub(S).cross(W.clone().sub(E)).normalize(), T = telaiBraccio(S, E, W, h);
     const l1 = S.distanceTo(E), l2 = E.distanceTo(W), sc1 = new THREE.Matrix4().makeScale(raggioBraccio, A.L1 / l1, raggioBraccio), sc2 = new THREE.Matrix4().makeScale(1, A.L2 / l2, 1);
     const B1 = TR(S).multiply(T.brac), B2 = TR(E).multiply(T.ava);
@@ -119,16 +120,16 @@ export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani 
     const Jh = P('coscia1' + s), Jk = P('gamba1' + s), Ja = P('piede' + s), ac = angoliCoscia(Jk.clone().sub(Jh).normalize(), lato), loc = Ja.clone().sub(Jk).normalize().applyMatrix4(ac.R.clone().invert()), gin = Math.atan2(-loc.z, -loc.y);
     const Bc = TR(Jh).multiply(ac.R), Bg = TR(Jk).multiply(ac.R).multiply(RX(gin)), Bp = TR(Ja);
     lega('coscia1' + s, Bc); lega('coscia2' + s, Bc); lega('gamba1' + s, Bg); lega('gamba2' + s, Bg); lega('piede' + s, Bp);
-    R0[s] = { S, d0: E.clone().sub(S).normalize(), brac: T.brac, sc1, sc2, A, Gm, lato, riposo: { avanti: ac.avanti, apri: ac.apri, ginocchio: gin } };
+    R0[s] = { S, clav: P('clav' + s).sub(perno), d0: E.clone().sub(S).normalize(), brac: T.brac, bracInv: T.brac.clone().invert(), lungo1: A.L1 / l1, sc1, sc2, A, Gm, lato, riposo: { avanti: ac.avanti, apri: ac.apri, ginocchio: gin } };
   }
   // ---- a ogni posa: i telai delle ossa dal pupazzo
   const ri = new THREE.Matrix4(), U = new THREE.Matrix4(), M = new THREE.Matrix4(), M2 = new THREE.Matrix4(), q = new THREE.Quaternion(), q0 = new THREE.Quaternion(), qs = new THREE.Quaternion(), Tp = TR(perno), Tpi = TR(perno.clone().negate()), Tc = TR(pernoCollo.clone().negate());
-  const FR = { spina5: 0.15, spina4: 0.45, spina3: 0.8, collo1: 0.2, collo2: 0.5, collo3: 0.8 }, s3 = V(0, 0, 0), e3 = V(0, 0, 0), w3 = V(0, 0, 0), h3 = V(0, 0, 0), d3 = V(0, 0, 0);
+  const FR = { spina5: 0.15, spina4: 0.45, spina3: 0.8, collo1: 0.2, collo2: 0.5, collo3: 0.8, clav: 0.08 }, s3 = V(0, 0, 0), e3 = V(0, 0, 0), w3 = V(0, 0, 0), h3 = V(0, 0, 0), d3 = V(0, 0, 0);
   function aggiorna() {
     root.updateMatrixWorld(true); ri.copy(root.matrixWorld).invert(); U.multiplyMatrices(ri, upper.matrixWorld);
-    SK[K.bacino].identity();
-    for (const n of ['spina5', 'spina4', 'spina3']) SK[K[n]].copy(Tp).multiply(M.makeRotationFromQuaternion(q.copy(q0).slerp(upper.quaternion, FR[n]))).multiply(Tpi);
-    M.copy(U).multiply(Tpi); for (const n of ['spina2', 'spina1', 'clavD', 'clavS']) SK[K[n]].copy(M);
+    SK[K.bacino].multiplyMatrices(ri, fianchi.matrixWorld);                 // i fianchi di solito stanno fermi nella radice, ma una scena può rovesciarli (chi cade, chi è sdraiato)
+    for (const n of ['spina5', 'spina4', 'spina3']) SK[K[n]].copy(SK[K.bacino]).multiply(Tp).multiply(M.makeRotationFromQuaternion(q.copy(q0).slerp(upper.quaternion, FR[n]))).multiply(Tpi);
+    M.copy(U).multiply(Tpi); for (const n of ['spina2', 'spina1']) SK[K[n]].copy(M);
     // collo e testa: attorno al perno del collo, sempre di più verso la testa
     for (const n of ['collo1', 'collo2', 'collo3']) SK[K[n]].copy(U).multiply(M.makeTranslation(collo.position.x, collo.position.y, collo.position.z)).multiply(M2.makeRotationFromQuaternion(q.copy(q0).slerp(collo.quaternion, FR[n]))).multiply(Tc);
     SK[K.testa].multiplyMatrices(ri, collo.matrixWorld).multiply(Tc);
@@ -139,7 +140,13 @@ export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani 
       qs.setFromUnitVectors(r.d0, d3.subVectors(e3, s3).normalize());
       SK[K['brac1' + s]].copy(U).multiply(M.makeTranslation(s3.x, s3.y, s3.z)).multiply(M2.makeRotationFromQuaternion(qs)).multiply(r.brac).multiply(r.sc1).multiply(INV[K['brac1' + s]]);
       SK[K['brac2' + s]].copy(U).multiply(M.makeTranslation(s3.x, s3.y, s3.z)).multiply(T.brac).multiply(r.sc1).multiply(INV[K['brac2' + s]]);
-      SK[K['spalla' + s]].copy(U).multiply(M.makeTranslation(s3.x, s3.y, s3.z)).multiply(M2.makeRotationFromQuaternion(q.copy(q0).slerp(qs, 0.5))).multiply(M.makeTranslation(-r.S.x, -r.S.y, -r.S.z));
+      // tra il busto e il braccio: le tappe della spalla fanno un quarto, metà e tre quarti della rotazione del braccio attorno alla spalla (e della
+      // sua scala), così la stoffa contesa tra i due gira lungo l'arco invece di rientrare
+      for (const [n, f] of TAPPE) { const i = K[n + s]; if (i === undefined) continue;
+        SK[i].copy(U).multiply(M.makeTranslation(s3.x, s3.y, s3.z)).multiply(M2.makeRotationFromQuaternion(q.copy(q0).slerp(qs, f))).multiply(r.brac)
+          .multiply(M2.makeScale(1 + (raggioBraccio - 1) * f, 1 + (r.lungo1 - 1) * f, 1 + (raggioBraccio - 1) * f)).multiply(r.bracInv).multiply(M.makeTranslation(-r.S.x, -r.S.y, -r.S.z)); }
+      // la clavicola segue un poco il braccio (la spalla si alza quando lui lo alza), attorno al suo attacco allo sterno
+      SK[K['clav' + s]].copy(U).multiply(M.makeTranslation(r.clav.x, r.clav.y, r.clav.z)).multiply(M2.makeRotationFromQuaternion(q.copy(q0).slerp(qs, FR.clav))).multiply(M.makeTranslation(-r.clav.x, -r.clav.y, -r.clav.z)).multiply(Tpi);
       SK[K['ava1' + s]].copy(U).multiply(M.makeTranslation(e3.x, e3.y, e3.z)).multiply(T.ava).multiply(r.sc2).multiply(INV[K['ava1' + s]]);
       SK[K['ava2' + s]].copy(U).multiply(M.makeTranslation(e3.x, e3.y, e3.z)).multiply(M2.makeRotationFromQuaternion(A.gF.quaternion)).multiply(r.sc2).multiply(INV[K['ava2' + s]]);
       SK[K['mano' + s]].copy(U).multiply(M.makeTranslation(w3.x, w3.y, w3.z)).multiply(M2.makeRotationFromQuaternion(A.gH.quaternion)).multiply(INV[K['mano' + s]]);
@@ -154,11 +161,21 @@ export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani 
   // ---- le mani modellate ai polsi e il raccordo di pelle tra la mano e l'avambraccio (una superficie che parte dal bordo dell'una e arriva al bordo dell'altro)
   const fasce = [], MANI = {};
   if (mani) for (const [s, lato, A] of lati) {
-    const m = manoMesh({ skin: pelleMani || skin, unghia: pelleMani || unghia, livelli: livelliMano, taglio: true, pittura: pelleMani ? { lati: 0.25, pieghe: 0.15, nocche: 0 } : {} }); m.matrixAutoUpdate = false; m.matrix.copy(matriceMano(lato, 1.1 * k)); m.userData.scalaMano = 1.1 * k; A.gH.add(m); MANI[s] = m; A.manoMesh = m;
-    const bm = m.userData.bordoPolso, nbm = bm.length, hp = m.userData.mesh.geometry.attributes.position, pelle = C.parti.find((p) => p.tipo === 'pelle'), Wj = P('mano' + s), Ej = P('ava1' + s);
-    // il giro di bordo della pelle più vicino al polso
+    const pelle = C.parti.find((p) => p.tipo === 'pelle'), Wj = P('mano' + s), Ej = P('ava1' + s);
+    // il giro di bordo della pelle più vicino al polso (con le maniche lunghe non c'è: l'avambraccio è tutto sotto la stoffa e la mano esce dal polsino)
     let giro = null, dmin = 1e9; const c = V(0, 0, 0), pt = (i) => V(C.riposo[i * 3], C.riposo[i * 3 + 1], C.riposo[i * 3 + 2]);
     for (const g of pelle.bordi) { c.set(0, 0, 0); for (const v of g) c.add(pt(pelle.p0 + v)); c.multiplyScalar(1 / g.length); const d = c.distanceTo(Wj); if (d < dmin) { dmin = d; giro = g.map((v) => pelle.p0 + v); } }
+    const conRaccordo = dmin < 0.09;
+    const m = manoMesh({ skin: pelleMani || skin, unghia: pelleMani || unghia, livelli: livelliMano, taglio: conRaccordo, pittura: pelleMani ? { lati: 0.25, pieghe: 0.15, nocche: 0 } : {} }); m.matrixAutoUpdate = false; m.matrix.copy(matriceMano(lato, 1.1 * k)); m.userData.scalaMano = 1.1 * k; A.gH.add(m); MANI[s] = m; A.manoMesh = m;
+    let chiave = null;
+    const posaMano = () => {                                     // la posa della mano: quella dell'oggetto che tiene, se si vede, altrimenti quella chiesta dalla scena
+      const og = A.oggetti ? A.oggetti.find((x) => x.g.visible) : null, nv = og ? (og.scegli ? og.scegli() : Object.keys(og.varianti)[0]) : null, vr = og ? og.varianti[nv] : null;
+      const ch = vr ? `oggetto ${A.oggetti.indexOf(og)} ${nv}` : JSON.stringify(A.posaMano);
+      if (ch !== chiave || m.userData.sporca) { chiave = ch; m.userData.sporca = false;
+        if (vr) { m.userData.posa(vr.posa); og.gp.position.copy(vr.pos); og.gp.quaternion.copy(vr.quat); if (og.gr) og.gr.rotation.z = vr.rz; og.gp.updateMatrixWorld(true); }
+        else m.userData.posa(posaDaPupazzo((typeof A.posaMano === 'string' && A.poseProprie && A.poseProprie[A.posaMano]) || A.posaMano)); } };
+    if (!conRaccordo) { fasce.push(posaMano); continue; }
+    const bm = m.userData.bordoPolso, nbm = bm.length, hp = m.userData.mesh.geometry.attributes.position;
     // a riposo: l'angolo di ogni punto attorno all'avambraccio, per far combaciare i due giri
     const Bm = INV[K['mano' + s]].clone().invert().multiply(m.matrix), asse = Ej.clone().sub(Wj).normalize(), zr = V(0, 1, 0).applyMatrix4(new THREE.Matrix4().extractRotation(INV[K['ava2' + s]].clone().invert())), ref = V(0, 0, 1).applyMatrix4(new THREE.Matrix4().extractRotation(INV[K['ava2' + s]].clone().invert()));
     const xr = asse.clone().cross(ref).normalize(), ang = (p) => { const d = p.clone().sub(Wj); return Math.atan2(d.dot(xr), d.dot(ref)); }, avv = (a) => Math.atan2(Math.sin(a), Math.cos(a));
@@ -171,9 +188,9 @@ export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani 
     for (let r = 0; r < righe - 1; r++) for (let i = 0; i < nbm; i++) { const a = r * nbm + i, b = r * nbm + (i + 1) % nbm, cc = (r + 1) * nbm + (i + 1) % nbm, d = (r + 1) * nbm + i; idx.push(a, b, cc, a, cc, d); }
     geo.setAttribute('position', pa); geo.setAttribute('normal', na); geo.setIndex(idx);
     const fm = new THREE.Mesh(geo, C.parti.find((q) => q.tipo === 'pelle').mesh.material); fm.frustumCulled = false; fm.name = 'polso' + s; C.group.add(fm);
-    const Mh = new THREE.Matrix4(), p0 = V(0, 0, 0), p1 = V(0, 0, 0), n0 = V(0, 0, 0), n1 = V(0, 0, 0), t0 = V(0, 0, 0), t1 = V(0, 0, 0), x = V(0, 0, 0), ee = V(0, 0, 0), ww = V(0, 0, 0); let verso = 0, chiave = null;
+    const Mh = new THREE.Matrix4(), p0 = V(0, 0, 0), p1 = V(0, 0, 0), n0 = V(0, 0, 0), n1 = V(0, 0, 0), t0 = V(0, 0, 0), t1 = V(0, 0, 0), x = V(0, 0, 0), ee = V(0, 0, 0), ww = V(0, 0, 0); let verso = 0;
     fasce.push(() => {
-      const ch = JSON.stringify(A.posaMano); if (ch !== chiave || m.userData.sporca) { chiave = ch; m.userData.sporca = false; m.userData.posa(posaDaPupazzo((typeof A.posaMano === 'string' && A.poseProprie && A.poseProprie[A.posaMano]) || A.posaMano)); }
+      posaMano();
       const hn = m.userData.mesh.geometry.attributes.normal, P_ = pa.array, N_ = na.array, ora = C.ora, nor = C.nor;
       Mh.multiplyMatrices(ri, m.matrixWorld); t0.set(0, 1, 0).transformDirection(Mh); ee.copy(A.gF.position).applyMatrix4(U); ww.copy(A.gH.position).applyMatrix4(U); t1.subVectors(ee, ww).normalize();
       for (let i = 0; i < nbm; i++) { const [a, b, t] = lega2[i]; p0.fromBufferAttribute(hp, bm[i]).applyMatrix4(Mh); n0.fromBufferAttribute(hn, bm[i]).transformDirection(Mh);
@@ -208,18 +225,28 @@ export function pianoDita(m) {
 // Appoggia un oggetto piatto (gruppo g: il suo -y va verso le punte delle dita, il suo -z è la faccia che si vede dal lato del palmo) contro le dita,
 // dal lato del palmo: spessore = mezzo spessore dell'oggetto, verso = di quanto scende verso il polso rispetto a metà dita.
 // inclina (radianti) + alto: l'oggetto resta appoggiato dal lato delle punte e si stacca dal palmo dal lato del polso (il palmo non è piatto).
-export function appoggiaSulleDita(g, m, { spessore = 0.004, verso = 0.02, gioco = 0.001, inclina = 0, alto = 0.12 } = {}) {
+export function appoggiaSulleDita(g, m, { spessore = 0.004, verso = 0.02, gioco = 0.001, inclina = 0, alto = 0.12, lato = 0 } = {}) {
   const p = pianoDita(m), y = p.asse.clone().negate(), z = p.normale.clone().negate(), x = y.clone().cross(z).normalize();
-  g.position.copy(p.centro).addScaledVector(p.asse, -verso).addScaledVector(p.normale, p.raggio + spessore + gioco); g.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(x, y, z));
+  g.position.copy(p.centro).addScaledVector(p.asse, -verso).addScaledVector(p.lato, lato).addScaledVector(p.normale, p.raggio + spessore + gioco); g.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(x, y, z));
   if (inclina) { const q = new THREE.Quaternion().setFromAxisAngle(x, -inclina), perno = g.position.clone().addScaledVector(p.asse, alto / 2); g.position.sub(perno).applyQuaternion(q).add(perno); g.quaternion.premultiply(q); }
 }
 
 // La presa di un oggetto piatto tra le dita distese (dietro) e il pollice (davanti): mette la mano nella posa data, appoggia l'oggetto alle dita
 // e chiude il pollice sulla sua faccia davanti, in basso. Torna la posa completa della mano modellata (da dare come posa «propria» al braccio).
 // g = gruppo dell'oggetto (vedi appoggiaSulleDita); largo, alto = misure dell'oggetto; dove = a che altezza preme il pollice (0 = centro, 1 = bordo verso il polso).
-export function presaPiatta(g, m, posa, { spessore = 0.004, verso = 0.0, largo = 0.084, alto = 0.125, dove = 0.6, rollio = 60, inclina = 0 } = {}) {
-  const P0 = posaDaPupazzo(posa); m.userData.posa(P0); appoggiaSulleDita(g, m, { spessore, verso, gioco: 0.002, inclina, alto });
+export function presaPiatta(g, m, posa, { spessore = 0.004, verso = 0.0, largo = 0.084, alto = 0.125, dove = 0.6, rollio = 60, inclina = 0, lato = 0 } = {}) {
+  const P0 = posaDaPupazzo(posa); m.userData.posa(P0); appoggiaSulleDita(g, m, { spessore, verso, gioco: 0.002, inclina, alto, lato });
   g.updateMatrix(); const mi = m.matrix.clone().invert(), nel = (x, y, z) => V(x, y, z).applyMatrix4(g.matrix).applyMatrix4(mi).toArray(), sc = m.userData.scalaMano || 1.1;
   const og = { a: nel(-largo / 2, dove * alto / 2, -spessore), b: nel(largo / 2, dove * alto / 2, -spessore), r: 0.002 / sc };
   const P1 = avvolgiPollice(P0, og, { rollio, passo: 5, fine: 1 }); m.userData.posa(P1); m.userData.sporca = true; return P1;
+}
+
+// Un oggetto piatto che il braccio A tiene in mano (distintivo, telefono). Finché l'oggetto si vede (g.visible) la mano prende la sua presa,
+// qualunque posa chieda la scena. g = il gruppo che la scena accende e spegne; gp = il gruppo che la presa mette a posto (di solito lo stesso);
+// gr (facoltativo) = gruppo interno da girare su z per le varianti; varianti = { nome: opzioni di presaPiatta + { posa, rz } }; scegli() = quale usare.
+export function oggettoInMano(A, { g, gp = g, gr = null, scegli = null, varianti }) {
+  const o = { g, gp, gr, scegli, varianti: {} };
+  for (const [n, v] of Object.entries(varianti)) { const P = presaPiatta(gp, A.manoMesh, v.posa, v); o.varianti[n] = { posa: P, pos: gp.position.clone(), quat: gp.quaternion.clone(), rz: v.rz || 0 }; }
+  const primo = o.varianti[Object.keys(o.varianti)[0]]; gp.position.copy(primo.pos); gp.quaternion.copy(primo.quat); if (gr) gr.rotation.z = primo.rz;
+  (A.oggetti ||= []).push(o); return o;
 }

@@ -265,9 +265,15 @@ export function nelModello(m, a, b, r) {
 // ---- le pose della mano a pezzi (pupazzi.js: nome o { dita, pollice, apri, k }) tradotte per la mano modellata: così le scene non cambiano.
 const R2G = 180 / Math.PI;
 const POSE_PROPRIE = {
+  // la mano piatta (sulla bocca, su un tavolo): dita unite e appena curve, pollice accostato
+  piatta: { indice: { mcp: 8, pip: 9, dip: 6, ab: -3.4 }, medio: { mcp: 9, pip: 10, dip: 6 }, anulare: { mcp: 10, pip: 10, dip: 6, ab: 7.2 }, mignolo: { mcp: 12, pip: 10, dip: 6, ab: 8 }, pollice: { ab: 14, fl: 12, roll: 10, mcp: 8, ip: 8 } },
   // un tesserino tenuto contro le dita distese, il pollice lo ferma sul davanti
   tessera: { indice: { mcp: 4, pip: 3, dip: 2, ab: 4 }, medio: { mcp: 3, pip: 2, dip: 2 }, anulare: { mcp: 4, pip: 3, dip: 2 }, mignolo: { mcp: 6, pip: 4, dip: 3, ab: -5 }, pollice: { ab: 52, fl: 26, roll: 55, mcp: 12, ip: 8 } },
-  // un telefono tenuto in mano per filmare: appoggiato alle dita appena piegate, il pollice sullo schermo (lo chiude presaPiatta di corpo_mesh.js)
+  // un telefono tenuto in mano per guardarlo: appoggiato alle dita un po' piegate; all'orecchio: di traverso, con le dita che lo avvolgono da dietro.
+  // Il pollice lo chiude presaPiatta di corpo_mesh.js.
+  telefono: { indice: { mcp: 16, pip: 22, dip: 12, ab: -2 }, medio: { mcp: 18, pip: 24, dip: 12 }, anulare: { mcp: 20, pip: 26, dip: 14, ab: 5 }, mignolo: { mcp: 22, pip: 28, dip: 14, ab: 7 }, pollice: { ab: 40, fl: 20, roll: 50, mcp: 8, ip: 10 } },
+  orecchio: { indice: { mcp: 30, pip: 40, dip: 22, ab: -2 }, medio: { mcp: 32, pip: 42, dip: 24 }, anulare: { mcp: 34, pip: 44, dip: 24, ab: 5 }, mignolo: { mcp: 36, pip: 46, dip: 24, ab: 7 }, pollice: { ab: 40, fl: 20, roll: 50, mcp: 8, ip: 10 } },
+  // un telefono tenuto di traverso per filmare: dietro le dita distese, il pollice sullo schermo
   filma: { indice: { mcp: 8, pip: 10, dip: 8, ab: 3 }, medio: { mcp: 8, pip: 10, dip: 8 }, anulare: { mcp: 9, pip: 11, dip: 8 }, mignolo: { mcp: 10, pip: 12, dip: 8, ab: -4 }, pollice: { ab: 48, fl: 22, roll: 55, mcp: 8, ip: 12 } },
   // le dita attorno a una sbarra (maniglia): per la presa precisa su una maniglia vera si usa afferra()
   leva: { indice: { mcp: 44, pip: 92, dip: 58 }, medio: { mcp: 46, pip: 94, dip: 60 }, anulare: { mcp: 46, pip: 94, dip: 60 }, mignolo: { mcp: 46, pip: 92, dip: 58 }, pollice: { ab: 45, fl: 34, roll: 75, mcp: 30, ip: 40 } },
@@ -276,7 +282,8 @@ export function posaDaPupazzo(p = 'rilassata') {
   if (typeof p === 'string' && POSE_PROPRIE[p]) return POSE_PROPRIE[p];
   if (p && typeof p === 'object' && (p.indice || p.pollice?.ab !== undefined)) return p;                    // già una posa della mano modellata
   const P = typeof p === 'string' ? POSE_MANO[p] || POSE_MANO.rilassata : { ...POSE_MANO.rilassata, ...p }, k = P.k || K_DITA, Q = {};
-  QUATTRO.forEach((f, i) => { const c = P.dita[i]; Q[f] = { mcp: Math.min(88, c * k[0] * R2G), pip: Math.min(108, c * k[1] * R2G), dip: Math.min(72, c * k[2] * R2G), ab: (1.5 - i) * 0.075 * (P.apri ?? 0.3) * R2G }; });
+  const chiuse = 1 - Math.min(1, (P.apri ?? 0.3) / 0.3), PARI = [-3.4, 0, 7.2, 6.9];                      // a riposo il modello tiene le dita a ventaglio: con apri = 0 si raddrizzano
+  QUATTRO.forEach((f, i) => { const c = P.dita[i]; Q[f] = { mcp: Math.min(88, c * k[0] * R2G), pip: Math.min(108, c * k[1] * R2G), dip: Math.min(72, c * k[2] * R2G), ab: (1.5 - i) * 0.075 * (P.apri ?? 0.3) * R2G + chiuse * PARI[i] }; });
   const tc = P.pollice ?? 0.3, fl = P.fletti ?? tc; Q.pollice = { ab: 10 + 21 * tc, fl: 23 * tc, roll: 0, mcp: 5 + 26 * fl, ip: 5 + 42 * fl };
   return Q;
 }
