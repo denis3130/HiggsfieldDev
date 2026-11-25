@@ -3,6 +3,10 @@
 Ogni episodio è un film three.js che è una funzione pura del tempo (`window.seek(t)` disegna il fotogramma t), costruito con la skill
 motion-reel e renderizzato fotogramma per fotogramma in Chromium (anche senza scheda video: SwiftShader, circa 2 s a fotogramma 1080×1920).
 
+**Regola sui modelli (25/11 sera, per tutte le sessioni, anche quelle aperte prima):** i modelli si fanno come la mano della carta A
+dell'episodio 1, quella che l'utente ha approvato («ora si che sembra una vera mano… devi fare i modelli in quel modo»). I passi sono più
+sotto, in «Come si fa un modello».
+
 - `ep1-prova/`: prova dell'inizio dell'episodio 1 de «La voce nel bosco» (24/11).
   - `sets/bosco.js`: il bosco, il protagonista, la bocca nel tronco, il manifesto.
   - `film.js`: le inquadrature agganciate alle parole della voce (`assets/parole.json`, scritto da `scripts/bivio/voce.py`), i sottotitoli
@@ -93,15 +97,16 @@ una pallina. Cosa c'era di sbagliato e come si fa adesso:
   `provini.py prova_mano 0.5,1.5,2.5,3.5,4.5,5.5,6.5 out/prova_mano/pose.jpg 7`. Una posa nuova si guarda prima qui, poi nell'episodio.
 - Immagini delle carte A/B: `prova_carta/` mette a confronto più inquadrature della stessa immagine nel formato largo della carta. Niente grandangolo
   (deforma) e niente filtro di luminosità (brucia i chiari): `ingressoSet` accetta `amb`, `fronte` e `luce: { pos, k, colore }` per illuminare il soggetto.
-  Una mano si legge se si vedono nocche e pollice: tre quarti dal lato del pollice, mai da dietro lungo il braccio.
+  Una mano si legge se si vedono nocche e pollice: tre quarti dal lato del pollice, mai da dietro lungo il braccio. (Valeva per la mano a
+  pezzi. Con la mano modellata l'inquadratura delle foto dell'utente, da dietro e dall'alto lungo il braccio, funziona ed è quella approvata.)
 - Dopo ogni modifica a mani o braccia: provini di TUTTE le scene con le mani (bocca, telefono, distintivo, fazzoletto, dito sulle labbra, baule, carte),
   ingranditi, e confronto con il render di prima. Cambiando la forma della mano si spostano anche i punti d'arrivo (la mano sulla bocca era salita sul naso).
 
 
-## Mano modellata per i primi piani (25/11 sera): dopo «no la mano sulla porta è ancora fatta male comunque»
+## Mano modellata (25/11 sera): dopo «no la mano sulla porta è ancora fatta male comunque»; approvata: «ora si che sembra una vera mano»
 
-- La mano a pezzi (`mano()` in `pupazzi.js`) regge da lontano; in primo piano resta una massa informe, da qualunque lato. Per i primi piani c'è
-  la mano MODELLATA, `cast/sets/mano_mesh.js`: è la «generic-hand» dei WebXR Input Profiles (licenza MIT, `cast/sets/mani/LICENZA_MIT.md`).
+- La mano a pezzi (`mano()` in `pupazzi.js`) in primo piano resta una massa informe, da qualunque lato: l'utente l'ha bocciata due volte.
+  Al suo posto c'è la mano MODELLATA, `cast/sets/mano_mesh.js`: è la «generic-hand» dei WebXR Input Profiles (licenza MIT, `cast/sets/mani/LICENZA_MIT.md`).
   Il modello originale è `mani/destra.glb` (da `npm pack @webxr-input-profiles/assets`); `mani/converti.py` lo trasforma in `mani/mano_destra.js`
   (vertici saldati, triangoli, pesi delle ossa). Spazio del modello: dita verso -y, dorso verso +x, pollice verso -z.
 - Cosa fa il modulo: `cinematica` piega osso per osso (nel modello le ossa non sono in catena, i conti li fa il codice); `afferra(P, { a, b, r })`
@@ -138,7 +143,36 @@ una pallina. Cosa c'era di sbagliato e come si fa adesso:
   voce intera; `mix.py` sposta i suoni, salta quelli finiti prima, taglia quelli a cavallo e fa partire la musica con il video. Il video si
   è tagliato senza ricodificare, perché il primo fotogramma della cucina era già un fotogramma chiave. Ogni fotogramma si campiona mezzo
   fotogramma dopo il suo tempo (`seek` in motion.js): il fotogramma n mostra il tempo (n + 0,5) / 30.
-- Per i prossimi episodi: la mano modellata oggi è usata solo nella carta A; le altre scene hanno ancora la mano a pezzi.
+
+## Come si fa un modello (regola dal 25/11 sera): «devi fare i modelli in quel modo»
+
+Vista la carta A rifatta sulla sua foto, l'utente ha detto: «molto bravo la mano ora si che sembra una vera mano, annotati da qualche parte
+che per le sessioni precedenti e future, devi fare i modelli in quel modo». Vale per tutte le sessioni de Il Bivio. «In quel modo» è questo:
+
+1. Si parte da una forma modellata vera, non da pezzi incollati. Sfere, capsule e scatole accostate, viste da vicino, restano una massa
+   informe. Il modello di partenza deve avere una licenza libera (MIT, CC0, CC BY) e la licenza si salva accanto al file, come
+   `cast/sets/mani/LICENZA_MIT.md`. Niente servizi a pagamento.
+2. Si trasforma in dati (`mani/converti.py`: vertici saldati, triangoli, pesi delle ossa) e si piega con le ossa (`cinematica`), non
+   spostando pezzi.
+3. Tocca davvero quello che tiene: le dita si chiudono finché arrivano sull'oggetto della scena (`afferra`, `avvolgiPollice`), con le misure
+   vere dell'oggetto (`LEVA_INGRESSO` per la maniglia). Niente pose a occhio che passano attraverso l'oggetto o gli restano staccate.
+4. Una superficie sola: le parti vicine (l'avambraccio) crescono dal bordo del modello, dagli stessi vertici (`cuciAvambraccio`).
+5. Poi si liscia (suddivisione di Loop) e si dipinge sui vertici: unghie, nocche, pieghe, fianchi più scuri. Colori piatti con sfumature
+   morbide, come il resto del cast: forma vera, mai l'effetto plastica.
+6. Si guarda da sola nel laboratorio (`prova_mesh/`: sei punti di vista su fondo neutro), anche da sotto e di lato, prima di metterla in scena.
+7. Luce con le ombre, da sopra e di lato: con la luce alle spalle il modello resta piatto e scuro.
+8. Prima di mandarla all'utente: accanto a una foto vera, ritagliata nelle stesse proporzioni, e confronto punto per punto (grandezza,
+   direzioni, dove stanno polso e nocche, dove esce l'oggetto); poi ingrandita in tutte le scene in cui si vede. Se la foto l'ha mandata
+   lui, l'immagine si rifà com'è nella foto. Le sue foto restano sulla macchina, mai nel repository.
+
+Cosa ne ho dedotto io (non sono parole sue, da correggere se dice altro):
+- «I modelli» sono prima di tutto le mani; lo stesso metodo vale per ogni parte del corpo o oggetto che si vede da vicino.
+- Lo stile dei personaggi che ha già approvato (versione 3, variante adulta) resta com'è finché non lo dice lui.
+- Dal prossimo episodio le mani si fanno così in tutte le scene. Nell'episodio 1 la mano modellata c'è solo nella carta A; le altre scene
+  hanno la mano a pezzi e non le ha contestate. Per farlo servono: le pose che oggi sono solo della mano a pezzi (telefono, distintivo,
+  bocca, dito sulle labbra) riscritte per `cinematica` e provate in `prova_mesh/`; la mano sinistra (`attacca(T.AR)` la specchia, ma
+  finora si è vista solo la destra); il tempo per fotogramma nelle scene in movimento, da misurare prima di un render intero (la mano si
+  ricalcola a ogni fotogramma: ossa, suddivisione, normali).
 
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 

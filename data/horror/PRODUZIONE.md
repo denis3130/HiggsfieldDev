@@ -108,6 +108,14 @@ Il reel di riferimento è fatto di veri video 3D (personaggi che camminano, port
 Stile scelto: **3D cartone come il reel**. Il reel è fatto tutto con Claude: le scene si costruiscono col codice in three.js e si renderizzano
 fotogramma per fotogramma (`scripts/bivio/3d/`, vedi LEGGIMI.md). Niente PC dell'utente e niente modelli video.
 
+**Modelli 3D (regola del 25/11, per tutte le sessioni, anche quelle aperte prima).** Si fanno come la mano della carta A de «Il testimone»,
+che l'utente ha approvato: «molto bravo la mano ora si che sembra una vera mano, annotati da qualche parte che per le sessioni precedenti e
+future, devi fare i modelli in quel modo». Cioè: una forma modellata vera in una superficie sola (mai pezzi incollati), piegata con le ossa
+e chiusa davvero su quello che tocca, lisciata e dipinta, e messa accanto a una foto vera per il confronto prima di mandarla. Il codice e
+i passi stanno sul ramo principale del repository: `scripts/bivio/3d/cast/sets/mano_mesh.js` e «Come si fa un modello» in
+`scripts/bivio/3d/LEGGIMI.md`. Una sessione aperta prima del 25/11 lavora su un suo ramo, che non li ha: prima di costruire un modello li
+prende dal ramo principale (`git fetch origin claude/gta6-auto-clipping-system-p29knx`).
+
 Prova scartata (24/11, «non mi piace»): `scripts/bivio/ltx_video.py` con LTX-Video 2B int8 per OpenVINO, da un'immagine (la prima inquadratura resta
 quella, poi la scena si muove) o solo dal testo.
 - Modello: `rahmanbazarov/LTX-Video-int8-ov` (licenza LTX-Video Open Weights) scaricato senza `text_encoder/openvino_model.*`: il codificatore
