@@ -167,7 +167,7 @@
    "post_id": "3cba41ef-cbe8-47d7-8a3f-fcd71e77187e",
    "revision": "58c67f48",
    "approvata": "2026-11-22 dall'utente: 'basta chiedermi autorizzazioni fai e basta'",
-   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)",
+   "stato": "NON pubblicata: il 25/11 l'utente ha negato le modifiche alle bozze vidIQ e ha scelto «Oggi non pubblicare niente». Resta in bozza senza data: quando dà il via va rimessa in calendario (nuovo publishAt, poi vidiq_social_post_publish).",
    "voce": "voce nuova 2 «più chiara» (24/11), ogni frase controllata con Whisper medium sul testo scritto"
   },
   {
@@ -180,7 +180,7 @@
    "post_id": "70f0dfd9-af22-4171-9da4-8e4f83460dc5",
    "revision": "e774ab1c",
    "approvata": "regola del 22/11: pubblicare senza chiedere",
-   "stato": "da pubblicare il giorno stesso dopo le 9 (limite vidIQ 3 al giorno)"
+   "stato": "NON pubblicata: il 25/11 l'utente ha negato le modifiche alle bozze vidIQ e ha scelto «Oggi non pubblicare niente». Resta in bozza senza data: quando dà il via va rimessa in calendario (nuovo publishAt, poi vidiq_social_post_publish)."
   },
   {
    "giorno": "2026-11-26",
@@ -274,5 +274,6 @@
    "approvata": "2026-11-21 dall'utente in chat: 'postali tu da solo senza metricool'",
    "stato": "TENUTA FUORI il 23/11: ballerine in bikini nello strip club e battuta volgare sottotitolata (regola: niente scene sessuali)."
   }
- ]
+ ],
+ "sospensione_25_11": "Il 25/11 l'utente ha fermato tutte le pubblicazioni del giorno (stacappella 18:00 e 19:00, Il Bivio 21:00): «Oggi non pubblicare niente». Vale solo per quel giorno, ma le due bozze del 25/11 restano da ricollocare e nessuna bozza va toccata su vidIQ finché non lo dice lui."
 }

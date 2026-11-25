@@ -12,16 +12,18 @@
     "A": "Apri e fai finta di non averlo riconosciuto",
     "B": "Non apri e scappi dal balcone con il telefono"
    },
-   "durata_s": 138,
+   "durata_s": 144,
    "film": "scripts/bivio/3d/ep1",
    "copione": "data/horror/il_testimone/ep1/episodio.json",
    "vidiq": {
     "upload_id": "411e87bb-73cc-4838-b1ee-8c8d769724a6",
     "post_id": "0f3539ef-e4d8-4b9d-b2ba-c69b13f05aea",
     "revision": "721cfac6",
-    "publication_id": "3b7d61e8-cbe9-4c7c-9ac8-f0956c80943e"
+    "publication_id": "3b7d61e8-cbe9-4c7c-9ac8-f0956c80943e",
+    "upload_id_voce_lenta": "84840423-5627-4fa1-b1b7-9ba776945848",
+    "nota": "Nella bozza c'è ancora il primo video (upload 411e87bb, voce a 3,0 parole/s): la sostituzione con la versione definitiva dalla voce più lenta (upload 84840423, 2,85 parole/s, 2:24) è stata negata dall'utente il 25/11."
    },
-   "stato": "bozza vidIQ pronta (pubblica, programmata per le 21:00); video consegnato all'utente alle 07:20; si pubblica nel pomeriggio se l'utente non chiede modifiche (un secondo caricamento toglierebbe uno Short a stacappella)",
+   "stato": "NON pubblicato: il 25/11 l'utente ha negato le modifiche alle bozze vidIQ e ha scelto «Oggi non pubblicare niente». Resta in bozza, non programmato. Quando dà il via: mettere nella bozza l'upload 84840423 con la nuova data e ora, poi pubblicare.",
    "scelta_votata": null
   }
  ]
