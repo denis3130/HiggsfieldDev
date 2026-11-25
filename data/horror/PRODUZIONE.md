@@ -117,3 +117,18 @@ quella, poi la scena si muove) o solo dal testo.
   intero finisce la RAM.
 - `cond_noise` 0,15 (un po' di rumore sul fotogramma di partenza) e descrizioni del movimento esplicite danno più movimento.
 - Tempi (4 vCPU): clip da 2 secondi (49 fotogrammi) a 384×672 con 20 passi in circa 5 minuti; il risultato è morbido e va ingrandito.
+
+## 8. Prova delle voci di Higgsfield (25/11, chiesta dall'utente)
+L'utente ha chiesto se su Higgsfield si può «prendere un loro doppiatore IA e usarlo illimitatamente una volta spesi dei crediti». Risposta: no,
+ogni generazione costa crediti (nessuna quota illimitata sul suo account); copiare il timbro di una loro voce per usarla in locale non si fa
+(le voci sono del fornitore e dei suoi doppiatori). La regola «niente Higgsfield per Il Bivio» resta finché non decide lui.
+- Costo della narrazione di un episodio intero (circa 1750 caratteri), da `estimate_audio_cost`: Qwen TTS 0,74 crediti; `text2speech_v2` con
+  `variant: elevenlabs` 5,25; Eleven v4 8,05; Seed Audio 11,4. Il costo va a caratteri (0,45 crediti per 131 caratteri, 0,6 per 157).
+- Con il suo ok ho speso 1,35 crediti (da 662,4 a 661,05) per due frasi dell'episodio 1 con tre voci preimpostate, motore ElevenLabs
+  (`model: text2speech_v2`, `voice_type: preset`): Gideon `1ad38ba4-9cc4-4f2f-9fde-b0fefdf67ae5` (grave, 73 Hz, 3,1 parole/s),
+  Luc `04e867c7-9e41-5cff-80d3-5284e74d7bd1` (narratore, 107 Hz, 3,1 parole/s), Julian `95429266-c0ac-4137-a209-63b8812b0f23`
+  (confidenziale, 126 Hz, 3,8 parole/s: troppo veloce, rallentata del 25%). L'italiano è uscito corretto in tutte e tre.
+  In attesa della sua scelta (gli ho mandato un video di confronto con la voce attuale).
+- Le anteprime e i file generati stanno su `d1xarpci4ikg0w.cloudfront.net`, `cdn.higgsfield.ai` e `d8j0ntlcm91z4.cloudfront.net` (aggiunti alla rete
+  dell'ambiente). Se sceglie una voce: generare la narrazione, ricavare i tempi delle parole con Whisper (come fa `voce.py`) e passare da
+  `prepara_voce.py` per la velocità (2,85 parole/s) e le pause.
