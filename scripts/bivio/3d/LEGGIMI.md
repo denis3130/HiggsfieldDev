@@ -53,7 +53,7 @@ Testo approvato dall'utente il 25/11 (`data/horror/storie/13_il_testimone.md`), 
   dietro l'unica finestra accesa (tende, piano di lavoro col ceppo dei coltelli, frigo, radiosveglia 02:47, lampada) e il parcheggio sotto (asfalto
   bagnato, strisce, lampione col cono di luce e le ombre, auto ferme, l'auto grigia col baule che si apre). Dentro: tu (`testimone`), Riva (`ispettore`),
   Elena (`elena`). La camera sta alla tua finestra (vista dall'alto, anche col teleobiettivo), giù nel parcheggio, fuori dalla finestra o dentro la cucina:
-  `interno`, `cucina` (luce accesa 0..1), `tenda`, `telTu`/`telFuori` (telefono in mano; visto da fuori sta dal lato del dorso), `cofano`, `elena.cade`,
+  `interno`, `cucina` (luce accesa 0..1), `tenda`, `telTu`/`telFuori` (telefono in mano; `telFuori` = mentre filma: dritto, di traverso dietro le dita), `cofano`, `elena.cade`,
   `elena.sdraiata`, `elena.nascosta`.
 - `cast/sets/adulti.js`: `elena()`, gli oggetti di Riva (`fazzoletto`, `radio`, `lama` = solo un luccichio), `telefono()`; i capelli del protagonista sono
   una `chioma()` scolpita (`pupazzi.js`): l'utente il 25/11 ha chiesto «migliora i capelli del protagonista» e la calotta liscia non andava.
@@ -85,7 +85,10 @@ una pallina. Cosa c'era di sbagliato e come si fa adesso:
   `k` cambia quanto piega ogni giuntura delle dita.
 - Avambracci nudi: `polsoZ` (il polso è piatto: l'avambraccio è un `loft` che si schiaccia verso la mano e ruota insieme al dorso, come quello vero),
   `gomitoM` + `orlo` (gomito di pelle e orlo netto della manica: prima la manica finiva in una palla di stoffa col bordo seghettato).
-- Un oggetto in mano va tenuto davvero: il distintivo sta davanti alle dita col pollice sopra (prima era una mano aperta con il portafoglio sotto).
+- Un oggetto in mano va tenuto davvero: il distintivo sta davanti alle dita col pollice sopra (prima era una mano aperta con il portafoglio sotto);
+  il telefono che filma sta dietro le dita messe di traverso, con le punte che agganciano il bordo (posa `filma`; prima era appoggiato sul dorso
+  della mano). Chi filma un parcheggio dal quarto piano tiene il telefono al petto, inclinato in giù: così il viso resta scoperto. Attenzione
+  alle viste dal basso: un oggetto tenuto 35 cm davanti alla faccia, visto da giù, finisce sopra la testa.
 - `prova_mano/`: il laboratorio. Ogni secondo una posa, vista da sei punti su fondo neutro e luce piena:
   `provini.py prova_mano 0.5,1.5,2.5,3.5,4.5,5.5,6.5 out/prova_mano/pose.jpg 7`. Una posa nuova si guarda prima qui, poi nell'episodio.
 - Immagini delle carte A/B: `prova_carta/` mette a confronto più inquadrature della stessa immagine nel formato largo della carta. Niente grandangolo

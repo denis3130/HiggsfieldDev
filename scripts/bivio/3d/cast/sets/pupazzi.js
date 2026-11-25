@@ -323,6 +323,8 @@ const POSE_MANO = {
   rilassata: { dita: [0.2, 0.26, 0.32, 0.4], pollice: 0.3, apri: 0.3 }, aperta: { dita: [0.03, 0.02, 0.03, 0.05], pollice: 0, apri: 1 }, piatta: { dita: [0.05, 0.05, 0.06, 0.08], pollice: 0.14, apri: 0.15 },
   pugno: { dita: [1, 1, 1, 1], pollice: 0.95, apri: 0 }, indice: { dita: [0.02, 1, 1, 1], pollice: 0.95, apri: 0 }, presa: { dita: [0.5, 0.56, 0.6, 0.66], pollice: 0.45, apri: 0.2 }, pizzico: { dita: [0.62, 0.78, 0.86, 0.92], pollice: 0.72, apri: 0 },
   // le dita avvolgono una sbarra orizzontale (maniglia, ringhiera): la sbarra passa sotto le nocche, a y = -0.095 e z = -0.0245 della mano; il pollice chiude da sotto
+  // un telefono tenuto dritto per filmare, di traverso dietro le dita: le punte agganciano il bordo lontano, il mignolo resta disteso, il pollice è sullo schermo
+  filma: { dita: [1, 1, 1, 0.12], pollice: 1, apri: 0.1, k: [0, 0.05, 1.3], pv: [[-0.25, -0.62, -0.74], [0.106, -0.984, 0.138], [0.2, -0.97, 0.06]], pb: [-0.3, 0, -1] },
   // un tesserino o un portafoglio tenuto dritto contro le dita, dal lato del palmo: dita distese dietro, pollice davanti in basso
   tessera: { dita: [0.03, 0.02, 0.03, 0.05], pollice: 1, apri: 0.05, pv: [[-0.3, -0.6, -0.74], [0.279, -0.953, 0.114], [0.35, -0.93, 0.05]], pb: [-0.2, 0, -1] },
   leva: { dita: [0.95, 1, 1, 1], pollice: 1, apri: 0, k: [0.72, 1.62, 1.0], pv: [[-0.42, -0.62, -0.66], [-0.083, -0.639, -0.766], [0.3, -0.93, 0.05]], pb: [-0.8, 0.1, -0.3] },

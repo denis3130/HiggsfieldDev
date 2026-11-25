@@ -63,6 +63,8 @@ function zuffa(t, A) {
 }
 const aTerra = () => ({ pos: pEf, yaw: yE, cade: 1, lean: 0.3, headPitch: 0.25, gambe: { aL: 0.5, gL: 1.0, aR: 0.4, gR: 0.85 }, armL: { a: [-0.06, 0.06, 0.17], mano: 'piatta' }, armR: { a: [0.06, 0.05, 0.17], mano: 'piatta' }, blink: 1 });
 // Riva col dito alzato che conta i piani (piano = 1..4, anche con la virgola mentre sale)
+// il braccio che filma dalla finestra: il telefono all'altezza del petto, di traverso dietro le dita e inclinato verso il parcheggio (lui guarda lo schermo dall'alto)
+const FILMA = { a: [0.206, 0.329, 0.268], gomito: [1, -0.8, 0], dita: [-1, 0.06, 0], dorso: [0, -0.5, 0.87], mano: 'filma' };
 // il braccio che mostra il distintivo allo spioncino: palmo verso la porta, il portafoglio davanti alle dita
 const DIST_SU = { a: [-0.1, 0.33, 0.33], gomito: [-1, -0.8, -0.1], dita: [0, 1, 0.05], dorso: [0, 0, -1], mano: 'tessera' };
 function conta(pos, yaw, piano, colpetto) {
@@ -121,7 +123,7 @@ function sequenza() {
   const tRec = w(10, 'dodici') - 0.12, fineRec = r(14) - 0.12, sec = (t) => 12 * clamp((t - tRec) / (rf(13) + 0.15 - tRec));
   sc(r(10) - 0.1, (t, k) => { const al = io(prog(t, r(10) + 0.1, w(10, 'filmi')));
     return { set: 'F', id: 'tu2', pioggia: 0.7, cucina: 1, tenda: 1, telTu: 1, telFuori: 1, cam: v3([WX - 0.3, FY + 1.73, 2.05], [WX + 0.35, FY + 1.72, 2.2], io(k)), look: [WX + 0.05, FY + 1.6, -0.5], fov: 24,
-      tu: tuFin(t, { fear: 0.9, browUp: 0.4, headPitch: 0.34 - 0.1 * al, armR: { a: v3([0.2, 0.0, 0.12], [0.1, 0.36, 0.32], al), gomito: [1, -0.8, 0], dita: [0, 1, 0.12], dorso: [0, 0, 1], mano: TIENE } }) }; });
+      tu: tuFin(t, { fear: 0.9, browUp: 0.4, headPitch: 0.34 - 0.1 * al, armR: { ...FILMA, a: v3([0.2, 0.0, 0.12], FILMA.a, al) } }) }; });
   // lui la trascina verso il baule
   const testaE = loc(pEf, yE, [1.5, 0.14, 0]), dTr = [0.12, 0, 0.62];
   sc(tRec, (t, k) => { const tr = io(prog(k, 0.35, 1)), pE = su(pEf, dTr, tr), giuK = io(prog(k, 0, 0.3)), pR = su(su(testaE, [-0.02, 0, 0.42], 1), dTr, tr); pR[1] = 0;
@@ -154,7 +156,7 @@ function sequenza() {
   // --- una sola finestra accesa
   const camGiu = [pFz[0] + 0.5, 1.72, pFz[2] + 1.5];
   const rivaSu = (t, x = {}) => fazz(t, { fazzoletto: false, headPitch: -0.66, headYaw: 0.2, gazeY: 0.4, lean: -0.06, ...x });
-  const tuTel = (t, x = {}) => tuFin(t, { fear: 1, browUp: 0.5, headPitch: 0.3, armR: { a: [0.1, 0.36, 0.32], gomito: [1, -0.8, 0], dita: [0, 1, 0.12], dorso: [0, 0, 1], mano: TIENE }, ...x });
+  const tuTel = (t, x = {}) => tuFin(t, { fear: 1, browUp: 0.5, headPitch: 0.3, armR: FILMA, ...x });
   sc(fineRec, (t, k) => ({ set: 'F', id: 'palazzo', pioggia: 1, cucina: 1, tenda: 1, telTu: 1, telFuori: 1, cam: camGiu, look: v3([WX + 0.6, FY - 2.2, 0], [WX, FY + 1.55, 0], io(prog(k, 0.05, 0.8))), fov: lerp(46, 12.5, E.inOutCubic(prog(k, 0.15, 0.92))), fronte: 0.1,
     riva: rivaSu(t), elena: { nascosta: true }, tu: tuTel(t) }));
   const pC = sottoLampione, yC = yFin(pC), uno = w(15, 'uno'), due = w(15, 'due'), tre = w(15, 'tre'), quattro = w(15, 'quattro');

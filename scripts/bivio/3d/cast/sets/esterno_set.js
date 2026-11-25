@@ -170,8 +170,9 @@ export function fuoriSet() {
       E.group.visible = !e.nascosta; E.pose(e);
       bic.visible = !!o.bicchiere; LM.intensity = dn ? 0.75 * (1 - k) : 0;
       vetroB.material.opacity = dn ? 0 : 0.9 * (1 - k); vetroB.visible = vetroB.material.opacity > 0.01;
-      // telFuori: il telefono sta dal lato del dorso della mano (visto da fuori si vede il retro, con le dita dietro) e sporge sopra le dita
-      const tk = M.clamp(o.telTu ?? 0); tel.g.visible = tk > 0; tel.g.position.set(0, o.telFuori ? -0.05 : 0, o.telFuori ? 0.062 : 0); T.group.updateMatrixWorld(true);
+      // telFuori: il telefono che filma. Sta dritto, di traverso dietro le dita (posa della mano «filma», dita orizzontali e dorso verso fuori):
+      // da fuori si vedono il dorso della mano, le dita sul retro del telefono e l'obiettivo che sporge sopra l'indice
+      const tk = M.clamp(o.telTu ?? 0), tf = !!o.telFuori; tel.g.visible = tk > 0; tel.g.rotation.z = tf ? -Math.PI / 2 : 0; tel.g.position.set(tf ? 0.055 : 0, tf ? -0.128 : 0, tf ? 0.0145 : 0); T.group.updateMatrixWorld(true);
       tel.schermo.getWorldPosition(tmp); tel.schermo.getWorldDirection(dir); LT.position.copy(tmp).addScaledVector(dir, 0.24); LT.intensity = (o.telFuori ? 0.5 : 0.8) * tk;
     } };
 }
