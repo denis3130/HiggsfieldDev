@@ -397,7 +397,7 @@ export function braccio(upper, side, o) {
     hand.userData.pose(q.mano || 'rilassata');
   }
   a({});
-  return { a, gH, hand, S, riposo, side };
+  return { a, gH, gF, hand, S, riposo, side, L2, r1: o.r1, liscio: !!o.polsoZ };
 }
 
 // ------------------------------------------------------------------ gamba (anca + ginocchio) con la scarpa

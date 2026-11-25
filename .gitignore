@@ -12,3 +12,5 @@ scripts/mix.wav
 scripts/part*.mp4
 scripts/parts.txt
 scripts/guida.ass
+# audio mandati dall'utente (musiche protette, registrazioni): restano solo sulla macchina
+scripts/bivio/musica/utente/

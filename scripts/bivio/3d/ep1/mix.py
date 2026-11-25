@@ -4,7 +4,8 @@
 # La musica di sottofondo la sceglie l'utente: musica.json = {"file": brano in scripts/bivio/musica (licenze in licenze_musica.json),
 #   "da": secondo da cui parte, "coda": secondi finali da scartare, "incrocio": dissolvenza quando il brano ricomincia, "filtri": filtri di ffmpeg sul brano,
 #   "lufs": livello prima del volume finale, misurato senza i bassi sotto 200 Hz, cioè come si sente da un telefono (lì la voce è a -22,9 e la pioggia intorno a -31,5)}.
-#   Per provarne un'altra senza toccare musica.json: MUSICA=<file> oppure MUSICA='{"file": ..., "lufs": ...}'; MUSICA=no la toglie.
+#   Può essere anche una lista di brani da sovrapporre. Un brano che manca (quelli dell'utente stanno solo sulla macchina, in musica/utente) si salta con un avviso.
+#   Per provarne un'altra senza toccare musica.json: MUSICA=<file> oppure MUSICA='{"file": ..., "lufs": ...}' (o una lista); MUSICA=no la toglie.
 # MIX=<file.wav> scrive il mix altrove (per le prove); SENZA_VOCE=1 lascia fuori la voce (per misurare i livelli).
 import json, math, os, re, subprocess, sys, unicodedata
 D = os.path.dirname(os.path.abspath(__file__))
@@ -14,7 +15,8 @@ MLIB = os.environ.get('MLIB') or os.path.normpath(os.path.join(D, '../../musica'
 if not os.path.isdir(MLIB): MLIB = '/home/user/HiggsfieldDev/scripts/bivio/musica'
 MUS = json.load(open(f'{D}/musica.json')) if os.path.exists(f'{D}/musica.json') else {}
 if os.environ.get('MUSICA'):
-    e = os.environ['MUSICA']; MUS = {} if e == 'no' else json.loads(e) if e.lstrip().startswith('{') else {'file': e}
+    e = os.environ['MUSICA']; MUS = [] if e == 'no' else json.loads(e) if e.lstrip()[:1] in '{[' else {'file': e}
+MUS = [m for m in (MUS if isinstance(MUS, list) else [MUS]) if m.get('file')]
 MIX = os.environ.get('MIX') or f'{D}/audio/mix.wav'
 RIGHE = json.load(open(f'{D}/assets/parole.json')); END = json.load(open(f'{D}/film.json'))['duration']
 norm = lambda s: re.sub(r"[^a-z']", '', ''.join(c for c in unicodedata.normalize('NFD', s.lower()) if unicodedata.category(c) != 'Mn'))
@@ -58,20 +60,23 @@ TELEFONO = 'highpass=f=200,highpass=f=200'                     # l'altoparlante 
 def volume_di(file, filtri='anull'):
     m = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', file, '-af', f'{filtri},loudnorm=print_format=json', '-f', 'null', '-'], capture_output=True, text=True).stderr
     return float(json.loads(m[m.rindex('{'):m.rindex('}') + 1])['input_i'])
-def musica(m):
-    """prepara il brano: parte da m['da'], copre tutto l'episodio (se è più corto ricomincia con una dissolvenza incrociata),
-    passa dai filtri e torna con il volume che lo porta al livello m['lufs']"""
+def musica(m, i=0):
+    """prepara il brano: parte da m['da'], copre tutto l'episodio (se è più corto ricomincia con una dissolvenza incrociata; se gli manca
+    poco, o con "ripeti": false, finisce nel silenzio), passa dai filtri e torna con il volume che lo porta al livello m['lufs']"""
     src = m['file'] if os.path.isabs(m['file']) else os.path.join(MLIB, m['file']); da = float(m.get('da', 0)); serve = END + 0.5
+    if not os.path.exists(src): print('ATTENZIONE: manca la musica', src, '(saltata)'); return None
     lungo = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', src], capture_output=True, text=True).stdout) - da - float(m.get('coda', 0))
-    X = float(m.get('incrocio', 4.0)); n = 1 if lungo >= serve else math.ceil((serve - X) / (lungo - X))
+    X = float(m.get('incrocio', 4.0)); n = 1 if (lungo >= END - 2 or m.get('ripeti') is False) else math.ceil((serve - X) / (lungo - X))
     ing = sum([['-ss', f'{da:.3f}', '-t', f'{lungo:.3f}', '-i', src] for _ in range(n)], [])
-    g = ';'.join(f'[{i}:a]aresample=48000,aformat=channel_layouts=stereo[c{i}]' for i in range(n)); u = '[c0]'
-    for i in range(1, n): g += f';{u}[c{i}]acrossfade=d={X}:c1=qsin:c2=qsin[x{i}]'; u = f'[x{i}]'
-    g += f";{u}atrim=0:{serve:.3f},{m.get('filtri', 'highpass=f=70')}[m]"; out = f'{D}/audio/_musica.wav'
+    g = ';'.join(f'[{k}:a]aresample=48000,aformat=channel_layouts=stereo[c{k}]' for k in range(n)); u = '[c0]'
+    for k in range(1, n): g += f';{u}[c{k}]acrossfade=d={X}:c1=qsin:c2=qsin[x{k}]'; u = f'[x{k}]'
+    g += f";{u}apad,atrim=0:{serve:.3f},{m.get('filtri', 'highpass=f=70')}[m]"; out = f'{D}/audio/_musica{i}.wav'
     subprocess.run(['ffmpeg', '-v', 'error', '-y'] + ing + ['-filter_complex', g, '-map', '[m]', '-c:a', 'pcm_s24le', out], check=True)
     return out, round(10 ** ((float(m.get('lufs', -34)) - volume_di(out, TELEFONO)) / 20), 4), n
-if MUS.get('file'):
-    letto, vm, giri = musica(MUS); suono(letto, 0, vm, dur=END, dentro=float(MUS.get('entra', 1.0)), fuori=1.5, lib=False)
+LETTI = []
+for i, m in enumerate(MUS):
+    r_ = musica(m, i)
+    if r_: suono(r_[0], 0, r_[1], dur=END, dentro=float(m.get('entra', 1.0)), fuori=1.5, lib=False); LETTI.append((m, r_[1], r_[2], r_[0]))
 # --- ambienti: pioggia fuori, pioggia dietro il vetro in cucina, buio di fondo per tutto l'episodio
 fuori = [(0.0, g2), (r(4) - 0.1, r(18) - 0.2), (agente, r(21) - 0.25)]
 dentro = [(r(3) - 0.15, r(4) - 0.1), (r(18) - 0.2, agente)]
@@ -127,8 +132,9 @@ j = json.loads(m[m.rindex('{'):m.rindex('}') + 1])
 af = f"loudnorm=I=-14:TP=-1:LRA=11:measured_I={j['input_i']}:measured_TP={j['input_tp']}:measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true"
 af += ',alimiter=limit=0.79:level=disabled:attack=3:release=60'          # picchi a -2 dB: la codifica AAC li rialza di oltre 1 dB
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', pre, '-af', af, '-ar', '48000', '-c:a', 'pcm_s16le', MIX], check=True); os.remove(pre)
-print(f"mix: {n} tracce, durata {END} s, misurato {j['input_i']} LUFS / picco {j['input_tp']} dB -> -14 LUFS" + (f"; musica {os.path.basename(MUS['file'])} da {MUS.get('da', 0)} s a {MUS.get('lufs', -34)} LUFS da telefono (volume {vm}, {giri} giro/i)" if MUS.get('file') else '; senza musica'))
-if os.path.exists(f'{D}/audio/_musica.wav'): os.remove(f'{D}/audio/_musica.wav')
+print(f"mix: {n} tracce, durata {END} s, misurato {j['input_i']} LUFS / picco {j['input_tp']} dB -> -14 LUFS" + (''.join(f"; musica {os.path.basename(m['file'])} da {m.get('da', 0)} s a {m.get('lufs', -34)} LUFS da telefono (volume {v}, {g} giro/i)" for m, v, g, _ in LETTI) if LETTI else '; senza musica'))
+for _, _, _, f in LETTI:
+    if os.path.exists(f): os.remove(f)
 if len(sys.argv) > 2:
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', sys.argv[1], '-i', MIX, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', '-shortest', sys.argv[2]], check=True)
     print('scritto', sys.argv[2])

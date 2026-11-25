@@ -23,9 +23,10 @@
     "upload_id_voce_lenta": "84840423-5627-4fa1-b1b7-9ba776945848",
     "nota": "Nella bozza c'è ancora il primo video (upload 411e87bb, voce a 3,0 parole/s): la sostituzione con la versione definitiva dalla voce più lenta (upload 84840423, 2,85 parole/s, 2:24) è stata negata dall'utente il 25/11."
    },
-   "stato": "NON pubblicato. Versione definitiva con la voce Luc e le mani rifatte (146,9 s) consegnata all'utente il 25/11 alle 18:40, dopo la sua correzione sulla carta A («la mano è fatta male»): mano e braccio nuovi per tutti i personaggi, carta A con la mano che stringe la maniglia, distintivo, telefono che filma, mano sulla bocca e dito sulle labbra ricontrollati sul video finale. La versione delle 14:13 (voce Luc, mani vecchie) è superata. Higgsfield: 5,25 crediti per la narrazione (saldo 655,8), nessuna spesa in più per il rifacimento. Nella bozza vidIQ c'è ancora il primo video (voce locale): quando dà il via va caricato il definitivo, messo nella bozza con data e ora nuove e pubblicato. Il 25/11 ha scelto «Oggi non pubblicare niente».",
+   "stato": "NON pubblicato. Versione del 25/11 alle 20:45 consegnata all'utente: carta A rifatta con la mano modellata, vista come nelle due foto che ha mandato (dopo «no la mano sulla porta è ancora fatta male comunque»), e musica scelta da lui: il suo audio «audio horror di dexter» come musica principale con sotto gli archi in tensione. Consegnata anche la copia di riserva con i soli archi (CC0), perché uno Short oltre il minuto con un reclamo Content ID viene bloccato in tutto il mondo: deve dire lui quale pubblicare. Le versioni di prima (mani a pezzi, 18:40; voce Luc, 14:13) sono superate. Higgsfield: 5,25 crediti per la narrazione (saldo 655,8), nessuna altra spesa. Nella bozza vidIQ c'è ancora il primo video (voce locale): quando dà il via va caricato il definitivo, messo nella bozza con data e ora nuove e pubblicato. Il 25/11 ha scelto «Oggi non pubblicare niente».",
    "scelta_votata": null,
-   "voce": "Luc di Higgsfield (job b21e2f15-c9e7-452f-8f72-8344ca0e6b23, 5,25 crediti), scelta dall'utente il 25/11; le versioni con la voce locale restano solo come prove"
+   "voce": "Luc di Higgsfield (job b21e2f15-c9e7-452f-8f72-8344ca0e6b23, 5,25 crediti), scelta dall'utente il 25/11; le versioni con la voce locale restano solo come prove",
+   "musica": "scripts/bivio/3d/ep1/musica.json: audio dell'utente (solo sulla macchina) + archi_tensione.mp3 (CC0, Magmi.Soundtracks su Freesound)"
   }
  ]
 }

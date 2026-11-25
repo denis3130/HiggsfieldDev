@@ -98,6 +98,32 @@ una pallina. Cosa c'era di sbagliato e come si fa adesso:
   ingranditi, e confronto con il render di prima. Cambiando la forma della mano si spostano anche i punti d'arrivo (la mano sulla bocca era salita sul naso).
 
 
+## Mano modellata per i primi piani (25/11 sera): dopo «no la mano sulla porta è ancora fatta male comunque»
+
+- La mano a pezzi (`mano()` in `pupazzi.js`) regge da lontano; in primo piano resta una massa informe, da qualunque lato. Per i primi piani c'è
+  la mano MODELLATA, `cast/sets/mano_mesh.js`: è la «generic-hand» dei WebXR Input Profiles (licenza MIT, `cast/sets/mani/LICENZA_MIT.md`).
+  Il modello originale è `mani/destra.glb` (da `npm pack @webxr-input-profiles/assets`); `mani/converti.py` lo trasforma in `mani/mano_destra.js`
+  (vertici saldati, triangoli, pesi delle ossa). Spazio del modello: dita verso -y, dorso verso +x, pollice verso -z.
+- Cosa fa il modulo: `cinematica` piega osso per osso (nel modello le ossa non sono in catena, i conti li fa il codice); `afferra(P, { a, b, r })`
+  chiude le dita attorno a un bastone finché lo toccano; `avvolgiPollice` porta il pollice dal lato del palmo, di fronte alle dita; poi la
+  superficie si liscia (suddivisione di Loop, 2 livelli) e si dipinge: unghie, fianchi delle dita più scuri, pieghe delle nocche.
+- Nella scena: `attacca(A)` la mette al polso di un braccio (`T.AL` / `T.AR`) al posto di quella a pezzi e, con le maniche corte, fa anche
+  l'avambraccio: una superficie nuova che parte dalla sezione vera del polso e arriva al gomito, quindi nessuna giuntura. `stacca(m)` rimette
+  tutto com'era. `presaSu(a, b, { ...presaNocche(u, v), rollio, lungo })` dice dove vanno polso, dita e dorso perché un bastone della scena
+  passi nel pugno (si danno al braccio come `mondo`, `ditaM`, `dorsoM`); `nelModello` porta il bastone e l'avambraccio nello spazio della mano.
+  La leva della porta d'ingresso è `LEVA_INGRESSO` in `testimone_set.js`.
+- Carta A dell'episodio 1 (`cartaA()` in `ep1/film.js`): l'inquadratura è quella delle due foto mandate dall'utente (la sua mano sulla
+  maniglia, dall'alto e da dietro lungo il braccio): il braccio entra dall'angolo in basso a destra, il pugno sulla leva, la placca sopra,
+  12° di rollio. Del personaggio si vede solo il braccio. Un faro in alto a destra con le ombre dà volume: una luce da dietro lascia al buio
+  il dorso della mano, che guarda verso la porta. Finito lo scatto il set torna com'era: le altre inquadrature dell'ingresso sono rimaste
+  identiche pixel per pixel (controllato a 84,26 e 93 s).
+- Laboratori: `prova_mesh/` (la mano da sola: aperta, pugno, presa su un bastone) e `prova_carta/` (la carta con sopra bollo e scritte, tre
+  inquadrature per fotogramma). Una presa nuova si guarda prima lì, da sotto e di lato, per vedere pollice e punte delle dita.
+- Rifare solo la fine di un episodio: `render.mjs ... --video-only --range 130.13333333:146.93`, partendo da un fotogramma chiave del video già
+  fatto (`ffprobe -skip_frame nokey`); poi testa e coda si uniscono senza ricodificare passando da MPEG-TS (`-bsf:v h264_mp4toannexb`) e si
+  controlla che i fotogrammi a cavallo del taglio combacino. Otto minuti invece di un'ora.
+- Per i prossimi episodi: la mano modellata oggi è usata solo nella carta A; le altre scene hanno ancora la mano a pezzi.
+
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 
 - La musica la sceglie l'utente. Se non ne manda una sua, gli si propongono tre brani veri e gratuiti (CC0), montati sotto lo stesso pezzo
@@ -115,3 +141,13 @@ una pallina. Cosa c'era di sbagliato e come si fa adesso:
 - Un brano più corto dell'episodio ricomincia con una dissolvenza incrociata; uno con grandi sbalzi di volume si livella con un `volume`
   che dipende dal tempo (vedi `2_archi`). Dopo il mix si controllano volume finale (-14 LUFS) e picchi: con il pianoforte la codifica AAC
   ha portato un picco a +0,1 dB, quindi con quel brano va abbassato il limitatore.
+- Scelta dell'utente per l'episodio 1 (25/11): «archi di tensione mi piace ma aspetta che ti aggiungo un'audio migliore ma tienilo ugualmente».
+  `ep1/musica.json` è una lista: il suo audio (Dropbox `/Shorts/audio horror di dexter.webm`, copiato in `scripts/bivio/musica/utente/`, che è
+  fuori dal repository) come musica principale a -37, livellato a pezzi di 6 secondi e alleggerito nei bassi, e gli archi a -40,5 che salgono
+  di 4 dB da 120 a 132 s e restano soli nel finale, dove il suo sfuma. Insieme stanno circa 13 dB sotto la voce. Se il suo file manca, mix.py
+  lo salta con un avviso e restano gli archi.
+- YouTube: uno Short più lungo di un minuto con un reclamo Content ID attivo viene bloccato in tutto il mondo
+  (https://support.google.com/youtube/answer/15424877). L'audio dell'utente è musica di una serie TV: gliel'ho segnalato e ha anche la
+  versione con i soli archi (CC0).
+- Dropbox: ogni link di download ha un indirizzo diverso (`uc….dl.dropboxusercontent.com`) che va aggiunto alla rete dell'ambiente con una
+  richiesta da approvare, prima che il link scada (15 minuti).

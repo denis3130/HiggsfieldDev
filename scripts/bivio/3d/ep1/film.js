@@ -6,7 +6,8 @@ import * as M from './lib/motion.js';
 import * as G from './lib/gl.js';
 import { THREE } from './sets/stile.js';
 import { fuoriSet, WX, FY, AUTO } from './sets/esterno_set.js';
-import { ingressoSet, pianerottoloSet } from './sets/testimone_set.js';
+import { ingressoSet, pianerottoloSet, LEVA_INGRESSO } from './sets/testimone_set.js';
+import { attacca, stacca, presaSu, presaNocche, nelModello, afferra, avvolgiPollice } from './sets/mano_mesh.js';
 import { battito } from './sets/pupazzi.js';
 
 const { W, H, E, prog, lerp, clamp, font, bump } = M;
@@ -332,6 +333,27 @@ function scatto(set, o, wd = 540, luce = 1, hg = 0) { const cv = document.create
   if (hg) set.camera.aspect = wd / hg; c.scale(wd / W, cv.height / H); if (luce !== 1) c.filter = `brightness(${luce})`; G.renderSet(c, set, 0, 0, o);
   if (hg) { set.camera.aspect = W / H; set.camera.updateProjectionMatrix(); } return cv; }
 
+// Carta A: la tua mano che impugna la maniglia, vista come nelle due foto mandate dall'utente il 25/11: dall'alto e da dietro, lungo il braccio
+// (il braccio entra dall'angolo in basso a destra, il pugno sulla leva, la placca sopra, l'inquadratura un po' storta). È un primo piano, quindi
+// la mano è quella MODELLATA (sets/mano_mesh.js): si mette sulla leva vera della porta, chiude le dita finché la toccano e avvolge il pollice
+// da sotto; mano e avambraccio sono un pezzo solo e del personaggio si vede solo quello. Un faro in alto a destra, con le ombre, le dà volume.
+// Finito lo scatto il set torna com'era (mano a pezzi, corpo, niente ombre): le altre inquadrature dell'ingresso non cambiano.
+function cartaA() {
+  const L = LEVA_INGRESSO, M0 = [0.295, 1.05, -2.44], g = presaSu(L.a, L.b, { ...presaNocche(0.01, 0.035), rollio: -32, lungo: 0.5 });
+  const mm = attacca(SI.T.AL), faro = new THREE.SpotLight('#FFE2BC', 2.6, 3, 0.36, 0.7, 1.2); faro.position.set(M0[0] + 0.35, M0[1] + 0.45, M0[2] + 0.05); faro.target.position.set(0.295, 1.02, -2.48);
+  faro.castShadow = true; faro.shadow.mapSize.set(2048, 2048); faro.shadow.camera.near = 0.15; faro.shadow.camera.far = 2; faro.shadow.bias = -0.0004; faro.shadow.normalBias = 0.004; faro.shadow.radius = 5; SI.scene.add(faro, faro.target);
+  for (const x of mm.userData.pezzi) { x.castShadow = true; x.receiveShadow = true; } const prima = [], nascosti = [], scatola = new THREE.Box3();
+  SI.scene.traverse((o) => { if (!o.isMesh || mm.userData.pezzi.includes(o)) return; scatola.setFromObject(o); if (scatola.min.z < -2.3 && scatola.max.z > -2.62 && scatola.max.y > 0.5) { prima.push([o, o.castShadow, o.receiveShadow]); o.receiveShadow = true; if (scatola.max.x - scatola.min.x < 0.3) o.castShadow = true; } });
+  const agg = SI.update; SI.update = (t, u, o) => { agg(t, u, o);
+    SI.T.group.traverse((x) => { if (x.isMesh && x.visible && !mm.userData.pezzi.includes(x)) { nascosti.push(x); x.visible = false; } });          // di te si vede solo il braccio
+    SI.scene.updateMatrixWorld(true); const m = nelModello(mm, L.a, L.b, L.r);
+    mm.userData.posa(avvolgiPollice(afferra({ avambraccio: m.avambraccio }, m.leva, { pollice: false }), m.leva, { rollio: 75, zona: [-0.06, -0.012] })); };
+  const img = scatto(SI, { cam: [M0[0] - 0.07, M0[1] + 0.47, M0[2] + 0.26], look: [M0[0] + 0.02, M0[1] - 0.06, M0[2]], roll: 12 * Math.PI / 180, fov: 27, piedi: 1, telefono: 0, occhio: 0.9, amb: 0.16, fronte: 0.05,
+    tu: { pos: [0.08, 0, -1.94], yaw: Math.PI, lean: 0.14, headPitch: 0.3, armL: { mondo: g.polso, gomitoM: [0.5, -0.8, 0.4], ditaM: g.dita, dorsoM: g.dorso, mano: 'rilassata' } } }, 860, 1, 480);
+  SI.update = agg; SI.scene.remove(faro, faro.target); faro.dispose(); for (const [o, c, r] of prima) { o.castShadow = c; o.receiveShadow = r; } for (const x of nascosti) x.visible = true; stacca(mm);
+  return img;
+}
+
 M.film({
   fonts: [font(74, 800, 'Display'), font(74, 500, 'UI')],
   samples: 1,
@@ -345,9 +367,7 @@ M.film({
     const zB = AUTO[2], bx = AUTO[0] - 2.15;
     IMG.video = scatto(SF, { cam: CW, look: [bx + 0.2, 0.9, zB], fov: 9.5, tenda: 1, tu: lontano, cofano: 1, elena: { pos: [bx - 0.62, 0.82, zB], yaw: -Math.PI / 2, sdraiata: 1, blink: 1, gambe: { gL: 1.25, gR: 1.12 } },
       riva: { pos: [bx - 0.52, 0, zB + 0.04], yaw: Math.PI / 2, lean: 0.5, headPitch: 0.3, armL: { mondo: [bx - 0.22, 0.78, zB - 0.11], mano: 'presa' }, armR: { mondo: [bx - 0.22, 0.78, zB + 0.11], mano: 'presa' } } });
-    // carta A: la tua mano che impugna la maniglia, vista da sopra la spalla (direzioni della mano nel verso della scena: sei girato verso la porta)
-    IMG.cartaA = scatto(SI, { cam: [0.075, 1.23, -2.16], look: [0.255, 1.0, -2.46], fov: 34, piedi: 1, telefono: 0, occhio: 0.9, amb: 0.2, fronte: 0.14, luce: { pos: [-0.1, 1.45, -2.2], k: 1.1, colore: '#FFD9A8' },
-      tu: { pos: [0.08, 0, -1.96], yaw: Math.PI, lean: 0.14, headPitch: 0.3, armL: { mondo: [0.3, 1.058, -2.375], gomitoM: [0.5, -0.8, 0.4], ditaM: [0, -0.12, -1], dorsoM: [0, 1, -0.12], mano: 'leva' } } }, 860, 1, 480);
+    IMG.cartaA = cartaA();
     IMG.cartaB = scatto(SF, { cam: [4.5, FY + 1.5, 0.2], look: [4.2, FY - 3.2, 6.5], fov: 30, cucina: 0, riva: lontano, elena: { nascosta: true }, tu: lontano }, 860, 1.7, 480);
   },
   draw(ctx, u, t) {

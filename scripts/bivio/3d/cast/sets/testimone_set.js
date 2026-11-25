@@ -31,6 +31,8 @@ function porta(p, { numero = null, colore = '#4A3226' } = {}) {
   return g;
 }
 
+// la leva della porta d'ingresso nel mondo (la porta sta a z = -2.56): a = punta libera, b = perno, r = raggio. Serve a chi la impugna.
+export const LEVA_INGRESSO = { a: [0.225, 1.02, -2.475], b: [0.365, 1.02, -2.475], r: 0.011 };
 // ------------------------------------------------------------------ l'ingresso di casa, di notte
 export function ingressoSet() {
   const scene = new THREE.Scene(); scene.background = new THREE.Color('#05070c');
