@@ -12,7 +12,7 @@
     "A": "Apri e fai finta di non averlo riconosciuto",
     "B": "Non apri e scappi dal balcone con il telefono"
    },
-   "durata_s": 144,
+   "durata_s": 147,
    "film": "scripts/bivio/3d/ep1",
    "copione": "data/horror/il_testimone/ep1/episodio.json",
    "vidiq": {
@@ -23,8 +23,9 @@
     "upload_id_voce_lenta": "84840423-5627-4fa1-b1b7-9ba776945848",
     "nota": "Nella bozza c'è ancora il primo video (upload 411e87bb, voce a 3,0 parole/s): la sostituzione con la versione definitiva dalla voce più lenta (upload 84840423, 2,85 parole/s, 2:24) è stata negata dall'utente il 25/11."
    },
-   "stato": "NON pubblicato: il 25/11 l'utente ha negato le modifiche alle bozze vidIQ e ha scelto «Oggi non pubblicare niente». Resta in bozza, non programmato. Quando dà il via: mettere nella bozza l'upload 84840423 con la nuova data e ora, poi pubblicare.",
-   "scelta_votata": null
+   "stato": "NON pubblicato. Il 25/11 l'utente ha scelto «Oggi non pubblicare niente» e poi la voce Luc: l'episodio è in rifacimento con la voce nuova. Nella bozza vidIQ c'è ancora il primo video (voce locale): quando dà il via va caricato quello definitivo con Luc, messo nella bozza con data e ora nuove e pubblicato.",
+   "scelta_votata": null,
+   "voce": "Luc di Higgsfield (job b21e2f15-c9e7-452f-8f72-8344ca0e6b23, 5,25 crediti), scelta dall'utente il 25/11; le versioni con la voce locale restano solo come prove"
   }
  ]
 }

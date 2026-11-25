@@ -37,7 +37,11 @@ def suono(file, t, vol=1.0, ss=None, dur=None, filtri='', ciclo=False, dentro=0.
 
 LONTANO = 'lowpass=f=1700,aecho=0.8:0.6:90|180:0.3|0.18'        # un suono che arriva dal parcheggio, quattro piani più giù
 vo = f'{D}/audio/vo.wav'
-if os.path.exists(vo): suono(vo, 0, 1.0, lib=False)
+if os.path.exists(vo):
+    # la voce entra sempre allo stesso livello (-19,4 LUFS, quello su cui sono tarati i suoni), qualunque motore l'abbia fatta
+    mv = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', vo, '-af', 'loudnorm=print_format=json', '-f', 'null', '-'], capture_output=True, text=True).stderr
+    lv = float(json.loads(mv[mv.rindex('{'):mv.rindex('}') + 1])['input_i'])
+    suono(vo, 0, round(10 ** ((-19.4 - lv) / 20), 3), lib=False)
 # --- ambienti: pioggia fuori, pioggia dietro il vetro in cucina, buio di fondo per tutto l'episodio
 fuori = [(0.0, g2), (r(4) - 0.1, r(18) - 0.2), (agente, r(21) - 0.25)]
 dentro = [(r(3) - 0.15, r(4) - 0.1), (r(18) - 0.2, agente)]

@@ -128,7 +128,10 @@ ogni generazione costa crediti (nessuna quota illimitata sul suo account); copia
   (`model: text2speech_v2`, `voice_type: preset`): Gideon `1ad38ba4-9cc4-4f2f-9fde-b0fefdf67ae5` (grave, 73 Hz, 3,1 parole/s),
   Luc `04e867c7-9e41-5cff-80d3-5284e74d7bd1` (narratore, 107 Hz, 3,1 parole/s), Julian `95429266-c0ac-4137-a209-63b8812b0f23`
   (confidenziale, 126 Hz, 3,8 parole/s: troppo veloce, rallentata del 25%). L'italiano è uscito corretto in tutte e tre.
-  In attesa della sua scelta (gli ho mandato un video di confronto con la voce attuale).
+  Ha scelto Luc («il 2 luc narratore di storie»): è la voce della serie. La narrazione intera dell'episodio 1 (1883 caratteri con gli a capo tra le
+  righe del copione) è costata 5,25 crediti in una sola generazione: 130 secondi, 2,75 parole al secondo mentre parla (non serve rallentarla),
+  testo corretto. Generare riga per riga costerebbe di più (il prezzo si arrotonda a ogni richiesta).
 - Le anteprime e i file generati stanno su `d1xarpci4ikg0w.cloudfront.net`, `cdn.higgsfield.ai` e `d8j0ntlcm91z4.cloudfront.net` (aggiunti alla rete
-  dell'ambiente). Se sceglie una voce: generare la narrazione, ricavare i tempi delle parole con Whisper (come fa `voce.py`) e passare da
-  `prepara_voce.py` per la velocità (2,85 parole/s) e le pause.
+  dell'ambiente). Dopo la generazione: `python3 scripts/bivio/3d/voce_esterna.py <audio> <cartella con episodio.json>` (tempi delle parole con Whisper
+  sul testo del copione, più `controllo.txt` con le righe sentite diverse), poi `prepara_voce.py` per le pause delle azioni e `mix.py`, che porta la voce
+  sempre allo stesso livello (-19,4 LUFS) prima di mescolarla ai suoni.
