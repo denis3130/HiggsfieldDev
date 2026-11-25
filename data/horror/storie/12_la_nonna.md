@@ -27,3 +27,24 @@ Riattacchi. Davanti a te, la nonna sorride. Fuori, la voce smette di bussare. E 
 Cosa fai? La A: apri la porta alla voce che piange là fuori. Oppure la B: resti dentro con la nonna e rispetti le regole. Scrivilo nei commenti, e seguimi per vedere come continua.
 
 **Bivio:** A: Apri la porta / B: Resti con la nonna
+
+---
+
+## Versione 2 (25/11, da approvare): thriller alla Saw / Misery, niente soprannaturale
+**La verità.** La nonna è viva e lucidissima. Dopo anni di solitudine punisce i nipoti che l'hanno dimenticata: li attira a casa, li droga col brodo e li mette alla prova in cantina con le sue regole e i suoi giochi. La cugina Sara è già lì. Ogni episodio: una prova e una scelta morale.
+
+### Episodio 1 — Il terzo piatto
+Arrivi a casa della nonna sotto la tempesta, dopo dieci anni che non la vedi. Lei apre la porta prima ancora che tu bussi, come se ti stesse aspettando. «Entra, presto. Prima che faccia buio.»
+La cucina è come la ricordavi: la stufa accesa, l'odore di brodo, il pendolo. Ma le finestre sono chiuse con le assi. E sulla porta ci sono tre catenacci nuovi.
+A cena mette in tavola tre piatti. «Chi deve venire?», le chiedi. Lei sorride: «Nessuno, se rispetti le regole.»
+Te le dice mentre ti riempie la scodella. Uno: si mangia tutto. Due: non si esce dalla cucina. Tre: non si mente alla nonna.
+Il brodo è buono. Troppo dolce. Al terzo cucchiaio la stanza comincia a girare. L'ultima cosa che vedi è lei che chiude il primo catenaccio. Senza smettere di sorridere.
+Ti svegli in cantina, legato a una sedia, sotto una lampadina che ronza. Davanti a te c'è un vecchio registratore. Si accende da solo.
+«Dieci anni, tesoro. Non una telefonata. Non un biglietto per il mio compleanno. Stanotte imparerai cosa vuol dire aspettare qualcuno.»
+Sul tavolo ci sono due chiavi. Una apre le tue corde. L'altra apre una catena.
+Solo allora senti respirare dietro di te. Legata a un'altra sedia c'è tua cugina Sara. Anche lei non veniva da anni. Ha il terzo piatto sulle ginocchia. Vuoto.
+«Puoi prendere una chiave sola», dice la voce della nonna. «L'altra finisce nel pozzo. Hai un minuto.»
+Di sopra, il pendolo ricomincia a battere.
+Cosa fai? La A: prendi la chiave delle tue corde e scappi a cercare aiuto. Oppure la B: liberi Sara e restate insieme. Scrivilo nei commenti, e seguimi per vedere come continua.
+
+**Bivio:** A: Prendi la tua chiave e scappi / B: Liberi Sara
