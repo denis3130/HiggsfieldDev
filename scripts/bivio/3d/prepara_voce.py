@@ -29,10 +29,31 @@ else:
     a, sr = sf.read(f'{V}/voce_lenta.wav', dtype='float32')
     q = [[[x[0] * k, x[1] * k, x[2]] for x in r] for r in p]
 assert len(q) == len(ep['righe']), (len(q), len(ep['righe']))
+# Dove tagliare la voce tra una riga e la successiva. NON a metà tra i tempi delle parole: quelli di Whisper sbagliano di qualche centesimo e,
+# con una voce letta tutta di seguito (Luc), il taglio finiva dentro l'attacco della parola dopo: se ne sentiva la prima lettera, poi la
+# pausa, poi la parola intera («s… Sotto», «o… Oppure»: l'utente il 25/11: «nella voce a volte si ripete con qualche lettera»).
+# Si taglia in mezzo al silenzio vero più vicino (40 dB sotto il livello della voce); se un silenzio non c'è, nel punto più debole.
+if a is not None:
+    PASSO = 0.005; _w = int(PASSO * sr); _n = len(a) // _w; LIV = 20 * np.log10(np.sqrt((a[:_n * _w].reshape(_n, _w) ** 2).mean(1) + 1e-12)); LIV -= np.percentile(LIV, 90)
+def taglio(fine, inizio):
+    t = (fine + inizio) / 2; lo, hi = max(0, int((fine - 0.25) / PASSO)), min(len(LIV), int((inizio + 0.25) / PASSO)); zitto = LIV[lo:hi] < -40; meglio = None; k = 0
+    while k < len(zitto):
+        if zitto[k]:
+            j = k
+            while j < len(zitto) and zitto[j]: j += 1
+            s0, s1 = (lo + k) * PASSO, (lo + j) * PASSO; voto = (s1 - s0) - 2 * max(0.0, s0 - t, t - s1)       # lungo e vicino al punto atteso
+            if s1 - s0 >= 0.03 and (meglio is None or voto > meglio[0]): meglio = (voto, (s0 + s1) / 2)
+            k = j
+        else: k += 1
+    if meglio: return meglio[1], True
+    lo, hi = max(0, int((fine - 0.1) / PASSO)), min(len(LIV), int((inizio + 0.1) / PASSO)); return (lo + int(np.argmin(LIV[lo:hi])) + 0.5) * PASSO, False
+TAGLI = []
 def pausa(i, sec):                                   # dopo la riga di indice i (da 0)
     global a
-    t = (q[i][-1][1] + q[i + 1][0][0]) / 2
-    if a is not None: j = int(t * sr); a = np.concatenate([a[:j], np.zeros(int(sec * sr), np.float32), a[j:]])
+    if a is not None:
+        t, pulito = taglio(q[i][-1][1], q[i + 1][0][0]); j = int(t * sr); n = int((0.004 if pulito else 0.012) * sr); prima, dopo = a[:j].copy(), a[j:].copy()
+        prima[-n:] *= np.linspace(1, 0, n, dtype=np.float32); dopo[:n] *= np.linspace(0, 1, n, dtype=np.float32)          # niente scatti sul taglio
+        a = np.concatenate([prima, np.zeros(int(sec * sr), np.float32), dopo]); TAGLI.append((i + 1, round(t, 3), pulito))
     for r in q[i + 1:]:
         for x in r: x[0] += sec; x[1] += sec
 for n, sec in sorted(PAUSE.items(), reverse=True): pausa(n - 1, sec)
@@ -45,5 +66,10 @@ if a is not None:
     import soundfile as sf
     a = np.concatenate([a, np.zeros(sr * 4, np.float32)])[: int(fine * sr)]; sf.write(f'{F}/audio/vo.wav', a, sr)
 json.dump(q, open(f'{F}/assets/parole.json', 'w'), ensure_ascii=False)
-json.dump({'title': 'Il testimone - episodio 1', 'duration': fine, 'formats': ['9x16'], 'poster': 30}, open(f'{F}/film.json', 'w'), indent=1)
+# film.json: se c'è già (un episodio in lavorazione ha anche altre voci, come l'inizio tagliato) si aggiorna solo la durata quando non c'è un taglio iniziale
+if os.path.exists(f'{F}/film.json'):
+    cfg = json.load(open(f'{F}/film.json'))
+    if not cfg.get('inizio_fotogramma'): cfg['duration'] = fine; json.dump(cfg, open(f'{F}/film.json', 'w'), indent=1, ensure_ascii=False)
+else: json.dump({'title': 'Il testimone - episodio 1', 'duration': fine, 'formats': ['9x16'], 'poster': 30}, open(f'{F}/film.json', 'w'), indent=1)
+if TAGLI: print('tagli per le pause (dopo la riga, secondo, nel silenzio):', ' '.join(f"{n}:{t}{'' if ok else '(!)'}" for n, t, ok in sorted(TAGLI)))
 print('durata', fine, '| righe:', ' '.join(f'{i + 1}:{r[0][0]:.1f}' for i, r in enumerate(q)))

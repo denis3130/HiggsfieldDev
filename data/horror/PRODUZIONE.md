@@ -144,4 +144,5 @@ ogni generazione costa crediti (nessuna quota illimitata sul suo account); copia
 - Le anteprime e i file generati stanno su `d1xarpci4ikg0w.cloudfront.net`, `cdn.higgsfield.ai` e `d8j0ntlcm91z4.cloudfront.net` (aggiunti alla rete
   dell'ambiente). Dopo la generazione: `python3 scripts/bivio/3d/voce_esterna.py <audio> <cartella con episodio.json>` (tempi delle parole con Whisper
   sul testo del copione, più `controllo.txt` con le righe sentite diverse), poi `prepara_voce.py` per le pause delle azioni e `mix.py`, che porta la voce
-  sempre allo stesso livello (-19,4 LUFS) prima di mescolarla ai suoni.
+  sempre allo stesso livello (-19,4 LUFS) prima di mescolarla ai suoni. Le pause si inseriscono tagliando nel silenzio vero tra le frasi: tagliando
+  a metà tra i tempi delle parole si sentiva la prima lettera della frase dopo ripetuta (l'utente il 25/11: «a volte si ripete con qualche lettera»).

@@ -68,6 +68,12 @@ Testo approvato dall'utente il 25/11 (`data/horror/storie/13_il_testimone.md`), 
 - Voce: `voce.py` con `PAUSA_FRASI=0.16 PAUSA_RIGHE=0.22`, poi `prepara_voce.py <cartella voce> <film>`: rallenta a 2,85 parole al secondo mentre parla
   (`ART`; la prova era a 3,2 e l'utente ha chiesto due volte di rallentarla: «va troppo veloce»), inserisce i silenzi per le azioni (`PAUSE`), scrive `audio/vo.wav`,
   `assets/parole.json` e la durata. Con `--finta` inventa i tempi dal testo: serve per costruire le inquadrature mentre la voce si genera (ci mette 70 minuti).
+  **Dove si taglia per le pause** (corretto il 25/11 notte, dopo «nella voce ia a volte si ripete con qualche lettera»): in mezzo al silenzio
+  vero tra le due righe, cercato sull'audio (`taglio()`), non a metà tra i tempi delle parole. Con una voce letta tutta di seguito (Luc) i
+  tempi di Whisper sbagliano di qualche centesimo e il taglio finiva dentro l'attacco della parola dopo: se ne sentiva la prima lettera,
+  poi la pausa, poi la parola intera («s… Sotto», «s… Spegni», «o… Oppure», «s… Scrivilo»; più leggeri altri quattro). Non era Luc: il suo
+  audio originale è pulito. I tempi delle parole e la durata non cambiano, quindi il video non si rifà: basta rifare `vo.wav` e il mix. Lo
+  script stampa i tagli e segna con (!) quelli dove un silenzio non c'è. `prepara_voce.py` non riscrive più un `film.json` che c'è già.
   Poi `bocca.py audio/vo.wav assets/parole.json "op,op,isp,isp,isp,isp" assets/bocca.json` (chi parla in ogni battuta tra «»).
 - Controlli: `provini.py <film> t1,t2,… uscita.jpg [colonne]` affianca i fotogrammi; `render.mjs --strip a:b:N` per vedere un movimento.
 - Suoni: `cerca_suoni.py "parole in inglese"` cerca registrazioni CC0 su Openverse; `ep1/mix.py [video uscita]` monta voce e suoni sugli stessi momenti
