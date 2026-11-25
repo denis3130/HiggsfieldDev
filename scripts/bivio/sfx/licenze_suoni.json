@@ -114,5 +114,25 @@
   "autore": "unfa",
   "licenza": "CC0 1.0",
   "pagina": "https://freesound.org/people/unfa/sounds/154906"
+ },
+ "bussata.mp3": {
+  "titolo": "door knock 2.wav",
+  "autore": "ripper351",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/ripper351/sounds/151089",
+  "nota": "i tre colpi forti sono a 1,00 / 1,29 / 1,59 s"
+ },
+ "ascensore.mp3": {
+  "titolo": "Creepy old elevator 2",
+  "autore": "bassboybg",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/bassboybg/sounds/218928",
+  "nota": "ronzio da 1,5 a 27 s; a 27,1 s il colpo dell'ascensore che si ferma"
+ },
+ "ascensore_ding.mp3": {
+  "titolo": "Elevator Ding",
+  "autore": "collierhs_colinlib",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/collierhs_colinlib/sounds/588718"
  }
 }

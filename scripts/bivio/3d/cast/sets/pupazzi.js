@@ -140,9 +140,14 @@ function fisso(c, F) {
   const line = (pts, wd, a = 0.5) => { c.beginPath(); c.moveTo(pts[0], pts[1]); if (pts.length === 6) c.quadraticCurveTo(pts[2], pts[3], pts[4], pts[5]); else c.bezierCurveTo(pts[2], pts[3], pts[4], pts[5], pts[6], pts[7]); c.lineWidth = wd; c.strokeStyle = F.linea; c.globalAlpha = a; c.lineCap = 'round'; c.stroke(); c.globalAlpha = 1; };
   const e = F.eye, n = F.nose, m = F.mouth;
   for (const s of [-1, 1]) blob(s * F.blush.x, F.blush.y, F.blush.r, F.blush.color);
-  blob(0, n.y - n.h * 0.2, n.w * 1.9, F.blush.color.replace(/[\d.]+\)$/, '0.16)'));
-  // ombra sotto il naso e narici
-  c.fillStyle = F.ombra; c.globalAlpha = 0.5; c.beginPath(); c.ellipse(0, n.y - n.h * 0.92, n.w * 1.05, n.h * 0.26, 0, 0, TAU); c.fill(); c.globalAlpha = 1;
+  if (n.tipo === 'vero') {                             // naso adulto: ombra corta sotto la punta e le pieghe delle due narici
+    c.fillStyle = F.ombra; c.globalAlpha = n.ombra ?? 0.3; c.beginPath(); c.ellipse(0, n.y - n.h * 1.07, n.w * 0.78, n.h * 0.15, 0, 0, TAU); c.fill(); c.globalAlpha = 1;
+    for (const s of [-1, 1]) line([s * n.w * 1.06, n.y - n.h * 0.16, s * n.w * 1.34, n.y - n.h * 0.56, s * n.w * 0.96, n.y - n.h * 0.9], 0.001, n.pieghe ?? 0.42);
+  } else {
+    blob(0, n.y - n.h * 0.2, n.w * 1.9, F.blush.color.replace(/[\d.]+\)$/, '0.16)'));
+    // ombra sotto il naso e narici
+    c.fillStyle = F.ombra; c.globalAlpha = n.ombra ?? 0.5; c.beginPath(); c.ellipse(0, n.y - n.h * 0.92, n.w * 1.05, n.h * 0.26, 0, 0, TAU); c.fill(); c.globalAlpha = 1;
+  }
   if (F.rughe) {
     const a = 0.42 * F.rughe;
     const fy = e.y + F.brow.y + 0.02; line([-0.04, fy, 0, fy + 0.005, 0.04, fy], 0.0011, a); line([-0.044, fy + 0.011, 0, fy + 0.017, 0.044, fy + 0.011], 0.0011, a); line([-0.036, fy + 0.022, 0, fy + 0.027, 0.036, fy + 0.022], 0.001, a * 0.8);
@@ -159,6 +164,34 @@ function fisso(c, F) {
       if (!(jaw || baffi) || (ax < m.w * 0.9 && Math.abs(y - m.y) < 0.006)) continue;
       c.globalAlpha = r(0.08, 0.26) * M.clamp((-0.03 - y) / 0.02 + (baffi ? 1 : 0)); c.fillRect(x, y, 0.0009, 0.0009); } c.globalAlpha = 1; }
   if (F.neo) { c.fillStyle = 'rgba(110,60,45,0.8)'; c.beginPath(); c.arc(F.neo[0], F.neo[1], 0.0011, 0, TAU); c.fill(); }
+  if (F.graffi) {                                      // tre graffi freschi: { x, y, ang, len }
+    const g = F.graffi; c.save(); c.translate(g.x, g.y); c.rotate(g.ang || 0); c.lineCap = 'round';
+    for (let i = -1; i <= 1; i++) { const y = i * 0.0052, l = (g.len || 0.03) * (1 - 0.18 * Math.abs(i));
+      c.strokeStyle = 'rgba(214,120,110,0.5)'; c.lineWidth = 0.0034; c.beginPath(); c.moveTo(-l / 2, y); c.quadraticCurveTo(0, y + 0.0016, l / 2, y - 0.0008); c.stroke();
+      c.strokeStyle = '#A3261F'; c.lineWidth = 0.0013; c.beginPath(); c.moveTo(-l / 2, y); c.quadraticCurveTo(0, y + 0.0016, l / 2, y - 0.0008); c.stroke(); }
+    c.restore(); }
+}
+
+// naso adulto: dorso stretto dalla radice (tra gli occhi) alla punta, narici. Le normali sono mescolate con quelle della
+// faccia (n.piatto), così di fronte resta un rilievo morbido e non un cono, mentre di profilo la sagoma c'è tutta.
+// n: { tipo:'vero', y (centro), w (mezza larghezza alle narici), h, d (sporgenza), alto (radice, in unità di h), piatto, t, tinta }
+function nasoVero(head, F, zAt) {
+  const n = F.nose, NU = 22, NV = 40, top = n.alto ?? 1.9, giu = 0.0012;
+  const wS = chiavi([[-1, 0.5], [-0.52, 1], [0.0, 0.66], [0.6, 0.46], [top, 0.54]]);
+  const dS = chiavi([[-1, 0], [-0.84, 0.6], [-0.52, 1], [-0.1, 0.86], [0.6, 0.52], [1.25, 0.22], [top, 0]]);
+  const pos = [], fn = [], idx = [], e = 0.0008;
+  const sup = (u, s) => { const x = u * wS(s) * n.w, y = n.y + s * n.h; return [x, y, zAt(x, y) - giu + dS(s) * n.d * Math.pow(Math.max(0, 1 - u * u), 0.8)]; };
+  for (let j = 0; j <= NV; j++) { const s = -1 + ((top + 1) * j) / NV;
+    for (let i = 0; i <= NU; i++) { const q = sup(-1 + (2 * i) / NU, s), [x, y] = q; pos.push(...q);
+      const gx = (zAt(x + e, y) - zAt(x - e, y)) / (2 * e), gy = (zAt(x, y + e) - zAt(x, y - e)) / (2 * e), l = Math.hypot(gx, gy, 1); fn.push(-gx / l, -gy / l, 1 / l); } }
+  for (let j = 0; j < NV; j++) for (let i = 0; i < NU; i++) { const a = j * (NU + 1) + i, b = a + 1, c2 = a + NU + 1; idx.push(a, b, c2 + 1, a, c2 + 1, c2); }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
+  const N = g.attributes.normal, kf = n.piatto ?? 0.6;
+  for (let i = 0; i < N.count; i++) { const x = N.getX(i) * (1 - kf) + fn[i * 3] * kf, y = N.getY(i) * (1 - kf) + fn[i * 3 + 1] * kf, z = N.getZ(i) * (1 - kf) + fn[i * 3 + 2] * kf, l = Math.hypot(x, y, z) || 1; N.setXYZ(i, x / l, y / l, z / l); }
+  const m = mat(mix(F.skin, n.tinta || '#d9897a', n.t ?? 0.04)), nose = new THREE.Mesh(g, m); head.add(nose);
+  const buio = mat(mix(F.skin, '#3E1A14', n.narici ?? 0.62));
+  for (const s of [-1, 1]) { const q = sup(s * 0.46, -0.88); add(head, sfera(1, 10), buio, V(q[0], q[1] + n.h * 0.02, q[2] - n.d * 0.1), [n.w * 0.2, n.h * 0.1, n.d * 0.16]); }
+  return nose;
 }
 
 // ------------------------------------------------------------------ testa
@@ -187,11 +220,14 @@ export function testa(F) {
       bocca(c, F, p); });
   }
   // naso in rilievo (piccolo, un po' più roseo della pelle), narici
-  const n = F.nose, ng = new THREE.SphereGeometry(1, 24, 18);
+  const n = F.nose;
+  if (n.tipo === 'vero') nasoVero(head, F, zAt); else {
+  const ng = new THREE.SphereGeometry(1, 24, 18);
   { const p = ng.attributes.position; for (let i = 0; i < p.count; i++) { const y = p.getY(i); if (y > -0.2) { const t = (y + 0.2) / 1.2; p.setX(i, p.getX(i) * (1 - 0.62 * t)); p.setZ(i, p.getZ(i) * (1 - 0.45 * t) - 0.35 * t); } } ng.computeVertexNormals(); }
   const noseM = mat(mix(F.skin, n.tinta || '#d9897a', n.t ?? 0.16));
   add(head, ng, noseM, V(0, n.y, zAt(0, n.y) + n.d * 0.28), [n.w, n.h, n.d]);
   for (const s of [-1, 1]) add(head, sfera(1, 12), noseM, V(s * n.w * 0.72, n.y - n.h * 0.42, zAt(0, n.y) + n.d * 0.08), [n.w * 0.5, n.h * 0.36, n.d * 0.5]);
+  }
   // orecchie
   const o = F.orecchie || {}, ey = o.y ?? -0.01, [efx] = fattori(ey / S[1], k);
   for (const s of [-1, 1]) {
