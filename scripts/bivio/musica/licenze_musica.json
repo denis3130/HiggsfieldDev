@@ -1,0 +1,24 @@
+{
+ "nota": "Musiche di sottofondo de Il Bivio: brani veri presi da Freesound, tutti CC0 1.0 (pubblico dominio: uso libero anche su YouTube, crediti non obbligatori). Sono le anteprime MP3 di Freesound. La licenza di ognuno è stata ricontrollata sulla sua pagina il 25/11/2026.",
+ "accordi_scuri.mp3": {
+  "titolo": "CINEMATIC BG ATMOSPHERIC #0055H.wav",
+  "autore": "metrostock99",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/metrostock99/sounds/350955",
+  "nota": "accordo scuro in la minore, tenuto, che «respira» ogni 8 secondi circa: lo stesso genere del sottofondo dei reel di riferimento. Dura 144 s; gli ultimi 14 s sono la chiusura e si scartano («coda»), poi ricomincia con una dissolvenza incrociata"
+ },
+ "archi_tensione.mp3": {
+  "titolo": "Suspenseful Strings Music 01",
+  "autore": "Magmi.Soundtracks",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Magmi.Soundtracks/sounds/475737",
+  "nota": "violoncelli e violini: note basse tenute, poi un ostinato (18-37 s e 57-95 s) e il culmine con tremoli e glissati da 112 a 150 s. Dura 193 s. Ha moltissimi bassi (da tagliare) e 13 dB di differenza tra l'inizio e il culmine (da livellare)"
+ },
+ "piano_inquietante.mp3": {
+  "titolo": "Horror Piano",
+  "autore": "rhinosack",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/rhinosack/sounds/668902",
+  "nota": "pianoforte solo, una nota al secondo circa, dissonante, volume costante. Dura 148 s"
+ }
+}

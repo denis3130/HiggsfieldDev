@@ -1,0 +1,6 @@
+{
+ "nota": "Le tre musiche proposte all'utente il 25/11 per l'episodio 1 (prove da 38 secondi). Quella scelta va copiata in musica.json, che mix.py legge da solo. Per riascoltarne una senza toccare musica.json: MUSICA=\"$(python3 -c \"import json; print(json.dumps(json.load(open('musica_proposte.json'))['1_accordi']))\")\" python3 mix.py. I livelli («lufs») sono misurati senza i bassi sotto 200 Hz, cioè come da telefono: lì la voce è a -22,9 e la pioggia intorno a -31,5.",
+ "1_accordi": {"file": "accordi_scuri.mp3", "da": 0, "coda": 14, "incrocio": 4, "filtri": "highpass=f=90", "lufs": -38},
+ "2_archi": {"file": "archi_tensione.mp3", "da": 0, "filtri": "highpass=f=120,bass=g=-6:f=200:w=0.8,volume='pow(10,(4-4*clip((t-55)/4,0,1)+2*clip((t-94)/4,0,1)-6*clip((t-112)/5,0,1))/20)':eval=frame", "lufs": -38},
+ "3_piano": {"file": "piano_inquietante.mp3", "da": 0, "filtri": "highpass=f=70", "lufs": -39.5}
+}

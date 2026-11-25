@@ -4,7 +4,7 @@ Stato al 23/11: 11 storie scritte (`data/horror/storie/`). Episodio 1 di «La vo
 (`data/horror/ep1_voce_nel_bosco/`, non pubblicato). Gli script stanno in `scripts/bivio/`.
 
 Regole fisse: niente servizi a pagamento, niente Higgsfield. Una sola voce (il narratore). Suoni veri registrati (CC0), mai sintetici.
-La musica la sceglie l'utente: finché non la manda, solo ambiente scuro CC0. Si deve vedere ogni cosa che la voce dice.
+La musica la sceglie l'utente: se non ne manda una sua gli si propongono tre brani veri e gratuiti (CC0) già montati sotto l'inizio dell'episodio (`scripts/bivio/musica/`, vedi «Musica di sottofondo» in `scripts/bivio/3d/LEGGIMI.md`). Si deve vedere ogni cosa che la voce dice.
 
 ## Cartella di un episodio
 ```

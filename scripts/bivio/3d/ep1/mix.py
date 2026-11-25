@@ -1,10 +1,21 @@
 # Mix dell'episodio 1 de «Il testimone»: la voce + suoni veri CC0 agganciati alle stesse parole delle inquadrature (assets/parole.json).
 # Uso: python3 mix.py [video_muto.mp4 uscita.mp4]     → audio/mix.wav (48 kHz, -14 LUFS) e, se indicato, il video con l'audio.
 # I suoni stanno in scripts/bivio/sfx (licenze in licenze_suoni.json); LIB=<cartella> per prenderli altrove.
-import json, os, re, subprocess, sys, unicodedata
+# La musica di sottofondo la sceglie l'utente: musica.json = {"file": brano in scripts/bivio/musica (licenze in licenze_musica.json),
+#   "da": secondo da cui parte, "coda": secondi finali da scartare, "incrocio": dissolvenza quando il brano ricomincia, "filtri": filtri di ffmpeg sul brano,
+#   "lufs": livello prima del volume finale, misurato senza i bassi sotto 200 Hz, cioè come si sente da un telefono (lì la voce è a -22,9 e la pioggia intorno a -31,5)}.
+#   Per provarne un'altra senza toccare musica.json: MUSICA=<file> oppure MUSICA='{"file": ..., "lufs": ...}'; MUSICA=no la toglie.
+# MIX=<file.wav> scrive il mix altrove (per le prove); SENZA_VOCE=1 lascia fuori la voce (per misurare i livelli).
+import json, math, os, re, subprocess, sys, unicodedata
 D = os.path.dirname(os.path.abspath(__file__))
 LIB = os.environ.get('LIB') or os.path.normpath(os.path.join(D, '../../sfx'))
 if not os.path.isdir(LIB): LIB = '/home/user/HiggsfieldDev/scripts/bivio/sfx'
+MLIB = os.environ.get('MLIB') or os.path.normpath(os.path.join(D, '../../musica'))
+if not os.path.isdir(MLIB): MLIB = '/home/user/HiggsfieldDev/scripts/bivio/musica'
+MUS = json.load(open(f'{D}/musica.json')) if os.path.exists(f'{D}/musica.json') else {}
+if os.environ.get('MUSICA'):
+    e = os.environ['MUSICA']; MUS = {} if e == 'no' else json.loads(e) if e.lstrip().startswith('{') else {'file': e}
+MIX = os.environ.get('MIX') or f'{D}/audio/mix.wav'
 RIGHE = json.load(open(f'{D}/assets/parole.json')); END = json.load(open(f'{D}/film.json'))['duration']
 norm = lambda s: re.sub(r"[^a-z']", '', ''.join(c for c in unicodedata.normalize('NFD', s.lower()) if unicodedata.category(c) != 'Mn'))
 r = lambda n: RIGHE[n - 1][0][0]
@@ -37,11 +48,30 @@ def suono(file, t, vol=1.0, ss=None, dur=None, filtri='', ciclo=False, dentro=0.
 
 LONTANO = 'lowpass=f=1700,aecho=0.8:0.6:90|180:0.3|0.18'        # un suono che arriva dal parcheggio, quattro piani più giù
 vo = f'{D}/audio/vo.wav'
-if os.path.exists(vo):
+if os.path.exists(vo) and not os.environ.get('SENZA_VOCE'):
     # la voce entra sempre allo stesso livello (-19,4 LUFS, quello su cui sono tarati i suoni), qualunque motore l'abbia fatta
     mv = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', vo, '-af', 'loudnorm=print_format=json', '-f', 'null', '-'], capture_output=True, text=True).stderr
     lv = float(json.loads(mv[mv.rindex('{'):mv.rindex('}') + 1])['input_i'])
     suono(vo, 0, round(10 ** ((-19.4 - lv) / 20), 3), lib=False)
+# --- la musica di sottofondo: un brano vero per tutto l'episodio, sempre allo stesso livello sotto la voce
+TELEFONO = 'highpass=f=200,highpass=f=200'                     # l'altoparlante di un telefono non rende i bassi: i livelli della musica si misurano così
+def volume_di(file, filtri='anull'):
+    m = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', file, '-af', f'{filtri},loudnorm=print_format=json', '-f', 'null', '-'], capture_output=True, text=True).stderr
+    return float(json.loads(m[m.rindex('{'):m.rindex('}') + 1])['input_i'])
+def musica(m):
+    """prepara il brano: parte da m['da'], copre tutto l'episodio (se è più corto ricomincia con una dissolvenza incrociata),
+    passa dai filtri e torna con il volume che lo porta al livello m['lufs']"""
+    src = m['file'] if os.path.isabs(m['file']) else os.path.join(MLIB, m['file']); da = float(m.get('da', 0)); serve = END + 0.5
+    lungo = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', src], capture_output=True, text=True).stdout) - da - float(m.get('coda', 0))
+    X = float(m.get('incrocio', 4.0)); n = 1 if lungo >= serve else math.ceil((serve - X) / (lungo - X))
+    ing = sum([['-ss', f'{da:.3f}', '-t', f'{lungo:.3f}', '-i', src] for _ in range(n)], [])
+    g = ';'.join(f'[{i}:a]aresample=48000,aformat=channel_layouts=stereo[c{i}]' for i in range(n)); u = '[c0]'
+    for i in range(1, n): g += f';{u}[c{i}]acrossfade=d={X}:c1=qsin:c2=qsin[x{i}]'; u = f'[x{i}]'
+    g += f";{u}atrim=0:{serve:.3f},{m.get('filtri', 'highpass=f=70')}[m]"; out = f'{D}/audio/_musica.wav'
+    subprocess.run(['ffmpeg', '-v', 'error', '-y'] + ing + ['-filter_complex', g, '-map', '[m]', '-c:a', 'pcm_s24le', out], check=True)
+    return out, round(10 ** ((float(m.get('lufs', -34)) - volume_di(out, TELEFONO)) / 20), 4), n
+if MUS.get('file'):
+    letto, vm, giri = musica(MUS); suono(letto, 0, vm, dur=END, dentro=float(MUS.get('entra', 1.0)), fuori=1.5, lib=False)
 # --- ambienti: pioggia fuori, pioggia dietro il vetro in cucina, buio di fondo per tutto l'episodio
 fuori = [(0.0, g2), (r(4) - 0.1, r(18) - 0.2), (agente, r(21) - 0.25)]
 dentro = [(r(3) - 0.15, r(4) - 0.1), (r(18) - 0.2, agente)]
@@ -96,8 +126,9 @@ m = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', pre, '-af', 'lou
 j = json.loads(m[m.rindex('{'):m.rindex('}') + 1])
 af = f"loudnorm=I=-14:TP=-1:LRA=11:measured_I={j['input_i']}:measured_TP={j['input_tp']}:measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true"
 af += ',alimiter=limit=0.79:level=disabled:attack=3:release=60'          # picchi a -2 dB: la codifica AAC li rialza di oltre 1 dB
-subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', pre, '-af', af, '-ar', '48000', '-c:a', 'pcm_s16le', f'{D}/audio/mix.wav'], check=True); os.remove(pre)
-print(f"mix: {n} tracce, durata {END} s, misurato {j['input_i']} LUFS / picco {j['input_tp']} dB -> -14 LUFS")
+subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', pre, '-af', af, '-ar', '48000', '-c:a', 'pcm_s16le', MIX], check=True); os.remove(pre)
+print(f"mix: {n} tracce, durata {END} s, misurato {j['input_i']} LUFS / picco {j['input_tp']} dB -> -14 LUFS" + (f"; musica {os.path.basename(MUS['file'])} da {MUS.get('da', 0)} s a {MUS.get('lufs', -34)} LUFS da telefono (volume {vm}, {giri} giro/i)" if MUS.get('file') else '; senza musica'))
+if os.path.exists(f'{D}/audio/_musica.wav'): os.remove(f'{D}/audio/_musica.wav')
 if len(sys.argv) > 2:
-    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', sys.argv[1], '-i', f'{D}/audio/mix.wav', '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', '-shortest', sys.argv[2]], check=True)
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', sys.argv[1], '-i', MIX, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', '-shortest', sys.argv[2]], check=True)
     print('scritto', sys.argv[2])

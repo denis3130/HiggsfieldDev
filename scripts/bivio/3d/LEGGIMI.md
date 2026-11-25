@@ -97,3 +97,21 @@ una pallina. Cosa c'era di sbagliato e come si fa adesso:
 - Dopo ogni modifica a mani o braccia: provini di TUTTE le scene con le mani (bocca, telefono, distintivo, fazzoletto, dito sulle labbra, baule, carte),
   ingranditi, e confronto con il render di prima. Cambiando la forma della mano si spostano anche i punti d'arrivo (la mano sulla bocca era salita sul naso).
 
+
+## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
+
+- La musica la sceglie l'utente. Se non ne manda una sua, gli si propongono tre brani veri e gratuiti (CC0), montati sotto lo stesso pezzo
+  dell'episodio (prove numerate da 38 secondi, con l'etichetta in basso), più l'episodio intero già fatto con quello consigliato.
+- I brani stanno in `scripts/bivio/musica/` (licenze in `licenze_musica.json`): `accordi_scuri.mp3` (accordo scuro tenuto, il genere dei
+  reel di riferimento), `archi_tensione.mp3` (violoncelli e violini, con un culmine verso la fine), `piano_inquietante.mp3` (pianoforte solo).
+  Si cercano su Openverse (solo `cc0,by`) e si scaricano le anteprime da Freesound; la licenza si ricontrolla sulla pagina del brano.
+- `ep1/mix.py` mette la musica se trova `ep1/musica.json` (`file`, `da`, `coda`, `incrocio`, `filtri`, `lufs`); senza quel file il mix è
+  quello di prima, identico. Le tre proposte dell'episodio 1 sono in `ep1/musica_proposte.json`; `MUSICA='{...}'` ne prova una senza toccare
+  niente, `MIX=<file.wav>` scrive il mix altrove.
+- Il livello («lufs») si misura senza i bassi sotto 200 Hz, cioè come si sente da un telefono: lì la voce è a -22,9 LUFS e la pioggia intorno
+  a -31,5. La musica va a -38 (il pianoforte a -39,5, perché le note staccate si notano di più): circa 15 dB sotto la voce, come nei reel
+  di riferimento, e abbastanza da riempire le pause (nelle pause il fondo sale di 6 dB rispetto a prima). Un brano con soli bassi su un
+  telefono sparisce: si tagliano i bassi (`highpass`, `bass`) e si misura dopo.
+- Un brano più corto dell'episodio ricomincia con una dissolvenza incrociata; uno con grandi sbalzi di volume si livella con un `volume`
+  che dipende dal tempo (vedi `2_archi`). Dopo il mix si controllano volume finale (-14 LUFS) e picchi: con il pianoforte la codifica AAC
+  ha portato un picco a +0,1 dB, quindi con quel brano va abbassato il limitatore.
