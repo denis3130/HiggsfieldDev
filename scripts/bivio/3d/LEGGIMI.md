@@ -112,16 +112,32 @@ una pallina. Cosa c'era di sbagliato e come si fa adesso:
   tutto com'era. `presaSu(a, b, { ...presaNocche(u, v), rollio, lungo })` dice dove vanno polso, dita e dorso perché un bastone della scena
   passi nel pugno (si danno al braccio come `mondo`, `ditaM`, `dorsoM`); `nelModello` porta il bastone e l'avambraccio nello spazio della mano.
   La leva della porta d'ingresso è `LEVA_INGRESSO` in `testimone_set.js`.
-- Carta A dell'episodio 1 (`cartaA()` in `ep1/film.js`): l'inquadratura è quella delle due foto mandate dall'utente (la sua mano sulla
-  maniglia, dall'alto e da dietro lungo il braccio): il braccio entra dall'angolo in basso a destra, il pugno sulla leva, la placca sopra,
-  12° di rollio. Del personaggio si vede solo il braccio. Un faro in alto a destra con le ombre dà volume: una luce da dietro lascia al buio
-  il dorso della mano, che guarda verso la porta. Finito lo scatto il set torna com'era: le altre inquadrature dell'ingresso sono rimaste
-  identiche pixel per pixel (controllato a 84,26 e 93 s).
+- Carta A dell'episodio 1 (`cartaA()` in `ep1/film.js`): rifatta DUE volte sulle foto mandate dall'utente (la sua mano sulla maniglia).
+  La prima era sbagliata («no broski non va bene guarda bene la mia foto»): braccio teso dall'alto, mano che pendeva dal polso col dorso
+  verso la porta, pugno piccolo. Quella giusta ricalca la foto: tu vicino alla porta col gomito basso (`pos z -2.06`, `gomitoM [0.3, -1, 0.5]`),
+  quindi avambraccio quasi orizzontale; mano in piano (`rollio: 3`), polso dritto; camera dietro il braccio, in alto e un po' a sinistra
+  (`M0 + [-0.12, 0.45, 0.42]`), stretta (`fov 19.5`, il pugno occupa un terzo della carta) e storta di 12°: il braccio entra dall'angolo in
+  basso a destra allargandosi, le nocche stanno in cima, la punta della leva esce a sinistra col pollice raccolto sotto, la placca è sopra.
+  Del personaggio si vede solo il braccio; un faro in alto a destra con le ombre dà volume. Finito lo scatto il set torna com'era: le altre
+  inquadrature dell'ingresso restano identiche pixel per pixel (controllato a 93 s).
+- Come si controlla un'immagine rifatta su una foto: ritaglio della foto nelle proporzioni della carta, messo accanto al provino
+  (`out/prova_carta/confronto_*.jpg`), e si confrontano uno per uno grandezza, direzione del braccio, posizione del polso e delle nocche,
+  dove esce l'oggetto. Le foto dell'utente restano sulla macchina, non nel repository.
+- Nocche: `manoMesh` alza la pelle sopra le giunture delle dita (`rilievo`) e le tinge un po' di rosso; il pollice (`avvolgiPollice`) si
+  chiude sulla leva o sulle dita che già la stringono e punta in avanti sotto la leva, come in un pugno vero visto da dietro.
+- Avambraccio: il moncone del polso del modello si taglia (`YT`) e dal bordo del taglio, cioè dagli stessi vertici della mano, cresce un
+  tubo che arriva al gomito (`cuciAvambraccio`): una superficie sola, niente riga al polso. Due superfici accostate lasciavano una riga.
 - Laboratori: `prova_mesh/` (la mano da sola: aperta, pugno, presa su un bastone) e `prova_carta/` (la carta con sopra bollo e scritte, tre
   inquadrature per fotogramma). Una presa nuova si guarda prima lì, da sotto e di lato, per vedere pollice e punte delle dita.
-- Rifare solo la fine di un episodio: `render.mjs ... --video-only --range 130.13333333:146.93`, partendo da un fotogramma chiave del video già
+- Rifare solo la fine di un episodio: `render.mjs ... --video-only --range <da>:<a>`, partendo da un fotogramma chiave del video già
   fatto (`ffprobe -skip_frame nokey`); poi testa e coda si uniscono senza ricodificare passando da MPEG-TS (`-bsf:v h264_mp4toannexb`) e si
   controlla che i fotogrammi a cavallo del taglio combacino. Otto minuti invece di un'ora.
+- Inizio tagliato (25/11, «taglia la parte iniziale dove riassumi ciò che succede»): l'aggancio che riassumeva l'episodio (righe 1 e 2 della
+  voce) non c'è più. `ep1/film.json` ha `inizio_fotogramma: 389` (il primo fotogramma della cucina) e `duration` = quel che resta; in
+  `film.js` `T0` sposta il tempo (anche in `post`, che decide la vignettatura dal tipo di inquadratura) e tutti i tempi restano quelli della
+  voce intera; `mix.py` sposta i suoni, salta quelli finiti prima, taglia quelli a cavallo e fa partire la musica con il video. Il video si
+  è tagliato senza ricodificare, perché il primo fotogramma della cucina era già un fotogramma chiave. Ogni fotogramma si campiona mezzo
+  fotogramma dopo il suo tempo (`seek` in motion.js): il fotogramma n mostra il tempo (n + 0,5) / 30.
 - Per i prossimi episodi: la mano modellata oggi è usata solo nella carta A; le altre scene hanno ancora la mano a pezzi.
 
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
@@ -143,9 +159,9 @@ una pallina. Cosa c'era di sbagliato e come si fa adesso:
   ha portato un picco a +0,1 dB, quindi con quel brano va abbassato il limitatore.
 - Scelta dell'utente per l'episodio 1 (25/11): «archi di tensione mi piace ma aspetta che ti aggiungo un'audio migliore ma tienilo ugualmente».
   `ep1/musica.json` è una lista: il suo audio (Dropbox `/Shorts/audio horror di dexter.webm`, copiato in `scripts/bivio/musica/utente/`, che è
-  fuori dal repository) come musica principale a -37, livellato a pezzi di 6 secondi e alleggerito nei bassi, e gli archi a -40,5 che salgono
-  di 4 dB da 120 a 132 s e restano soli nel finale, dove il suo sfuma. Insieme stanno circa 13 dB sotto la voce. Se il suo file manca, mix.py
-  lo salta con un avviso e restano gli archi.
+  fuori dal repository) come musica principale a -37, da 1,8 s (prima è silenzio), livellato a pezzi di 6 secondi e alleggerito nei bassi, e
+  gli archi a -40,5 che salgono di 4 dB da 112 a 124 s e restano soli nel finale, dove il suo sfuma. Insieme stanno circa 13 dB sotto la voce.
+  Se il suo file manca, mix.py lo salta con un avviso e restano gli archi.
 - YouTube: uno Short più lungo di un minuto con un reclamo Content ID attivo viene bloccato in tutto il mondo
   (https://support.google.com/youtube/answer/15424877). L'audio dell'utente è musica di una serie TV: gliel'ho segnalato e ha anche la
   versione con i soli archi (CC0).

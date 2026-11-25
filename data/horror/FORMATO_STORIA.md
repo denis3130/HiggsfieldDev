@@ -31,7 +31,7 @@ Obiettivo: qualità da cinema. Chi scorre deve fermarsi nei primi 2 secondi e vo
 - Ep. 1: nessun ramo. Ep. 2–7: due aperture (se ha vinto A / se ha vinto B) e poi una parte comune uguale per tutti (struttura a rombo: la storia resta una sola). Ep. 7 finisce con la scelta finale. Ep. 8: due finali completi (Finale A e Finale B), senza altre scelte.
 - Ogni apertura comincia con «Avete scelto A: …» (o B) in poche parole: fa anche da riassunto per chi arriva adesso.
 - Parole: Ep. 1 = 100–125. Ep. 2–7: apertura 30–40 + parte comune 70–85 (bivio compreso). Ep. 8: ogni finale 100–125.
-- Ogni episodio: gancio nei primi 2 secondi → una scoperta → la minaccia cresce → colpo finale + bivio.
+- Ogni episodio: si entra subito nella scena → una scoperta → la minaccia cresce → colpo finale + bivio. NIENTE aggancio iniziale che riassume o anticipa quello che succederà («Alle tre di notte vedi un uomo uccidere una donna. Dieci minuti dopo bussa alla tua porta…»): l'utente l'ha fatto tagliare dall'episodio 1 de «Il testimone» il 25/11 («taglia la parte iniziale dove riassumi ciò che succede»). La prima frase è già la storia.
 - Il bivio è un vero dilemma: due scelte entrambe difendibili, da 50 e 50, su cui la gente litiga nei commenti. Ogni scelta cambia davvero l'apertura dell'episodio dopo.
 - Chiusura degli Ep. 1–7 (dal 22/11): il narratore spiega le due scelte, una frase intera per ciascuna, in seconda persona:
   «Cosa fai? La A: vai verso la voce di tuo fratello. Oppure la B: resti in silenzio e ti nascondi. Scrivilo nei commenti.»

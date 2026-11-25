@@ -1,17 +1,17 @@
 [
  {
   "file": "utente/audio_horror_dexter.webm",
-  "da": 0,
+  "da": 1.8,
   "ripeti": false,
-  "filtri": "highpass=f=70,bass=g=-4:f=160:w=0.8,volume='pow(10,(5-1*clip((t-3)/6,0,1)-2.5*clip((t-15)/6,0,1)+1.5*clip((t-21)/6,0,1)-3.5*clip((t-27)/6,0,1)+0.5*clip((t-33)/6,0,1)-1.5*clip((t-45)/6,0,1)+0.5*clip((t-57)/6,0,1)+4.5*clip((t-63)/6,0,1)-4*clip((t-69)/6,0,1)+1.5*clip((t-75)/6,0,1)-1*clip((t-87)/6,0,1)-2*clip((t-93)/6,0,1)-1*clip((t-99)/6,0,1)-1*clip((t-105)/6,0,1)+3*clip((t-111)/6,0,1)-1*clip((t-117)/6,0,1)+5*clip((t-123)/6,0,1)+2*clip((t-129)/6,0,1))/20)':eval=frame",
+  "filtri": "highpass=f=70,bass=g=-4:f=160:w=0.8,volume='pow(10,(5-1*clip((t-1.2)/6,0,1)-2.5*clip((t-13.2)/6,0,1)+1.5*clip((t-19.2)/6,0,1)-3.5*clip((t-25.2)/6,0,1)+0.5*clip((t-31.2)/6,0,1)-1.5*clip((t-43.2)/6,0,1)+0.5*clip((t-55.2)/6,0,1)+4.5*clip((t-61.2)/6,0,1)-4*clip((t-67.2)/6,0,1)+1.5*clip((t-73.2)/6,0,1)-1*clip((t-85.2)/6,0,1)-2*clip((t-91.2)/6,0,1)-1*clip((t-97.2)/6,0,1)-1*clip((t-103.2)/6,0,1)+3*clip((t-109.2)/6,0,1)-1*clip((t-115.2)/6,0,1)+5*clip((t-121.2)/6,0,1)+2*clip((t-127.2)/6,0,1))/20)':eval=frame",
   "lufs": -37,
-  "nota": "l'audio scelto dall'utente il 25/11 (Dropbox: /Shorts/audio horror di dexter.webm): dura quanto l'episodio, la musica entra a 2 s e sfuma da 126 a 138 s. Sta solo sulla macchina (musica/utente, fuori dal repository). Il volume è livellato a pezzi di 6 secondi: all'inizio era 9 dB più basso che al centro. Ha molti bassi: tolti 4 dB sotto i 160 Hz, altrimenti in cuffia la musica risulta più forte che dal telefono."
+  "nota": "l'audio scelto dall'utente il 25/11 (Dropbox: /Shorts/audio horror di dexter.webm). Sta solo sulla macchina (musica/utente, fuori dal repository). Nel file la musica entra a 2 s e sfuma da 126 a 138 s: qui parte da 1,8 s, così comincia con il video. Il volume è livellato a pezzi di 6 secondi (all'inizio era 9 dB più basso che al centro) e ha 4 dB in meno sotto i 160 Hz, altrimenti in cuffia la musica risulta più forte che dal telefono."
  },
  {
   "file": "archi_tensione.mp3",
   "da": 0,
-  "filtri": "highpass=f=120,bass=g=-6:f=200:w=0.8,volume='pow(10,(4-4*clip((t-55)/4,0,1)+2*clip((t-94)/4,0,1)-6*clip((t-112)/5,0,1)+4*clip((t-120)/12,0,1))/20)':eval=frame",
+  "filtri": "highpass=f=120,bass=g=-6:f=200:w=0.8,volume='pow(10,(4-4*clip((t-55)/4,0,1)+2*clip((t-94)/4,0,1)-6*clip((t-112)/5,0,1)+4*clip((t-112)/12,0,1))/20)':eval=frame",
   "lufs": -40.5,
-  "nota": "gli archi in tensione, che all'utente piacciono («tienilo ugualmente»): più bassi sotto il suo audio, salgono di 4 dB da 120 a 132 s e restano soli nel finale"
+  "nota": "gli archi in tensione, che all'utente piacciono («tienilo ugualmente»): più bassi sotto il suo audio, salgono di 4 dB da 112 a 124 s e restano soli nel finale, quando il suo sfuma"
  }
 ]

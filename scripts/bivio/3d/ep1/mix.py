@@ -18,7 +18,11 @@ if os.environ.get('MUSICA'):
     e = os.environ['MUSICA']; MUS = [] if e == 'no' else json.loads(e) if e.lstrip()[:1] in '{[' else {'file': e}
 MUS = [m for m in (MUS if isinstance(MUS, list) else [MUS]) if m.get('file')]
 MIX = os.environ.get('MIX') or f'{D}/audio/mix.wav'
-RIGHE = json.load(open(f'{D}/assets/parole.json')); END = json.load(open(f'{D}/film.json'))['duration']
+# film.json: "inizio_fotogramma" dice da dove parte il video nel tempo della voce (l'aggancio iniziale è stato tagliato: vedi film.js),
+# "duration" quanto dura il video. Qui T0 è quell'inizio in secondi, FINE la durata del video, END la fine nel tempo della voce:
+# i suoni restano agganciati alle parole (tempo della voce) e `suono` li sposta; la musica invece parte con il video.
+CFG = json.load(open(f'{D}/film.json')); T0 = CFG.get('inizio_fotogramma', 0) / 30; FINE = CFG['duration']; END = FINE + T0
+RIGHE = json.load(open(f'{D}/assets/parole.json'))
 norm = lambda s: re.sub(r"[^a-z']", '', ''.join(c for c in unicodedata.normalize('NFD', s.lower()) if unicodedata.category(c) != 'Mn'))
 r = lambda n: RIGHE[n - 1][0][0]
 rf = lambda n: RIGHE[n - 1][-1][1]
@@ -34,18 +38,24 @@ K3 = [rf(22) + 0.22, rf(22) + 0.62, rf(22) + 1.02]; cutA = w(23, 'guardi') - 0.1
 chiuso = rf(11) + 0.3; ferma = w(21, 'ferma') + 0.1
 
 ING, FIL = [], []          # ingressi di ffmpeg e catene di filtri
+def lunghezza(f): return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], capture_output=True, text=True).stdout or 0)
 def suono(file, t, vol=1.0, ss=None, dur=None, filtri='', ciclo=False, dentro=0.0, fuori=0.0, lib=True):
-    """mette un suono al tempo t (secondi del film)"""
+    """mette un suono al tempo t (secondi della voce); quello che finisce prima dell'inizio del video (T0) si salta"""
+    percorso = os.path.join(LIB, file) if lib else file
+    if t < T0 and not ciclo and t + (dur if dur is not None else lunghezza(percorso) - (ss or 0)) <= T0 + 0.02: return
     arg = []
     if ciclo: arg += ['-stream_loop', '-1']
     if ss is not None: arg += ['-ss', f'{ss:.3f}']
     if dur is not None: arg += ['-t', f'{dur:.3f}']
-    ING.append(arg + ['-i', os.path.join(LIB, file) if lib else file])
+    ING.append(arg + ['-i', percorso])
     i = len(ING) - 1; c = ['aresample=48000', 'aformat=channel_layouts=stereo']
     if filtri: c.append(filtri)
     if dentro: c.append(f'afade=t=in:st=0:d={dentro}')
     if fuori and dur: c.append(f'afade=t=out:st={max(0, dur - fuori):.3f}:d={fuori}')
-    c.append(f'volume={vol}'); c.append(f'adelay={max(0, int(t * 1000))}:all=1')
+    c.append(f'volume={vol}')
+    if t < T0:          # comincia prima dell'inizio del video: se ne tiene solo la parte che resta, con un attacco morbido
+        c.append(f'atrim=start={T0 - t:.4f},asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.08')
+    else: c.append(f'adelay={int((t - T0) * 1000)}:all=1')
     FIL.append(f'[{i}:a]' + ','.join(c) + f'[s{i}]')
 
 LONTANO = 'lowpass=f=1700,aecho=0.8:0.6:90|180:0.3|0.18'        # un suono che arriva dal parcheggio, quattro piani più giù
@@ -63,10 +73,10 @@ def volume_di(file, filtri='anull'):
 def musica(m, i=0):
     """prepara il brano: parte da m['da'], copre tutto l'episodio (se è più corto ricomincia con una dissolvenza incrociata; se gli manca
     poco, o con "ripeti": false, finisce nel silenzio), passa dai filtri e torna con il volume che lo porta al livello m['lufs']"""
-    src = m['file'] if os.path.isabs(m['file']) else os.path.join(MLIB, m['file']); da = float(m.get('da', 0)); serve = END + 0.5
+    src = m['file'] if os.path.isabs(m['file']) else os.path.join(MLIB, m['file']); da = float(m.get('da', 0)); serve = FINE + 0.5
     if not os.path.exists(src): print('ATTENZIONE: manca la musica', src, '(saltata)'); return None
     lungo = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', src], capture_output=True, text=True).stdout) - da - float(m.get('coda', 0))
-    X = float(m.get('incrocio', 4.0)); n = 1 if (lungo >= END - 2 or m.get('ripeti') is False) else math.ceil((serve - X) / (lungo - X))
+    X = float(m.get('incrocio', 4.0)); n = 1 if (lungo >= FINE - 2 or m.get('ripeti') is False) else math.ceil((serve - X) / (lungo - X))
     ing = sum([['-ss', f'{da:.3f}', '-t', f'{lungo:.3f}', '-i', src] for _ in range(n)], [])
     g = ';'.join(f'[{k}:a]aresample=48000,aformat=channel_layouts=stereo[c{k}]' for k in range(n)); u = '[c0]'
     for k in range(1, n): g += f';{u}[c{k}]acrossfade=d={X}:c1=qsin:c2=qsin[x{k}]'; u = f'[x{k}]'
@@ -76,7 +86,7 @@ def musica(m, i=0):
 LETTI = []
 for i, m in enumerate(MUS):
     r_ = musica(m, i)
-    if r_: suono(r_[0], 0, r_[1], dur=END, dentro=float(m.get('entra', 1.0)), fuori=1.5, lib=False); LETTI.append((m, r_[1], r_[2], r_[0]))
+    if r_: suono(r_[0], T0, r_[1], dur=FINE, dentro=float(m.get('entra', 1.0)), fuori=1.5, lib=False); LETTI.append((m, r_[1], r_[2], r_[0]))
 # --- ambienti: pioggia fuori, pioggia dietro il vetro in cucina, buio di fondo per tutto l'episodio
 fuori = [(0.0, g2), (r(4) - 0.1, r(18) - 0.2), (agente, r(21) - 0.25)]
 dentro = [(r(3) - 0.15, r(4) - 0.1), (r(18) - 0.2, agente)]
@@ -123,7 +133,7 @@ suono('colpo.mp3', r(30) - 0.12, 0.55, filtri='aecho=0.8:0.6:120|260:0.3|0.18')
 suono('rise_long.mp3', r(30), 0.35, ss=20, dur=END - r(30), dentro=1.0, fuori=1.2)
 
 n = len(ING); pre = f'{D}/audio/_premix.wav'
-graf = ';'.join(FIL) + ';' + ''.join(f'[s{i}]' for i in range(n)) + f'amix=inputs={n}:normalize=0:duration=longest,atrim=0:{END},afade=t=out:st={END - 0.8:.2f}:d=0.8[a]'
+graf = ';'.join(FIL) + ';' + ''.join(f'[s{i}]' for i in range(n)) + f'amix=inputs={n}:normalize=0:duration=longest,atrim=0:{FINE},afade=t=out:st={FINE - 0.8:.2f}:d=0.8[a]'
 cmd = ['ffmpeg', '-v', 'error', '-y'] + sum(ING, []) + ['-filter_complex', graf, '-map', '[a]', '-c:a', 'pcm_f32le', '-ar', '48000', pre]
 subprocess.run(cmd, check=True)
 # volume a -14 LUFS in due passate (misura, poi correzione lineare: niente pompaggio)
@@ -132,7 +142,7 @@ j = json.loads(m[m.rindex('{'):m.rindex('}') + 1])
 af = f"loudnorm=I=-14:TP=-1:LRA=11:measured_I={j['input_i']}:measured_TP={j['input_tp']}:measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true"
 af += ',alimiter=limit=0.79:level=disabled:attack=3:release=60'          # picchi a -2 dB: la codifica AAC li rialza di oltre 1 dB
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', pre, '-af', af, '-ar', '48000', '-c:a', 'pcm_s16le', MIX], check=True); os.remove(pre)
-print(f"mix: {n} tracce, durata {END} s, misurato {j['input_i']} LUFS / picco {j['input_tp']} dB -> -14 LUFS" + (''.join(f"; musica {os.path.basename(m['file'])} da {m.get('da', 0)} s a {m.get('lufs', -34)} LUFS da telefono (volume {v}, {g} giro/i)" for m, v, g, _ in LETTI) if LETTI else '; senza musica'))
+print(f"mix: {n} tracce, durata {FINE} s (dal secondo {T0:.2f} della voce), misurato {j['input_i']} LUFS / picco {j['input_tp']} dB -> -14 LUFS" + (''.join(f"; musica {os.path.basename(m['file'])} da {m.get('da', 0)} s a {m.get('lufs', -34)} LUFS da telefono (volume {v}, {g} giro/i)" for m, v, g, _ in LETTI) if LETTI else '; senza musica'))
 for _, _, _, f in LETTI:
     if os.path.exists(f): os.remove(f)
 if len(sys.argv) > 2:

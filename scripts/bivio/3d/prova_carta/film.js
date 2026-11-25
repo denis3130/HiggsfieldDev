@@ -18,11 +18,13 @@ const K0 = { presa: 'pugno', rollio: -32, tu: [0.08, -1.94] };
 const SENZA = { amb: 0.26, fronte: 0.2, luce: { pos: [-0.05, 1.5, -2.15], k: 0.8 } };
 // come nelle foto dell'utente: dall'alto e da dietro, lungo il braccio (il braccio entra dall'angolo in basso a destra), l'ombra della mano sulla porta
 const M0 = [0.295, 1.05, -2.44];                                   // più o meno il centro della mano
-const POV = (d, luce, o = {}) => conf({ ...K0, cam: [M0[0] + d[0], M0[1] + d[1], M0[2] + d[2]], amb: 0.16, fronte: 0.05, luce: null, faro: { pos: [M0[0] + luce[0], M0[1] + luce[1], M0[2] + luce[2]], k: 2.6, colore: '#FFE2BC', cono: 0.36 }, fov: 30, soloBraccio: 1, ...o });
-const LK = [M0[0] + 0.02, M0[1] - 0.06, M0[2]], LUCE = [0.35, 0.45, 0.05];
+const POV = (d, luce, o = {}) => conf({ ...K0, nuda: 1, cam: [M0[0] + d[0], M0[1] + d[1], M0[2] + d[2]], amb: 0.16, fronte: 0.05, luce: null, faro: { pos: [M0[0] + luce[0], M0[1] + luce[1], M0[2] + luce[2]], k: 2.6, colore: '#FFE2BC', cono: 0.36 }, fov: 30, soloBraccio: 1, ...o });
+// come nella foto: il braccio quasi orizzontale (tu più vicino alla porta, gomito basso), il dorso della mano verso chi guarda, il polso dritto
+// (nella foto la leva scende a sinistra e il braccio a destra, a «V» col pugno in cima: la camera sta in diagonale, a sinistra, dietro e sopra la mano, e stringe molto)
+const LUCE = [0.35, 0.5, 0.3], F0 = { tu: [0.08, -2.06], gomito: [0.3, -1, 0.5], rollio: 3, rollio2: 0, fov: 19, look: [M0[0] + 0.0, M0[1] - 0.01, M0[2] + 0.05] };
 const VISTE = [
-  POV([-0.07, 0.47, 0.26], LUCE, { rollio2: 12, fov: 27, look: LK }), POV([-0.07, 0.47, 0.26], LUCE, { rollio2: 12, fov: 25, look: [M0[0] + 0.03, M0[1] - 0.05, M0[2]] }), POV([-0.1, 0.44, 0.3], LUCE, { rollio2: 16, fov: 26, look: LK }),
-  POV([0.0, 0.2, 0.16], LUCE, { fov: 22, look: [M0[0] + 0.01, M0[1] + 0.06, M0[2] + 0.06], senzaCarta: 1 }), POV([-0.2, 0.25, 0.1], LUCE, { fov: 22, look: [M0[0] + 0.01, M0[1] + 0.06, M0[2] + 0.06], senzaCarta: 1 }), POV([0.25, 0.3, 0.2], LUCE, { fov: 22, look: [M0[0] + 0.01, M0[1] + 0.06, M0[2] + 0.06], senzaCarta: 1 }),
+  POV([-0.12, 0.45, 0.42], LUCE, { ...F0, rollio2: 12, fov: 16 }), POV([-0.1, 0.38, 0.5], LUCE, { ...F0, rollio2: 12, fov: 16 }), POV([-0.16, 0.42, 0.4], LUCE, { ...F0, rollio2: 14, fov: 16 }),
+  POV([-0.3, 0.02, 0.2], LUCE, { ...F0, fov: 18 }), POV([-0.1, -0.3, 0.2], LUCE, { ...F0, fov: 18 }), POV([0.0, 0.3, 0.3], LUCE, { ...F0, fov: 12, look: [M0[0], M0[1] + 0.03, M0[2] + 0.12] }),
 ];
 // la carta sopra l'immagine (sfumatura, bollo e scritte come nel film), per giudicare la composizione
 function sopra(ctx, y) { const k = 1080 / 860; ctx.save(); ctx.translate(0, y); ctx.scale(k, k); const g = ctx.createLinearGradient(0, 480 * 0.45, 0, 480); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,0.88)'); ctx.fillStyle = g; ctx.fillRect(0, 0, 860, 480);
@@ -33,8 +35,9 @@ function metti(o) {                                            // dopo la posa d
   FARO.intensity = o.faro ? o.faro.k : 0; if (o.faro) { FARO.position.set(...o.faro.pos); FARO.color.set(o.faro.colore); FARO.angle = o.faro.cono || 0.42; }
   SI.scene.updateMatrixWorld(true); const m = nelModello(MM, LA, LB, LR); let P = afferra({ avambraccio: m.avambraccio }, m.leva, { pollice: false });
   if (o.pollice === 'sotto') P = avvolgiPollice(P, m.leva, { rollio: o.rollioPollice ?? 75, zona: [-0.06, -0.012] }); else P.pollice = { ...POLLICE[o.pollice] };
-  const av = m.avambraccio, pg = Math.round(Math.acos(Math.max(-1, Math.min(1, -av[1]))) * 180 / Math.PI);
-  MM.userData.posa(P); INFO = `polso piegato ${pg}° (avambraccio nel modello ${av.map((x) => x.toFixed(2)).join(' ')})  ` + ['indice', 'medio', 'anulare', 'mignolo'].map((f) => f[0] + ':' + [P[f].mcp || 0, P[f].pip || 0, P[f].dip || 0].map((x) => Math.round(x)).join('/')).join(' ') + '  p:' + JSON.stringify(P.pollice) + JSON.stringify(P.infoPollice || '');
+  const av = m.avambraccio, pg = Math.round(Math.acos(Math.max(-1, Math.min(1, -av[1]))) * 180 / Math.PI), e1 = new THREE.Vector3(), e2 = new THREE.Vector3(); SI.T.AL.gF.getWorldPosition(e1); SI.T.AL.gH.getWorldPosition(e2);
+  const pend = Math.round(Math.asin((e2.y - e1.y) / e1.distanceTo(e2)) * 180 / Math.PI);
+  MM.userData.posa(P); INFO = `bordo ${MM.userData.bordo}  polso ${pg}° ${av[0] < 0 ? 'indietro' : 'in giù'}, avambraccio ${pend}° sull'orizzonte  ` + ['indice', 'medio', 'anulare', 'mignolo'].map((f) => f[0] + ':' + [P[f].mcp || 0, P[f].pip || 0, P[f].dip || 0].map((x) => Math.round(x)).join('/')).join(' ') + '  p:' + JSON.stringify(P.pollice) + JSON.stringify(P.infoPollice || '');
 }
 M.film({ fonts: [M.font(20, 700, 'Display')], samples: 1,
   async init() { await G.initGL({ exposure: 1.0 }); G.R.toneMapping = THREE.NoToneMapping; SI = ingressoSet(); MM = attacca(SI.T.AL);
@@ -47,4 +50,4 @@ M.film({ fonts: [M.font(20, 700, 'Display')], samples: 1,
     for (let i = 0; i < 3; i++) { const v = VISTE[n + i]; if (!v) continue; const g = presaSu(LA, LB, { ...PRESE[v.presa], rollio: v.rollio, lungo: v.lungo });
       scatto(ctx, SI, { cam: v.cam || [C[0] + v.d[0], C[1] + v.d[1], C[2] + v.d[2]], look: v.cam ? (v.look || [M0[0] + 0.02, M0[1] - 0.02, M0[2]]) : [C[0] + v.s[0], C[1] + v.s[1], C[2] + v.s[2]], roll: (v.rollio2 || 0) * Math.PI / 180, fov: v.fov, piedi: 1, telefono: 0, occhio: 0.9, amb: v.amb, fronte: v.fronte, luce: v.luce, carta: v,
         tu: { pos: [v.tu[0], 0, v.tu[1]], yaw: Math.PI, lean: 0.14, headPitch: 0.3, armL: { mondo: g.polso, gomitoM: v.gomito, ditaM: g.dita, dorsoM: g.dorso, mano: 'rilassata' } } }, 0, 20 + i * 630, 1080, 603);
-      if (!v.senzaCarta) sopra(ctx, 20 + i * 630); ctx.textBaseline = 'alphabetic'; ctx.fillStyle = '#fff'; ctx.font = '700 20px Display'; ctx.fillText(`${n + i + 1}`, 1040, 44 + i * 630); } } });
+      if (!v.senzaCarta && !v.nuda) sopra(ctx, 20 + i * 630); ctx.textBaseline = 'alphabetic'; ctx.fillStyle = '#fff'; ctx.font = '700 20px Display'; ctx.fillText(`${n + i + 1}`, 1040, 44 + i * 630); ctx.font = '500 13px Display'; ctx.fillText(INFO.slice(0, 150), 200, 38 + i * 630); } } });

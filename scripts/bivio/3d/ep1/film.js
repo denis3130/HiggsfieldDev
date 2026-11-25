@@ -12,6 +12,10 @@ import { battito } from './sets/pupazzi.js';
 
 const { W, H, E, prog, lerp, clamp, font, bump } = M;
 let SF = null, SI = null, SP = null, RIGHE = [], WORDS = [], CHUNKS = [], END = 130, BOCCA = [], SEQ = [], IMG = {};
+// T0: da dove parte il video nel tempo della voce. L'utente ha fatto togliere l'aggancio iniziale che riassumeva la storia («taglia la parte
+// iniziale dove riassumi ciò che succede»): film.json dice da che fotogramma si comincia (389 = la cucina, riga 3) e quanto dura quel che resta.
+// Tutti i tempi qui sotto restano quelli della voce intera; END è la fine in quel tempo.
+let T0 = 0;
 const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z']/g, '');
 const r = (n) => RIGHE[n - 1][0][0], rf = (n) => RIGHE[n - 1][RIGHE[n - 1].length - 1][1];
 const w = (n, parola, fine = 0, quale = 0) => { const h = RIGHE[n - 1].filter((x) => norm(x[2]) === norm(parola)); const x = h[Math.min(quale, h.length - 1)]; return x ? x[fine] : r(n); };
@@ -333,14 +337,16 @@ function scatto(set, o, wd = 540, luce = 1, hg = 0) { const cv = document.create
   if (hg) set.camera.aspect = wd / hg; c.scale(wd / W, cv.height / H); if (luce !== 1) c.filter = `brightness(${luce})`; G.renderSet(c, set, 0, 0, o);
   if (hg) { set.camera.aspect = W / H; set.camera.updateProjectionMatrix(); } return cv; }
 
-// Carta A: la tua mano che impugna la maniglia, vista come nelle due foto mandate dall'utente il 25/11: dall'alto e da dietro, lungo il braccio
-// (il braccio entra dall'angolo in basso a destra, il pugno sulla leva, la placca sopra, l'inquadratura un po' storta). È un primo piano, quindi
-// la mano è quella MODELLATA (sets/mano_mesh.js): si mette sulla leva vera della porta, chiude le dita finché la toccano e avvolge il pollice
-// da sotto; mano e avambraccio sono un pezzo solo e del personaggio si vede solo quello. Un faro in alto a destra, con le ombre, le dà volume.
-// Finito lo scatto il set torna com'era (mano a pezzi, corpo, niente ombre): le altre inquadrature dell'ingresso non cambiano.
+// Carta A: la tua mano che impugna la maniglia, rifatta sulle due foto mandate dall'utente il 25/11 («guarda bene la mia foto»): il pugno
+// chiuso sulla leva visto da dietro e dall'alto, grande, con le nocche in cima e il dorso verso chi guarda; il polso dritto continua la linea
+// dell'avambraccio, che arriva dall'angolo in basso a destra allargandosi; la punta della leva esce a sinistra con il pollice raccolto sotto;
+// la placca sopra; l'inquadratura un po' storta. Per avere il braccio quasi orizzontale sei vicino alla porta, col gomito basso.
+// È un primo piano, quindi la mano è quella MODELLATA (sets/mano_mesh.js): si mette sulla leva vera, chiude le dita finché la toccano,
+// raccoglie il pollice; mano e avambraccio sono una superficie sola e del personaggio si vede solo quello. Un faro in alto a destra, con le
+// ombre, le dà volume. Finito lo scatto il set torna com'era (mano a pezzi, corpo, niente ombre): le altre inquadrature non cambiano.
 function cartaA() {
-  const L = LEVA_INGRESSO, M0 = [0.295, 1.05, -2.44], g = presaSu(L.a, L.b, { ...presaNocche(0.01, 0.035), rollio: -32, lungo: 0.5 });
-  const mm = attacca(SI.T.AL), faro = new THREE.SpotLight('#FFE2BC', 2.6, 3, 0.36, 0.7, 1.2); faro.position.set(M0[0] + 0.35, M0[1] + 0.45, M0[2] + 0.05); faro.target.position.set(0.295, 1.02, -2.48);
+  const L = LEVA_INGRESSO, M0 = [0.295, 1.05, -2.44], g = presaSu(L.a, L.b, { ...presaNocche(0.01, 0.035), rollio: 3, lungo: 0.5 });
+  const mm = attacca(SI.T.AL), faro = new THREE.SpotLight('#FFE2BC', 2.6, 3, 0.36, 0.7, 1.2); faro.position.set(M0[0] + 0.35, M0[1] + 0.5, M0[2] + 0.3); faro.target.position.set(0.295, 1.02, -2.48);
   faro.castShadow = true; faro.shadow.mapSize.set(2048, 2048); faro.shadow.camera.near = 0.15; faro.shadow.camera.far = 2; faro.shadow.bias = -0.0004; faro.shadow.normalBias = 0.004; faro.shadow.radius = 5; SI.scene.add(faro, faro.target);
   for (const x of mm.userData.pezzi) { x.castShadow = true; x.receiveShadow = true; } const prima = [], nascosti = [], scatola = new THREE.Box3();
   SI.scene.traverse((o) => { if (!o.isMesh || mm.userData.pezzi.includes(o)) return; scatola.setFromObject(o); if (scatola.min.z < -2.3 && scatola.max.z > -2.62 && scatola.max.y > 0.5) { prima.push([o, o.castShadow, o.receiveShadow]); o.receiveShadow = true; if (scatola.max.x - scatola.min.x < 0.3) o.castShadow = true; } });
@@ -348,8 +354,8 @@ function cartaA() {
     SI.T.group.traverse((x) => { if (x.isMesh && x.visible && !mm.userData.pezzi.includes(x)) { nascosti.push(x); x.visible = false; } });          // di te si vede solo il braccio
     SI.scene.updateMatrixWorld(true); const m = nelModello(mm, L.a, L.b, L.r);
     mm.userData.posa(avvolgiPollice(afferra({ avambraccio: m.avambraccio }, m.leva, { pollice: false }), m.leva, { rollio: 75, zona: [-0.06, -0.012] })); };
-  const img = scatto(SI, { cam: [M0[0] - 0.07, M0[1] + 0.47, M0[2] + 0.26], look: [M0[0] + 0.02, M0[1] - 0.06, M0[2]], roll: 12 * Math.PI / 180, fov: 27, piedi: 1, telefono: 0, occhio: 0.9, amb: 0.16, fronte: 0.05,
-    tu: { pos: [0.08, 0, -1.94], yaw: Math.PI, lean: 0.14, headPitch: 0.3, armL: { mondo: g.polso, gomitoM: [0.5, -0.8, 0.4], ditaM: g.dita, dorsoM: g.dorso, mano: 'rilassata' } } }, 860, 1, 480);
+  const img = scatto(SI, { cam: [M0[0] - 0.12, M0[1] + 0.45, M0[2] + 0.42], look: [M0[0] - 0.015, M0[1] + 0.005, M0[2] - 0.005], roll: 12 * Math.PI / 180, fov: 19.5, piedi: 1, telefono: 0, occhio: 0.9, amb: 0.16, fronte: 0.05,
+    tu: { pos: [0.08, 0, -2.06], yaw: Math.PI, lean: 0.14, headPitch: 0.3, armL: { mondo: g.polso, gomitoM: [0.3, -1, 0.5], ditaM: g.dita, dorsoM: g.dorso, mano: 'rilassata' } } }, 860, 1, 480);
   SI.update = agg; SI.scene.remove(faro, faro.target); faro.dispose(); for (const [o, c, r] of prima) { o.castShadow = c; o.receiveShadow = r; } for (const x of nascosti) x.visible = true; stacca(mm);
   return img;
 }
@@ -360,7 +366,7 @@ M.film({
   async init() {
     RIGHE = await fetch('assets/parole.json').then((x) => x.json()); WORDS = RIGHE.flat();
     try { BOCCA = await fetch('assets/bocca.json').then((x) => x.json()); } catch { BOCCA = []; }
-    CHUNKS = chunks(WORDS); END = Number(M.CFG.duration || 130);
+    CHUNKS = chunks(WORDS); T0 = Number(M.CFG.inizio_fotogramma || 0) / 30; END = Number(M.CFG.duration || 130) + T0;
     await G.initGL({ exposure: 1.0 }); G.R.toneMapping = THREE.NoToneMapping; SF = fuoriSet(); SI = ingressoSet(); SP = pianerottoloSet();
     SEQ = sequenza(); window.TEMPI = SEQ.map((s) => [Math.round(s.t0 * 100) / 100, s.f(s.t0 + 0.01, 0, s).id]);
     // le immagini fisse: la miniatura del video e le due carte
@@ -371,6 +377,7 @@ M.film({
     IMG.cartaB = scatto(SF, { cam: [4.5, FY + 1.5, 0.2], look: [4.2, FY - 3.2, 6.5], fov: 30, cucina: 0, riva: lontano, elena: { nascosta: true }, tu: lontano }, 860, 1.7, 480);
   },
   draw(ctx, u, t) {
+    t += T0; { const k = t * 30; if (Math.abs(k - Math.round(k)) < 1e-6) t = Math.round(k) / 30; } u = M.U(t);      // i fotogrammi cadono esattamente dove cadevano nel film intero
     const o = shot(t);
     ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
     G.renderSet(ctx, o.set === 'F' ? SF : o.set === 'I' ? SI : SP, t, u, o);
@@ -385,5 +392,5 @@ M.film({
     const a = Math.max(1 - prog(t, 0, 0.3), prog(t, END - 0.7, END));
     if (a > 0) { ctx.fillStyle = `rgba(0,0,0,${a})`; ctx.fillRect(0, 0, W, H); }
   },
-  post(ctx, u, t) { const o = shot(t); if (o.spioncino || o.carte || o.rec) return; const g = ctx.createRadialGradient(W / 2, H * 0.48, H * 0.3, W / 2, H * 0.5, H * 0.8); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,0.4)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); },
+  post(ctx, u, t) { const o = shot(t + T0); if (o.spioncino || o.carte || o.rec) return; const g = ctx.createRadialGradient(W / 2, H * 0.48, H * 0.3, W / 2, H * 0.5, H * 0.8); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,0.4)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); },
 });

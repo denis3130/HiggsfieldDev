@@ -20,32 +20,41 @@ function posizioni(allunga = false) {
     p[v * 3 + 1] = Y0 + (y - Y0) * 4.2; p[v * 3] = AX + (p[v * 3] - AX) * k; p[v * 3 + 2] = AZ + (p[v * 3 + 2] - AZ) * k; }
   return p;
 }
-// L'AVAMBRACCIO che continua la mano senza giunture (maniche corte, primi piani): una superficie nuova e fitta che parte dalla sezione
-// vera del polso del modello (la si misura sulla maglia lisciata) e arriva al gomito allargandosi e arrotondandosi. av = { lungo, gomito }
-// in metri del modello. Segue l'osso del polso. Parte combaciando con il moncone del polso (stessa sezione, stessa pendenza: niente
-// scalino né riga) e pochi millimetri dopo il moncone viene ristretto (RITIRA) e resta nascosto dentro.
-function avambraccioLiscio(av, fine, { anelli = 30, spicchi = 44 } = {}) {
-  const YA = 0.0585, YB = 0.0625, AX = 0.0385, AZ = 0.0102, DUE = 2 * Math.PI;
-  // la sezione vera del polso a due altezze (raggio per ogni direzione attorno all'asse): la superficie nuova parte SOPRA quella della mano
-  // e ne continua la pendenza, così nel punto d'attacco le due combaciano
+// L'AVAMBRACCIO che continua la mano senza giunture (maniche corte, primi piani). Il moncone del polso viene TAGLIATO a YT e dal bordo del
+// taglio (i vertici stessi della mano) cresce un tubo nuovo e fitto che nei primi anelli passa dalla forma vera del bordo alla sezione
+// liscia del polso e poi arriva al gomito allargandosi e arrotondandosi. Mano e avambraccio sono una superficie sola, con gli stessi
+// vertici sul bordo e le normali continue: al polso non resta nessuna riga. av = { lungo, gomito } in metri del modello.
+// I vertici del tubo seguono l'osso del polso (come quelli del bordo). Torna { pos (tubo, a riposo), idx (mano tagliata + tubo), bordo }.
+function cuciAvambraccio(av, fine, idxFine, { anelli = 34, spicchi = 44, raccordo = 5 } = {}) {
+  const YT = 0.06, AX = 0.0385, AZ = 0.0102, DUE = 2 * Math.PI, nf = fine.length / 3, ang = (x, z) => Math.atan2(z - AZ, x - AX);
   const sezione = (yc) => { const so = new Float32Array(spicchi), qu = new Float32Array(spicchi);
-    for (let v = 0; v < fine.length / 3; v++) { const y = fine[v * 3 + 1]; if (Math.abs(y - yc) > 0.0016) continue; const dx = fine[v * 3] - AX, dz = fine[v * 3 + 2] - AZ, i = ((Math.round(Math.atan2(dz, dx) / DUE * spicchi) % spicchi) + spicchi) % spicchi; so[i] += Math.hypot(dx, dz); qu[i]++; }
+    for (let v = 0; v < nf; v++) { const y = fine[v * 3 + 1]; if (Math.abs(y - yc) > 0.0016) continue; const i = ((Math.round(ang(fine[v * 3], fine[v * 3 + 2]) / DUE * spicchi) % spicchi) + spicchi) % spicchi; so[i] += Math.hypot(fine[v * 3] - AX, fine[v * 3 + 2] - AZ); qu[i]++; }
     let r = Array.from(so, (x, i) => (qu[i] ? x / qu[i] : 0)); const vic = (i, d) => r[(i + d + spicchi) % spicchi];
     for (let giro = 0; giro < spicchi; giro++) r = r.map((x, i) => x || (vic(i, 1) + vic(i, -1)) / ((vic(i, 1) ? 1 : 0) + (vic(i, -1) ? 1 : 0) || 1));
     for (let giro = 0; giro < 3; giro++) r = r.map((x, i) => 0.5 * x + 0.25 * (vic(i, 1) + vic(i, -1))); return r; };
-  const r0 = sezione(YA), r1 = sezione(YB), cs = (i) => Math.cos(i / spicchi * DUE), sn = (i) => Math.sin(i / spicchi * DUE);
-  const rx = Math.max(...r1.map((x, i) => Math.abs(x * cs(i)))), rz = Math.max(...r1.map((x, i) => Math.abs(x * sn(i))));
-  const yg = POLSO.y + av.lungo, pos = [], idx = [], PRIMI = 3, N = PRIMI + anelli + 4;
-  for (let j = 0; j <= N; j++) { let y, kx = 1, kz = 1, q = 1;                                  // q: 0 = sezione r0, 1 = sezione r1
-    if (j < PRIMI) { q = j / PRIMI; y = YA + (YB - YA) * q; }
-    else if (j <= PRIMI + anelli) { const t = (j - PRIMI) / anelli, pancia = Math.sin(Math.PI * t ** 0.75) ** 2; y = YB + t * (yg - YB); kx = 1 + (av.gomito / rx - 1) * t ** 1.45 + 0.05 * pancia; kz = 1 + (av.gomito / rz - 1) * t ** 1.2 + 0.03 * pancia; }
-    else { const u = (j - PRIMI - anelli) / 4, c = Math.cos(u * Math.PI / 2); y = yg + av.gomito * 0.8 * Math.sin(u * Math.PI / 2); kx = av.gomito / rx * c; kz = av.gomito / rz * c; }
-    for (let i = 0; i < spicchi; i++) { const r = r0[i] + (r1[i] - r0[i]) * q; pos.push(AX + r * kx * cs(i), y, AZ + r * kz * sn(i)); } }
-  for (let j = 0; j < N; j++) for (let i = 0; i < spicchi; i++) { const a = j * spicchi + i, b = j * spicchi + (i + 1) % spicchi, c = a + spicchi, d = b + spicchi; idx.push(a, b, c, b, d, c); }      // un giro attorno a +y visto da fuori
-  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setIndex(idx); g.computeVertexNormals();
-  // le facce devono guardare fuori: se la prima normale punta verso l'asse si rovescia il verso dei triangoli
-  const n = g.attributes.normal, p0 = g.attributes.position; if (n.getX(0) * (p0.getX(0) - AX) + n.getZ(0) * (p0.getZ(0) - AZ) < 0) { for (let i = 0; i < idx.length; i += 3) { const t = idx[i + 1]; idx[i + 1] = idx[i + 2]; idx[i + 2] = t; } g.setIndex(idx); g.computeVertexNormals(); }
-  return g;
+  const r1 = sezione(YT), rAt = (a) => { const u = ((a / DUE * spicchi) % spicchi + spicchi) % spicchi, i = Math.floor(u), f = u - i; return r1[i] * (1 - f) + r1[(i + 1) % spicchi] * f; };
+  const rx = Math.max(...r1.map((x, i) => Math.abs(x * Math.cos(i / spicchi * DUE)))), rz = Math.max(...r1.map((x, i) => Math.abs(x * Math.sin(i / spicchi * DUE))));
+  // il taglio: restano i triangoli della mano tutti sotto YT; il bordo è fatto dai lati rimasti con una faccia sola
+  const tenuti = [], lati = new Map();
+  for (let t = 0; t < idxFine.length; t += 3) { const a = idxFine[t], b = idxFine[t + 1], c = idxFine[t + 2]; if (fine[a * 3 + 1] > YT || fine[b * 3 + 1] > YT || fine[c * 3 + 1] > YT) continue; tenuti.push(a, b, c);
+    for (const [u, w] of [[a, b], [b, c], [c, a]]) { const k = u < w ? u * nf + w : w * nf + u; lati.set(k, (lati.get(k) || 0) + 1); } }
+  const vicini = new Map(); for (const [k, n] of lati) if (n === 1) { const u = Math.floor(k / nf), w = k % nf; for (const [p, q] of [[u, w], [w, u]]) { if (!vicini.has(p)) vicini.set(p, []); vicini.get(p).push(q); } }
+  const visti = new Set(); let bordo = [];                                   // i giri del bordo: si tiene il più lungo (l'anello attorno al polso)
+  for (const v0 of vicini.keys()) { if (visti.has(v0)) continue; const giro = [v0]; visti.add(v0); let prev = -1, cur = v0; for (;;) { const nx = vicini.get(cur).find((q) => q !== prev && !visti.has(q)); if (nx === undefined) break; giro.push(nx); visti.add(nx); prev = cur; cur = nx; } if (giro.length > bordo.length) bordo = giro; }
+  const nb = bordo.length, B = bordo.map((v) => ({ v, a: ang(fine[v * 3], fine[v * 3 + 2]), y: fine[v * 3 + 1], r: Math.hypot(fine[v * 3] - AX, fine[v * 3 + 2] - AZ) }));
+  // gli anelli del tubo hanno gli stessi angoli dei vertici del bordo; nei primi `raccordo` anelli altezza e raggio passano da quelli veri del bordo a quelli lisci
+  const yg = POLSO.y + av.lungo, pos = [], N = anelli + 4, sm3 = (x) => { const t = Math.min(1, Math.max(0, x)); return t * t * (3 - 2 * t); };
+  for (let j = 1; j <= N; j++) { let dy, kx, kz; const be = sm3(j / raccordo);
+    if (j <= anelli) { const t = j / anelli, pancia = Math.sin(Math.PI * t ** 0.75) ** 2; dy = t * (yg - YT); kx = 1 + (av.gomito / rx - 1) * t ** 1.45 + 0.05 * pancia; kz = 1 + (av.gomito / rz - 1) * t ** 1.2 + 0.03 * pancia; }
+    else { const u = (j - anelli) / 4, c = Math.cos(u * Math.PI / 2); dy = yg - YT + av.gomito * 0.8 * Math.sin(u * Math.PI / 2); kx = av.gomito / rx * c; kz = av.gomito / rz * c; }
+    for (const b of B) { const r = b.r + (rAt(b.a) - b.r) * be; pos.push(AX + r * kx * Math.cos(b.a), b.y + (YT - b.y) * be + dy, AZ + r * kz * Math.sin(b.a)); } }
+  const V = (j, i) => (j === 0 ? B[i % nb].v : nf + (j - 1) * nb + (i % nb)), nuovi = [];
+  for (let j = 0; j < N; j++) for (let i = 0; i < nb; i++) nuovi.push(V(j, i), V(j, i + 1), V(j + 1, i), V(j, i + 1), V(j + 1, i + 1), V(j + 1, i));
+  // il verso dei triangoli nuovi: devono guardare fuori
+  const P3 = (v) => (v < nf ? [fine[v * 3], fine[v * 3 + 1], fine[v * 3 + 2]] : [pos[(v - nf) * 3], pos[(v - nf) * 3 + 1], pos[(v - nf) * 3 + 2]]), idx = tenuti.slice();
+  const fuori = (a, b, c) => { const A = P3(a), Bq = P3(b), C = P3(c), ux = Bq[0] - A[0], uy = Bq[1] - A[1], uz = Bq[2] - A[2], vx = C[0] - A[0], vy = C[1] - A[1], vz = C[2] - A[2], nx = uy * vz - uz * vy, nz = ux * vy - uy * vx; return nx * ((A[0] + Bq[0] + C[0]) / 3 - AX) + nz * ((A[2] + Bq[2] + C[2]) / 3 - AZ) > 0; };
+  const gira = !fuori(nuovi[0], nuovi[1], nuovi[2]); for (let t = 0; t < nuovi.length; t += 3) idx.push(nuovi[t], gira ? nuovi[t + 2] : nuovi[t + 1], gira ? nuovi[t + 1] : nuovi[t + 2]);
+  return { pos: Float32Array.from(pos), idx: Uint32Array.from(idx), bordo: `${nb}/${vicini.size}` };
 }
 const LOC = RIP.map(() => null);                                   // ogni osso rispetto a quello prima nella catena, a riposo
 Object.values(CATENE).forEach((c) => c.forEach((k, i) => { if (i) LOC[k] = RIP[c[i - 1]].clone().invert().multiply(RIP[k]); }));
@@ -107,20 +116,21 @@ export function afferra(P, og, { dita = QUATTRO, pollice = true, stringe = 0.001
 // falangetta tocca l'oggetto dal lato del palmo senza entrare nelle dita. Q è la posa con le dita già chiuse (afferra).
 const s1 = V(0, 0, 0), s2 = V(0, 0, 0), s3 = V(0, 0, 0), s4 = V(0, 0, 0), asse = V(0, 0, 0), w = V(0, 0, 0);
 function segmentoDito(POSA, f, i, a, b) { const c = CATENE[f], o = f === 'pollice' ? 0 : 1; a.setFromMatrixPosition(POSA[c[o + i]]); b.setFromMatrixPosition(POSA[c[o + i + 1]]); if (i === 2) { zz.setFromMatrixColumn(POSA[c[o + i]], 2); b.addScaledVector(zz, -PUNTA); } }
-export function avvolgiPollice(P, og, { rollio = 75, stringe = 0.001, zona = null, passo = 5, fine = 1 } = {}) {
+export function avvolgiPollice(P, og, { rollio = 75, stringe = 0.001, zona = null, passo = 5, fine = 1, avanti = 0.03 } = {}) {
   const Q = JSON.parse(JSON.stringify(P)), POSA = RIP.map((m) => m.clone()), O = { a: V(...og.a), b: V(...og.b), r: og.r }; asse.subVectors(O.b, O.a).normalize();
-  const tocca = (da) => { cinematica(Q, POSA); for (let i = da; i < 3; i++) if (margine(POSA, 'pollice', i, O) < -stringe) return true; return false; };
+  // quanto manca perché la falange j del pollice tocchi qualcosa: la leva oppure una falange delle dita (che le stanno già attorno)
+  const libero = (j) => { let m = margine(POSA, 'pollice', j, O); segmentoDito(POSA, 'pollice', j, s1, s2); for (const f of QUATTRO) for (let i = 1; i < 3; i++) { segmentoDito(POSA, f, i, s3, s4); m = Math.min(m, distSegmenti(s1, s2, s3, s4) - RAGGI.pollice[j] - RAGGI[f][i]); } return m; };
+  const tocca = (da) => { cinematica(Q, POSA); for (let i = da; i < 3; i++) if ((i ? libero(i) : margine(POSA, 'pollice', 0, O)) < -stringe) return true; return false; };
   const chiudi = (chiave, da, max) => { let g = 0; Q.pollice[chiave] = 0; if (tocca(da)) return; while (g < max) { g += 1; Q.pollice[chiave] = g; if (tocca(da)) { Q.pollice[chiave] = g - 1; break; } } };
-  const prova = (ab, fl) => { Q.pollice = { ab, fl, roll: rollio, mcp: 0, ip: 0 }; cinematica(Q, POSA); if (margine(POSA, 'pollice', 0, O) < -0.004) return null; chiudi('mcp', 1, 55); chiudi('ip', 2, 75); cinematica(Q, POSA);
-    const m2 = margine(POSA, 'pollice', 2, O), m1 = margine(POSA, 'pollice', 1, O); let urto = 0;
-    for (const f of QUATTRO) for (let i = 0; i < 3; i++) { segmentoDito(POSA, f, i, s3, s4); for (let j = 1; j < 3; j++) { segmentoDito(POSA, 'pollice', j, s1, s2); const d = distSegmenti(s1, s2, s3, s4) - RAGGI.pollice[j] - RAGGI[f][i]; if (d < -0.0025) urto += -0.0025 - d; } }
+  const prova = (ab, fl) => { Q.pollice = { ab, fl, roll: rollio, mcp: 0, ip: 0 }; cinematica(Q, POSA); if (margine(POSA, 'pollice', 0, O) < -0.004 || libero(1) < -0.004) return null; chiudi('mcp', 1, 55); chiudi('ip', 2, 75); cinematica(Q, POSA);
+    const m2 = libero(2), m1 = libero(1), mLeva = margine(POSA, 'pollice', 2, O);
     segmentoDito(POSA, 'pollice', 2, s1, s2); const dir = s2.clone().sub(s1).normalize(), mid = s1.clone().lerp(s2, 0.5), t = mid.clone().sub(O.a).dot(asse); w.copy(O.a).addScaledVector(asse, t).sub(mid).normalize();        // dal pollice verso l'asse
     const sotto = w.x, dove = zona ? Math.max(0, zona[0] - mid.z, mid.z - zona[1]) : 0;                                                                // sotto > 0: la falangetta sta dal lato del palmo
-    return { punti: 60 * Math.abs(m2) + 12 * Math.max(0, m1 - 0.004) + 30 * urto + 0.012 * (1 - sotto) + 0.004 * Math.abs(dir.dot(asse)) + 0.6 * dove + 0.00002 * (ab + Math.abs(fl)), posa: { ...Q.pollice }, m1, m2, urto, sotto };
+    return { punti: 60 * Math.abs(m2) + 4 * Math.max(0, mLeva - 0.012) + 12 * Math.max(0, m1 - 0.004) + 0.012 * (1 - sotto) + avanti * (1 + dir.y) + 0.6 * dove + 0.00002 * (ab + Math.abs(fl)), posa: { ...Q.pollice }, m1, m2, urto: mLeva, sotto };
   };
   let best = null; const giro = (A, F, st) => { for (let ab = A[0]; ab <= A[1]; ab += st) for (let fl = F[0]; fl <= F[1]; fl += st) { const r = prova(ab, fl); if (r && (!best || r.punti < best.punti)) best = r; } };
   giro([0, 75], [-15, 65], passo); if (best && fine < passo) giro([best.posa.ab - passo, best.posa.ab + passo], [best.posa.fl - passo, best.posa.fl + passo], fine);
-  if (best) Q.pollice = best.posa; Q.infoPollice = best && { m1: +(best.m1 * 1000).toFixed(1), m2: +(best.m2 * 1000).toFixed(1), urto: +(best.urto * 1000).toFixed(1), sotto: +best.sotto.toFixed(2) };
+  if (best) Q.pollice = best.posa; Q.infoPollice = best && { m1: +(best.m1 * 1000).toFixed(1), m2: +(best.m2 * 1000).toFixed(1), leva: +(best.urto * 1000).toFixed(1), sotto: +best.sotto.toFixed(2) };
   return Q;
 }
 
@@ -166,7 +176,7 @@ function appartenenza(livelli) {
   return (f, v) => out[f].a[v * 3 + out[f].j];
 }
 function pittura(livelli, skin, unghia, o = {}) {
-  const pos = liscia(Float32Array.from(DATI.pos), livelli), n = pos.length / 3, col = new Float32Array(n * 3), cs = new THREE.Color(skin), cu = new THREE.Color(unghia), sc = new THREE.Color(skin).multiplyScalar(o.scuro ?? 0.66), p = V(0, 0, 0), c = new THREE.Color();
+  const pos = liscia(Float32Array.from(DATI.pos), livelli), n = pos.length / 3, col = new Float32Array(n * 3), cs = new THREE.Color(skin), cu = new THREE.Color(unghia), sc = new THREE.Color(skin).multiplyScalar(o.scuro ?? 0.66), cr = new THREE.Color(o.rosso || '#C27C66'), p = V(0, 0, 0), c = new THREE.Color();
   const lati = o.lati ?? 0.5, pieghe = o.pieghe ?? 0.3, suo = appartenenza(livelli);
   for (let v = 0; v < n; v++) { let u = 0, s = 0;
     FDITA.forEach((f, fi) => { const mio = sm(0.3, 0.6, suo(fi, v)); if (!mio) return; const ch = CATENE[f], pol = f === 'pollice', o1 = pol ? 0 : 1;
@@ -176,22 +186,29 @@ function pittura(livelli, skin, unghia, o = {}) {
         if (i > 0) s = Math.max(s, mio * pieghe * sm(0.0018, 0.0002, Math.abs(p.z)) * sm(0.001, 0.004, p.y) * sm(1.1 * mz, 0.6 * mz, Math.abs(p.x)));            // la piega della nocca
         if (i === 2) { const a = pol ? [0.008, 0.0235, 0.0078, 0.0026] : [0.0088, 0.0212, RAGGI[f][2] * 0.86, 0.0031];
           u = Math.max(u, mio * sm(-a[0] + 0.0008, -a[0] - 0.0008, p.z) * sm(-a[1] - 0.0008, -a[1] + 0.0008, p.z) * sm(a[2] + 0.0006, a[2] - 0.0006, Math.abs(p.x)) * sm(a[3] - 0.0007, a[3] + 0.0007, p.y)); } } });
-    c.copy(cs).lerp(sc, s).lerp(cu, u); col[v * 3] = c.r; col[v * 3 + 1] = c.g; col[v * 3 + 2] = c.b; }
+    // le nocche (dove il dito si attacca alla mano e a metà dito): un velo più rosso sul dorso
+    let rosso = 0; for (const f of QUATTRO) { const ch = CATENE[f]; for (const [k, y0, rag, forza] of [[ch[1], 0.0085, 0.0105, 1], [ch[2], 0.0068, 0.0075, 0.6]]) { p.set(pos[v * 3], pos[v * 3 + 1], pos[v * 3 + 2]).applyMatrix4(INV[k]); if (p.y < 0.002) continue; rosso = Math.max(rosso, forza * sm(rag, rag * 0.35, Math.hypot(p.x, p.y - y0, p.z + 0.001))); } }
+    c.copy(cs).lerp(sc, s).lerp(cr, (o.nocche ?? 0.45) * rosso).lerp(cu, u); col[v * 3] = c.r; col[v * 3 + 1] = c.g; col[v * 3 + 2] = c.b; }
   return col;
 }
 
 // La mano pronta: un gruppo nello spazio del modello. userData.posa(P) la piega; userData.ossa = matrici delle ossa nella posa attuale.
-export function manoMesh({ skin = '#D9A583', unghia = '#EBC6B3', livelli = 2, pittura: op = {}, materiale = null, avambraccio = null, allunga = false } = {}) {
+export function manoMesh({ skin = '#D9A583', unghia = '#EBC6B3', livelli = 2, pittura: op = {}, materiale = null, avambraccio = null, allunga = false, rilievo = 1 } = {}) {
   const g = new THREE.Group(), geo = new THREE.BufferGeometry(), POSA = RIP.map((m) => m.clone()), base = new Float32Array(NV * 3), P0 = posizioni(allunga && !avambraccio);
-  let braccio = null, ritira = null; if (avambraccio) { const fine = liscia(Float32Array.from(DATI.pos), livelli); braccio = new THREE.Mesh(avambraccioLiscio(avambraccio, fine), new THREE.MeshLambertMaterial({ color: skin })); braccio.matrixAutoUpdate = false; braccio.frustumCulled = false; g.add(braccio);
-    ritira = []; for (let v = 0; v < fine.length / 3; v++) { const y = fine[v * 3 + 1]; if (y > 0.064) { const k = 1 - 0.14 * sm(0.064, 0.068, y); ritira.push(v, 0.0385 + (fine[v * 3] - 0.0385) * k, y, 0.0102 + (fine[v * 3 + 2] - 0.0102) * k); } } }      // RITIRA: il moncone oltre l'attacco, ristretto
   let tmp = [new Float32Array((T0.nv + T0.ne) * 3), new Float32Array((T1.nv + T1.ne) * 3), new Float32Array((T2.nv + T2.ne) * 3)];
-  const nfin = livelli ? TOPO[livelli - 1].nv + TOPO[livelli - 1].ne : NV, attr = new THREE.BufferAttribute(new Float32Array(nfin * 3), 3);
-  geo.setAttribute('position', attr); geo.setAttribute('color', new THREE.BufferAttribute(pittura(livelli, skin, unghia, op), 3)); geo.setIndex(new THREE.BufferAttribute(INDICI[livelli], 1));
+  const nfin = livelli ? TOPO[livelli - 1].nv + TOPO[livelli - 1].ne : NV, colori = pittura(livelli, skin, unghia, op);
+  const tubo = avambraccio ? cuciAvambraccio(avambraccio, liscia(Float32Array.from(DATI.pos), livelli), INDICI[livelli]) : null, nt = tubo ? tubo.pos.length / 3 : 0;
+  const attr = new THREE.BufferAttribute(new Float32Array((nfin + nt) * 3), 3), col = new Float32Array((nfin + nt) * 3); col.set(colori); if (nt) { const c = new THREE.Color(skin); for (let v = nfin; v < nfin + nt; v++) { col[v * 3] = c.r; col[v * 3 + 1] = c.g; col[v * 3 + 2] = c.b; } }
+  geo.setAttribute('position', attr); geo.setAttribute('color', new THREE.BufferAttribute(col, 3)); geo.setIndex(new THREE.BufferAttribute(tubo ? tubo.idx : INDICI[livelli], 1));
   const mesh = new THREE.Mesh(geo, materiale || new THREE.MeshLambertMaterial({ color: 0xffffff, vertexColors: true })); mesh.frustumCulled = false; g.add(mesh);
-  g.userData.ossa = POSA; g.userData.mesh = mesh; g.userData.pezzi = braccio ? [mesh, braccio] : [mesh];
-  g.userData.posa = (P = {}) => { cinematica(P, POSA); let p = pelle(POSA, P0, base); for (let i = 0; i < livelli; i++) p = suddividi(p, TOPO[i], tmp[i]); attr.array.set(p); if (ritira) { const e = SK[K.wrist].elements, a = attr.array; for (let i = 0; i < ritira.length; i += 4) { const v = ritira[i] * 3, x = ritira[i + 1], y = ritira[i + 2], z = ritira[i + 3]; a[v] = e[0] * x + e[4] * y + e[8] * z + e[12]; a[v + 1] = e[1] * x + e[5] * y + e[9] * z + e[13]; a[v + 2] = e[2] * x + e[6] * y + e[10] * z + e[14]; } }
-    attr.needsUpdate = true; geo.computeVertexNormals(); geo.computeBoundingSphere(); if (braccio) braccio.matrix.copy(SK[K.wrist]); return g; };
+  g.userData.ossa = POSA; g.userData.mesh = mesh; g.userData.pezzi = [mesh]; g.userData.bordo = tubo ? tubo.bordo : 0;
+  g.userData.posa = (P = {}) => { cinematica(P, POSA); let p = pelle(POSA, P0, base); for (let i = 0; i < livelli; i++) p = suddividi(p, TOPO[i], tmp[i]); const a = attr.array; a.set(p);
+    if (nt) { const e = SK[K.wrist].elements, q = tubo.pos; for (let v = 0; v < nt; v++) { const x = q[v * 3], y = q[v * 3 + 1], z = q[v * 3 + 2], o = (nfin + v) * 3; a[o] = e[0] * x + e[4] * y + e[8] * z + e[12]; a[o + 1] = e[1] * x + e[5] * y + e[9] * z + e[13]; a[o + 2] = e[2] * x + e[6] * y + e[10] * z + e[14]; } }
+    if (rilievo) { const cen = [];                    // le nocche: la pelle si alza sopra le giunture delle dita (di più a pugno chiuso)
+      for (const f of QUATTRO) { const ch = CATENE[f], ang = (P[f] && P[f].mcp) || 0; for (const [k, k0, su, h, sg] of [[ch[1], ch[0], 0.0075, rilievo * (0.0012 + 0.0016 * Math.min(1, ang / 60)), 0.0056], [ch[2], ch[1], 0.006, rilievo * 0.0009, 0.0042]]) {
+        const J = new THREE.Vector3().setFromMatrixPosition(POSA[k]), d = new THREE.Vector3().setFromMatrixColumn(POSA[k], 1).add(new THREE.Vector3().setFromMatrixColumn(POSA[k0], 1)).normalize(); cen.push([J.x + d.x * su, J.y + d.y * su, J.z + d.z * su, d.x, d.y, d.z, h, 1 / (2 * sg * sg), (3 * sg) ** 2]); } }
+      for (let v = 0; v < nfin; v++) { const x = a[v * 3], y = a[v * 3 + 1], z = a[v * 3 + 2]; let dx = 0, dy = 0, dz = 0; for (const c of cen) { const q = (x - c[0]) ** 2 + (y - c[1]) ** 2 + (z - c[2]) ** 2; if (q < c[8]) { const w = c[6] * Math.exp(-q * c[7]); dx += c[3] * w; dy += c[4] * w; dz += c[5] * w; } } if (dx || dy || dz) { a[v * 3] = x + dx; a[v * 3 + 1] = y + dy; a[v * 3 + 2] = z + dz; } } }
+    attr.needsUpdate = true; geo.computeVertexNormals(); geo.computeBoundingSphere(); return g; };
   g.userData.posa({});
   return g;
 }

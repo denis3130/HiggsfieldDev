@@ -3,6 +3,11 @@
  "storia": "Il testimone",
  "episodio": 1,
  "titolo": "La finestra accesa",
+ "tagliate": [
+  1,
+  2
+ ],
+ "nota_taglio": "Le righe 1 e 2 (l'aggancio che riassumeva l'episodio) sono state tolte dal video su richiesta dell'utente il 25/11: la voce registrata le contiene ancora, ma film.json fa partire video e audio dalla riga 3 (inizio_fotogramma 389).",
  "righe": [
   {
    "id": 1,

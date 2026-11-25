@@ -1,8 +1,10 @@
 {
  "title": "Il testimone - episodio 1",
- "duration": 146.93,
+ "duration": 133.963333,
  "formats": [
   "9x16"
  ],
- "poster": 30
+ "poster": 30,
+ "inizio_fotogramma": 389,
+ "nota": "inizio_fotogramma: l'aggancio iniziale (righe 1 e 2 della voce) è tagliato su richiesta dell'utente; duration è quel che resta (la voce intera dura 146,93 s)"
 }
