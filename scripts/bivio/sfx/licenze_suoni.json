@@ -83,5 +83,24 @@
   "autore": "WolffVisuals",
   "licenza": "CC0 1.0",
   "pagina": "https://freesound.org/people/WolffVisuals/sounds/399581"
+ },
+ "pioggia_vento.mp3": {
+  "titolo": "Heavy Rain & Wind",
+  "autore": "jackcursham",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/jackcursham/sounds/467326"
+ },
+ "tuono.mp3": {
+  "titolo": "Thunder",
+  "autore": "Fission9",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Fission9/sounds/465314",
+  "nota": "il colpo forte parte a 0,78 s, picco a 1,81 s"
+ },
+ "porta_cigola.mp3": {
+  "titolo": "Wooden door creaking",
+  "autore": "TheBuilder15",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/TheBuilder15/sounds/367052"
  }
 }
