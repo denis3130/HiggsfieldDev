@@ -7,13 +7,24 @@ import * as M from '../lib/motion.js';
 import { THREE, V, rnd, tex, mat, piatto as basic, sfera, add, loft, tra, ombre, alone } from './stile.js';
 import { testa, capelli, chioma, ciuffi, braccio, gamba, chiavi, mix } from './pupazzi.js';
 
+// mondo: il punto da raggiungere in coordinate della scena. Le direzioni dita/dorso/gomito sono nel verso del PERSONAGGIO (z = davanti a lui);
+// per darle nel verso della scena si usano ditaM/dorsoM/gomitoM (se il personaggio è girato le due cose non coincidono).
+const _qi = new THREE.Quaternion();
 function braccia(upper, AL, AR, p) {
   for (const [A, q] of [[AL, p.armL], [AR, p.armR]]) {
-    if (q && q.mondo) { const v = upper.worldToLocal(V(...q.mondo)); A.a({ ...q, a: [v.x, v.y, v.z] }); } else A.a(q || {});
+    if (!q) { A.a({}); continue; }
+    let r = q;
+    if (q.mondo || q.ditaM || q.dorsoM || q.gomitoM) {
+      r = { ...q }; upper.getWorldQuaternion(_qi).invert();
+      if (q.mondo) { const v = upper.worldToLocal(V(...q.mondo)); r.a = [v.x, v.y, v.z]; }
+      for (const [k, km] of [['dita', 'ditaM'], ['dorso', 'dorsoM'], ['gomito', 'gomitoM']]) if (q[km]) { const d = V(...q[km]).applyQuaternion(_qi); r[k] = [d.x, d.y, d.z]; }
+    }
+    A.a(r);
   }
 }
 
-// o: { k (statura: 1 = 1,78 m), largo (spalle), C (colori), F (faccia), torso (materiale), manica, manica2, polsino, capelli(T), extra(parti), cappotto, mano }
+// o: { k (statura: 1 = 1,78 m), largo (spalle), C (colori), F (faccia), torso (materiale), manica, manica2, polsino, capelli(T), extra(parti), cappotto, mano,
+//      polso, polsoZ (mezza larghezza e mezzo spessore del polso), gomitoM + orlo (maniche al gomito: gomito di pelle e orlo della manica) }
 function uomo(o) {
   const k = o.k || 1, L = o.largo || 1, C = o.C, root = new THREE.Group();
   const skinM = mat(C.skin), nailM = mat(C.unghie || '#EBC6B3'), pantM = mat(C.pant);
@@ -30,7 +41,7 @@ function uomo(o) {
   const collo = new THREE.Group(); collo.position.set(0, 0.505 * k, 0.008); upper.add(collo);
   const T = testa(o.F); T.head.position.set(0, 0.094 * k, 0.012); T.head.scale.setScalar(k * (o.testa || 1)); collo.add(T.head);
   if (o.capelli) o.capelli(T);
-  const bo = { sx: 0.196 * L * k, sy: 0.356 * k, L1: 0.3 * k, L2: 0.265 * k, r0: 0.054 * k, r1: 0.045 * k, r2: 0.037 * k, manica: o.manica, manica2: o.manica2, polsino: o.polsino, skin: o.guanti ? mat(o.guanti) : skinM, nail: o.guanti ? mat(o.guanti) : nailM, mano: 1.05 * k };
+  const bo = { sx: 0.196 * L * k, sy: 0.356 * k, L1: 0.3 * k, L2: 0.265 * k, r0: 0.054 * k, r1: 0.045 * k, r2: (o.polso ?? 0.037) * k, polsoZ: o.polsoZ ? o.polsoZ * k : 0, gomitoM: o.gomitoM, orlo: o.orlo, manica: o.manica, manica2: o.manica2, polsino: o.polsino, skin: o.guanti ? mat(o.guanti) : skinM, nail: o.guanti ? mat(o.guanti) : nailM, mano: 1.05 * k };
   const AL = braccio(upper, -1, bo), AR = braccio(upper, 1, bo);
   const parti = { root, fianchi, upper, collo, T, AL, AR, k };
   if (o.extra) o.extra(parti);
@@ -73,7 +84,7 @@ export function testimone() {
       spessore: (th, ph) => 0.05 + 0.095 * Math.exp(-(((th - 0.72) / 0.36) ** 2)) * Math.exp(-(((ph - 0.18) / 0.8) ** 2)) + 0.02 * Math.exp(-((th / 0.5) ** 2)),
       solchi: { k: 38, amp: 0.014 }, base: C.capelli, chiaro: '#4E3A2B', scuro: '#17100C', n: 260, seme: 9 });
   };
-  return uomo({ k: 1, C, F, torso: mat(0xffffff, { map: magliaT }), manica: mat(C.maglia), manica2: mat(C.skin), polsino: null,
+  return uomo({ k: 1, C, F, polso: 0.0295, polsoZ: 0.0205, torso: mat(0xffffff, { map: magliaT }), manica: mat(C.maglia), manica2: mat(C.skin), gomitoM: mat(C.skin), orlo: mat(C.magliaDk), polsino: null,
     capelli: pettina,
     extra: ({ upper, k }) => { const cl = add(upper, new THREE.TorusGeometry(0.054 * k, 0.007 * k, 10, 36), mat(C.magliaDk), V(0, 0.463 * k, 0.008)); cl.rotation.x = Math.PI / 2 + 0.2; cl.scale.set(1.08, 1, 1); } });
 }
@@ -103,12 +114,12 @@ export function ispettore({ guanti = false } = {}) {
     extra: ({ upper, AL, AR, k }) => {
       // colletto del cappotto alzato dietro al collo
       add(upper, loft([{ y: 0.43 * k, rx: 0.12 * k, rz: 0.1 * k }, { y: 0.5 * k, rx: 0.085 * k, rz: 0.088 * k }], 20, { a0: 1.9, a1: Math.PI * 2 - 1.9 }), mat(C.cappottoDk, { side: THREE.DoubleSide }));
-      // distintivo in un portafoglio di pelle, nella mano (di base nascosto)
+      // distintivo in un portafoglio di pelle (di base nascosto): sta davanti alle dita, il pollice lo ferma sul davanti (posa della mano «tessera»)
       const d = new THREE.Group(); d.visible = false; AL.gH.add(d);
-      add(d, new THREE.BoxGeometry(0.075, 0.105, 0.008), mat('#3A2416'), V(0, -0.075, -0.03));
+      add(d, new THREE.BoxGeometry(0.084, 0.125, 0.008), mat('#3A2416'), V(0, -0.1425, -0.02));
       const sc = add(d, new THREE.PlaneGeometry(0.062, 0.078), mat(0xffffff, { map: tex(128, 160, (c, w, h) => { c.clearRect(0, 0, w, h); c.fillStyle = C.oro; c.beginPath(); c.moveTo(64, 8); c.lineTo(112, 26); c.lineTo(108, 92); c.quadraticCurveTo(100, 136, 64, 154); c.quadraticCurveTo(28, 136, 20, 92); c.lineTo(16, 26); c.closePath(); c.fill();
         c.strokeStyle = '#8A6A1E'; c.lineWidth = 5; c.stroke(); c.fillStyle = '#8A6A1E'; c.beginPath(); for (let i = 0; i < 10; i++) { const a = (i / 10) * Math.PI * 2 - Math.PI / 2, rr = i % 2 ? 11 : 26; c.lineTo(64 + Math.cos(a) * rr, 72 + Math.sin(a) * rr); } c.closePath(); c.fill();
-        c.fillStyle = '#5E4712'; c.font = '700 15px Display'; c.textAlign = 'center'; c.fillText('POLIZIA', 64, 124); }), transparent: true }), V(0, -0.075, -0.0345)); sc.rotation.set(0, Math.PI, Math.PI);
+        c.fillStyle = '#5E4712'; c.font = '700 15px Display'; c.textAlign = 'center'; c.fillText('POLIZIA', 64, 124); }), transparent: true }), V(0, -0.152, -0.0245)); sc.rotation.set(0, Math.PI, Math.PI);
       upper.userData.distintivo = d;
       // nell'altra mano: il fazzoletto bianco, la radio, il bagliore di una lama (solo un luccichio: la violenza resta lontana)
       const fz = add(AR.gH, sfera(1, 12), mat('#F3F1EA'), V(0, -0.085, -0.035), [0.062, 0.075, 0.03]); fz.visible = false;

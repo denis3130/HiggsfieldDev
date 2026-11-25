@@ -63,10 +63,14 @@ function zuffa(t, A) {
 }
 const aTerra = () => ({ pos: pEf, yaw: yE, cade: 1, lean: 0.3, headPitch: 0.25, gambe: { aL: 0.5, gL: 1.0, aR: 0.4, gR: 0.85 }, armL: { a: [-0.06, 0.06, 0.17], mano: 'piatta' }, armR: { a: [0.06, 0.05, 0.17], mano: 'piatta' }, blink: 1 });
 // Riva col dito alzato che conta i piani (piano = 1..4, anche con la virgola mentre sale)
+// il braccio che mostra il distintivo allo spioncino: palmo verso la porta, il portafoglio davanti alle dita
+const DIST_SU = { a: [-0.1, 0.33, 0.33], gomito: [-1, -0.8, -0.1], dita: [0, 1, 0.05], dorso: [0, 0, -1], mano: 'tessera' };
 function conta(pos, yaw, piano, colpetto) {
-  const sp = loc(pos, yaw, [0.2, 1.5, 0.02]), tg = [WX, 3 * piano + 1.5, 0.2], d = [tg[0] - sp[0], tg[1] - sp[1], tg[2] - sp[2]], l = Math.hypot(...d);
-  const dir = d.map((x) => x / l);
-  return { mondo: su(sp, dir, 0.57 + 0.02 * colpetto), gomito: [0.5, -0.8, -0.3], dita: dir, dorso: [0, 1, 0], mano: 'indice' };
+  // il braccio sale a scatti verso il palazzo, un piano alla volta: dall'alto si deve vedere il dito che sale (se puntasse dritto alla finestra,
+  // cioè alla camera, sparirebbe di scorcio), quindi l'alzata va da 52 a 85 gradi
+  const sp = loc(pos, yaw, [0.2, 1.5, 0.02]), az = verso(sp, FIN), el = (52 + 11 * (piano - 1)) * Math.PI / 180;
+  const dir = [Math.sin(az) * Math.cos(el), Math.sin(el), Math.cos(az) * Math.cos(el)];
+  return { mondo: su(sp, dir, 0.5 + 0.02 * colpetto), gomito: [0.5, -0.8, -0.3], ditaM: dir, dorsoM: [-Math.sin(az), 0.3, -Math.cos(az)], mano: 'indice' };
 }
 
 // ------------------------------------------------------------------ la sequenza delle inquadrature
@@ -81,7 +85,7 @@ function sequenza() {
     ...zuffa(t, { tG: w(1, 'finestra'), tL: w(1, 'uccidere') + 0.1, tC: w(1, 'uccidere', 1) }) }));
   const g2 = r(2) - 0.12;
   sc(g2, (t) => { const bussa = [0.75, 1.0, 1.25].reduce((m, x) => Math.max(m, bump(t, g2 + x, 0.11)), 0), al = E.outCubic(prog(t, w(2, 'ha') - 0.1, w(2, 'distintivo')));
-    const giu = { a: [-0.253, -0.21, 0.035], gomito: [-0.6, -0.3, -0.75], dita: [0, -1, 0.05], dorso: [0, 0, 1], mano: 'rilassata' }, suD = { a: [-0.118, 0.39, 0.33], gomito: [-1, -0.8, -0.1], dita: [0, 1, 0.05], dorso: [0, 0, -1], mano: { dita: [0.14, 0.12, 0.12, 0.14], pollice: 0.35, apri: 0.1 } };
+    const giu = { a: [-0.253, -0.21, 0.035], gomito: [-0.6, -0.3, -0.75], dita: [0, -1, 0.05], dorso: [0, 0, 1], mano: 'rilassata' }, suD = DIST_SU;
     return { set: 'P', id: 'pov', spioncino: 1, cam: [0, 1.56, 0.03], look: [0, 1.62, 0.8], fov: 74, isp: { pos: [0.02, 0, 0.8], yaw: Math.PI, breathe: Math.sin(t * 1.9), blink: battito(t, 21), headPitch: 0.1, open: 0.72, gazeY: -0.3, smile: 0.25 * al,
       distintivo: al > 0.05, armL: mixA(giu, suD, al), armR: prog(t, g2 + 0.5, g2 + 0.7) * (1 - prog(t, g2 + 1.4, g2 + 1.7)) > 0.01 ? { a: [0.12, 0.42, 0.4 + 0.07 * bussa], gomito: [1, -0.8, 0], dita: [0, 0.3, 1], dorso: [0, 1, 0], mano: 'pugno' } : undefined } }; });
 
@@ -108,7 +112,7 @@ function sequenza() {
   // «Non si muove più.»: tu alla finestra, la mano sulla bocca
   sc(r(8) - 0.1, (t, k) => { const m = E.outCubic(prog(t, r(8) - 0.05, r(8) + 0.4));
     return { set: 'F', id: 'tu1', pioggia: 0.7, cucina: 1, tenda: 1, cam: v3([WX - 0.4, FY + 1.74, 2.3], [WX - 0.3, FY + 1.73, 2.05], io(k)), look: [WX + 0.03, FY + 1.66, -0.5], fov: 22,
-      tu: tuFin(t, { fear: 1, browUp: 0.6, mouth: 0.25 * (1 - m), armL: m > 0.02 ? { a: v3([-0.2, 0.0, 0.1], [-0.085, 0.5, 0.135], m), gomito: [-0.8, -0.8, 0.1], dita: [1, 0.28, 0.05], dorso: [0, 0.1, 1], mano: { dita: [0.1, 0.1, 0.12, 0.16], pollice: 0.3, apri: 0 } } : undefined }) }; });
+      tu: tuFin(t, { fear: 1, browUp: 0.6, mouth: 0.25 * (1 - m), armL: m > 0.02 ? { a: v3([-0.2, 0.0, 0.1], [-0.085, 0.458, 0.146], m), gomito: [-0.8, -0.8, 0.1], dita: [1, 0.2, 0.05], dorso: [0, 0.1, 1], mano: { dita: [0.1, 0.1, 0.12, 0.16], pollice: 0.3, apri: 0 } } : undefined }) }; });
   sc(r(9) - 0.1, (t, k) => ({ set: 'F', id: 'intorno', pov: 1, pioggia: 1, tenda: 1, tu: lontano, cam: CW, look: su([3.3, 1.2, 13.8], scuote(t), 0.4), fov: lerp(8.2, 7.2, io(k)), elena: aTerra(),
     riva: { pos: pRf, yaw: yR + 0.15, breathe: Math.sin(t * 1.7), headPitch: 0.42 - 0.34 * prog(t, r(9) + 0.2, r(9) + 0.7), headYaw: M.kf(t, [[r(9) + 0.3, 0], [w(9, 'intorno') + 0.25, -1.0], [w(9, 'calmo') + 0.2, 0.95], [rf(9), 0.15]], io), open: 0.7,
       armR: { a: v3([0.16, 0.08, 0.2], [0.253, -0.21, 0.035], io(prog(t, r(9), r(9) + 0.8))), mano: 'pugno' } } }));
@@ -136,7 +140,7 @@ function sequenza() {
   sc(chiude, (t, k, s) => { const c = 1 - io(prog(t, chiude + 0.25, rf(11) + 0.3)), th = 1.2 * c, bx = AUTO[0] - 1.3 - 0.8 * Math.cos(th), by = 0.915 + 0.8 * Math.sin(th);
     return { set: 'F', id: 'rec3', rec: { sec: sec(t), zoom: '4,0x' }, pioggia: 0.6, tenda: 1, tu: lontano, cofano: c, cam: CW, look: su([BAULE[0] + 0.3, 1.05, zB], scuote(t, 1.3), 1), fov: 8.6, elena: { nascosta: true },
       riva: { pos: [BAULE[0] - 0.2, 0, zB + 0.02], yaw: Math.PI / 2, lean: 0.12 + 0.2 * (1 - c), headPitch: 0.2, breathe: Math.sin(t * 2.4),
-        armL: { mondo: [bx - 0.03, by + 0.03, zB - 0.26], gomito: [-0.8, -0.6, -0.2], dita: [0.6, 0.6, 0], dorso: [0, 1, 0], mano: 'piatta' }, armR: { mondo: [bx - 0.03, by + 0.03, zB + 0.26], gomito: [0.8, -0.6, -0.2], dita: [0.6, 0.6, 0], dorso: [0, 1, 0], mano: 'piatta' } } }; });
+        armL: { mondo: [bx - 0.03, by + 0.03, zB - 0.26], gomito: [-0.8, -0.6, -0.2], ditaM: [0.8, 0.5, 0], dorsoM: [-0.5, 0.8, 0], mano: 'piatta' }, armR: { mondo: [bx - 0.03, by + 0.03, zB + 0.26], gomito: [0.8, -0.6, -0.2], ditaM: [0.8, 0.5, 0], dorsoM: [-0.5, 0.8, 0], mano: 'piatta' } } }; });
   // il fazzoletto sulla guancia; poi alza la testa
   const pFz = [BAULE[0] - 0.55, 0, zB - 0.2], su13 = r(13) + 0.05;
   const fazz = (t, x = {}) => ({ pos: pFz, yaw: yFin(pFz) - 0.2, breathe: Math.sin(t * 1.9), blink: battito(t, 21), fazzoletto: true, open: 0.7, ...x });
@@ -159,10 +163,10 @@ function sequenza() {
     return { set: 'F', id: 'conta', pov: 1, pioggia: 1, tenda: 1, tu: lontano, cam: CW, look: su([pC[0], 1.42, pC[2]], scuote(t, 0.7), 0.5), fov: lerp(7.4, 6.4, io(k)), elena: { nascosta: true },
       riva: { pos: pC, yaw: yC, breathe: Math.sin(t * 1.7), blink: battito(t, 21), headPitch: -0.66, gazeY: 0.4, lean: -0.06, open: 0.72,
         armR: al < 1 ? (al > 0.02 ? { ...cn, mondo: v3(loc(pC, yC, [0.26, 0.86, 0.06]), cn.mondo, al) } : undefined) : cn } }; });
-  sc(r(16) - 0.1, (t, k) => { const al = io(prog(t, r(16) + 0.1, w(16, 'labbra') + 0.1)), cn = conta(pC, yC, 4, 0), bocca = loc(pC, yC, [0.03, 1.1025 + 0.445, 0.13]);
+  sc(r(16) - 0.1, (t, k) => { const al = io(prog(t, r(16) + 0.1, w(16, 'labbra') + 0.1)), cn = conta(pC, yC, 4, 0), bocca = loc(pC, yC, [-0.014, 1.1025 + 0.492, 0.118]);
     return { set: 'F', id: 'zitto', pov: 1, pioggia: 1, tenda: 1, tu: lontano, cam: CW, look: su([pC[0], 1.55, pC[2]], scuote(t, 0.6), 0.5), fov: lerp(6.0, 4.6, io(k)), elena: { nascosta: true },
       riva: { pos: pC, yaw: yC, breathe: Math.sin(t * 1.7), headPitch: -0.66, gazeY: 0.4, lean: -0.06, open: 0.72, smile: 0.35 * prog(t, rf(16), rf(16) + 0.5),
-        armR: { mondo: v3(cn.mondo, bocca, al), gomito: [0.6, -0.8, 0.1], dita: v3(cn.dita, [0, 1, -0.12], al), dorso: v3([0, 1, 0], [0, 0.1, 1], al), mano: 'indice' } } }; });
+        armR: al < 0.5 ? { ...cn, mondo: v3(cn.mondo, bocca, al) } : { mondo: v3(cn.mondo, bocca, al), gomito: [0.6, -0.8, 0.1], dita: [0, 1, -0.12], dorso: [0, 0.1, 1], mano: 'indice' } } }; });
 
   // --- spegni la luce, chiami il 112
   const buio = w(17, 'luce') + 0.12;
@@ -192,7 +196,7 @@ function sequenza() {
     return { set: 'I', id: 'viso', porta: false, cam: v3([0.12, 1.675, -3.1], [0.07, 1.675, -2.96], kk), look: [0, 1.668, -2.0], fov: 27, occhio: 0.25 + 0.3 * kk, telefono: 1, piedi: 1,
       tu: { pos: [0, 0, lerp(-1.93, -2.12, kk)], yaw: Math.PI, breathe: Math.sin(t * 3.2), fear: 0.35 + 0.35 * kk, browUp: 0.4, mouth: 0.1, blink: bump(t, cutA + 0.5, 0.09), lean: 0.06 * kk, headPitch: 0.05 * kk,
         armR: { a: [0.13, 0.03, 0.2], gomito: [1, -0.5, -0.4], dita: [0, 0.6, 0.6], dorso: [0, -0.5, 1], mano: 'presa' } } }; });
-  const distSu = { a: [-0.118, 0.39, 0.33], gomito: [-1, -0.8, -0.1], dita: [0, 1, 0.05], dorso: [0, 0, -1], mano: { dita: [0.14, 0.12, 0.12, 0.14], pollice: 0.35, apri: 0.1 } };
+  const distSu = DIST_SU;
   const riposoL = { a: [-0.253, -0.21, 0.035], gomito: [-0.6, -0.3, -0.75], dita: [0, -1, 0.05], dorso: [0, 0, 1], mano: 'rilassata' };
   sc(cutB, (t) => { const giu = io(prog(t, w(25, 'cappotto') - 0.3, w(25, 'scuro', 1) + 0.2)), zoom = E.inOutCubic(prog(t, w(25, 'guancia') - 0.5, w(25, 'freschi', 1) + 0.15)), fine = io(prog(t, rf(25) + 0.2, rf(25) + 1.2));
     const arriva = E.outCubic(prog(t, cutB, cutB + 0.5)), guarda = io(prog(t, cutB + 0.3, cutB + 0.9));
@@ -321,7 +325,10 @@ function carte(ctx, t) {
     ctx.strokeText('Scrivi A o B nei commenti', W / 2 - 20, 1556); ctx.fillStyle = '#fff'; ctx.fillText('Scrivi A o B nei commenti', W / 2 - 20, 1556); ctx.restore(); }
 }
 // un fotogramma di un set in una tela piccola (per le carte e la miniatura del video)
-function scatto(set, o, wd = 540, luce = 1) { const cv = document.createElement('canvas'); cv.width = wd; cv.height = Math.round(wd * H / W); const c = cv.getContext('2d'); c.fillStyle = '#000'; c.fillRect(0, 0, cv.width, cv.height); c.scale(wd / W, wd / W); if (luce !== 1) c.filter = `brightness(${luce})`; G.renderSet(c, set, 0, 0, o); return cv; }
+// (con hg l'immagine è larga: la camera prende quelle proporzioni e il fotogramma viene schiacciato nella tela, senza usare un grandangolo)
+function scatto(set, o, wd = 540, luce = 1, hg = 0) { const cv = document.createElement('canvas'); cv.width = wd; cv.height = hg || Math.round(wd * H / W); const c = cv.getContext('2d'); c.fillStyle = '#000'; c.fillRect(0, 0, cv.width, cv.height);
+  if (hg) set.camera.aspect = wd / hg; c.scale(wd / W, cv.height / H); if (luce !== 1) c.filter = `brightness(${luce})`; G.renderSet(c, set, 0, 0, o);
+  if (hg) { set.camera.aspect = W / H; set.camera.updateProjectionMatrix(); } return cv; }
 
 M.film({
   fonts: [font(74, 800, 'Display'), font(74, 500, 'UI')],
@@ -336,8 +343,10 @@ M.film({
     const zB = AUTO[2], bx = AUTO[0] - 2.15;
     IMG.video = scatto(SF, { cam: CW, look: [bx + 0.2, 0.9, zB], fov: 9.5, tenda: 1, tu: lontano, cofano: 1, elena: { pos: [bx - 0.62, 0.82, zB], yaw: -Math.PI / 2, sdraiata: 1, blink: 1, gambe: { gL: 1.25, gR: 1.12 } },
       riva: { pos: [bx - 0.52, 0, zB + 0.04], yaw: Math.PI / 2, lean: 0.5, headPitch: 0.3, armL: { mondo: [bx - 0.22, 0.78, zB - 0.11], mano: 'presa' }, armR: { mondo: [bx - 0.22, 0.78, zB + 0.11], mano: 'presa' } } });
-    IMG.cartaA = scatto(SI, { cam: [0.64, 1.2, -1.7], look: [0.16, 1.1, -2.56], fov: 85, piedi: 1, telefono: 1, occhio: 0.9, tu: { pos: [-0.32, 0, -2.02], yaw: Math.PI - 0.35, lean: 0.12, armL: { mondo: [0.34, 1.05, -2.44], gomito: [-0.2, -0.9, -0.3], dita: [0.3, -0.1, -1], dorso: [0, 1, 0], mano: 'presa' }, armR: { a: [0.13, 0.2, 0.26], gomito: [1, -0.7, -0.2], dita: [0, 0.92, 0.25], dorso: [0, 0, 1], mano: 'presa' } } }, 860, 2.0);
-    IMG.cartaB = scatto(SF, { cam: [4.5, FY + 1.5, 0.2], look: [4.2, FY - 3.2, 6.5], fov: 85, cucina: 0, riva: lontano, elena: { nascosta: true }, tu: lontano }, 860, 1.7);
+    // carta A: la tua mano che impugna la maniglia, vista da sopra la spalla (direzioni della mano nel verso della scena: sei girato verso la porta)
+    IMG.cartaA = scatto(SI, { cam: [0.075, 1.23, -2.16], look: [0.255, 1.0, -2.46], fov: 34, piedi: 1, telefono: 0, occhio: 0.9, amb: 0.2, fronte: 0.14, luce: { pos: [-0.1, 1.45, -2.2], k: 1.1, colore: '#FFD9A8' },
+      tu: { pos: [0.08, 0, -1.96], yaw: Math.PI, lean: 0.14, headPitch: 0.3, armL: { mondo: [0.3, 1.058, -2.375], gomitoM: [0.5, -0.8, 0.4], ditaM: [0, -0.12, -1], dorsoM: [0, 1, -0.12], mano: 'leva' } } }, 860, 1, 480);
+    IMG.cartaB = scatto(SF, { cam: [4.5, FY + 1.5, 0.2], look: [4.2, FY - 3.2, 6.5], fov: 30, cucina: 0, riva: lontano, elena: { nascosta: true }, tu: lontano }, 860, 1.7, 480);
   },
   draw(ctx, u, t) {
     const o = shot(t);

@@ -4,6 +4,7 @@
 //  - pianerottoloSet(): il pianerottolo visto dallo spioncino: luce gialla delle scale, muri a due colori, la porta dell'interno 11,
 //    l'ascensore, la ringhiera. Dentro c'è l'ispettore.
 // update(t, u, o): { cam, look, fov, roll, tu | isp: {...posa}, piedi 0..1, colpo 0..1 (la porta che vibra), ... }
+// ingressoSet, per le immagini delle carte: amb e fronte (luce di base, 0.2 e 0.1), luce: { pos, k, colore } (una luce in più vicino al soggetto)
 import * as G from '../lib/gl.js';
 import * as M from '../lib/motion.js';
 import { THREE, V, rnd, tex, mat, piatto as basic, sfera, add, tra, luci, ombre, alone, PI } from './stile.js';
@@ -24,7 +25,8 @@ function porta(p, { numero = null, colore = '#4A3226' } = {}) {
   const tel = mat(mix(colore, '#000000', 0.45));
   add(g, new THREE.BoxGeometry(1.06, 0.1, 0.1), tel, V(0, 2.13, 0)); for (const s of [-1, 1]) add(g, new THREE.BoxGeometry(0.09, 2.18, 0.1), tel, V(s * 0.495, 1.09, 0));
   const ott = mat('#C9A24A');
-  add(g, new THREE.TorusGeometry(0.018, 0.006, 8, 20), ott, V(0, 1.52, 0.034)); add(g, sfera(0.03, 14), ott, V(0.36, 1.02, 0.05)); add(g, new THREE.BoxGeometry(0.05, 0.16, 0.012), ott, V(0.36, 1.0, 0.034));
+  add(g, new THREE.TorusGeometry(0.018, 0.006, 8, 20), ott, V(0, 1.52, 0.034)); add(g, new THREE.BoxGeometry(0.05, 0.16, 0.012), ott, V(0.36, 1.0, 0.034));
+  tra(g, V(0.36, 1.02, 0.034), V(0.36, 1.02, 0.087), 0.014, 0.012, ott); tra(g, V(0.365, 1.02, 0.085), V(0.225, 1.02, 0.085), 0.0115, 0.0105, ott);          // maniglia a leva (verso il centro della porta)
   if (numero) add(g, new THREE.PlaneGeometry(0.16, 0.09), mat(0xffffff, { map: tex(128, 72, (c, w, h) => { c.fillStyle = '#C9A24A'; c.fillRect(0, 0, w, h); c.fillStyle = '#3A2A12'; c.font = '700 44px Display'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(numero, w / 2, h / 2 + 3); }) }), V(0, 1.72, 0.034));
   return g;
 }
@@ -75,6 +77,7 @@ export function ingressoSet() {
   const lPorta = new THREE.PointLight('#FFB25E', 0.45, 3.2, 1.6); lPorta.position.set(0, 0.25, -2.3); scene.add(lPorta);
   const lTel = new THREE.PointLight('#CFE0FF', 0.3, 1.6, 1.5); scene.add(lTel);
   const lOcchio = new THREE.PointLight('#FFC27A', 0, 1.4, 1.5); lOcchio.position.set(0.02, 1.68, -2.5); scene.add(lOcchio);
+  const lExtra = new THREE.PointLight('#FFE6C4', 0, 2.4, 1.2); scene.add(lExtra);          // una luce in più da mettere dove serve (le immagini delle carte)
   const T = testimone(); scene.add(T.group);
   // il telefono nella sua mano (schermo acceso verso di lui)
   const tel = new THREE.Group(); T.AR.gH.add(tel);
@@ -87,6 +90,8 @@ export function ingressoSet() {
       piedi.forEach((g) => { g.position.x = g.userData.s * 0.1 + (1 - k) * 0.75 + (o.piediDx || 0); g.visible = k > 0.01; g.children[1].material.opacity = k; });
       pg.position.z = 0.012 * (o.colpo || 0); pg.rotation.x = 0.004 * (o.colpo || 0);
       P.visible = o.porta !== false; alOcchio.visible = P.visible; lOcchio.intensity = o.occhio || 0;
+      L.A.intensity = (o.amb ?? 0.2) * PI; L.F.intensity = (o.fronte ?? 0.1) * PI;
+      if (o.luce) { lExtra.position.set(...o.luce.pos); lExtra.intensity = o.luce.k ?? 1; lExtra.color.set(o.luce.colore || '#FFE6C4'); } else lExtra.intensity = 0;
       T.pose(o.tu || { pos: [0, 0, -0.9], yaw: Math.PI });
       T.AR.gH.getWorldPosition(tmp); lTel.position.set(tmp.x, tmp.y + 0.08, tmp.z - 0.05); lTel.intensity = 0.3 * (o.telefono ?? 1);
       tel.visible = (o.telefono ?? 1) > 0;

@@ -8,7 +8,7 @@
 // Tutto è una funzione pura dei parametri: nessuno stato tra un fotogramma e l'altro.
 import * as G from '../lib/gl.js';
 import * as M from '../lib/motion.js';
-import { THREE, V, DOWN, UP, rnd, tex, mat, sfera, add, segmento } from './stile.js';
+import { THREE, V, DOWN, UP, rnd, tex, mat, sfera, add, segmento, loft } from './stile.js';
 
 export const mix = (a, b, t) => '#' + new THREE.Color(a).lerp(new THREE.Color(b), t).getHexString();
 const TAU = Math.PI * 2;
@@ -314,43 +314,71 @@ export const ciocche = (base, chiaro, scuro, n = 90, seme = 5) => tex(256, 256, 
 
 // ------------------------------------------------------------------ mano
 // A riposo: polso all'origine, dita verso -y, dorso verso +z, pollice verso -x (mano del braccio a +x; l'altra è specchiata).
+// Palmo a sezioni (largo alle nocche, stretto al polso, dorso più piatto del palmo), nocche in rilievo, dita rastremate a tre falangi,
+// pollice che parte dal polso dentro il suo monte e si oppone alle dita.
+// Posa: { dita: [indice, medio, anulare, mignolo] 0..1, pollice 0 (aperto di lato) .. 1 (chiuso davanti al palmo), apri (dita allargate),
+//         k: [nocca, falange, punta] (quanto piega ogni giuntura, in radianti a dita = 1), fletti (pieghe del pollice, se diverse da pollice),
+//         pv: [metacarpo, falange, punta] (le direzioni dei tre pezzi del pollice, nello spazio della mano, per le prese precise), pb (verso dell'unghia) }
 const POSE_MANO = {
-  rilassata: { dita: [0.2, 0.26, 0.32, 0.4], pollice: 0.25, apri: 0.3 }, aperta: { dita: [0.03, 0.02, 0.03, 0.05], pollice: 0, apri: 1 }, piatta: { dita: [0.05, 0.05, 0.06, 0.08], pollice: 0.12, apri: 0.2 },
-  pugno: { dita: [1, 1, 1, 1], pollice: 0.9, apri: 0 }, indice: { dita: [0.02, 1, 1, 1], pollice: 0.9, apri: 0 }, presa: { dita: [0.5, 0.56, 0.6, 0.66], pollice: 0.4, apri: 0.2 }, pizzico: { dita: [0.62, 0.78, 0.86, 0.92], pollice: 0.72, apri: 0 },
+  rilassata: { dita: [0.2, 0.26, 0.32, 0.4], pollice: 0.3, apri: 0.3 }, aperta: { dita: [0.03, 0.02, 0.03, 0.05], pollice: 0, apri: 1 }, piatta: { dita: [0.05, 0.05, 0.06, 0.08], pollice: 0.14, apri: 0.15 },
+  pugno: { dita: [1, 1, 1, 1], pollice: 0.95, apri: 0 }, indice: { dita: [0.02, 1, 1, 1], pollice: 0.95, apri: 0 }, presa: { dita: [0.5, 0.56, 0.6, 0.66], pollice: 0.45, apri: 0.2 }, pizzico: { dita: [0.62, 0.78, 0.86, 0.92], pollice: 0.72, apri: 0 },
+  // le dita avvolgono una sbarra orizzontale (maniglia, ringhiera): la sbarra passa sotto le nocche, a y = -0.095 e z = -0.0245 della mano; il pollice chiude da sotto
+  // un tesserino o un portafoglio tenuto dritto contro le dita, dal lato del palmo: dita distese dietro, pollice davanti in basso
+  tessera: { dita: [0.03, 0.02, 0.03, 0.05], pollice: 1, apri: 0.05, pv: [[-0.3, -0.6, -0.74], [0.279, -0.953, 0.114], [0.35, -0.93, 0.05]], pb: [-0.2, 0, -1] },
+  leva: { dita: [0.95, 1, 1, 1], pollice: 1, apri: 0, k: [0.72, 1.62, 1.0], pv: [[-0.42, -0.62, -0.66], [-0.083, -0.639, -0.766], [0.3, -0.93, 0.05]], pb: [-0.8, 0.1, -0.3] },
 };
+const K_DITA = [1.35, 1.5, 1.1];
+const D_POLLICE = [V(-0.76, -0.64, -0.1), V(-0.3, -0.76, -0.58)], B_POLLICE = [V(-0.28, 0.12, 0.95), V(-0.88, 0.1, 0.46)];
 export function mano(skinM, nailM, s = 1) {
   const g = new THREE.Group(), h = new THREE.Group(); g.add(h); h.scale.setScalar(s);
-  add(h, sfera(1, 24), skinM, V(0, -0.046, 0), [0.04, 0.05, 0.0155]);
-  add(h, sfera(1, 16), skinM, V(-0.014, -0.032, -0.005), [0.02, 0.027, 0.0135]);
-  const X = [-0.0255, -0.0085, 0.0085, 0.0245], Y = [-0.086, -0.091, -0.088, -0.08], L = [[0.031, 0.021, 0.018], [0.034, 0.023, 0.019], [0.031, 0.021, 0.018], [0.024, 0.016, 0.015]], R = [0.0088, 0.009, 0.0086, 0.0076];
+  add(h, loft([{ y: -0.1005, rx: 0.0006, rz: 0.0003 }, { y: -0.1, rx: 0.031, rz: 0.0045, n: 2.4 }, { y: -0.097, rx: 0.0375, rzf: 0.0088, rzb: 0.0088, n: 2.8 }, { y: -0.09, rx: 0.0405, rzf: 0.0118, rzb: 0.0122, n: 3 },
+    { y: -0.075, rx: 0.042, rzf: 0.0128, rzb: 0.0146, n: 2.9 }, { y: -0.05, rx: 0.0405, rzf: 0.0138, rzb: 0.0166, n: 2.7 }, { y: -0.025, rx: 0.036, rzf: 0.0148, rzb: 0.0186, n: 2.5 },
+    { y: -0.006, rx: 0.0305, rzf: 0.0166, rzb: 0.019, n: 2.3 }, { y: 0.008, rx: 0.027, rzf: 0.017, rzb: 0.018, n: 2.1 }, { y: 0.016, rx: 0.018, rz: 0.011 }, { y: 0.0165, rx: 0.0006, rz: 0.0003 }], 40), skinM);
+  const X = [-0.0285, -0.0096, 0.0094, 0.0272], Y = [-0.0925, -0.096, -0.0935, -0.0865], L = [[0.037, 0.0235, 0.0205], [0.0405, 0.0265, 0.0215], [0.0375, 0.0245, 0.0205], [0.0295, 0.0185, 0.0185]], R = [0.0097, 0.01, 0.0095, 0.0085];
+  const RR = [1, 0.93, 0.86, 0.77];
   const Fg = X.map((x, i) => { let p = h; return L[i].map((len, j) => { const jg = new THREE.Group(); jg.position.set(j ? 0 : x, j ? -L[i][j - 1] : Y[i], 0); p.add(jg);
-    segmento(jg, len, R[i] * (1 - 0.07 * j), R[i] * (1 - 0.07 * (j + 1)), skinM, { seg: 12 });
-    if (j === 2) add(jg, sfera(1, 10), nailM, V(0, -len * 0.6, R[i] * 0.66), [R[i] * 0.7, len * 0.36, R[i] * 0.26]);
+    segmento(jg, len, R[i] * RR[j], R[i] * RR[j + 1], skinM, { seg: 14 });
+    if (!j) add(jg, sfera(1, 16), skinM, V(0, 0, 0.0028), [R[i] * 1.07, R[i] * 1.2, R[i] * 1.0]);      // la nocca
+    if (j === 2) add(jg, sfera(1, 12), nailM, V(0, -len * 0.6, R[i] * 0.5 + 0.0005), [R[i] * 0.6, len * 0.34, R[i] * 0.3]);
     p = jg; return jg; }); });
-  const t0 = new THREE.Group(); t0.position.set(-0.031, -0.03, -0.004); h.add(t0); segmento(t0, 0.03, 0.0115, 0.0105, skinM, { seg: 12 });
-  const t1 = new THREE.Group(); t1.position.y = -0.03; t0.add(t1); segmento(t1, 0.026, 0.0102, 0.0092, skinM, { seg: 12 });
-  const t2 = new THREE.Group(); t2.position.y = -0.026; t1.add(t2); segmento(t2, 0.02, 0.009, 0.008, skinM, { seg: 12 });
-  add(t2, sfera(1, 10), nailM, V(-0.0062, -0.012, 0.0015), [0.0024, 0.0075, 0.006]);
+  const t0 = new THREE.Group(); t0.position.set(-0.02, -0.019, -0.007); h.add(t0); segmento(t0, 0.041, 0.0168, 0.0132, skinM, { seg: 24 });
+  add(t0, sfera(1, 24), skinM, V(0.0065, -0.02, -0.0035), [0.0165, 0.028, 0.0158]);      // il monte del pollice
+  const t1 = new THREE.Group(); t1.position.y = -0.041; t0.add(t1); segmento(t1, 0.031, 0.0126, 0.0114, skinM, { seg: 16 });
+  const t2 = new THREE.Group(); t2.position.y = -0.031; t1.add(t2); segmento(t2, 0.0255, 0.0114, 0.0099, skinM, { seg: 16 });
+  add(t2, sfera(1, 12), nailM, V(0, -0.0155, 0.0061), [0.0068, 0.0088, 0.0036]);
+  const d = V(0, 0, 0), b = V(0, 0, 0), B = new THREE.Matrix4(), q0 = new THREE.Quaternion();
   g.userData.pose = (p = 'rilassata') => {
-    const P = typeof p === 'string' ? POSE_MANO[p] || POSE_MANO.rilassata : { ...POSE_MANO.rilassata, ...p };
-    Fg.forEach((js, i) => { const c = P.dita[i]; js[0].rotation.set(c * 1.35, 0, (i - 1.5) * 0.075 * (P.apri ?? 0.3)); js[1].rotation.x = c * 1.5; js[2].rotation.x = c * 1.1; });
-    const tc = P.pollice; t0.rotation.set(0.25 + 0.55 * tc, 0.5 * tc, -0.85 + 0.45 * tc); t1.rotation.set(0.12 + 0.5 * tc, 0, 0.25 * tc); t2.rotation.set(0.1 + 0.7 * tc, 0, 0);
+    const P = typeof p === 'string' ? POSE_MANO[p] || POSE_MANO.rilassata : { ...POSE_MANO.rilassata, ...p }, k = P.k || K_DITA;
+    Fg.forEach((js, i) => { const c = P.dita[i]; js[0].rotation.set(c * k[0], 0, (i - 1.5) * 0.075 * (P.apri ?? 0.3)); js[1].rotation.x = c * k[1]; js[2].rotation.x = c * k[2]; });
+    const tc = P.pollice, fl = P.fletti ?? tc;
+    if (P.pv) d.set(...P.pv[0]).normalize().negate(), b.set(...(P.pb || [-0.88, 0.1, 0.46])); else d.lerpVectors(D_POLLICE[0], D_POLLICE[1], tc).normalize().negate(), b.lerpVectors(B_POLLICE[0], B_POLLICE[1], tc);
+    b.addScaledVector(d, -b.dot(d)).normalize(); t0.quaternion.setFromRotationMatrix(B.makeBasis(d.clone().cross(b), d, b));
+    if (P.pv) { q0.copy(t0.quaternion).invert(); t1.quaternion.setFromUnitVectors(DOWN, d.set(...P.pv[1]).normalize().applyQuaternion(q0));
+      q0.copy(t0.quaternion).multiply(t1.quaternion).invert(); t2.quaternion.setFromUnitVectors(DOWN, d.set(...P.pv[2]).normalize().applyQuaternion(q0)); }
+    else { t1.rotation.set(0.08 + 0.75 * fl, 0, 0); t2.rotation.set(0.06 + 0.95 * fl, 0, 0); }
   };
   g.userData.pose('rilassata');
   return g;
 }
 
 // ------------------------------------------------------------------ braccio con cinematica inversa
-// o: { sx, sy, sz, L1, L2, r0, r1, r2, manica, polsino, skin, nail, mano (scala) }; side: -1 = x negativo
+// o: { sx, sy, sz, L1, L2, r0, r1, r2, manica, manica2, polsino, gomitoM, orlo, skin, nail, mano (scala), polsoZ }; side: -1 = x negativo
+// polsoZ (per gli avambracci nudi): mezzo spessore del polso; l'avambraccio si appiattisce verso la mano e ruota con lei, come quello vero.
 export function braccio(upper, side, o) {
-  const S = V(side * o.sx, o.sy, o.sz || 0), { L1, L2 } = o;
-  const gU = segmento(upper, L1, o.r0, o.r1, o.manica), gF = segmento(upper, L2, o.r1, o.r2, o.manica2 || o.manica);
+  const S = V(side * o.sx, o.sy, o.sz || 0), { L1, L2 } = o, mF = o.manica2 || o.manica;
+  const gU = segmento(upper, L1, o.r0, o.r1, o.manica);
+  let gF;
+  if (o.polsoZ) { gF = new THREE.Group(); upper.add(gF); const N = 8, rA = o.r1 * 0.94;       // il gomito è la sfera del braccio (l'avambraccio parte un filo più stretto: due superfici uguali sfarfallano)
+    add(gF, loft(Array.from({ length: N + 1 }, (_, i) => { const u = 1 - i / N, e = u * u * (3 - 2 * u), pancia = 0.0035 * Math.sin(Math.PI * Math.min(1, u * 1.6)) ** 2; return { y: -L2 * u, rx: rA + (o.r2 - rA) * u + pancia, rz: rA + (o.polsoZ - rA) * e + pancia * 0.6 }; }), 28), mF);
+    add(gF, sfera(1, 18), mF, V(0, -L2, 0), [o.r2, Math.min(o.r2, o.polsoZ) * 0.95, o.polsoZ]);
+  } else gF = segmento(upper, L2, o.r1 * 0.94, o.r2, mF, { capA: false });
   if (o.polsino) add(gF, new THREE.CylinderGeometry(o.r2 * 1.14, o.r2 * 1.2, 0.03, 20), o.polsino, V(0, -L2 + 0.012, 0));
-  if (o.gomitoM) add(gF, sfera(o.r1 * 1.03, 18), o.gomitoM);
+  if (o.gomitoM) add(gF, sfera(o.r1 * 1.03, 28), o.gomitoM);                 // maniche corte: il gomito è di pelle e la manica finisce netta poco sopra
+  if (o.orlo) add(gU, new THREE.CylinderGeometry(o.r1 * 1.085, o.r1 * 1.07, 0.014, 28), o.orlo, V(0, -L1 + 0.016, 0));
   const gH = new THREE.Group(); upper.add(gH);
   const hand = mano(o.skin, o.nail, o.mano || 1); if (side < 0) hand.scale.x = -1; gH.add(hand);
   const riposo = [side * (o.sx + 0.035), o.sy - (L1 + L2) * 0.985, (o.sz || 0) + 0.035];
-  const B = new THREE.Matrix4();
+  const B = new THREE.Matrix4(), zf = V(0, 0, 0), yf = V(0, 0, 0);
   function a(q = {}) {
     const T = V(...(q.a || riposo)), d = T.clone().sub(S), len = M.clamp(d.length(), Math.abs(L1 - L2) + 0.01, L1 + L2 - 0.003), dir = d.normalize();
     const aa = (L1 * L1 - L2 * L2 + len * len) / (2 * len), hh = Math.sqrt(Math.max(0, L1 * L1 - aa * aa));
@@ -358,9 +386,11 @@ export function braccio(upper, side, o) {
     const E = S.clone().addScaledVector(dir, aa).addScaledVector(pole, hh), Wp = S.clone().addScaledVector(dir, len);
     gU.position.copy(S); gU.quaternion.setFromUnitVectors(DOWN, E.clone().sub(S).normalize());
     const fd = Wp.clone().sub(E).normalize();
-    gF.position.copy(E); gF.quaternion.setFromUnitVectors(DOWN, fd);
     const yh = (q.dita ? V(...q.dita).normalize() : fd.clone()).negate(), zh = V(...(q.dorso || [0, 0, 1]));
     zh.addScaledVector(yh, -zh.dot(yh)); if (zh.lengthSq() < 1e-6) { zh.set(1, 0, 0); zh.addScaledVector(yh, -zh.dot(yh)); } zh.normalize();
+    // l'avambraccio gira su se stesso insieme alla mano (il lato piatto del polso segue il dorso)
+    yf.copy(fd).negate(); zf.copy(zh).addScaledVector(yf, -zh.dot(yf)); if (zf.lengthSq() < 1e-4) { zf.copy(yh).addScaledVector(yf, -yh.dot(yf)); } zf.normalize();
+    gF.position.copy(E); gF.quaternion.setFromRotationMatrix(B.makeBasis(yf.clone().cross(zf), yf, zf));
     gH.position.copy(Wp); gH.quaternion.setFromRotationMatrix(B.makeBasis(yh.clone().cross(zh), yh, zh));
     hand.userData.pose(q.mano || 'rilassata');
   }
