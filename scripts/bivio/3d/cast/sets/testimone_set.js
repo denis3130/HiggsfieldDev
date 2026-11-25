@@ -84,7 +84,7 @@ export function ingressoSet() {
     update(t, u, o = {}) {
       G.lookFrom(cam, o.cam || [0.4, 1.55, 1.3], o.look || [0, 1.0, -2.4], o.roll || 0); cam.fov = o.fov || 44; cam.updateProjectionMatrix(); L.segui(cam, o.look || [0, 1.0, -2.4]);
       const k = M.clamp(o.piedi || 0);
-      piedi.forEach((g) => { g.position.x = g.userData.s * 0.1 + (1 - k) * 0.75; g.visible = k > 0.01; g.children[1].material.opacity = k; });
+      piedi.forEach((g) => { g.position.x = g.userData.s * 0.1 + (1 - k) * 0.75 + (o.piediDx || 0); g.visible = k > 0.01; g.children[1].material.opacity = k; });
       pg.position.z = 0.012 * (o.colpo || 0); pg.rotation.x = 0.004 * (o.colpo || 0);
       P.visible = o.porta !== false; alOcchio.visible = P.visible; lOcchio.intensity = o.occhio || 0;
       T.pose(o.tu || { pos: [0, 0, -0.9], yaw: Math.PI });

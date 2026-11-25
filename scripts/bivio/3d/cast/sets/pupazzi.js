@@ -256,7 +256,7 @@ export function capelli(T, o) {
     for (let j = 0; j < h; j++) { const th = ((j + 0.5) / h) * Math.PI, sn = Math.sin(th), cs = Math.cos(th);
       for (let i = 0; i < w; i++) { const ph = ((i + 0.5) / w) * TAU;
         p.set(-Math.cos(ph) * sn, cs, Math.sin(ph) * sn).applyQuaternion(q);
-        d[(j * w + i) * 4 + 3] = Math.round(255 * M.clamp((o.limite(Math.atan2(p.x, p.z)) - Math.acos(M.clamp(p.y, -1, 1))) * 70 + 0.5));
+        const fi = Math.atan2(p.x, p.z); d[(j * w + i) * 4 + 3] = Math.round(255 * M.clamp((o.limite(fi) - Math.acos(M.clamp(p.y, -1, 1))) * (o.netto ? o.netto(fi) : 70) + 0.5));
       } }
     c.putImageData(img, 0, 0);
   });
@@ -264,6 +264,49 @@ export function capelli(T, o) {
   const sc = o.scala || 1.045, m = add(head, g, new THREE.MeshLambertMaterial({ map: t, transparent: true, alphaTest: 0.04, side: THREE.DoubleSide }), V(0, o.dy || 0, o.dz || 0), [S[0] * sc * (o.sx || 1), S[1] * sc * (o.sy || 1), S[2] * sc * (o.sz || 1)]);
   m.renderOrder = o.ordine || 2;
   return m;
+}
+// chioma scolpita: una massa unica sopra la calotta corta. Lo spessore dipende dalla direzione (volume davanti, niente ai lati) e la superficie
+// ha i solchi della pettinata, così la luce disegna le ciocche. th = angolo dalla cima, ph = 0 davanti (positivo verso +x).
+// o: { limite(ph) → fin dove arriva, spessore(th, ph) (frazione del raggio), bordo(ph) (rad in cui sale dal bordo), dir (verso della pettinata: 0 = +x, negativo = all'indietro),
+//      solchi: { k, amp }, base, chiaro, scuro, n, seme }
+export function chioma(T, o) {
+  const { head, S, k } = T, NT = 64, NP = 160, pos = [], uv = [], idx = [], be = o.dir ?? -0.4, cb = Math.cos(be), sb = Math.sin(be), so = o.solchi || { k: 40, amp: 0 };
+  for (let j = 0; j <= NT; j++) for (let i = 0; i <= NP; i++) {
+    const ph = -Math.PI + (TAU * i) / NP, lim = o.limite(ph), th = (lim * j) / NT, u = th * Math.sin(ph), v = th * Math.cos(ph), lungo = u * cb + v * sb, trav = -u * sb + v * cb;
+    const e0 = M.clamp((lim - th) / (o.bordo ? o.bordo(ph) : 0.08)), e = e0 * e0 * (3 - 2 * e0);
+    const onda = 0.5 + 0.5 * Math.sin(trav * so.k + 1.6 * Math.sin(lungo * 2.7 + 0.6) + 0.8 * Math.sin(trav * 6.1 + 1.3));
+    const sc = 1.034 + e * (o.spessore(th, ph) + so.amp * (onda - 0.5) * 2);
+    const x = Math.sin(th) * Math.sin(ph), y = Math.cos(th), z = Math.sin(th) * Math.cos(ph);
+    pos.push(x * S[0] * sc, y * S[1] * sc, z * S[2] * sc * (z < 0 ? k.back : 1)); uv.push(0.5 + trav * 0.3, 0.5 + lungo * 0.3);
+  }
+  for (let j = 0; j < NT; j++) for (let i = 0; i < NP; i++) { const a = j * (NP + 1) + i, c2 = a + NP + 1; idx.push(a, c2, a + 1, a + 1, c2, c2 + 1); }
+  const ge = new THREE.BufferGeometry(); ge.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); ge.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); ge.setIndex(idx); ge.computeVertexNormals();
+  const t = tex(1024, 1024, (c, w, h) => { c.fillStyle = o.base; c.fillRect(0, 0, w, h); const r = rnd(o.seme || 5);
+    for (let i = 0; i < (o.n || 240); i++) { const x = r() * w, y0 = r(-0.2, 0.8) * h, len = r(0.2, 0.6) * h; c.strokeStyle = r() < 0.5 ? o.scuro : o.chiaro; c.globalAlpha = r(0.18, 0.5); c.lineWidth = r(1.5, 4.5);
+      c.beginPath(); c.moveTo(x, y0); c.bezierCurveTo(x + r(-9, 9), y0 + len * 0.33, x + r(-9, 9), y0 + len * 0.66, x + r(-5, 5), y0 + len); c.stroke(); } });
+  const m = new THREE.Mesh(ge, new THREE.MeshLambertMaterial({ map: t, side: THREE.DoubleSide })); head.add(m);
+  return m;
+}
+// ciuffi in rilievo sopra la calotta: ognuno segue la curva della testa da (th, ph) a (th + dth, ph + dph) e si stacca dal cuoio capelluto.
+// th = angolo dalla cima, ph = 0 davanti (positivo verso +x). lista: [{ th, ph, dth, dph, s0, s1 (distanza dal cranio: 1 = pelle), w, h, c (indice colore) }]
+// colori: [[base, chiaro, scuro], …]
+export function ciuffi(T, { lista, colori, righe = 22 }) {
+  const { head, S, k } = T, g = new THREE.Group(); head.add(g);
+  const mats = colori.map((c, i) => new THREE.MeshLambertMaterial({ map: ciocche(c[0], c[1], c[2], righe, 11 + i * 7) }));
+  const P = (th, ph, sc) => { const x = Math.sin(th) * Math.sin(ph), y = Math.cos(th), z = Math.sin(th) * Math.cos(ph); return V(x * S[0] * sc, y * S[1] * sc, z * S[2] * sc * (z < 0 ? k.back : 1)); };
+  const NS = 12, NU = 10;
+  for (const q of lista) {
+    const C = (s) => P(q.th + q.dth * s, q.ph + q.dph * s, q.s0 + (q.s1 - q.s0) * Math.sin(Math.min(1, s / 0.8) * Math.PI / 2) ** 1.3 - (q.giu || 0) * Math.max(0, s - 0.8) / 0.2);
+    const pos = [], uv = [], idx = [];
+    for (let j = 0; j <= NS; j++) { const s = j / NS, c = C(s), t = C(Math.min(1, s + 0.02)).sub(C(Math.max(0, s - 0.02))).normalize();
+      const n = c.clone().normalize(); n.addScaledVector(t, -n.dot(t)).normalize(); const b = t.clone().cross(n).normalize();
+      const r = Math.sin(Math.PI * (0.14 + 0.86 * s)) ** 0.85;
+      for (let i = 0; i <= NU; i++) { const a = (i / NU) * TAU; pos.push(c.x + r * (Math.cos(a) * q.w * b.x + Math.sin(a) * q.h * n.x), c.y + r * (Math.cos(a) * q.w * b.y + Math.sin(a) * q.h * n.y), c.z + r * (Math.cos(a) * q.w * b.z + Math.sin(a) * q.h * n.z)); uv.push(0.15 + 0.7 * (i / NU) + (q.u || 0), s); } }
+    for (let j = 0; j < NS; j++) for (let i = 0; i < NU; i++) { const a = j * (NU + 1) + i, c2 = a + NU + 1; idx.push(a, c2, a + 1, a + 1, c2, c2 + 1); }
+    const ge = new THREE.BufferGeometry(); ge.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); ge.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); ge.setIndex(idx); ge.computeVertexNormals();
+    const m = new THREE.Mesh(ge, mats[(q.c || 0) % mats.length]); m.material.side = THREE.DoubleSide; g.add(m);
+  }
+  return g;
 }
 // texture di ciocche (per crocchie, code, ciuffi)
 export const ciocche = (base, chiaro, scuro, n = 90, seme = 5) => tex(256, 256, (c, w, h) => { c.fillStyle = base; c.fillRect(0, 0, w, h); const r = rnd(seme);

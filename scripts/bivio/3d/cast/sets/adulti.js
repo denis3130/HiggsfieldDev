@@ -4,8 +4,8 @@
 // Stesse pose degli altri personaggi: pos, yaw, lean, twist, breathe, headYaw/Pitch/Roll, armL/armR, sit, gambe + espressione.
 import * as G from '../lib/gl.js';
 import * as M from '../lib/motion.js';
-import { THREE, V, rnd, tex, mat, piatto as basic, sfera, add, loft, tra, ombre } from './stile.js';
-import { testa, capelli, braccio, gamba, chiavi, mix } from './pupazzi.js';
+import { THREE, V, rnd, tex, mat, piatto as basic, sfera, add, loft, tra, ombre, alone } from './stile.js';
+import { testa, capelli, chioma, ciuffi, braccio, gamba, chiavi, mix } from './pupazzi.js';
 
 function braccia(upper, AL, AR, p) {
   for (const [A, q] of [[AL, p.armL], [AR, p.armR]]) {
@@ -25,6 +25,7 @@ function uomo(o) {
   const sec = [[-0.1, 0.178, 0.124, 0.124, 2], [0.05, 0.167, 0.112, 0.112, 2], [0.2, 0.185 * L, 0.125, 0.118, 2.2], [0.33, 0.21 * L, 0.13, 0.12, 2.4], [0.405, 0.218 * L, 0.115, 0.115, 2.8], [0.44, 0.16 * L, 0.1, 0.1, 2], [0.462, 0.075, 0.075, 0.075, 2], [0.47, 0.055, 0.06, 0.06, 2]];
   add(upper, loft(sec.map(([y, rx, rzf, rzb, n]) => ({ y: y * k, rx: rx * k, rzf: rzf * k, rzb: rzb * k, n })), 64), o.torso);
   if (o.cappotto) add(upper, loft([{ y: -0.52 * k, rx: 0.205 * k, rz: 0.155 * k, pieghe: 0.012, nPieghe: 6 }, { y: -0.3 * k, rx: 0.192 * k, rz: 0.142 * k }, { y: -0.07 * k, rx: 0.172 * k, rz: 0.119 * k }], 48), o.cappotto);
+  if (o.cappotto) { const fondo = add(upper, new THREE.CircleGeometry(1, 28), pantM, V(0, -0.5 * k, 0), [0.2 * k, 0.15 * k, 1]); fondo.rotation.x = Math.PI / 2; fondo.material = mat(C.pant, { side: THREE.DoubleSide }); }   // il fondo del cappotto, per non vederci dentro
   tra(upper, V(0, 0.455 * k, 0.004), V(0, 0.54 * k, 0.012), 0.052 * k, 0.048 * k, mat(mix(C.skin, '#8E553F', 0.22)));
   const collo = new THREE.Group(); collo.position.set(0, 0.505 * k, 0.008); upper.add(collo);
   const T = testa(o.F); T.head.position.set(0, 0.094 * k, 0.012); T.head.scale.setScalar(k * (o.testa || 1)); collo.add(T.head);
@@ -63,11 +64,17 @@ export function testimone() {
     blush: { x: 0.047, y: -0.03, r: 0.024, color: 'rgba(205,115,95,0.16)' }, barba: 'rgba(55,38,28,0.9)', orecchie: { y: -0.012, h: 0.028, w: 0.017 } };
   const magliaT = tex(512, 512, (c, w, h) => { c.fillStyle = C.maglia; c.fillRect(0, 0, w, h); const r = rnd(8); for (let i = 0; i < 2600; i++) { c.fillStyle = `rgba(${r() < 0.5 ? '255,255,255' : '60,62,70'},${r(0.03, 0.09)})`; c.fillRect(r() * w, r() * h, r(2, 7), 1.5); }
     c.fillStyle = 'rgba(0,0,0,0.1)'; c.fillRect(0, h - 22, w, 22); });
-  const l1 = chiavi([[-3.15, 2.25], [-2.2, 2.2], [-1.85, 1.95], [-1.6, 1.56], [-1.42, 1.76], [-1.2, 1.6], [-0.98, 1.42], [-0.72, 1.04], [-0.4, 0.95], [0, 0.94], [0.4, 0.98], [0.72, 1.06], [0.98, 1.42], [1.2, 1.6], [1.42, 1.76], [1.6, 1.56], [1.85, 1.95], [2.2, 2.2], [3.15, 2.25]]);
-  const l2 = chiavi([[-3.15, 1.0], [-1.7, 0.9], [-1.2, 0.96], [-0.8, 0.98], [-0.35, 1.06], [0.1, 1.1], [0.45, 1.04], [0.75, 1.0], [1.1, 0.94], [1.7, 0.88], [3.15, 1.0]]);
+  // capelli: lati e nuca corti con la sfumatura, sopra ciuffi in rilievo pettinati di lato (dalla riga a sinistra di chi guarda) con un po' di volume davanti
+  const l1 = chiavi([[-3.15, 2.25], [-2.2, 2.2], [-1.85, 1.95], [-1.6, 1.56], [-1.42, 1.76], [-1.2, 1.6], [-0.98, 1.42], [-0.74, 1.02], [-0.45, 0.93], [0, 0.97], [0.45, 0.93], [0.74, 1.02], [0.98, 1.42], [1.2, 1.6], [1.42, 1.76], [1.6, 1.56], [1.85, 1.95], [2.2, 2.2], [3.15, 2.25]]);
+  const pettina = (T) => {
+    capelli(T, { polo: [0.2, 0.85, -0.5], scala: 1.03, limite: l1, netto: (f) => { const a = Math.abs(f); return a < 1.0 ? 70 : a > 1.5 ? 9 : 70 - 61 * (a - 1.0) / 0.5; }, base: C.capelli, chiaro: '#4A3728', scuro: '#17100C', n: 700, seme: 7 });
+    const l2 = chiavi([[0, 0.97], [0.45, 0.93], [0.72, 1.0], [1.0, 1.02], [1.4, 0.98], [1.9, 1.04], [2.5, 1.14], [3.15, 1.2]]);
+    chioma(T, { limite: (ph) => l2(Math.abs(ph)), bordo: (ph) => { const a = Math.abs(ph); return a < 0.8 ? 0.05 : a < 1.7 ? 0.1 : 0.2; }, dir: -0.45,
+      spessore: (th, ph) => 0.05 + 0.095 * Math.exp(-(((th - 0.72) / 0.36) ** 2)) * Math.exp(-(((ph - 0.18) / 0.8) ** 2)) + 0.02 * Math.exp(-((th / 0.5) ** 2)),
+      solchi: { k: 38, amp: 0.014 }, base: C.capelli, chiaro: '#4E3A2B', scuro: '#17100C', n: 260, seme: 9 });
+  };
   return uomo({ k: 1, C, F, torso: mat(0xffffff, { map: magliaT }), manica: mat(C.maglia), manica2: mat(C.skin), polsino: null,
-    capelli: (T) => { capelli(T, { polo: [0.25, 0.8, -0.55], scala: 1.035, limite: l1, base: C.capelli, chiaro: '#55402F', scuro: '#17100C', n: 700, seme: 7 });
-      capelli(T, { polo: [0.3, 0.75, -0.6], scala: 1.1, sy: 1.03, limite: (ph) => l2(ph) + 0.05 * Math.sin(ph * 6.3 + 0.5) + 0.035 * Math.sin(ph * 13 + 2), base: '#34271F', chiaro: '#5E4737', scuro: '#1B130E', n: 560, seme: 9, ordine: 3 }); },
+    capelli: pettina,
     extra: ({ upper, k }) => { const cl = add(upper, new THREE.TorusGeometry(0.054 * k, 0.007 * k, 10, 36), mat(C.magliaDk), V(0, 0.463 * k, 0.008)); cl.rotation.x = Math.PI / 2 + 0.2; cl.scale.set(1.08, 1, 1); } });
 }
 
@@ -93,7 +100,7 @@ export function ispettore({ guanti = false } = {}) {
   const lim = chiavi([[0, 0.82], [0.25, 0.76], [0.52, 0.6], [0.78, 0.84], [1.0, 1.36], [1.2, 1.56], [1.42, 1.7], [1.6, 1.5], [1.85, 1.95], [2.2, 2.2], [3.15, 2.22]]);
   return uomo({ k: 1.05, largo: 1.06, C, F, torso: mat(0xffffff, { map: cappT }), manica: capM, manica2: capM, polsino: capD, cappotto: mat(C.cappotto, { side: THREE.DoubleSide }), guanti: guanti ? '#17171A' : null,
     capelli: (T) => capelli(T, { polo: [0.15, 0.85, -0.5], scala: 1.03, limite: (ph) => lim(Math.abs(ph)), base: '#6E6C69', chiaro: '#A9A6A1', scuro: '#3B3A38', n: 760, seme: 15 }),
-    extra: ({ upper, AL, k }) => {
+    extra: ({ upper, AL, AR, k }) => {
       // colletto del cappotto alzato dietro al collo
       add(upper, loft([{ y: 0.43 * k, rx: 0.12 * k, rz: 0.1 * k }, { y: 0.5 * k, rx: 0.085 * k, rz: 0.088 * k }], 20, { a0: 1.9, a1: Math.PI * 2 - 1.9 }), mat(C.cappottoDk, { side: THREE.DoubleSide }));
       // distintivo in un portafoglio di pelle, nella mano (di base nascosto)
@@ -103,6 +110,44 @@ export function ispettore({ guanti = false } = {}) {
         c.strokeStyle = '#8A6A1E'; c.lineWidth = 5; c.stroke(); c.fillStyle = '#8A6A1E'; c.beginPath(); for (let i = 0; i < 10; i++) { const a = (i / 10) * Math.PI * 2 - Math.PI / 2, rr = i % 2 ? 11 : 26; c.lineTo(64 + Math.cos(a) * rr, 72 + Math.sin(a) * rr); } c.closePath(); c.fill();
         c.fillStyle = '#5E4712'; c.font = '700 15px Display'; c.textAlign = 'center'; c.fillText('POLIZIA', 64, 124); }), transparent: true }), V(0, -0.075, -0.0345)); sc.rotation.set(0, Math.PI, Math.PI);
       upper.userData.distintivo = d;
+      // nell'altra mano: il fazzoletto bianco, la radio, il bagliore di una lama (solo un luccichio: la violenza resta lontana)
+      const fz = add(AR.gH, sfera(1, 12), mat('#F3F1EA'), V(0, -0.085, -0.035), [0.062, 0.075, 0.03]); fz.visible = false;
+      const rd = new THREE.Group(); rd.visible = false; AR.gH.add(rd);
+      add(rd, new THREE.BoxGeometry(0.062, 0.13, 0.034), mat('#3B3F47'), V(0, -0.125, -0.04)); add(rd, new THREE.CylinderGeometry(0.006, 0.006, 0.1, 8), mat('#16181C'), V(0.02, -0.235, -0.04)); add(rd, sfera(0.008, 8), basic('#FF3B30'), V(-0.018, -0.175, -0.058));
+      const lama = new THREE.Sprite(new THREE.SpriteMaterial({ map: alone(), color: '#FFFFFF', transparent: true, depthWrite: false, depthTest: false, blending: THREE.AdditiveBlending })); lama.position.set(0, -0.2, -0.03); lama.scale.set(0.42, 0.42, 1); lama.visible = false; AR.gH.add(lama);
+      Object.assign(upper.userData, { fazzoletto: fz, radio: rd, lama });
     },
-    posa: (p, { upper }) => { upper.userData.distintivo.visible = !!p.distintivo; } });
+    posa: (p, { upper }) => { const u = upper.userData; u.distintivo.visible = !!p.distintivo; u.fazzoletto.visible = !!p.fazzoletto; u.radio.visible = !!p.radio; u.lama.visible = (p.lama || 0) > 0.01; u.lama.material.opacity = M.clamp(p.lama || 0); } });
+}
+
+// ------------------------------------------------------------------ ELENA MARCHI (si vede solo da lontano, nel parcheggio): cappotto rosso, capelli lunghi, borsa a tracolla
+export function elena() {
+  const C = { skin: '#E3B596', pant: '#1E1F26', scarpa: '#16161A', suola: '#0C0C0E', cappotto: '#B5252C', cappottoDk: '#861A20', capelli: '#5E3F26' };
+  const F = { S: [0.076, 0.11, 0.092], forma: { jaw: 0.3, jawP: 1.7, cheek: 0.02, chinIn: 0.1 }, skin: C.skin, ombra: '#C99072', linea: '#96604C',
+    eye: { x: 0.031, y: 0.004, w: 0.0165, h: 0.0105, hl: 0.005, tilt: 0.06, ir: 0.0068, iris: '#5A4632', lash: '#221612', lashW: 0.0024, ala: true, open0: 0.9 },
+    brow: { dx: 0.001, y: 0.021, len: 0.034, arch: 0.004, thick: 0.004, t0: 1, t1: 0.45, color: '#4E3520' },
+    nose: { tipo: 'vero', y: -0.027, w: 0.0098, h: 0.0125, d: 0.013, ombra: 0.25 },
+    mouth: { y: -0.062, w: 0.02, lip: '#B8545A', lipA: 0.85, line: '#7A3036', lineW: 0.0013, lipU: 0.002, lipL: 0.0034 },
+    blush: { x: 0.045, y: -0.03, r: 0.024, color: 'rgba(225,120,110,0.28)' }, orecchie: { y: -0.012, h: 0.024, w: 0.014 } };
+  const capT = tex(512, 512, (c, w, h) => { c.fillStyle = C.cappotto; c.fillRect(0, 0, w, h);
+    c.fillStyle = '#2A2B31'; c.beginPath(); c.moveTo(w / 2 - 44, 0); c.lineTo(w / 2 + 44, 0); c.lineTo(w / 2, 150); c.closePath(); c.fill();                 // maglia scura sotto
+    c.strokeStyle = C.cappottoDk; c.lineWidth = 15; c.lineJoin = 'round'; c.beginPath(); c.moveTo(w / 2 - 52, 0); c.lineTo(w / 2, 158); c.lineTo(w / 2 + 52, 0); c.stroke();
+    c.lineWidth = 5; c.beginPath(); c.moveTo(w / 2 + 4, 158); c.lineTo(w / 2 + 4, h); c.stroke(); c.fillStyle = C.cappottoDk; c.fillRect(0, 372, w, 26);    // cintura
+    c.fillStyle = '#3A0D10'; for (const y of [210, 300]) { c.beginPath(); c.arc(w / 2 - 14, y, 7, 0, 7); c.fill(); } });
+  const capM = mat(C.cappotto), capD = mat(C.cappottoDk), hairM = mat(C.capelli);
+  const lim = chiavi([[0, 0.98], [0.5, 0.96], [0.8, 1.2], [1.05, 1.95], [1.4, 2.35], [3.15, 2.55]]);
+  return uomo({ k: 0.93, largo: 0.84, C, F, torso: mat(0xffffff, { map: capT }), manica: capM, manica2: capM, polsino: capD, cappotto: mat(C.cappotto, { side: THREE.DoubleSide }),
+    capelli: (T) => { capelli(T, { polo: [-0.2, 0.9, -0.4], scala: 1.05, limite: (ph) => lim(Math.abs(ph)), base: C.capelli, chiaro: '#8A6240', scuro: '#3A2616', n: 700, seme: 31 });
+      add(T.head, sfera(1, 22), hairM, V(0, -0.085, -0.05), [0.086, 0.16, 0.058]); },
+    extra: ({ upper, k }) => { const bg = mat('#3B2A1E');
+      add(upper, new THREE.BoxGeometry(0.06, 0.2, 0.26), bg, V(-0.21 * k, -0.12 * k, 0.02)); tra(upper, V(-0.2 * k, -0.02 * k, 0.03), V(0.14 * k, 0.4 * k, 0.05), 0.008, 0.008, bg); } });
+}
+
+// il telefono in mano (schermo acceso verso chi lo tiene): torna { g, schermo }
+export function telefono(P, lato = 'AR', colore = '#BFD6FF', dy = 0) {
+  const g = new THREE.Group(); P[lato].gH.add(g);
+  add(g, new THREE.BoxGeometry(0.072, 0.148, 0.009), mat('#15171B'), V(0, -0.085 + dy, -0.03));
+  const schermo = add(g, new THREE.PlaneGeometry(0.064, 0.136), basic(colore), V(0, -0.085 + dy, -0.0352)); schermo.rotation.y = Math.PI;
+  add(g, new THREE.CircleGeometry(0.011, 16), basic('#2C3038'), V(-0.018, -0.135 + dy, -0.0252)); add(g, new THREE.CircleGeometry(0.006, 12), basic('#0A0B0E'), V(-0.018, -0.135 + dy, -0.0251));   // l'obiettivo sul retro
+  return { g, schermo };
 }

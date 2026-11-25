@@ -41,7 +41,7 @@ Ogni scelta cambia l'apertura dell'episodio dopo; poi i rami si ricongiungono. N
 
 ---
 
-## Episodio 1 — La finestra accesa (bozza da approvare)
+## Episodio 1 — La finestra accesa (approvato dall'utente il 25/11; video in `scripts/bivio/3d/ep1/`)
 Alle tre di notte, dalla finestra di casa tua, vedi un uomo uccidere una donna. Dieci minuti dopo, quell'uomo bussa alla tua porta. E ha un distintivo in mano.
 Non riesci a dormire. Sei in cucina, al quarto piano, con la luce accesa, quando giù nel parcheggio qualcuno grida. Scosti la tenda.
 Sotto l'unico lampione, un uomo con un cappotto scuro tiene una donna per il braccio. Lei si divincola. Lo graffia in faccia. Poi qualcosa luccica, e lei cade. Non si muove più. L'uomo si guarda intorno. Calmo. Come chi l'ha già fatto.

@@ -134,5 +134,58 @@
   "autore": "collierhs_colinlib",
   "licenza": "CC0 1.0",
   "pagina": "https://freesound.org/people/collierhs_colinlib/sounds/588718"
+ },
+ "grido.mp3": {
+  "titolo": "Female scream 02",
+  "autore": "missozzy",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/missozzy/sounds/169811",
+  "nota": "solo il grido (da 0,25 a 1,95 s); nel mix è ovattato e lontano"
+ },
+ "tonfo.mp3": {
+  "titolo": "Body fall_01.wav",
+  "autore": "deleted_user_2104797",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/deleted_user_2104797/sounds/346695",
+  "nota": "ritaglio da 0,5 a 1,4 s"
+ },
+ "baule.mp3": {
+  "titolo": "Shutting car hatchback door inside garage (2003 Subaru Forester)",
+  "autore": "jedspear",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/jedspear/sounds/322923",
+  "nota": "ritaglio da 1,55 a 3,2 s"
+ },
+ "interruttore.mp3": {
+  "titolo": "Switch Flip #2",
+  "autore": "IanStarGem",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/IanStarGem/sounds/278204"
+ },
+ "radio_bip.mp3": {
+  "titolo": "Walkie Talkie - Roger Beep",
+  "autore": "bruce965",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/bruce965/sounds/321906"
+ },
+ "squillo.mp3": {
+  "titolo": "Ring Back Tone",
+  "autore": "NuclearTape",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/NuclearTape/sounds/475550",
+  "nota": "il primo squillo (2,3 s)"
+ },
+ "pioggia_notte.mp3": {
+  "titolo": "Light rain at night with cars passing by .wav",
+  "autore": "javierat",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/javierat/sounds/532392",
+  "nota": "ritaglio di 150 secondi (da 0:45)"
+ },
+ "pioggia_finestra.mp3": {
+  "titolo": "rain - outside window.wav",
+  "autore": "Anthousai",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Anthousai/sounds/398741"
  }
 }

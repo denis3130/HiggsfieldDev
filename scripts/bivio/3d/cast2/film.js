@@ -33,6 +33,8 @@ const SHOTS = [
   { t: { pos: [-0.26, 0, 0.05], yaw: 0.3, fear: 0.5, headYaw: 0.25 }, i: { pos: [0.27, 0, -0.05], yaw: -0.3, smile: 0.5, headYaw: -0.2 }, cam: [0.02, 1.6, 3.1], look: [0.02, 1.5, 0], fov: 30 },
   { t: { yaw: 1.5 }, cam: [0.035, 1.69, 1.0], look: [0.035, 1.675, 0], fov: 26 },
   { i: { yaw: 1.5 }, cam: [0.035, 1.775, 1.0], look: [0.035, 1.76, 0], fov: 26 },
+  { t: { yaw: 2.5 }, cam: [0, 1.7, 1.0], look: [0, 1.675, 0], fov: 26 },
+  { t: { yaw: -0.75, headPitch: 0.25 }, cam: [0, 1.82, 0.95], look: [0, 1.69, 0], fov: 26 },
 ];
 M.film({ fonts: [M.font(20, 700, 'Display')], samples: 1,
   async init() { await G.initGL({ exposure: 1.0 }); G.R.toneMapping = THREE.NoToneMapping; S = studio(); },
