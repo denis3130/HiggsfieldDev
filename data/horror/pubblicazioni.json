@@ -1,0 +1,28 @@
+{
+ "nota": "Pubblicazioni de Il Bivio sul canale Dr.. (@dope696, UC31alM1a6RoLaOowc1MxBQg) con vidIQ: un episodio al giorno alle 21:00 Europe/Rome. È il terzo caricamento vidIQ della giornata (gli altri due sono gli Short di stacappella).",
+ "episodi": [
+  {
+   "storia": "13_il_testimone",
+   "episodio": 1,
+   "titolo_episodio": "La finestra accesa",
+   "giorno": "2026-11-25",
+   "ora": "21:00",
+   "titolo": "Hai visto un omicidio. Ora l'assassino bussa alla tua porta: apri o scappi? 😨 Il Bivio #shorts",
+   "bivio": {
+    "A": "Apri e fai finta di non averlo riconosciuto",
+    "B": "Non apri e scappi dal balcone con il telefono"
+   },
+   "durata_s": 138,
+   "film": "scripts/bivio/3d/ep1",
+   "copione": "data/horror/il_testimone/ep1/episodio.json",
+   "vidiq": {
+    "upload_id": "411e87bb-73cc-4838-b1ee-8c8d769724a6",
+    "post_id": "0f3539ef-e4d8-4b9d-b2ba-c69b13f05aea",
+    "revision": "721cfac6",
+    "publication_id": "3b7d61e8-cbe9-4c7c-9ac8-f0956c80943e"
+   },
+   "stato": "bozza vidIQ pronta (pubblica, programmata per le 21:00); video consegnato all'utente alle 07:20; si pubblica nel pomeriggio se l'utente non chiede modifiche (un secondo caricamento toglierebbe uno Short a stacappella)",
+   "scelta_votata": null
+  }
+ ]
+}
