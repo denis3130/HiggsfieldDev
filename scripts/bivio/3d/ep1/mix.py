@@ -40,7 +40,7 @@ vo = f'{D}/audio/vo.wav'
 if os.path.exists(vo): suono(vo, 0, 1.0, lib=False)
 # --- ambienti: pioggia fuori, pioggia dietro il vetro in cucina, buio di fondo per tutto l'episodio
 fuori = [(0.0, g2), (r(4) - 0.1, r(18) - 0.2), (agente, r(21) - 0.25)]
-dentro = [(r(3) - 0.3, r(4) - 0.1), (r(18) - 0.2, agente)]
+dentro = [(r(3) - 0.15, r(4) - 0.1), (r(18) - 0.2, agente)]
 for a, b in fuori: suono('pioggia_notte.mp3', a, 0.9, ss=5 + a % 60, dur=b - a, filtri='lowpass=f=6000', dentro=0.25, fuori=0.3)
 for a, b in dentro: suono('pioggia_finestra.mp3', a, 0.55, dur=b - a, ciclo=True, filtri='lowpass=f=2500', dentro=0.25, fuori=0.3)
 suono('amb_slow.mp3', 0, 0.15, ss=6, dur=END, ciclo=True, dentro=1.5, fuori=1.2)

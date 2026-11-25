@@ -87,7 +87,7 @@ function sequenza() {
 
   // --- la cucina, alle 02:47
   const cK1 = [WX + 1.42, FY + 1.56, -3.5], grida = rf(3) + 0.12, pK = [WX - 0.78, FY, -1.15];
-  sc(r(3) - 0.3, (t, k) => { const beve = bump(t, r(3) + 1.5, 1.1);
+  sc(r(3) - 0.15, (t, k) => { const beve = bump(t, r(3) + 1.5, 1.1);
     return { set: 'F', id: 'cucina', interno: 1, cucina: 1, bicchiere: 1, cam: v3(cK1, [WX + 1.2, FY + 1.5, -3.2], io(k)), look: [WX - 0.5, FY + 1.12, -1.2], fov: 50,
       tu: { pos: pK, yaw: 2.2, breathe: Math.sin(t * 2.2), blink: battito(t, 5), sad: 0.3, headPitch: -0.16 * beve, armL: { a: v3([-0.1, 0.2, 0.27], [-0.05, 0.47, 0.17], io(beve)), gomito: [-0.5, -0.8, -0.3], dita: [0.2, 1, 0.15 - 0.5 * beve], dorso: [-1, 0, 0.3], mano: 'presa' } } }; });
   sc(w(3, 'quando') - 0.1, (t, k, s) => { const gira = E.outCubic(prog(t, grida, grida + 0.3)), va = io(prog(t, grida + 0.45, s.t1));
@@ -231,7 +231,7 @@ function subtitles(ctx, t) {
   for (let i = 0; i < CHUNKS.length; i++) if (t >= CHUNKS[i][0][0] - 0.05) ci = i;
   if (ci < 0) return;
   const ch = CHUNKS[ci], next = CHUNKS[ci + 1];
-  if (t > ch[ch.length - 1][1] + 0.6 && (!next || t < next[0][0] - 0.05)) return;
+  if (t > ch[ch.length - 1][1] + 0.4 && (!next || t < next[0][0] - 0.05)) return;
   const size = 74, fB = font(size, 800, 'Display'), fR = font(size, 500, 'UI');
   ctx.save(); ctx.textBaseline = 'alphabetic';
   const veil = ctx.createLinearGradient(0, 0, 0, H * 0.3); veil.addColorStop(0, 'rgba(0,0,0,0.5)'); veil.addColorStop(0.6, 'rgba(0,0,0,0.28)'); veil.addColorStop(1, 'rgba(0,0,0,0)');
@@ -351,7 +351,7 @@ M.film({
     if (o.ui === 'video') schermoVideo(ctx, t, SEQ.find((s) => t >= s.t0 && t < s.t1));
     if (o.carte) carte(ctx, t);
     subtitles(ctx, t);
-    const a = Math.max(1 - prog(t, 0, 0.5), prog(t, END - 0.7, END));
+    const a = Math.max(1 - prog(t, 0, 0.3), prog(t, END - 0.7, END));
     if (a > 0) { ctx.fillStyle = `rgba(0,0,0,${a})`; ctx.fillRect(0, 0, W, H); }
   },
   post(ctx, u, t) { const o = shot(t); if (o.spioncino || o.carte || o.rec) return; const g = ctx.createRadialGradient(W / 2, H * 0.48, H * 0.3, W / 2, H * 0.5, H * 0.8); g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, 'rgba(0,0,0,0.4)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); },

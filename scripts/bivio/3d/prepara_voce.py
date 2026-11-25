@@ -4,7 +4,7 @@
 import json, subprocess, sys, os
 import numpy as np
 V, F = sys.argv[1], sys.argv[2]; FINTA = '--finta' in sys.argv
-ART = float(os.environ.get('ART', 3.0))             # parole al secondo mentre parla, pause escluse (la prova del 25/11 era a 3,2: l'utente la vuole un po' più lenta)
+ART = float(os.environ.get('ART', 2.85))            # parole al secondo mentre parla, pause escluse: la prova del 25/11 era a 3,2 e per l'utente «va troppo veloce»; 3,0 era una differenza troppo piccola
 VEL = 2.5                                           # solo per i tempi finti
 TESTA, CODA = 0.4, 1.7
 # silenzio in più DOPO la riga (numero della riga: secondi)
