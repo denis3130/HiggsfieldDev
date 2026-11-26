@@ -41,7 +41,32 @@ function mascheraTex() {
   c.strokeStyle = 'rgba(40,34,30,0.35)'; c.lineWidth = 3; c.beginPath(); c.moveTo(0.25 * 1024 - 22, 0.61 * 512); c.quadraticCurveTo(0.25 * 1024, 0.615 * 512, 0.25 * 1024 + 22, 0.61 * 512); c.stroke();
   const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
-export function mascheratoSet() {
+// la maschera vera (personaggi/maschera.py): viso neutro intero, fori a mandorla, spessa 3 mm; origine nel giunto della testa
+async function mascheraVera() {
+  const base = new URL('../personaggi/maschera/', import.meta.url).href;
+  const [j, b] = await Promise.all([fetch(base + 'maschera.json').then((r) => r.json()), fetch(base + 'maschera.bin').then((r) => r.arrayBuffer())]);
+  const n = j.vertici, g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(b, 0, n * 3), 3)); g.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(b, n * 12, n * 2), 2));
+  g.setIndex(new THREE.BufferAttribute(new Uint32Array(b, n * 20, j.indici), 1)); g.computeVertexNormals();
+  // il contorno: ovale e fori a mandorla (le stesse forme di maschera.py, in decimetri), con il bordo sfumato di un pixel;
+  // nel colore, intorno ai fori, un'ombra sottile (lo spessore della maschera)
+  const S = 1024, [X0, X1, Y0, Y1] = j.griglia, [ax, ay, yc] = j.ovale, [fa, fb, rot, giu] = j.foro, occ = ['S', 'D'].map((k) => j.occhi[k].map((x) => x * 10));
+  const fOv = (x, y) => Math.hypot(x / ax, (y - yc) / ay) - 1;
+  const fOc = (x, y, e, s) => { const a = rot * s, c = Math.cos(a), sn = Math.sin(a), dx = x - e[0], dy = y - (e[1] - giu), u = c * dx + sn * dy, v = -sn * dx + c * dy; return Math.hypot(u / fa, v / fb) - 1; };
+  const cvA = document.createElement('canvas'), cvC = document.createElement('canvas'); cvA.width = cvA.height = cvC.width = cvC.height = S;
+  const ia = cvA.getContext('2d').createImageData(S, S), ic = cvC.getContext('2d').createImageData(S, S), px = (X1 - X0) / S;
+  for (let r = 0; r < S; r++) for (let q = 0; q < S; q++) {
+    const x = X0 + (q + 0.5) * px, y = Y0 + (1 - (r + 0.5) / S) * (Y1 - Y0), fo = fOv(x, y), fe = Math.min(fOc(x, y, occ[0], 1), fOc(x, y, occ[1], -1));
+    const k = (r * S + q) * 4, aOv = Math.min(1, Math.max(0, 0.5 - fo / (px / ax))), aOc = Math.min(1, Math.max(0, 0.5 + fe / (px / fb))), a = aOv * aOc;
+    ia.data[k] = ia.data[k + 1] = ia.data[k + 2] = a * 255; ia.data[k + 3] = 255;
+    const om = 1 - 0.55 * Math.exp(-Math.max(0, fe) / 0.09) - 0.25 * Math.exp(-Math.max(0, -fo) / 0.03);
+    ic.data[k] = 239 * om; ic.data[k + 1] = 235 * om; ic.data[k + 2] = 227 * om; ic.data[k + 3] = 255; }
+  cvA.getContext('2d').putImageData(ia, 0, 0); cvC.getContext('2d').putImageData(ic, 0, 0);
+  const tA = new THREE.CanvasTexture(cvA), tC = new THREE.CanvasTexture(cvC); tC.colorSpace = THREE.SRGBColorSpace; tA.anisotropy = tC.anisotropy = 8;
+  const m = new THREE.Mesh(g, new THREE.MeshPhysicalMaterial({ map: tC, alphaMap: tA, transparent: true, side: THREE.DoubleSide, roughness: 0.3, clearcoat: 1, clearcoatRoughness: 0.12, sheen: 0.2, sheenColor: new THREE.Color(0xFFF4E8), envMapIntensity: 0.6 }));
+  m.castShadow = false; m.receiveShadow = true; m.userData.occhi = j.occhi; return m;
+}
+export async function mascheratoSet() {
   materiali();
   const scene = new THREE.Scene(), cam = G.camera(30, 0.05, 30); scene.background = new THREE.Color(0x050505);
   const cem = pixelTex(512, 512, (x, y) => { const n = fbm(x / 60, y / 60, 3, 5), f = fbm(x / 5, y / 5, 9, 2), m = fbm(x / 20, y / 200, 4, 3); const c = 70 + n * 50 + f * 18 - m * 25; return [c, c * 0.98, c * 0.95, 0.5 + f * 0.25]; }, { rep: [3, 2], forza: 2 });
@@ -52,9 +77,15 @@ export function mascheratoSet() {
   mantello.scale.set(1, 1, 0.62); mantello.castShadow = true; mantello.receiveShadow = true; fig.add(mantello);
   const testa = new THREE.Group(); testa.position.set(0, 1.6, 0); fig.add(testa);
   const cap = new THREE.Mesh(new THREE.SphereGeometry(0.15, 64, 48, Math.PI / 2 + 0.95, Math.PI * 2 - 1.9, 0, Math.PI * 0.8), nero); cap.scale.set(1, 1.15, 1.12); cap.position.set(0, 0.02, -0.01); cap.castShadow = true; testa.add(cap);
-  const mas = new THREE.Mesh(mascheraGeo(), new THREE.MeshPhysicalMaterial({ map: mascheraTex(), roughness: 0.28, clearcoat: 0.8, clearcoatRoughness: 0.15, envMapIntensity: 0.5 })); mas.position.set(0, -0.005, 0.035); mas.castShadow = true; testa.add(mas);
+  const viso = new THREE.Group(); viso.position.set(0, -0.045, -0.012); testa.add(viso);
+  const mas = await mascheraVera(); viso.add(mas);
+  // chi la porta: la testa scura sotto (si vede solo dai fori) e gli occhi, lucidi, con un riflesso
+  const sotto = new THREE.Mesh(new THREE.SphereGeometry(0.095, 32, 24), new THREE.MeshStandardMaterial({ color: 0x0A0807, roughness: 0.9 })); sotto.scale.set(0.9, 1.1, 1.0); sotto.position.set(0, 0.03, 0.02); viso.add(sotto);
+  for (const k of ['S', 'D']) { const e = mas.userData.occhi[k], o = new THREE.Mesh(new THREE.SphereGeometry(0.0125, 24, 16), new THREE.MeshPhysicalMaterial({ color: 0x2A1A12, roughness: 0.15, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 1.2 }));
+    o.position.set(e[0] * 0.95, e[1] - 0.001, e[2] + 0.002); viso.add(o); }
   // la lampadina nuda che pende sopra, fuori dal quadro in alto
-  const L = new THREE.PointLight(0xFFE8C8, 1.6, 5, 2); L.position.set(0.15, 2.25, 0.5); L.castShadow = true; L.shadow.mapSize.set(1024, 1024); scene.add(L);
+  const L = new THREE.PointLight(0xFFE8C8, 1.6, 5, 2); L.position.set(0.15, 2.25, 0.5); L.castShadow = true; L.shadow.mapSize.set(2048, 2048); L.shadow.radius = 4; L.shadow.bias = -0.0005; scene.add(L);
+  const fill = new THREE.PointLight(0xB8C4E0, 0.12, 4, 2); fill.position.set(-0.3, 1.45, 1.2); scene.add(fill);           // un filo di luce fredda da davanti-sotto: si leggono naso e labbra
   scene.add(new THREE.HemisphereLight(0x405060, 0x101010, 0.15));
   return { scene, camera: cam, bloom: 0.4, bloomThreshold: 1.2, testa,
     update(t, u, o = {}) { G.R.toneMappingExposure = 1.1; cam.position.set(...(o.cam || [0, 1.55, 1.3])); cam.lookAt(...(o.look || [0, 1.52, 0])); if (o.fov) { cam.fov = o.fov; cam.updateProjectionMatrix(); }

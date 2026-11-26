@@ -411,7 +411,7 @@ M.film({
     // gli oggetti degli invitati, poi dove stanno visi e oggetti, poi le inquadrature
     oggetti(); calcolaSiti(); inquadrature();
     // le immagini fatte una volta: l'uomo mascherato, la foto, le carte
-    const MS = mascheratoSet(); IMG.mas = [[0, 0, 0], [0.05, 0.12, 0.04], [-0.04, -0.1, -0.05], [0.1, 0.02, 0]].map((r, i) => scatta(MS, { cam: [0.02 * i, 1.55, 1.3 - 0.06 * i], look: [0, 1.53, 0], fov: 30, testa: r }, 4 / 3));
+    const MS = await mascheratoSet(); IMG.mas = [[0, 0, 0], [0.05, 0.12, 0.03], [-0.03, -0.1, -0.04], [0.08, 0.03, 0]].map((r, i) => scatta(MS, { cam: [0.02 * i, 1.56, 1.3 - 0.05 * i], look: [0, 1.55, 0], fov: 44, testa: r }, 4 / 3));
     IMG.foto = await fotoFornace(); IMG.cartaA = await cartaA(); IMG.cartaB = await cartaB();
     for (const [n, i] of ORDINE) { fatte[n] = null; }
     // i fari della macchina nella notte (solo nella scena della strada)
