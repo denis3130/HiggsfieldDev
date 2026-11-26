@@ -4,6 +4,9 @@
 # Come si fa: dal viso si prende la superficie più avanti (una mappa delle altezze: niente narici, niente bocca aperta, il naso scende
 # dritto come nelle maschere vere), la si liscia un poco, la si porta 4 mm davanti alla pelle e la si ritaglia a ovale; dietro la stessa
 # superficie 3 mm più indietro, e il bordo che le unisce: UNA superficie chiusa.
+# È la PRIMA versione, quella che l'utente ha scelto («questa andava bene»): con le ombre dure della lampadina sotto il naso e sotto le
+# labbra e i fori un po' irregolari. Le versioni lisciate dopo (rampe al posto delle pareti, fori tagliati puliti, luce di riempimento)
+# gli piacevano meno: non rifarle.
 # Uscita: maschera.json + maschera.bin (pos f4, idx u4) in metri, origine nel giunto della testa, il viso guarda +z; occhi = centri dei fori.
 import sys, os, json
 import numpy as np
@@ -21,7 +24,7 @@ F = CT.F0[CT.G0 == CT.ID_BODY]
 F = F[(w[F] > 0.3).all(1) & (P[F][:, :, 2] > 0.1).all(1)]                     # le facce davanti della testa
 TRI = np.concatenate([F[:, [0, 1, 2]], F[:, [0, 2, 3]]])
 # ---- la mappa delle altezze: per ogni punto (x, y) la z più avanti
-PASSO = 0.01; X0, X1, Y0, Y1 = -0.85, 0.85, -0.95, 1.35
+PASSO = 0.015; X0, X1, Y0, Y1 = -0.85, 0.85, -0.95, 1.35
 nx, ny = int(round((X1 - X0) / PASSO)) + 1, int(round((Y1 - Y0) / PASSO)) + 1
 Z = np.full((ny, nx), -9.0)
 for t in TRI:
@@ -37,38 +40,42 @@ for t in TRI:
     dentro = (l1 >= -1e-6) & (l2 >= -1e-6) & (l3 >= -1e-6); z = l1 * a[2] + l2 * b[2] + l3 * c[2]
     blk = Z[j0:j1 + 1, i0:i1 + 1]; Z[j0:j1 + 1, i0:i1 + 1] = np.where(dentro & (z > blk), z, blk)
 vuoto = Z < -8
-_, (ii, jj) = ndi.distance_transform_edt(vuoto, return_indices=True); Z = Z[ii, jj]          # i buchi (gli occhi della pelle) chiusi col vicino...
-# ...poi lisciati come una membrana tesa (niente fossette dove la pelle rientrava verso l'occhio)
-buco = ndi.binary_dilation(vuoto, iterations=3)
-gx0, gy0 = np.meshgrid(X0 + PASSO * np.arange(nx), Y0 + PASSO * np.arange(ny))
-for e in (eS, eD):                                                           # e tutta la zona intorno all'occhio: niente fossette (l'angolo interno, le occhiaie)
-    buco |= ((gx0 - e[0]) / 0.3) ** 2 + ((gy0 - e[1] + 0.02) / 0.17) ** 2 < 1
-for _ in range(400): Zm = 0.25 * (np.roll(Z, 1, 0) + np.roll(Z, -1, 0) + np.roll(Z, 1, 1) + np.roll(Z, -1, 1)); Z = np.where(buco, Zm, Z)
+_, (ii, jj) = ndi.distance_transform_edt(vuoto, return_indices=True); Z = Z[ii, jj]          # i buchi (gli occhi della pelle) chiusi col vicino
 Z = ndi.gaussian_filter(Z, 1.6)                                                              # liscia: via i pori e le pieghe piccole, restano le forme
-for _ in range(60): Z = np.maximum(Z, ndi.grey_dilation(Z, size=3) - 1.6 * PASSO)            # niente pareti a picco (sotto il naso, sotto il labbro): al massimo 58 gradi
-Z = ndi.gaussian_filter(Z, 1.0)
 Z += 0.04                                                                                    # 4 mm davanti alla pelle
 gx, gy = np.meshgrid(X0 + PASSO * np.arange(nx), Y0 + PASSO * np.arange(ny))
 # ---- il ritaglio: ovale del viso (dalla fronte al mento), i due fori a mandorla per gli occhi (l'angolo esterno un po' più su)
-def f_ovale(x, y): return np.sqrt((x / 0.76) ** 2 + ((y - 0.22) / 1.02) ** 2) - 1
-def f_occhio(x, y, e, s):
-    a = 0.14 * s; c, sn = np.cos(a), np.sin(a); dx, dy = x - e[0], y - (e[1] - 0.005); u, v = c * dx + sn * dy, -sn * dx + c * dy
-    return np.sqrt((u / 0.2) ** 2 + (v / 0.088) ** 2) - 1
-def f_tutto(x, y): return np.maximum(f_ovale(x, y), np.maximum(-f_occhio(x, y, eS, 1), -f_occhio(x, y, eD, -1)))
-# la superficie un po' più larga dell'ovale; il contorno esatto (ovale e fori a mandorla) lo taglia la trasparenza in maschera (extra7.js),
-# con le stesse forme: bordi puliti anche nei fori
-dentro = f_ovale(gx, gy) < 0.035
+ov = (gx / 0.76) ** 2 + ((gy - 0.22) / 1.02) ** 2 < 1
+def mandorla(e, s):
+    dx, dy = gx - e[0], gy - (e[1] - 0.01); dy2 = dy - 0.05 * dx * s
+    return (dx / 0.19) ** 2 + (dy2 / (0.085 * (1 - 0.35 * (dx * s / 0.19)))) ** 2 < 1
+dentro = ov & ~mandorla(eS, 1) & ~mandorla(eD, -1)
+# solo le celle con i quattro angoli dentro
 C = dentro[:-1, :-1] & dentro[1:, :-1] & dentro[:-1, 1:] & dentro[1:, 1:]
+lab, n = ndi.label(C); C = lab == (np.bincount(lab.ravel())[1:].argmax() + 1)
 usati = np.zeros_like(dentro); usati[:-1, :-1] |= C; usati[1:, :-1] |= C; usati[:-1, 1:] |= C; usati[1:, 1:] |= C
 idx = -np.ones(dentro.shape, int); idx[usati] = np.arange(usati.sum()); nv = usati.sum()
-davanti = np.stack([gx[usati], gy[usati], Z[usati]], 1); UV = np.stack([(gx[usati] - X0) / (X1 - X0), (gy[usati] - Y0) / (Y1 - Y0)], 1)
+davanti = np.stack([gx[usati], gy[usati], Z[usati]], 1)
+# dietro: 3 mm più indietro lungo la normale della superficie
+gzy, gzx = np.gradient(Z, PASSO); N = np.stack([-gzx, -gzy, np.ones_like(Z)], -1); N /= np.linalg.norm(N, axis=-1, keepdims=True)
+dietro = davanti - 0.03 * N[usati]
 facce = []
-for j_, i_ in zip(*np.nonzero(C)):
-    a, b, c, d = idx[j_, i_], idx[j_, i_ + 1], idx[j_ + 1, i_ + 1], idx[j_ + 1, i_]; facce += [[a, b, c], [a, c, d]]
-POS = (davanti * 0.1).astype('<f4'); IDX = np.array(facce, '<u4').ravel()
+js, is_ = np.nonzero(C)
+for j, i in zip(js, is_):
+    a, b, c, d = idx[j, i], idx[j, i + 1], idx[j + 1, i + 1], idx[j + 1, i]
+    facce += [[a, b, c], [a, c, d], [nv + a, nv + c, nv + b], [nv + a, nv + d, nv + c]]
+# il bordo: i lati delle celle che stanno su una cella sola
+lati = {}
+for j, i in zip(js, is_):
+    q = [idx[j, i], idx[j, i + 1], idx[j + 1, i + 1], idx[j + 1, i]]
+    for k in range(4):
+        u, v = q[k], q[(k + 1) % 4]; key = (min(u, v), max(u, v)); lati[key] = None if key in lati else (u, v)
+for key, uv in lati.items():
+    if uv is None: continue
+    u, v = uv; facce += [[v, u, nv + u], [v, nv + u, nv + v]]
+POS = (np.vstack([davanti, dietro]) * 0.1).astype('<f4'); IDX = np.array(facce, '<u4').ravel()
 OUT = os.path.join(QUI, 'maschera'); os.makedirs(OUT, exist_ok=True)
-open(os.path.join(OUT, 'maschera.bin'), 'wb').write(POS.tobytes() + UV.astype('<f4').tobytes() + IDX.tobytes())
-json.dump(dict(vertici=len(POS), indici=len(IDX), occhi={'S': (eS * 0.1).tolist(), 'D': (eD * 0.1).tolist()}, ordine=['pos f4 vertici*3', 'uv f4 vertici*2', 'idx u4 indici'],
-               griglia=[X0, X1, Y0, Y1], ovale=[0.76, 1.02, 0.22], foro=[0.2, 0.088, 0.14, 0.005],
+open(os.path.join(OUT, 'maschera.bin'), 'wb').write(POS.tobytes() + IDX.tobytes())
+json.dump(dict(vertici=len(POS), indici=len(IDX), occhi={'S': (eS * 0.1).tolist(), 'D': (eD * 0.1).tolist()}, ordine=['pos f4 vertici*3', 'idx u4 indici'],
                nota='maschera «volto»: viso MakeHuman neutro (CC0), mappa delle altezze lisciata, 4 mm sopra la pelle, spessa 3 mm'), open(os.path.join(OUT, 'maschera.json'), 'w'))
-print('maschera:', len(POS), 'vertici', len(IDX) // 3, 'triangoli')
+print('maschera:', len(POS), 'vertici', len(IDX) // 3, 'triangoli', 'z naso', float(Z[usati].max()) * 0.1, 'm')
