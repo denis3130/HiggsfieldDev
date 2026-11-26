@@ -292,6 +292,11 @@ Storia dell'utente in `data/horror/storie/14_il_gioco_dei_sette.md`; formato da 
 - Personaggi nell'aspetto del video A: `gioco7-prova/personaggi/converti_teste.py <mpfb2> dati` fa i busti dei sette dal corpo MakeHuman
   CON la testa (forme per età, sesso, peso, origine, viso; testa ingrandita 1,18–1,25; occhi più grandi), e dipinge la pelle nello spazio
   uv guardando dove sta ogni texel sulla testa (lentiggini, macchie, labbra, sopracciglia, barba, rughe e pori nel rilievo, capelli dipinti
-  sotto l'attaccatura). `sets/personaggi.js` aggiunge occhi veri, capelli scolpiti (guscio con le ciocche e il bordo che sfuma; chignon,
-  coda), maglia con colletto, occhiali di Victor. `gioco7-scheda/` li mostra uno per uno. I dati generati (`personaggi/dati/`) non stanno
+  sotto l'attaccatura). `sets/personaggi.js` aggiunge occhi veri, maglia con colletto, occhiali di Victor e i capelli.
+- Capelli (26/11, dopo «sembrano pezzi staccati»): `personaggi/capelli.py` li fa come UNA forma sola per pettinatura, mai pezzi incollati.
+  Volume = strato sul cuoio capelluto che a filo dell'attaccatura scende a zero (nasce dalla pelle) + capelli che cadono (dal raggio della
+  testa «appeso», più stretti verso il viso, punte irregolari, il caschetto rientra in fondo) + chignon, uniti con l'unione morbida (smin);
+  superficie con marching cubes (scikit-image), lisciatura di Taubin, poche ciocche larghe scavate lungo il verso della pettinatura
+  (indietro, di traverso dalla riga, giù dove cadono). La distanza dalla pelle si prende dal piano tangente dei 6 punti più vicini:
+  dal punto più vicino esce una perlina per vertice. Pettinature in `PETTINATURE` di `converti_teste.py`. `gioco7-scheda/` li mostra uno per uno. I dati generati (`personaggi/dati/`) non stanno
   nel repository: si rifanno col comando sopra (mpfb2 = `pip download anny==0.6.2 --no-deps`, vedi `cast/sets/corpi/LICENZE.md`).

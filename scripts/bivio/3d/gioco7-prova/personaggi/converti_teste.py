@@ -64,6 +64,17 @@ CAPELLI = {
     'sophie': {'colore': '#5A3A22', 'fronte': 0.058, 'lati': 0.0, 'nuca': -0.09},
 }
 for _n, _c in CAPELLI.items(): PERSONAGGI[_n]['capelli'] = _c
+# la forma dei capelli (metri): spessore ai lati e in cima, ciuffo, riga (x della riga; None = tutto indietro), ciocche, chignon, capelli che cadono
+PETTINATURE = {
+    'leon':   dict(lato=0.004, cima=0.012, ciuffo=0.004, riga=None, ciocca=0.03, solchi=0.0012),
+    'victor': dict(lato=0.003, cima=0.007, riga=0.03, ciocca=0.03, solchi=0.0006),
+    'elena':  dict(lato=0.0035, cima=0.0055, riga=None, ciocca=0.028, solchi=0.0005, chignon=dict(r=0.04, sopra=0.1, fuori=0.022)),
+    'marcus': dict(lato=0.0022, cima=0.0028, riga=None, ciocca=0.006, solchi=0.00006),
+    'nora':   dict(lato=0.005, cima=0.011, riga=-0.02, ciocca=0.03, solchi=0.0012, giu=-0.1, cadono=dict(apre=1.2, spesso=0.009, gonfio=0.008, rientra=0.07, da=0.1)),
+    'adrian': dict(lato=0.004, cima=0.011, ciuffo=0.003, riga=None, ciocca=0.032, solchi=0.001),
+    'sophie': dict(lato=0.005, cima=0.011, riga=0.0, ciocca=0.03, solchi=0.0012, giu=-0.17, cadono=dict(apre=1.15, spesso=0.008, gonfio=0.012, rientra=0.02, da=0.1)),
+}
+import capelli as CAP
 
 def rgb(h): h = h.lstrip('#'); return np.array([int(h[i:i + 2], 16) for i in (0, 2, 4)], float) / 255
 def sm(a, b, x): t = np.clip((x - a) / (b - a), 0, 1); return t * t * (3 - 2 * t)
@@ -222,6 +233,18 @@ def costruisci(nome, o):
                    occhi={'S': T(J['occhioS']).tolist(), 'D': T(J['occhioD']).tolist(), 'raggio': J['r_occhio'] * 0.1}, testa2=T(J['testa2']).tolist(), collo=T(J['collo']).tolist(),
                    taglio=float((taglio - J['testa'][1]) * 0.1), pelle=o['pelle'], sopracciglia=o['sopracciglia'], capelli=o.get('capelli')), open(os.path.join(OUT, nome + '.json'), 'w'))
     print(f'  vertici {len(rv)} triangoli {len(IDX) // 3}', flush=True)
+    # i capelli: una forma sola (capelli.py)
+    st = dict(PETTINATURE[nome]); eYm = float(T(J['occhioS'])[1]); Pm = T(P); Nm = N
+    if st.get('chignon'):
+        b = st['chignon']; yb = eYm + b['sopra']; fascia = Pm[(np.abs(Pm[:, 0]) < 0.02) & (np.abs(Pm[:, 1] - yb) < 0.01)]
+        st['chignon'] = dict(c=[0.0, yb, float(fascia[:, 2].min()) - b['fuori']], r=b['r'])
+    if st.get('cadono'):
+        fascia = Pm[np.abs(Pm[:, 1] - (eYm + 0.03)) < 0.008]; st['cadono']['cz'] = float((fascia[:, 2].max() + fascia[:, 2].min()) / 2)
+    hv, hn, hc, ht = CAP.fai(Pm, Nm, eYm, o['capelli'], st)
+    open(os.path.join(OUT, nome + '_capelli.bin'), 'wb').write(hv.tobytes() + hn.tobytes() + hc.tobytes() + ht.ravel().tobytes())
+    j = json.load(open(os.path.join(OUT, nome + '.json'))); j['capelli_mesh'] = dict(vertici=len(hv), indici=int(ht.size), ordine=['pos f4 v*3', 'nor f4 v*3', 'col u1 v*3', 'idx u4 indici'])
+    json.dump(j, open(os.path.join(OUT, nome + '.json'), 'w'))
+    print(f'  capelli: vertici {len(hv)} triangoli {len(ht)}', flush=True)
 
 for nome, o in PERSONAGGI.items():
     if SOLO and nome not in SOLO: continue

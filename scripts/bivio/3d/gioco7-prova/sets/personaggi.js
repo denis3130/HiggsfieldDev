@@ -118,7 +118,7 @@ export async function busto(nome) {
   const stoffa = maglia(st.vestito.colore);
   const grp = new THREE.Group(), corpo = new THREE.Mesh(g, [pelle, stoffa]); grp.add(corpo); grp.add(colletto(B, scollo, stoffa.color));
   for (const s of ['S', 'D']) { const o = occhio(B.occhi.raggio * 0.97, st.iride, s === 'S' ? 3 : 4); o.position.set(...B.occhi[s]); grp.add(o); grp.userData['occhio' + s] = o; }
-  grp.add(capelli(B, st.capelli));
+  grp.add(B.capelli_mesh ? await capelliForma(nome, B, st) : capelli(B, st.capelli));
   if (st.occhiali) grp.add(occhiali(B));
   grp.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   grp.userData.B = B; return grp;
@@ -142,6 +142,17 @@ function colletto(B, scollo, colore) {
   const L = pts.length, lisci = pts.map((p, i) => { let x = 0, z = 0; for (let k = -3; k <= 3; k++) { const q = pts[(i + k + L) % L]; x += q[0]; z += q[1]; } return V(x / 7, scollo(x / 7, z / 7) + 0.002, z / 7); });
   const curva = new THREE.CatmullRomCurve3(lisci, true, 'centripetal');
   return new THREE.Mesh(new THREE.TubeGeometry(curva, 160, 0.0065, 14, true), new THREE.MeshPhysicalMaterial({ color: colore, roughness: 0.9, sheen: 0.6, sheenColor: colore.clone().multiplyScalar(1.5), envMapIntensity: 0.25 }));
+}
+// i capelli fatti dal convertitore come UNA forma sola (personaggi/capelli.py): posizioni, normali, colori (creste chiare, solchi scuri)
+async function capelliForma(nome, B, st) {
+  const c = B.capelli_mesh, b = await fetch(BASE + nome + '_capelli.bin').then((r) => r.arrayBuffer()), n = c.vertici; let o = 0;
+  const pos = new Float32Array(b, o, n * 3); o += n * 12; const nor = new Float32Array(b, o, n * 3); o += n * 12; const col = new Uint8Array(b, o, n * 3); o += n * 3;
+  const idx = new Uint32Array(b.slice(o, o + c.indici * 4));
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.BufferAttribute(nor, 3));
+  g.setAttribute('color', new THREE.BufferAttribute(col, 3, true)); g.setIndex(new THREE.BufferAttribute(idx, 1));
+  const base = new THREE.Color(B.capelli ? B.capelli.colore : st.capelli.colore);
+  const m = new THREE.MeshPhysicalMaterial({ color: base, vertexColors: true, roughness: 0.6, sheen: 0.5, sheenColor: base.clone().multiplyScalar(1.6), sheenRoughness: 0.4, clearcoat: (st.capelli.lucido || 0) * 0.3, clearcoatRoughness: 0.4, envMapIntensity: 0.3 });
+  return new THREE.Mesh(g, m);
 }
 // occhiali tondi a filo d'oro (fatti col codice): due cerchi davanti agli occhi, il ponte, le aste verso le orecchie
 function occhiali(B) {
