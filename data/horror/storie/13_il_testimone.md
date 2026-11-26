@@ -37,7 +37,7 @@
 7. Ep. 7 → A: accetti il suo patto / B: rifiuti
 8. Ep. 8 → Finale A / Finale B
 
-Ogni scelta cambia l'apertura dell'episodio dopo; poi i rami si ricongiungono. Nessuna morte del protagonista prima del finale. La violenza resta fuori campo o in lontananza (sagome sotto il lampione).
+~~Ogni scelta cambia l'apertura dell'episodio dopo; poi i rami si ricongiungono.~~ **Superato il 26/11 notte**: l'utente, visto l'episodio 2, «secondo me non ha senso, dovrebbe influire veramente l'opzione che scegli così facendo invece torniamo sul primo punto». Ogni scelta porta la storia su una strada sua e i rami non si ricongiungono; si scrive solo il ramo votato. La mappa qui sopra, da Ep. 2 in poi, è stata pensata per il ramo A (prigionia in casa con lui che «protegge»): vale solo come serbatoio di idee per quel ramo. Nessuna morte del protagonista prima del finale. La violenza resta fuori campo o in lontananza (sagome sotto il lampione).
 
 ---
 
@@ -60,6 +60,35 @@ Cosa fai? La A: apri, e fai finta di non averlo riconosciuto. Oppure la B: non a
 **Bivio:** A: Apri e fingi / B: Scappi dal balcone
 
 ## Episodio 2 — La mano tesa (testo approvato dall'utente il 26/11 sera con «vai»; ha vinto la B dell'episodio 1)
+
+**Bocciato nella storia il 26/11 notte, dopo la consegna:** «secondo me non ha senso, dovrebbe influire veramente l'opzione che scegli così facendo invece torniamo sul primo punto». Mia lettura, detta all'utente: la fuga votata si annullava in un minuto (lui entra, ti trova, ti chiede il telefono), cioè si finiva come con la A, e la scelta nuova era di nuovo sul telefono.
+
+**Proposta mandata (in attesa del suo ok):** la prima metà resta com'è, voce compresa, fino a «Ci sei.»; poi la fuga riesce davvero e porta a una situazione nuova (fuori di casa, lui dentro, Elena viva nel bagagliaio). Nell'episodio 1 non si è mai detto che fosse morta: «lei cade. Non si muove più». Seconda metà nuova:
+
+In casa tua si accende la luce. [voce già fatta]
+«Permesso», dice lui. Come un ospite. [voce già fatta]
+La tua portafinestra è rimasta socchiusa: capirà da dove sei uscito.
+Quella dell'appartamento vuoto, invece, è chiusa.
+Prendi il vaso con la pianta secca e colpisci il vetro.
+In casa tua, i passi si fermano.
+Poi riprendono.
+Infili la mano tra le schegge. La maniglia gira.
+La porta d'ingresso si apre da dentro. Dà sull'altra scala.
+Scendi quattro piani al buio: la luce delle scale, dalla tua cucina, si vedrebbe.
+Fuori piove forte. Per uscire dal cortile devi passare accanto all'auto grigia.
+E dal bagagliaio senti un colpo. Poi un altro.
+È viva.
+Alzi gli occhi. Nella tua cucina, dietro il vetro, c'è lui. Ha il telefono all'orecchio.
+Nella tua tasca, il telefono vibra. Lui aspetta che uno schermo si accenda.
+Dal bagagliaio, un altro colpo. Più debole.
+Cosa fai? [voce già fatta]
+La A: provi a tirarla fuori, sotto la sua finestra.
+Oppure la B: scappi con il video, e la lasci lì.
+Scrivilo nei commenti, e seguimi per vedere come continua. [voce già fatta]
+
+**Bivio nuovo:** A: La tiri fuori / B: Scappi e la lasci lì. Perché regge: sentendo i passi dalla portafinestra socchiusa, sai che lui capirà da dove sei uscito; la porta di un appartamento vuoto si apre da dentro con la maniglia; le finestre delle scale danno sul cortile come la tua cucina; lui ha il tuo numero (la centrale gli ha passato la tua chiamata) e chiama per vedere dove si accende uno schermo nel parcheggio buio; tutte e due le scelte sono possibili con quello che lui vede (sei nell'ombra dell'auto). Voce nuova solo per le frasi nuove: preventivo 2,55 crediti.
+
+**Versione consegnata e bocciata:**
 Scritto solo il ramo B («non apri, e scappi dal balcone con il telefono»): l'episodio 1 è uscito sul canale nuovo e il 26/11 l'utente ha detto
 «hanno scelto l'opzione B continua pure». Il ramo A non si scrive. Regole del 26/11 applicate: la voce non descrive l'immagine, ogni frase regge
 alla logica, pochi dettagli e tutti usati (le chiavi lasciate alla vicina per le piante; la portafinestra socchiusa, da cui lo senti e da cui lui
