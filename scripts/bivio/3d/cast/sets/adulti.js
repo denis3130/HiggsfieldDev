@@ -7,20 +7,30 @@ import * as M from '../lib/motion.js';
 import { THREE, V, rnd, tex, mat, piatto as basic, sfera, add, loft, tra, ombre, alone } from './stile.js';
 import { testa, capelli, chioma, ciuffi, braccio, gamba, chiavi, mix } from './pupazzi.js';
 import { CORPI, misure, vesti, texture, oggettoInMano } from './corpo_mesh.js';
+import { sbarra } from './prese.js';
 
 // mondo: il punto da raggiungere in coordinate della scena. Le direzioni dita/dorso/gomito sono nel verso del PERSONAGGIO (z = davanti a lui);
 // per darle nel verso della scena si usano ditaM/dorsoM/gomitoM (se il personaggio è girato le due cose non coincidono).
-const _qi = new THREE.Quaternion();
+const _qi = new THREE.Quaternion(), _e = V(0, 0, 0);
+function locale(upper, q) {
+  if (!(q.mondo || q.ditaM || q.dorsoM || q.gomitoM)) return q;
+  const r = { ...q }; upper.getWorldQuaternion(_qi).invert();
+  if (q.mondo) { const v = upper.worldToLocal(V(...q.mondo)); r.a = [v.x, v.y, v.z]; }
+  for (const [k, km] of [['dita', 'ditaM'], ['dorso', 'dorsoM'], ['gomito', 'gomitoM']]) if (q[km]) { const d = V(...q[km]).applyQuaternion(_qi); r[k] = [d.x, d.y, d.z]; }
+  return r;
+}
+// sbarra: { a, b, r, u, v, lungo, piega } = la mano stringe una sbarra della scena (il corrimano; vedi prese.js). Il rollio attorno alla sbarra
+// non lo sceglie la scena: si prende quello che lascia il polso più dritto (la mano in linea con l'avambraccio), più `piega` gradi se si vuole.
+function suSbarra(upper, A, q) {
+  const s = q.sbarra, prova = (rollio) => { const r = locale(upper, { ...q, ...sbarra(A, s.a, s.b, { ...s, rollio }) }); A.a(r); _e.copy(A.gH.position).sub(A.gF.position).normalize(); const d = V(...r.dita).normalize(); return [d.dot(_e), r, rollio]; };
+  let m = null; for (let g = -90; g <= 90; g += 15) { const x = prova(g); if (!m || x[0] > m[0]) m = x; }
+  for (const g of [m[2] - 10, m[2] - 5, m[2] + 5, m[2] + 10]) { const x = prova(g); if (x[0] > m[0]) m = x; }
+  return s.piega ? prova(m[2] + s.piega)[1] : m[1];
+}
 function braccia(upper, AL, AR, p) {
   for (const [A, q] of [[AL, p.armL], [AR, p.armR]]) {
     if (!q) { A.a({}); continue; }
-    let r = q;
-    if (q.mondo || q.ditaM || q.dorsoM || q.gomitoM) {
-      r = { ...q }; upper.getWorldQuaternion(_qi).invert();
-      if (q.mondo) { const v = upper.worldToLocal(V(...q.mondo)); r.a = [v.x, v.y, v.z]; }
-      for (const [k, km] of [['dita', 'ditaM'], ['dorso', 'dorsoM'], ['gomito', 'gomitoM']]) if (q[km]) { const d = V(...q[km]).applyQuaternion(_qi); r[k] = [d.x, d.y, d.z]; }
-    }
-    A.a(r);
+    A.a(q.sbarra ? suSbarra(upper, A, q) : locale(upper, q));
   }
 }
 

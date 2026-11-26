@@ -1,0 +1,9 @@
+{
+ "title": "Il testimone - episodio 2",
+ "duration": 126.68,
+ "formats": [
+  "9x16"
+ ],
+ "poster": 30,
+ "nota": "BOZZA del 26/11: assets/parole.json contiene tempi PROVVISORI inventati dal testo (prepara_voce.py --finta); la voce di Luc si genera solo dopo l'ok dell'utente al testo, poi voce_esterna.py + prepara_voce.py rifanno parole.json e la durata."
+}

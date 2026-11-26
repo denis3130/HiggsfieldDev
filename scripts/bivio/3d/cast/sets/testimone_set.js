@@ -21,13 +21,15 @@ function porta(p, { numero = null, colore = '#4A3226' } = {}) {
   const m = mat(0xffffff, { map: tex(256, 512, (c, w, h) => { c.fillStyle = colore; c.fillRect(0, 0, w, h); c.strokeStyle = mix(colore, '#000000', 0.35); c.lineWidth = 5;
     for (const [x, y, ww, hh] of [[28, 30, 200, 190], [28, 250, 200, 232]]) c.strokeRect(x, y, ww, hh);
     c.strokeStyle = mix(colore, '#ffffff', 0.12); c.lineWidth = 2; for (const [x, y, ww, hh] of [[34, 36, 188, 178], [34, 256, 188, 220]]) c.strokeRect(x, y, ww, hh); }) });
-  add(g, new THREE.BoxGeometry(0.9, 2.08, 0.06), m, V(0, 1.04, 0));
+  // l'anta sta in un gruppo suo, col perno sui cardini (x = -0.45): g.userData.anta.rotation.y la apre. Il telaio resta fermo.
+  const anta = new THREE.Group(); anta.position.x = -0.45; g.add(anta); const a = new THREE.Group(); a.position.x = 0.45; anta.add(a); g.userData.anta = anta;
+  add(a, new THREE.BoxGeometry(0.9, 2.08, 0.06), m, V(0, 1.04, 0));
   const tel = mat(mix(colore, '#000000', 0.45));
   add(g, new THREE.BoxGeometry(1.06, 0.1, 0.1), tel, V(0, 2.13, 0)); for (const s of [-1, 1]) add(g, new THREE.BoxGeometry(0.09, 2.18, 0.1), tel, V(s * 0.495, 1.09, 0));
   const ott = mat('#C9A24A');
-  add(g, new THREE.TorusGeometry(0.018, 0.006, 8, 20), ott, V(0, 1.52, 0.034)); add(g, new THREE.BoxGeometry(0.05, 0.16, 0.012), ott, V(0.36, 1.0, 0.034));
-  tra(g, V(0.36, 1.02, 0.034), V(0.36, 1.02, 0.087), 0.014, 0.012, ott); tra(g, V(0.365, 1.02, 0.085), V(0.225, 1.02, 0.085), 0.0115, 0.0105, ott);          // maniglia a leva (verso il centro della porta)
-  if (numero) add(g, new THREE.PlaneGeometry(0.16, 0.09), mat(0xffffff, { map: tex(128, 72, (c, w, h) => { c.fillStyle = '#C9A24A'; c.fillRect(0, 0, w, h); c.fillStyle = '#3A2A12'; c.font = '700 44px Display'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(numero, w / 2, h / 2 + 3); }) }), V(0, 1.72, 0.034));
+  add(a, new THREE.TorusGeometry(0.018, 0.006, 8, 20), ott, V(0, 1.52, 0.034)); add(a, new THREE.BoxGeometry(0.05, 0.16, 0.012), ott, V(0.36, 1.0, 0.034));
+  tra(a, V(0.36, 1.02, 0.034), V(0.36, 1.02, 0.087), 0.014, 0.012, ott); tra(a, V(0.365, 1.02, 0.085), V(0.225, 1.02, 0.085), 0.0115, 0.0105, ott);          // maniglia a leva (verso il centro della porta)
+  if (numero) add(a, new THREE.PlaneGeometry(0.16, 0.09), mat(0xffffff, { map: tex(128, 72, (c, w, h) => { c.fillStyle = '#C9A24A'; c.fillRect(0, 0, w, h); c.fillStyle = '#3A2A12'; c.font = '700 44px Display'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(numero, w / 2, h / 2 + 3); }) }), V(0, 1.72, 0.034));
   return g;
 }
 
@@ -101,7 +103,9 @@ export function ingressoSet() {
 }
 
 // ------------------------------------------------------------------ il pianerottolo (visto dallo spioncino)
-export function pianerottoloSet() {
+// opz.vano11 (episodio 2): il muro di fondo ha il vano vero della porta dell'interno 11, così l'anta può aprirsi verso casa della vicina.
+// Senza opzioni il set è quello dell'episodio 1, identico.
+export function pianerottoloSet(opz = {}) {
   const r = rnd(91), scene = new THREE.Scene(); scene.background = new THREE.Color('#0b0c0a');
   const cam = G.camera(75, 0.03, 40); scene.add(cam);
   const amb = new THREE.Group(); scene.add(amb);
@@ -110,7 +114,10 @@ export function pianerottoloSet() {
   const fl = add(amb, new THREE.PlaneGeometry(3.4, 3.6), mat(0xffffff, { map: tex(256, 256, (c, w, h) => { c.fillStyle = '#B9B2A2'; c.fillRect(0, 0, w, h); for (let i = 0; i < 900; i++) { c.fillStyle = ['#8F8778', '#D9D3C4', '#6E675B', '#A08F6E'][i % 4]; c.globalAlpha = r(0.4, 0.9); c.beginPath(); c.arc(r() * w, r() * h, r(0.8, 2.6), 0, 7); c.fill(); }
     c.globalAlpha = 1; c.strokeStyle = '#7A7366'; c.lineWidth = 3; c.strokeRect(0, 0, w, h); }, [6, 6]) }), V(0, 0, 1.75)); fl.rotation.x = -Math.PI / 2;
   const muroT = (w) => mat(0xffffff, { map: tex(64, 256, (c, ww, h) => { c.fillStyle = '#DDD3A9'; c.fillRect(0, 0, ww, h); c.fillStyle = '#78885E'; c.fillRect(0, h * 0.54, ww, h * 0.46); c.fillStyle = '#4E5A3C'; c.fillRect(0, h * 0.53, ww, 5); }) });
-  const back = add(amb, new THREE.PlaneGeometry(3.4, 2.7), muroT(), V(0, 1.35, 3.5)); back.rotation.y = Math.PI;
+  if (!opz.vano11) { const back = add(amb, new THREE.PlaneGeometry(3.4, 2.7), muroT(), V(0, 1.35, 3.5)); back.rotation.y = Math.PI; }
+  else { const mt = muroT();                                  // il muro di fondo a pezzi attorno al vano (x da -0.8 a 0.1, alto 2.08); la texture è a fasce orizzontali: basta tenere la v giusta
+    for (const [x0, x1, y0, y1] of [[-1.7, -0.8, 0, 2.7], [0.1, 1.7, 0, 2.7], [-0.8, 0.1, 2.08, 2.7]]) { const g = new THREE.PlaneGeometry(x1 - x0, y1 - y0), uv = g.attributes.uv; for (let i = 0; i < uv.count; i++) uv.setY(i, (y0 + uv.getY(i) * (y1 - y0)) / 2.7);
+      const m = add(amb, g, mt, V((x0 + x1) / 2, (y0 + y1) / 2, 3.5)); m.rotation.y = Math.PI; } }
   const right = add(amb, new THREE.PlaneGeometry(3.6, 2.7), muroT(), V(1.7, 1.35, 1.75)); right.rotation.y = -Math.PI / 2;
   const leftFar = add(amb, new THREE.PlaneGeometry(1.2, 2.7), muroT(), V(-1.7, 1.35, 0.6)); leftFar.rotation.y = Math.PI / 2;
   const sof = add(amb, new THREE.PlaneGeometry(3.4, 3.6), mat('#E6DEBF'), V(0, 2.7, 1.75)); sof.rotation.x = Math.PI / 2;
@@ -119,7 +126,14 @@ export function pianerottoloSet() {
   const ferro = mat('#2B2D2A');
   tra(amb, V(-1.62, 0.98, 1.25), V(-1.62, 0.98, 3.45), 0.022, 0.022, mat('#5A3B26')); for (let i = 0; i < 9; i++) tra(amb, V(-1.62, 0.0, 1.3 + i * 0.26), V(-1.62, 0.97, 1.3 + i * 0.26), 0.01, 0.01, ferro);
   // la porta dell'interno 11 di fronte, con lo zerbino; l'ascensore a destra
-  const p11 = new THREE.Group(); p11.position.set(-0.35, 0, 3.47); p11.rotation.y = Math.PI; amb.add(p11); porta(p11, { numero: '11', colore: '#5A3B26' });
+  const p11 = new THREE.Group(); p11.position.set(-0.35, 0, 3.47); p11.rotation.y = Math.PI; amb.add(p11); const g11 = porta(p11, { numero: '11', colore: '#5A3B26' });
+  // (episodio 2) la porta dell'11 si socchiude: dietro la luce di casa della vicina, la catenella tesa, il campanello accanto allo stipite
+  const casa11 = add(scene, new THREE.PlaneGeometry(1.6, 2.3), basic('#E9C58A'), V(-0.35, 1.04, 4.6)); casa11.rotation.y = Math.PI; casa11.visible = false;
+  for (const sx of [-0.82, 0.12]) { const sp = add(scene, new THREE.PlaneGeometry(1.2, 2.3), basic('#B88F5C'), V(sx, 1.04, 4.05)); sp.rotation.y = sx < 0 ? Math.PI / 2 : -Math.PI / 2; sp.visible = false; (casa11.userData.lati ||= []).push(sp); }      // le spallette del suo ingresso
+  const cat11 = tra(scene, V(-0.795, 1.3, 3.5), V(-0.72, 1.28, 3.78), 0.004, 0.004, mat('#B9B4A6')); cat11.visible = false;
+  { const pav = add(scene, new THREE.PlaneGeometry(0.94, 1.2), basic('#9C7A52'), V(-0.35, 0.002, 4.05)); pav.rotation.x = -Math.PI / 2; pav.visible = false; casa11.userData.lati.push(pav); }
+  if (opz.vano11) { add(amb, new THREE.BoxGeometry(0.05, 0.08, 0.02), mat('#D8D2C0'), V(0.33, 1.25, 3.485)); add(amb, sfera(0.011, 10), mat('#8E3B2E'), V(0.33, 1.25, 3.472)); }
+  const l11 = new THREE.PointLight('#FFD9A6', 0, 3.2, 1.4); l11.position.set(-0.7, 1.4, 3.2); scene.add(l11);
   const zer = add(amb, new THREE.PlaneGeometry(0.7, 0.42), mat('#7C4A32'), V(-0.35, 0.006, 3.12)); zer.rotation.x = -Math.PI / 2;
   const asc = new THREE.Group(); asc.position.set(1.685, 0, 2.2); asc.rotation.y = -Math.PI / 2; amb.add(asc);
   add(asc, new THREE.BoxGeometry(1.0, 2.1, 0.03), mat('#9CA2A8'), V(0, 1.05, 0)); add(asc, new THREE.BoxGeometry(0.012, 2.1, 0.04), mat('#5E646B'), V(0, 1.05, 0.005));
@@ -141,6 +155,7 @@ export function pianerottoloSet() {
       const bu = M.clamp(o.buio ?? 0), lv = M.clamp(o.luce ?? 1, 0, 1.5);
       L.T.intensity = 0.26 * PI * fk * lv * (1 + 2.2 * bu); L.A.intensity = 0.5 * PI * (0.9 + 0.1 * fk) * (1 - bu * (0.8 + 0.19 * (1 - Math.min(1, lv)))) * (bu ? 0.6 + 0.4 * Math.min(1, lv) : 1); L.F.intensity = 0.3 * PI * (1 - 0.93 * bu) * (bu ? Math.min(1, lv) : 1);
       al.material.opacity = 0.5 * fk * Math.min(1, lv); disco.material.color.set('#FFF1BE').multiplyScalar(bu ? 0.12 + 0.88 * Math.min(1, lv) : 1);
+      { const k11 = M.clamp(o.porta11 ?? 0); g11.userData.anta.rotation.y = 0.34 * k11; casa11.visible = cat11.visible = k11 > 0.02; casa11.userData.lati.forEach((x) => { x.visible = casa11.visible; }); l11.intensity = 1.3 * k11 * (1 - 0.7 * bu); }      // l'anta dell'11 gira verso l'interno di casa sua
       I.pose(o.isp || { pos: [0.03, 0, 0.82], yaw: Math.PI });
       // miraViso (metri sopra il centro della testa): la camera dello spioncino punta al suo viso dovunque sia, così resta nel cerchio anche da vicinissimo
       if (o.miraViso !== undefined) { I.group.updateMatrixWorld(true); const p = I.head.localToWorld(V(o.miraX || 0, o.miraViso, 0.08)); G.lookFrom(cam, o.cam || [0, 1.52, 0.03], [p.x, p.y, p.z], o.roll || 0); cam.updateProjectionMatrix(); L.segui(cam, [p.x, p.y, p.z]); }

@@ -64,15 +64,15 @@ Scritto solo il ramo B («non apri, e scappi dal balcone con il telefono»): l'e
 «hanno scelto l'opzione B continua pure». Il ramo A non si scrive. Regole del 26/11 applicate: la voce non descrive l'immagine, ogni frase regge
 alla logica, pochi dettagli e tutti usati (le chiavi lasciate alla vicina per le piante; la portafinestra socchiusa, da cui lo senti e da cui lui
 capisce dove sei; l'auto grigia con lei ancora nel bagagliaio).
-Perché regge: se non apri, un poliziotto chiede le chiavi alla vicina (lo senti dal muro); richiamare il 112 non serve, ti hanno mandato lui; giù
+Perché regge: se non apri, un poliziotto chiede le chiavi alla vicina (lo vedi dallo spioncino: la porta dell'interno 11, nell'episodio 1, è di fronte alla tua, non accanto; per questo il 26/11 «porta accanto» è diventata «porta di fronte» ed è stata tolta «Lo senti attraverso il muro»); lei va a prenderle, e in quel tempo tu scappi; richiamare il 112 non serve, ti hanno mandato lui; giù
 non si scende (quarto piano), dalla vicina c'è lui, resta il balcone dell'appartamento vuoto dell'altra scala; lui entra, trova la portafinestra
 socchiusa e guarda oltre il divisorio. Il telefono lo chiede con un pretesto credibile («le servono tutte e due le mani»).
 Le regole (lontano dalle finestre, non si apre a nessuno, niente telefono) e le chiavi nella tasca del cappotto arrivano nell'episodio 3.
 
 Avete scelto la B.
 Non apri. Non rispondi. Resti immobile, al buio.
-Lui smette di bussare. E suona alla porta accanto.
-Lo senti attraverso il muro. «Polizia, signora. Il suo vicino non risponde. Lei ha per caso le chiavi?»
+Lui smette di bussare. E suona alla porta di fronte.
+«Polizia, signora. Il suo vicino non risponde. Lei ha per caso le chiavi?»
 Le ha. Gliele hai lasciate tu, per le piante.
 Richiamare il centododici? Ti hanno appena mandato lui.
 Prendi il telefono ed esci sul balcone. La portafinestra resta socchiusa.
@@ -96,5 +96,5 @@ Cosa fai? La A: gli passi il telefono, con dentro il video. Oppure la B: gli dic
 
 **Bivio:** A: Gli passi il telefono / B: Dici che è caduto
 (nella mappa era «gli consegni il telefono / dici di averlo perso»: in questo ramo «perso» = caduto dal balcone; il freezer arriva nell'apertura B dell'episodio 3)
-**Parole:** 254
+**Parole:** 250
 

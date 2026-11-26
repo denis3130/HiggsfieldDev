@@ -10,6 +10,7 @@ import { testimone, ispettore, elena, telefono } from './adulti.js';
 import { assi } from './cucina3.js';
 import { mix } from './pupazzi.js';
 import { auto } from './auto_mesh.js';
+import { balconi, BAL } from './balcone.js';
 
 export const WX = 1.5, FY = 12;                      // la tua finestra: colonna x = 1,5, pavimento del quarto piano a 12 m
 export const LAMP = [3.5, 6.2, 13.3], ZUFFA = [3.3, 0, 13.7], AUTO = [7.3, 0, 15.1];   // il baule dell'auto grigia è a x = AUTO.x - 1,7
@@ -18,7 +19,10 @@ const macchia = (col, op = 1) => new THREE.MeshBasicMaterial({ map: alone(), col
 // l'auto è un modello vero (auto_mesh.js): carrozzeria in una superficie, bagagliaio con vano e cofano incernierato
 export { auto } from './auto_mesh.js';
 
-export function fuoriSet() {
+// opz.balcone (episodio 2): i balconi doppi veri (balcone.js) al posto di quelli disegnati, con la tua portafinestra e quella dell'appartamento vuoto.
+// Senza opzioni il set è quello dell'episodio 1, identico.
+export function fuoriSet(opz = {}) {
+  const BALC = !!opz.balcone;
   const r = rnd(131), scene = new THREE.Scene(); scene.background = new THREE.Color('#060A13'); scene.fog = new THREE.Fog('#060A13', 45, 120);
   const cam = G.camera(30, 0.05, 240); scene.add(cam);
   const amb = new THREE.Group(); scene.add(amb);                                   // riceve le ombre
@@ -59,7 +63,11 @@ export function fuoriSet() {
   const muro = mat('#9C9284'), muro2 = mat('#857C6F'), telaio = mat('#C9C6BD');
   const wy0 = FY + 0.9, wy1 = FY + 2.3, wx0 = WX - 0.6, wx1 = WX + 0.6, HT = 18.7;
   const rect = (x0, x1, y0, y1, m = muro, z = 0, p = amb) => add(p, new THREE.PlaneGeometry(x1 - x0, y1 - y0), m, V((x0 + x1) / 2, (y0 + y1) / 2, z));
-  rect(-9, wx0, 0, HT); rect(wx1, 9, 0, HT); rect(wx0, wx1, 0, wy0); rect(wx0, wx1, wy1, HT);
+  if (!BALC) { rect(-9, wx0, 0, HT); rect(wx1, 9, 0, HT); rect(wx0, wx1, 0, wy0); rect(wx0, wx1, wy1, HT); }
+  else {                                         // con i balconi veri la facciata ha i vani veri: sei colonne di buchi (portefinestre e finestre), dietro ci sono spallette e tapparelle (balcone.js)
+    const PF = [1, 2, 3, 4, 5].map((f) => [3 * f, 3 * f + BAL.HP]), FI = [1, 2, 3, 4, 5].map((f) => [3 * f + 0.9, 3 * f + 2.3]); let x = -9;
+    for (const [a, b, buchi] of [[-BAL.NX1, -BAL.NX0, PF], [-BAL.PX1, -BAL.PX0, PF], [-2.1, -0.9, FI], [wx0, wx1, FI], [BAL.PX0, BAL.PX1, PF], [BAL.NX0, BAL.NX1, PF]]) { rect(x, a, 0, HT); let y = 0; for (const [u, v] of buchi) { rect(a, b, y, u); y = v; } rect(a, b, y, HT); x = b; }
+    rect(x, 9, 0, HT); }
   for (let f = 1; f <= 6; f++) box(18.1, 0.12, 0.09, muro2, V(0, 3 * f, 0.04)); box(18.4, 0.55, 0.36, muro2, V(0, HT + 0.25, 0.05)); box(18.1, 0.5, 0.07, muro2, V(0, 0.25, 0.03));
   const vetro = (tipo) => basic(0xffffff, { map: tex(128, 160, (c, w, h) => {
     if (tipo === 0) { const g = c.createLinearGradient(0, 0, w, h); g.addColorStop(0, '#0B111D'); g.addColorStop(0.5, '#182236'); g.addColorStop(0.56, '#0E1524'); g.addColorStop(1, '#0A0F1A'); c.fillStyle = g; c.fillRect(0, 0, w, h); }
@@ -71,6 +79,7 @@ export function fuoriSet() {
   for (const x of [-7.5, -4.5, -1.5, 1.5, 4.5, 7.5]) for (let f = 1; f <= 5; f++) {
     const y = 3 * f, balc = Math.abs(x) === 4.5;
     if (x === WX && f === 4) continue;
+    if (BALC) continue;                              // con i balconi veri anche i vani sono veri
     if (balc) { rect(x - 0.5, x + 0.5, y + 0.05, y + 2.25, V3[r() < 0.5 ? 1 : 0], 0.012, fuori); box(2.5, 0.14, 1.1, muro2, V(x, y - 0.02, 0.55));
       const fr = add(fuori, new THREE.PlaneGeometry(2.5, 1.0), ringhiera, V(x, y + 0.55, 1.08)); for (const s of [-1, 1]) { const sd = add(fuori, new THREE.PlaneGeometry(1.06, 1.0), ringhiera, V(x + s * 1.24, y + 0.55, 0.55)); sd.rotation.y = Math.PI / 2; } }
     else { rect(x - 0.6, x + 0.6, y + 0.9, y + 2.3, V3[Math.floor(r(0, 3))], 0.012, fuori); box(1.36, 0.05, 0.16, telaio, V(x, y + 0.88, 0.07)); }
@@ -126,6 +135,7 @@ export function fuoriSet() {
   const alK = new THREE.Sprite(macchia('#FFD08A', 0.6)); alK.position.set(0.1, 2.0, -1.85); alK.scale.set(1.5, 1.5, 1); K.add(alK);
   const LK = new THREE.PointLight('#FFD9A6', 0, 9, 1.1); LK.position.set(0.1, 1.95, -1.85); K.add(LK);
   const LV = new THREE.PointLight('#FFD9A6', 0, 3, 1.4); LV.position.set(0, 1.75, 0.05); K.add(LV);       // riempimento sul viso quando sei alla finestra
+  const BL = BALC ? balconi({ scene, amb, fuori, FY }) : null;
   ombre(amb, { fa: false, riceve: true }); ombre(K, { fa: false, riceve: false });
 
   // ---------------------------------------------------------------- luci e personaggi
@@ -135,7 +145,9 @@ export function fuoriSet() {
   const bic = add(T.AL.gH, new THREE.CylinderGeometry(0.034, 0.028, 0.115, 16), mat('#D5E6EC'), V(0, -0.075, -0.045)); bic.visible = false;      // il bicchiere d'acqua
   const LM = new THREE.PointLight('#8FB0F0', 0, 5, 1.2); LM.position.set(WX + 0.2, FY + 1.7, -1.5); scene.add(LM);                              // la luce della notte che entra dalla finestra
   const tmp = V(0, 0, 0), dir = V(0, 0, 0), cA = new THREE.Color();
-  return { scene, camera: cam, bloom: 0, T, R, E, grigia,
+  // bacino: { gira: [x, y, z], sposta: [x, y, z] } nella posa di tu / riva = il bacino ruotato e spostato (scavalcare, sporgersi), prima della posa: le braccia «mondo» lo seguono
+  const bacino = (X, q) => { const f = X.parti.fianchi, b = q && q.bacino; f.rotation.set(...((b && b.gira) || [0, 0, 0])); f.position.set(...((b && b.sposta) || [0, 0, 0])); };
+  return { scene, camera: cam, bloom: 0, T, R, E, grigia, BL, tel,
     update(t, u, o = {}) {
       G.lookFrom(cam, o.cam || [WX, FY + 1.6, 0.5], o.look || ZUFFA, o.roll || 0); cam.fov = o.fov || 30; cam.updateProjectionMatrix(); L.segui(cam, o.look || ZUFFA);
       const k = M.clamp(o.cucina ?? 1), dn = o.interno ? 1 : 0;
@@ -148,23 +160,28 @@ export function fuoriSet() {
       SP.intensity = 15 * (o.lampione ?? 1); cono.material.opacity = 0.055 * (o.lampione ?? 1);
       grigia.cofano(o.cofano || 0);
       tel.g.visible = M.clamp(o.telTu ?? 0) > 0; tel.g.rotation.z = o.telFuori ? -Math.PI / 2 : 0;          // prima della posa: la mano modellata prende la presa dell'oggetto che si vede
-      T.pose(o.tu || { pos: [WX, FY, -0.55] });
+      if (BL) BL.update(t, o);
+      bacino(T, o.tu); T.pose(o.tu || { pos: [WX, FY, -0.55] }); T.head.visible = !(o.tu && o.tu.senzaTesta);      // senzaTesta: per le soggettive (la camera sta al posto della tua testa)
       const e = o.elena || { pos: [ZUFFA[0] + 0.35, 0, ZUFFA[2]], yaw: -Math.PI / 2 };
       const f = E.parti.fianchi, cade = M.clamp(e.cade || 0), sd = M.clamp(e.sdraiata || 0);      // prima della posa: le braccia «mondo» usano già il corpo ruotato
       f.rotation.set(-Math.PI / 2 * sd + 0.25 * cade * (e.dritta ? 0 : 1), 0, -Math.PI / 2 * cade * (e.lato || 1)); f.position.y = 0.14 * cade;      // cade: sul fianco sinistro (lato: -1 = sul destro); sdraiata: supina
-      E.group.visible = !e.nascosta; E.pose(e);
+      E.group.visible = !e.nascosta; if (!(BALC && e.nascosta)) E.pose(e);
       // i punti del corpo di Elena nel mondo: un braccio di Riva può dire { su: 'cavigliaD', delta: [x, y, z] } invece di un punto fisso (la tiene davvero)
       const anc = {}, wp = (g, n) => { g.getWorldPosition(tmp); anc[n] = [tmp.x, tmp.y, tmp.z]; }, P = E.parti;
       wp(P.GL.foot, 'cavigliaD'); wp(P.GR.foot, 'cavigliaS'); wp(P.GL.knee, 'ginocchioD'); wp(P.GR.knee, 'ginocchioS'); wp(P.AL.gH, 'polsoD'); wp(P.AR.gH, 'polsoS'); wp(P.AL.gU, 'spallaD'); wp(P.AR.gU, 'spallaS'); wp(E.head, 'testa');
       const tiene = (a) => (a && a.su && anc[a.su] ? { ...a, mondo: anc[a.su].map((v, i) => v + ((a.delta || [0, 0, 0])[i])) } : a);
       const rv = o.riva || { pos: [ZUFFA[0] - 0.35, 0, ZUFFA[2]], yaw: Math.PI / 2 };
-      R.pose({ ...rv, armL: tiene(rv.armL), armR: tiene(rv.armR) });
+      bacino(R, rv); R.pose({ ...rv, armL: tiene(rv.armL), armR: tiene(rv.armR) });
       bic.visible = !!o.bicchiere; LM.intensity = dn ? 0.75 * (1 - k) : 0;
+      // mira: { chi: 'tu' | 'riva', dx, dy, dz (punto nella testa), da: [x, y, z] } = la camera punta al viso di quel personaggio dovunque sia;
+      // con `da` sta anche a quella distanza dal viso (nel mondo): un primo piano che non dipende dalla posa
+      if (o.mira) { const X = o.mira.chi === 'riva' ? R : T; X.group.updateMatrixWorld(true); const p = X.head.localToWorld(V(o.mira.dx || 0, o.mira.dy || 0, o.mira.dz ?? 0.08)), lk = [p.x, p.y, p.z], d = o.mira.da;
+        G.lookFrom(cam, d ? [p.x + d[0], p.y + d[1], p.z + d[2]] : o.cam, lk, o.roll || 0); cam.updateProjectionMatrix(); L.segui(cam, lk); }
       vetroB.material.opacity = dn ? 0 : 0.9 * (1 - k); vetroB.visible = vetroB.material.opacity > 0.01;
       // telFuori: il telefono che filma. Sta dritto, di traverso dietro le dita (posa della mano «filma», dita orizzontali e dorso verso fuori):
       // da fuori si vedono il dorso della mano, le dita sul retro del telefono e l'obiettivo che sporge sopra l'indice
-      const tk = M.clamp(o.telTu ?? 0), tf = !!o.telFuori; tel.g.visible = tk > 0; tel.g.rotation.z = tf ? -Math.PI / 2 : 0; tel.g.position.set(tf ? 0.055 : 0, tf ? -0.128 : 0, tf ? 0.0145 : 0); T.group.updateMatrixWorld(true);
+      const tk = M.clamp(o.telTu ?? 0), tf = !!o.telFuori; tel.g.visible = tk > 0; if (BALC) tel.schermo.material.color.set('#0A0C10').lerp(cA.set('#BFD6FF'), M.clamp(o.telSchermo ?? 1)); tel.g.rotation.z = tf ? -Math.PI / 2 : 0; tel.g.position.set(tf ? 0.055 : 0, tf ? -0.128 : 0, tf ? 0.0145 : 0); T.group.updateMatrixWorld(true);
       tel.schermo.getWorldPosition(tmp); tel.schermo.getWorldDirection(dir); const orecchio = T.AR.posaMano === 'orecchio';      // all'orecchio lo schermo è contro la testa: fa solo un po' di chiarore
-      LT.position.copy(tmp).addScaledVector(dir, orecchio ? -0.1 : 0.24); LT.intensity = (orecchio ? 0.12 : o.telFuori ? 0.5 : 0.8) * tk;
+      LT.position.copy(tmp).addScaledVector(dir, orecchio ? -0.1 : 0.24); LT.intensity = (orecchio ? 0.12 : o.telFuori ? 0.5 : 0.8) * tk * (o.telLuce ?? 1);
     } };
 }

@@ -1,0 +1,149 @@
+{
+ "serie": "Il Bivio",
+ "storia": "Il testimone",
+ "episodio": 2,
+ "titolo": "La mano tesa",
+ "ramo": "B dell'episodio 1 (non apri, e scappi dal balcone con il telefono)",
+ "stato": "BOZZA del 26/11: il testo aspetta l'ok dell'utente; la voce di Luc si genera solo dopo. «pausa» = secondi di silenzio dopo la riga (per le azioni): li legge prepara_voce.py.",
+ "bivio": {
+  "A": "Gli passi il telefono",
+  "B": "Dici che è caduto"
+ },
+ "righe": [
+  {
+   "id": 1,
+   "voce": "Avete scelto la B.",
+   "pausa": 0.5
+  },
+  {
+   "id": 2,
+   "voce": "Non apri. Non rispondi. Resti immobile, al buio.",
+   "pausa": 0.5
+  },
+  {
+   "id": 3,
+   "voce": "Lui smette di bussare. E suona alla porta di fronte.",
+   "pausa": 0.6
+  },
+  {
+   "id": 4,
+   "voce": "«Polizia, signora. Il suo vicino non risponde. Lei ha per caso le chiavi?»",
+   "pausa": 0.5
+  },
+  {
+   "id": 5,
+   "voce": "Le ha. Gliele hai lasciate tu, per le piante.",
+   "pausa": 0.6
+  },
+  {
+   "id": 6,
+   "voce": "Richiamare il centododici? Ti hanno appena mandato lui.",
+   "pausa": 0.5
+  },
+  {
+   "id": 7,
+   "voce": "Prendi il telefono ed esci sul balcone. La portafinestra resta socchiusa.",
+   "pausa": 0.6
+  },
+  {
+   "id": 8,
+   "voce": "Sotto ci sono quattro piani di vuoto. E l'auto grigia. Lei è ancora lì dentro.",
+   "pausa": 0.7
+  },
+  {
+   "id": 9,
+   "voce": "Di fianco c'è il balcone di un appartamento vuoto da mesi. Lì non verrà a cercarti.",
+   "pausa": 0.5
+  },
+  {
+   "id": 10,
+   "voce": "Scavalchi la ringhiera. È bagnata. Non guardi giù.",
+   "pausa": 0.6
+  },
+  {
+   "id": 11,
+   "voce": "Un piede oltre il divisorio. Poi l'altro. Ci sei.",
+   "pausa": 0.6
+  },
+  {
+   "id": 12,
+   "voce": "Ti rannicchi contro il muro, al buio.",
+   "pausa": 0.9
+  },
+  {
+   "id": 13,
+   "voce": "In casa tua si accende la luce.",
+   "pausa": 0.7
+  },
+  {
+   "id": 14,
+   "voce": "«Permesso», dice lui. Come un ospite.",
+   "pausa": 0.5
+  },
+  {
+   "id": 15,
+   "voce": "Lo senti camminare. Apre le porte, una per una. Senza fretta.",
+   "pausa": 0.5
+  },
+  {
+   "id": 16,
+   "voce": "«Non deve avere paura di me», dice piano. «Sono qui per proteggerla.»",
+   "pausa": 0.8
+  },
+  {
+   "id": 17,
+   "voce": "Poi i suoi passi escono sul balcone. E si fermano.",
+   "pausa": 1.0
+  },
+  {
+   "id": 18,
+   "voce": "Trattieni il respiro.",
+   "pausa": 1.2
+  },
+  {
+   "id": 19,
+   "voce": "La sua faccia spunta da dietro il divisorio. Lentamente.",
+   "pausa": 0.8
+  },
+  {
+   "id": 20,
+   "voce": "«Eccola», dice, gentile. «Mi ha fatto spaventare. Pensavo si fosse buttato.»",
+   "pausa": 0.5
+  },
+  {
+   "id": 21,
+   "voce": "«Con questa pioggia si scivola. Basta un attimo.»",
+   "pausa": 0.7
+  },
+  {
+   "id": 22,
+   "voce": "Ti tende la mano, sopra il vuoto. «Venga. L'aiuto io.»",
+   "pausa": 0.6
+  },
+  {
+   "id": 23,
+   "voce": "«Prima però mi passi il telefono. Le servono tutte e due le mani.»",
+   "pausa": 0.8
+  },
+  {
+   "id": 24,
+   "voce": "Cosa fai?",
+   "pausa": 0.2
+  },
+  {
+   "id": 25,
+   "voce": "La A: gli passi il telefono, con dentro il video.",
+   "pausa": 0.25
+  },
+  {
+   "id": 26,
+   "voce": "Oppure la B: gli dici che ti è caduto di sotto.",
+   "pausa": 0.25
+  },
+  {
+   "id": 27,
+   "voce": "Scrivilo nei commenti, e seguimi per vedere come continua."
+  }
+ ],
+ "nota_testo": "26/11, costruendo le scene: la porta dell'interno 11, nell'episodio 1, è DI FRONTE alla tua (si vede dallo spioncino dietro l'ispettore), non accanto. Quindi «E suona alla porta di fronte» (era «accanto») e via «Lo senti attraverso il muro.»: lo guardi dallo spioncino. Da dire all'utente insieme al resto del testo."
+}

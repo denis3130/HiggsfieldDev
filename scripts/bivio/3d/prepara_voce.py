@@ -11,6 +11,7 @@ TESTA, CODA = 0.4, 1.7
 PAUSE = {2: 0.3, 3: 0.8, 4: 0.45, 6: 0.2, 7: 0.7, 8: 0.45, 9: 0.35, 10: 0.25, 11: 0.6, 12: 0.35, 13: 0.75, 14: 0.35, 15: 0.25, 16: 0.9, 17: 0.45, 18: 0.25, 19: 0.2, 20: 0.75,
          21: 0.6, 22: 1.4, 23: 0.25, 24: 0.4, 25: 0.75, 26: 0.65, 27: 0.35, 28: 0.25, 29: 0.75, 30: 0.2, 31: 0.25, 32: 0.25}
 ep = json.load(open(f'{V}/episodio.json'))
+if any('pausa' in r for r in ep['righe']): PAUSE = {i + 1: r['pausa'] for i, r in enumerate(ep['righe']) if r.get('pausa') and i + 1 < len(ep['righe'])}      # dall'episodio 2 le pause stanno nel copione, riga per riga
 if FINTA:
     q, t = [], 0.0
     for r in ep['righe']:
@@ -70,6 +71,6 @@ json.dump(q, open(f'{F}/assets/parole.json', 'w'), ensure_ascii=False)
 if os.path.exists(f'{F}/film.json'):
     cfg = json.load(open(f'{F}/film.json'))
     if not cfg.get('inizio_fotogramma'): cfg['duration'] = fine; json.dump(cfg, open(f'{F}/film.json', 'w'), indent=1, ensure_ascii=False)
-else: json.dump({'title': 'Il testimone - episodio 1', 'duration': fine, 'formats': ['9x16'], 'poster': 30}, open(f'{F}/film.json', 'w'), indent=1)
+else: json.dump({'title': f"{ep.get('storia', 'Il Bivio')} - episodio {ep.get('episodio', 1)}", 'duration': fine, 'formats': ['9x16'], 'poster': 30}, open(f'{F}/film.json', 'w'), indent=1)
 if TAGLI: print('tagli per le pause (dopo la riga, secondo, nel silenzio):', ' '.join(f"{n}:{t}{'' if ok else '(!)'}" for n, t, ok in sorted(TAGLI)))
 print('durata', fine, '| righe:', ' '.join(f'{i + 1}:{r[0][0]:.1f}' for i, r in enumerate(q)))
