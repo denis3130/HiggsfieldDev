@@ -46,6 +46,10 @@ const POSE = [
   { nome: 'fianco destro (la borsa di Elena)', centro: [-0.16, 1.0, -0.04], raggio: 1.3, posa: {} },
   { nome: 'mano sulla bocca (a coppa)', centro: [-0.02, 1.58, 0.1], raggio: 1.05, posa: { fear: 1, browUp: 0.6, armL: BOCCA } },
   { nome: 'mano sulla bocca (da lontano)', centro: [-0.05, 1.4, 0.05], raggio: 2.2, posa: { fear: 1, browUp: 0.6, armL: BOCCA } },
+  // il collo e il colletto da vicino (26/11: «migliorare il collo del protagonista»), fermo e con la testa girata e piegata
+  { nome: 'collo e colletto', centro: [0, 1.5, 0.03], raggio: 0.62, posa: {} },
+  { nome: 'collo, testa girata e in giù', centro: [0, 1.5, 0.03], raggio: 0.62, posa: { headYaw: 0.7, headPitch: 0.25 } },
+  { nome: 'collo, testa in su e inclinata', centro: [0, 1.5, 0.03], raggio: 0.62, posa: { headPitch: -0.45, headRoll: 0.2 } },
   // il telefono che filma dalla finestra (di traverso nella mano: dita dietro con le punte agganciate al bordo, pollice sullo schermo)
   { nome: 'telefono che filma', centro: [0.13, 1.4, 0.3], raggio: 0.8, posa: { telefono: 1, filma: 1, armR: { a: [0.206, 0.329, 0.268], gomito: [1, -0.8, 0], dita: [-1, 0.06, 0], dorso: [0, -0.5, 0.87], mano: 'filma' } } },
 ];

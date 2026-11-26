@@ -22,8 +22,8 @@ proprio quelli in dotazione al programma. Il codice di MakeHuman (AGPL) e quello
 **Che cosa ho fatto io sopra gli originali** (`converti_corpo.py`): forma del corpo per ogni personaggio, vestiti adattati al corpo, pelle
 tolta sotto i vestiti, testa e mani tolte (restano la testa disegnata e la mano modellata), ossa ridotte a quelle del pupazzo, lisciatura,
 il cappotto dell'ispettore e quello di Elena (la giacca allungata fino al ginocchio), le spalle a tappe (tre ossa in più per lato tra busto e
-braccio), l'osso della borsa di Elena (così può cadere a terra con lei), le maniche della maglietta più aderenti, texture ridipinte coi
-colori piatti dei personaggi (`pittura.py`).
+braccio), l'osso della borsa di Elena (così può cadere a terra con lei), le maniche della maglietta più aderenti, il collo del testimone
+più snello (`collo_snello()`), texture ridipinte coi colori piatti dei personaggi (`pittura.py`).
 
 **Per rifare i dati da capo:**
 ```

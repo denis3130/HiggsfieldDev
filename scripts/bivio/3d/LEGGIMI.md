@@ -342,6 +342,30 @@ L'utente ha fatto togliere «Sotto l'unico lampione,» dall'episodio 1 (frase ch
 - Limite: funziona se prima e dopo le parole da togliere c'è un silenzio (qui 800 e 186 ms). Dentro una frase detta tutta d'un fiato lo
   script si ferma e lo dice, invece di tagliare dentro una parola.
 
+## Il collo del protagonista (26/11): «quanto ci metti a modificare per migliorare il collo del protagonista?»
+
+Cosa non andava (detto a lui prima di toccare niente): troppo grosso (di fronte largo quanto la mascella, a cono verso le spalle; di profilo
+un tubo spesso quasi quanto la testa), senza stacco sotto la mascella, e alla base, davanti, uno scalino sopra il colletto. Il collo di
+MakeHuman ha misure vere (11,3 cm a metà), ma sotto una testa disegnata piccola e con poche ombre sembra enorme.
+- **Più snello** (`collo_snello()` nel convertitore, parametri `collo` del personaggio): stringe il collo attorno al suo asse, dal giunto
+  del collo a quello della testa: `largo` 0,84 di lato, `profondo` 0,81 davanti-dietro (l'asse sta verso la nuca, quindi rientra soprattutto
+  la gola). Sfuma verso le spalle coi pesi delle ossa del collo: `spalle` 0,3 = alla base di lato si stringe poco (il collo si allarga
+  verso le spalle, com'è vero; con 0,55 tra collo e colletto si apriva uno spiraglio), `gola` 0,92 = davanti-dietro si stringe anche
+  alla base (toglie lo scalino). A metà collo: da 11,3 a 9,7 cm. Si fa PRIMA di adattare i vestiti, così il colletto segue; statura e
+  giunti non cambiano. Solo il testimone ha `collo`: i dati di ispettore ed Elena restano identici byte per byte.
+- **Pelle sotto il colletto** (`sotto_collo` 0,6): attorno al collo la pelle continua sei centimetri sotto la maglietta invece di due.
+  Col collo più snello, dallo spiraglio del colletto si vedeva il bordo dove la pelle finiva (una punta che spuntava di tre quarti).
+- **Ombra sotto la mascella** (`ombraMento` in `vesti()`, 0,2 per il testimone in `adulti.js`): colori dei vertici sulla pelle, più scuri
+  dove il collo entra nella testa, sfumati in sei-sette centimetri, più leggeri sulla nuca. Senza, mento e collo hanno la stessa tinta
+  piatta. La pelle ha quindi un materiale suo (clone con `vertexColors`); i raccordi dei polsi usano quello liscio (`pelle.liscio`).
+- **Controlli**: laboratorio `prova_corpo` al secondo 10 (testa e collo da quattro lati) e ai secondi 50-52 (collo e colletto da vicino,
+  testa girata e in giù, testa in su e inclinata: col collo vecchio, lì, sotto il mento c'erano bordi seghettati), braccia alzate (la pelle
+  in più non buca la maglietta), poi le scene vere ingrandite. Niente foto vera accanto: Openverse rifiutava le richieste (429); ho
+  controllato le proporzioni sui numeri (collo circa il 62% della larghezza della testa) e da tutti i lati.
+- **Video**: si rifanno solo le scene in cui si vede lui (`scene_ep1`: cucina, finestra, tu1, tu2, palazzo, spegni, terra, ascolta, corridoio,
+  viso, passo, piede, video, carte: 2138 fotogrammi su 3964) e si attaccano alle altre, che non cambiano. L'elenco delle scene coi
+  fotogrammi si legge dalla pagina del film (`window.TEMPI`).
+
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 
 - La musica la sceglie l'utente. Se non ne manda una sua, gli si propongono tre brani veri e gratuiti (CC0), montati sotto lo stesso pezzo

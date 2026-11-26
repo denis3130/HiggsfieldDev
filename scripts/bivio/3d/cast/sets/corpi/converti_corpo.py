@@ -16,6 +16,7 @@ TEX = os.path.join(OUT, 'tex'); DIMS = {'male_elegantsuit01': 2048}        # lat
 # ---- i personaggi: forma del corpo (bersagli di MakeHuman), vestiti, scarpe, quanto lisciare
 PERSONAGGI = {
     'testimone': dict(forma={'macrodetails/caucasian-male-young': 1.0}, vestiti=['male_casualsuit06'], scarpe='shoes05', maniche=0.55, livelli={'pelle': 2, 'vestito': 1, 'scarpa': 1},
+                      collo=dict(largo=0.84, profondo=0.81, spalle=0.3, gola=0.92), sotto_collo=0.6,      # il collo più snello sotto la testa piccola (26/11: «migliorare il collo del protagonista»)
                       colori=dict(maglia='#A9ADB3', magliaDk='#8B8F96', jeans='#2C3654', scarpaChiaro='#D5D7DC', scarpaScuro='#3B3E47', calza='#8A8D96')),
     'ispettore': dict(forma={'macrodetails/caucasian-male-young': 0.55, 'macrodetails/caucasian-male-old': 0.45,
                              'macrodetails/universal-male-young-averagemuscle-maxweight': 0.12, 'macrodetails/universal-male-old-averagemuscle-maxweight': 0.1},
@@ -300,9 +301,28 @@ def dipingi(nome, o, c):
     if os.path.exists(nrm): P.Image.open(nrm).convert('RGB').save(os.path.join(TEX, f + '_normal.png')); info['pieghe'] = f + '_normal.png'
     return info
 
+def collo_snello(H, largo=0.84, profondo=0.81, spalle=0.3, gola=0.92):
+    """Il collo di MakeHuman ha misure vere (11-12 cm), ma sotto una testa disegnata piccola e con poche ombre sembra un tubo grosso quanto la
+    mascella (l'utente il 26/11: «migliorare il collo del protagonista»). Lo stringe attorno al suo asse (dal giunto del collo a quello della
+    testa): `largo` di lato, `profondo` davanti-dietro (l'asse sta verso la nuca, quindi rientra soprattutto la gola). Sfuma verso le spalle
+    coi pesi delle ossa del collo, così il trapezio scende più dolce invece di fare un cono (`spalle` = quanto ne risente la base di lato,
+    `gola` = quanto ne risente davanti-dietro: di profilo, alla base, la gola faceva uno scalino sopra il colletto)."""
+    a, b = mh.capo(H, GRUPPI, RIG['neck01']['head']), mh.capo(H, GRUPPI, RIG['head']['head']); asse = (b - a) / np.linalg.norm(b - a); L = np.linalg.norm(b - a)
+    sm = lambda x0, x1, x: (lambda t: t * t * (3 - 2 * t))(np.clip((x - x0) / (x1 - x0), 0, 1))
+    d = H - a; s = (d @ asse) / L                                                     # 0 alla base del collo, 1 al giunto della testa
+    wc = WB[:, [KO['collo1'], KO['collo2'], KO['collo3'], KO['testa']]].sum(1)        # quanto un vertice è «collo» (le spalle e il petto no)
+    fuori = sm(0.12, 0.55, wc) * sm(-0.9, -0.25, s) * (1 - sm(1.2, 1.7, s))             # sopra il giunto della testa niente: la testa modellata non si usa
+    m, mz = fuori * (spalle + (1 - spalle) * sm(-0.1, 0.45, s)), fuori * (gola + (1 - gola) * sm(-0.1, 0.45, s))
+    r = d - np.outer(d @ asse, asse)                                                  # la parte di d perpendicolare all'asse
+    ex = np.array([1.0, 0, 0]); ez = np.cross(ex, asse); ez /= np.linalg.norm(ez)     # di lato; davanti-dietro (perpendicolare all'asse)
+    rx, rz = r @ ex, r @ ez; nuovo = np.outer(rx * (1 - m * (1 - largo)), ex) + np.outer(rz * (1 - mz * (1 - profondo)), ez) + (r - np.outer(rx, ex) - np.outer(rz, ez))
+    H = H.copy(); H += nuovo - r
+    return H
+
 def costruisci(nome, o):
     print('==', nome, flush=True)
     H = mh.forma(V0, MP, o['forma'])                                                   # il corpo con la sua forma (decimetri)
+    if o.get('collo'): H = collo_snello(H, **o['collo'])
     capi = [mh.vestito(os.path.join(CL, n, n + '.json')) for n in o['vestiti'] + [o['scarpe']]]
     from scipy.spatial import cKDTree
     NH = np.zeros_like(H); cb_ = GRUPPI['body']                                         # le normali della pelle (verso fuori) e i suoi punti, per sapere se un vestito ci finisce sotto
@@ -352,7 +372,10 @@ def costruisci(nome, o):
         # (dove la maglia del corpo è rada, come sul braccio, due centimetri non arrivano al primo giro di vertici nascosti: resta comunque tutto
         # il giro di vertici che tocca la pelle visibile, altrimenti tra la pelle e l'orlo della manica si apre un buco)
         tocca = np.zeros(NV0, bool); fb = F0[G0 == ID_BODY]; tocca[fb[(~nasc[fb]).any(1)].ravel()] = True
-        d, _ = cKDTree(H[vis]).query(H[nas]); r = o.get('sotto', 0.22); scelti = (d < r) | tocca[nas]; sotto = nas[scelti]; d = d[scelti]; nasc[sotto] = False
+        # (attorno al collo la pelle continua più in giù, `sotto_collo`: con il collo snellito tra colletto e collo resta uno spiraglio, e da lì
+        # si vedeva il bordo dove la pelle finiva, come una punta che spuntava dal colletto)
+        d, _ = cKDTree(H[vis]).query(H[nas]); r = o.get('sotto', 0.22) + (o.get('sotto_collo', o.get('sotto', 0.22)) - o.get('sotto', 0.22)) * np.clip(WB[nas][:, [KO['collo1'], KO['collo2'], KO['collo3']]].sum(1) / 0.25, 0, 1)
+        scelti = (d < r) | tocca[nas]; sotto = nas[scelti]; d = d[scelti]; nasc[sotto] = False
         # ...ma solo per 2 cm e subito più in dentro (fino a 1,2 cm), così non buca il vestito nemmeno a braccio alzato: più in là, sotto il vestito non c'è niente
         N = np.zeros_like(H)
         for f in F0[G0 == ID_BODY]:

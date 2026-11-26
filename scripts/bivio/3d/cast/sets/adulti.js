@@ -50,7 +50,7 @@ function uomo(o) {
   let abito = null;
   if (mis) {                                             // il corpo modellato: i pezzi a pupazzo (tranne la testa) restano solo come ossa
     fianchi.traverse((x) => { if (!x.isMesh) return; for (let p = x; p; p = p.parent) if (p === T.head) return; x.visible = false; });
-    abito = vesti(parti, o.corpo, { materiali: o.materiali || {}, skin: C.skin, unghia: C.unghie || '#EBC6B3', pelleMani: o.guanti || null }); parti.abito = abito;
+    abito = vesti(parti, o.corpo, { materiali: o.materiali || {}, skin: C.skin, unghia: C.unghie || '#EBC6B3', pelleMani: o.guanti || null, ombraMento: o.ombraMento || 0 }); parti.abito = abito;
   }
   if (o.extra) o.extra(parti);
   ombre(root);
@@ -97,7 +97,7 @@ export function testimone({ modellato = true } = {}) {
       spessore: (th, ph) => 0.05 + 0.095 * Math.exp(-(((th - 0.72) / 0.36) ** 2)) * Math.exp(-(((ph - 0.18) / 0.8) ** 2)) + 0.02 * Math.exp(-((th / 0.5) ** 2)),
       solchi: { k: 38, amp: 0.014 }, base: C.capelli, chiaro: '#4E3A2B', scuro: '#17100C', n: 260, seme: 9 });
   };
-  return uomo({ k: 1, C, F, corpo: modellato ? 'testimone' : null,
+  return uomo({ k: 1, C, F, corpo: modellato ? 'testimone' : null, ombraMento: 0.2,
     polso: 0.0295, polsoZ: 0.0205, torso: mat(0xffffff, { map: magliaT }), manica: mat(C.maglia), manica2: mat(C.skin), gomitoM: mat(C.skin), orlo: mat(C.magliaDk), polsino: null,
     capelli: pettina,
     extra: ({ upper, k, abito }) => { if (abito) return; const cl = add(upper, new THREE.TorusGeometry(0.054 * k, 0.007 * k, 10, 36), mat(C.magliaDk), V(0, 0.463 * k, 0.008)); cl.rotation.x = Math.PI / 2 + 0.2; cl.scale.set(1.08, 1, 1); } });

@@ -87,7 +87,7 @@ function telaiBraccio(S, E, W, h) {
   return { brac: base3(x1, y1, x1.clone().cross(y1)), ava: base3(x2, y2, x2.clone().cross(y2)) };
 }
 // Veste il pupazzo: parti = { root, fianchi, upper, collo, AL, AR, GL, GR, k } (da uomo() in adulti.js). Torna { corpo, aggiorna() }: aggiorna va chiamata dopo ogni posa.
-export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani = true, livelliMano = 2, skin = '#D9A583', unghia = '#EBC6B3', pelleMani = null } = {}) {
+export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani = true, livelliMano = 2, skin = '#D9A583', unghia = '#EBC6B3', pelleMani = null, ombraMento = 0 } = {}) {
   const { root, fianchi, upper, collo, AL, AR, GL, GR, k = 1 } = parti, C = corpoMesh(nome, { materiali, skin }), D = C.D, K = D.K, mis = misure(nome, upper.position.y + AL.S.y), u = mis.u, P = mis.P;
   for (let i = 0; i < C.riposo.length; i++) C.riposo[i] *= u;
   root.add(C.group);
@@ -101,7 +101,14 @@ export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani 
       rho[v] = r; }
     const geo = pelle.mesh.geometry, ix = geo.index.array, tieni = [], tri = [];
     for (let t = 0; t < ix.length; t += 3) { const a = pelle.tri[t] - pelle.p0, b = pelle.tri[t + 1] - pelle.p0, c = pelle.tri[t + 2] - pelle.p0; if (rho[a] < 0.96 && rho[b] < 0.96 && rho[c] < 0.96) continue; tieni.push(ix[t], ix[t + 1], ix[t + 2]); tri.push(pelle.tri[t], pelle.tri[t + 1], pelle.tri[t + 2]); }
-    geo.setIndex(tieni); pelle.tri = Uint32Array.from(tri); }
+    geo.setIndex(tieni); pelle.tri = Uint32Array.from(tri);
+    // ombraMento (0 = niente): un'ombra morbida sotto la mascella, dipinta sui vertici della pelle: più scura dove il collo entra nella testa, sfuma
+    // in sei-sette centimetri, più leggera sulla nuca. Senza, mento e collo hanno la stessa tinta piatta e il collo sembra un tubo attaccato alla faccia.
+    if (ombraMento > 0) { const col = new Float32Array(pelle.nr * 3).fill(1);
+      for (let i = 0; i < pelle.nr; i++) { const g = pelle.rv[i]; p.set(C.riposo[g * 3], C.riposo[g * 3 + 1], C.riposo[g * 3 + 2]).applyMatrix4(Ti); if (p.lengthSq() > 0.09) continue;
+        const k = ombraMento * (1 - sm(0.98, 1.65, raggioTesta(parti.T, p.x, p.y, p.z))) * (0.5 + 0.5 * sm(-0.05, 0.02, p.z)); if (k <= 0) continue;
+        col[i * 3] = 1 - k; col[i * 3 + 1] = 1 - 1.1 * k; col[i * 3 + 2] = 1 - 1.18 * k; }
+      geo.setAttribute('color', new THREE.BufferAttribute(col, 3)); pelle.liscio = pelle.mesh.material; pelle.mesh.material = pelle.mesh.material.clone(); pelle.mesh.material.vertexColors = true; } }
   const nb = D.ossa.length, INV = D.ossa.map(() => new THREE.Matrix4()), SK = D.ossa.map(() => new THREE.Matrix4()), I4 = new THREE.Matrix4();
   const lega = (n, B) => INV[K[n]].copy(B).invert();
   // ---- riposo: i telai delle ossa nel corpo modellato (spazio della radice, personaggio in piedi nell'origine)
@@ -191,7 +198,7 @@ export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani 
     const NR = 8, righe = NR + 2, geo = new THREE.BufferGeometry(), pa = new THREE.BufferAttribute(new Float32Array(righe * nbm * 3), 3), na = new THREE.BufferAttribute(new Float32Array(righe * nbm * 3), 3), idx = [];
     for (let r = 0; r < righe - 1; r++) for (let i = 0; i < nbm; i++) { const a = r * nbm + i, b = r * nbm + (i + 1) % nbm, cc = (r + 1) * nbm + (i + 1) % nbm, d = (r + 1) * nbm + i; idx.push(a, b, cc, a, cc, d); }
     geo.setAttribute('position', pa); geo.setAttribute('normal', na); geo.setIndex(idx);
-    const fm = new THREE.Mesh(geo, C.parti.find((q) => q.tipo === 'pelle').mesh.material); fm.frustumCulled = false; fm.name = 'polso' + s; C.group.add(fm);
+    const pl = C.parti.find((q) => q.tipo === 'pelle'), fm = new THREE.Mesh(geo, pl.liscio || pl.mesh.material); fm.frustumCulled = false; fm.name = 'polso' + s; C.group.add(fm);      // (liscio: la pelle senza l'ombra dipinta sotto il mento)
     const Mh = new THREE.Matrix4(), p0 = V(0, 0, 0), p1 = V(0, 0, 0), n0 = V(0, 0, 0), n1 = V(0, 0, 0), t0 = V(0, 0, 0), t1 = V(0, 0, 0), x = V(0, 0, 0), ee = V(0, 0, 0), ww = V(0, 0, 0); let verso = 0;
     fasce.push(() => {
       posaMano();
