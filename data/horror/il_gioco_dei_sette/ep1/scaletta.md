@@ -88,3 +88,15 @@ In grassetto la parola dove cade lo scatto di camera; [chiave] = parola nel riqu
   grate, il televisore a tubo e l'uomo mascherato, la foto della fornace con i sette da giovani, il verbale, il corridoio di Sophie.
 - Personaggi: i sette a corpo intero seduti a tavola (le mani modellate approvate), Victor che si alza e poi riverso sul tavolo, Sophie che si
   avvicina, l'uomo mascherato; le versioni giovani dei sette per la foto.
+
+## Com'è venuto nel film (26/11 sera)
+- I dettagli ★ sono quasi tutti come sopra. Cambiati per farli vedere meglio: la cartella di Elena è sul tavolo sotto le sue mani (non
+  stretta al petto); Nora ha il taccuino aperto con scritto «Villa Cassani - 21:00 / sette invitati, OTTO piatti / Clara?».
+- Il cartoncino dice: «VILLA CASSANI / Strada delle Fornaci, 7 / 14 luglio, ore 21:00 / So chi ha ucciso tua sorella.». La cena è nel
+  giorno dell'anniversario: la foto della fornace ha la data «14 07 2016», il ritaglio è di venerdì 15 luglio 2016 («Muore a vent'anni
+  sulla provinciale… vicino alle vecchie fornaci… la ragazza era sola»), il verbale è del 16 luglio 2016 («Dichiaro di non essere mai
+  stato alla fornace»). Tutto torna con «Strada delle Fornaci».
+- La foto di Clara sulla mensola è una ragazza di spalle in controluce sul mare: il suo viso non si vede (non anticipa niente su chi sia).
+- Le luci: si spengono tutte le candele insieme (resta la luna con l'ombra della grata); quando «tornano» si accendono le applique
+  elettriche, e dagli stoppini sale il fumo.
+- Victor accusa indicando verso il fondo della tavola, senza che si veda chi: non si scopre a chi pensava.

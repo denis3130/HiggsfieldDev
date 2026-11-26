@@ -57,8 +57,8 @@ pezzi = [
     # le porte si bloccano: la serratura, la grata; il televisore
     (f(L7, 'whoosh_aria.mp3'), e['improvv'] - 0.3, 0.0, 0.5, -16, 0.02, 0.1),
     (f(A, 'serratura.mp3'), e['bloccarono'] - 0.06, 0.0, 0.5, -6, 0.005, 0.1),
-    (f(A, 'grata.mp3'), e['bloccarono'] + 0.25, 0.0, 2.2, -9, 0.005, 0.6),
-    (f(A, 'tv_accende.mp3'), e['accese'] - 0.08, 0.0, 1.2, -10, 0.005, 0.3),
+    (f(A, 'grata.mp3'), e['bloccarono'] + 0.44, 2.92, 1.0, -9, 0.005, 0.6),           # il colpo della grata a terra (a 3,0 s nel file)
+    (f(A, 'tv_accende.mp3'), e['accese'] - 0.06, 0.85, 1.2, -10, 0.005, 0.3),       # lo scatto è a 0,91 s nel file
     (f(A, 'tv_statica.mp3'), e['accese'], 0.0, 0.45, -14, 0.01, 0.1),
     (f(A, 'tv_statica.mp3'), e['accese'] + 0.4, 0.5, 4.3, -34, 0.3, 0.3),
     (f(A, 'neon.mp3'), e['accese'] + 0.3, 2.0, e['dal'] - e['accese'], -36, 0.5, 0.5),
@@ -75,10 +75,10 @@ pezzi = [
     (f(SFX, 'heart60.mp3'), e['sentii'] - 0.2, 0.0, e['victorAlza'] - e['sentii'], -14, 0.4, 0.8),
     (f(L7, 'whoosh_aria.mp3'), e['luogo'] - 0.3, 0.0, 0.5, -18, 0.02, 0.1),
     # Victor si alza: la sedia che stride; il buio: le candele, il tonfo, l'urlo; le luci che tornano
-    (f(A, 'sedia.mp3'), e['alzo'] - 0.08, 0.6, 1.2, -8, 0.01, 0.3),
+    (f(A, 'sedia.mp3'), e['alzo'] - 0.05, 5.2, 1.0, -8, 0.01, 0.3),                # lo strisciare più forte
     (f(L7, 'whoosh_aria.mp3'), e['alzo'] - 0.05, 0.0, 0.5, -16, 0.02, 0.1),
     (f(SFX, 'riser.mp3'), e['soChi'], 0.0, e['spensero'] - e['soChi'], -20, 0.6, 0.1),
-    (f(A, 'candela_soffio.mp3'), e['spensero'] - 0.12, 0.0, 1.2, -8, 0.01, 0.4),
+    (f(A, 'candela_soffio.mp3'), e['spensero'] - 0.2, 2.1, 0.7, -8, 0.01, 0.3),     # il soffio è a 2,25 s nel file
     (f(L7, 'whoosh_profondo.mp3'), e['spensero'] - 0.15, 0.3, 1.0, -12, 0.03, 0.5),
     (f(SFX, 'tonfo.mp3'), e['rumore'] + 0.55, 0.0, 1.2, -6, 0.005, 0.4),
     (f(SFX, 'grido.mp3'), e['urlo'] + 0.3, 0.0, 1.6, -9, 0.01, 0.5),
