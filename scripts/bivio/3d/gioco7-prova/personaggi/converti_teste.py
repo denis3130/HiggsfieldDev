@@ -37,19 +37,19 @@ def eta(giovane, vecchio, sesso='male', origine='caucasian'):
     return {f'macrodetails/{origine}-{sesso}-young': giovane, f'macrodetails/{origine}-{sesso}-old': vecchio}
 PERSONAGGI = {
     'leon':   dict(forma={**eta(0.85, 0.15), 'head/head-square': 0.3, 'chin/chin-prominent-incr': 0.3, 'nose/nose-scale-vert-incr': 0.2, 'eyebrows/eyebrows-trans-down': 0.4},
-                   testa=1.2, pelle='#D9A07E', guance='#D9796A', labbra='#B86B5E', sopracciglia='#3B2A20', barba=0.55, rughe=0.25, lentiggini=0.15, macchie=0.0, occhiaie=0.45),
+                   testa=1.25, pelle='#D9A07E', guance='#D9796A', labbra='#B86B5E', sopracciglia='#3B2A20', barba=0.55, rughe=0.25, lentiggini=0.15, macchie=0.0, occhiaie=0.45),
     'victor': dict(forma={**eta(0.45, 0.55), 'head/head-oval': 0.5, 'nose/nose-scale-vert-incr': 0.4, 'nose/nose-hump-incr': 0.5, 'cheek/l-cheek-volume-decr': 0.4, 'cheek/r-cheek-volume-decr': 0.4},
-                   testa=1.2, pelle='#E2AE90', guance='#D88072', labbra='#B97268', sopracciglia='#8A8580', barba=0.1, rughe=0.8, lentiggini=0.0, macchie=0.55, occhiaie=0.5),
+                   testa=1.25, pelle='#E2AE90', guance='#D88072', labbra='#B97268', sopracciglia='#8A8580', barba=0.1, rughe=0.8, lentiggini=0.0, macchie=0.55, occhiaie=0.5),
     'elena':  dict(forma={**eta(0.75, 0.25, 'female'), 'head/head-oval': 0.6, 'chin/chin-prominent-incr': 0.3, 'nose/nose-scale-horiz-decr': 0.4, 'cheek/l-cheek-bones-incr': 0.5, 'cheek/r-cheek-bones-incr': 0.5},
-                   testa=1.2, pelle='#E7B595', guance='#D9817A', labbra='#8E2A35', sopracciglia='#2B1E18', barba=0.0, rughe=0.4, lentiggini=0.0, macchie=0.1, occhiaie=0.3),
+                   testa=1.25, pelle='#E7B595', guance='#D9817A', labbra='#8E2A35', sopracciglia='#2B1E18', barba=0.0, rughe=0.4, lentiggini=0.0, macchie=0.1, occhiaie=0.3),
     'marcus': dict(forma={**eta(0.55, 0.45, 'male', 'african'), 'macrodetails/universal-male-young-averagemuscle-maxweight': 0.35, 'head/head-square': 0.6, 'chin/chin-width-incr': 0.5, 'nose/nose-scale-horiz-incr': 0.4},
-                   testa=1.18, pelle='#8A5A3E', guance='#7A4232', labbra='#6E4034', sopracciglia='#1A1210', barba=0.7, rughe=0.6, lentiggini=0.0, macchie=0.0, occhiaie=0.4),
+                   testa=1.23, pelle='#8A5A3E', guance='#7A4232', labbra='#6E4034', sopracciglia='#1A1210', barba=0.7, rughe=0.6, lentiggini=0.0, macchie=0.0, occhiaie=0.4),
     'nora':   dict(forma={**eta(0.9, 0.1, 'female', 'asian'), 'head/head-round': 0.4, 'nose/nose-scale-horiz-decr': 0.2},
-                   testa=1.22, pelle='#E8B996', guance='#E08F84', labbra='#B86A66', sopracciglia='#1E1612', barba=0.0, rughe=0.15, lentiggini=0.6, macchie=0.0, occhiaie=0.2),
+                   testa=1.27, pelle='#E8B996', guance='#E08F84', labbra='#B86A66', sopracciglia='#1E1612', barba=0.0, rughe=0.15, lentiggini=0.6, macchie=0.0, occhiaie=0.2),
     'adrian': dict(forma={**eta(0.8, 0.2), 'head/head-rectangular': 0.5, 'chin/chin-width-incr': 0.6, 'chin/chin-prominent-incr': 0.4, 'nose/nose-scale-vert-decr': 0.2},
-                   testa=1.18, pelle='#DDA785', guance='#D37E6E', labbra='#B46E60', sopracciglia='#2A1C14', barba=0.3, rughe=0.3, lentiggini=0.0, macchie=0.05, occhiaie=0.25),
+                   testa=1.23, pelle='#DDA785', guance='#D37E6E', labbra='#B46E60', sopracciglia='#2A1C14', barba=0.3, rughe=0.3, lentiggini=0.0, macchie=0.05, occhiaie=0.25),
     'sophie': dict(forma={**eta(1.0, 0.0, 'female'), 'head/head-round': 0.3, 'eyes/l-eye-scale-incr': 0.5, 'eyes/r-eye-scale-incr': 0.5, 'chin/chin-height-decr': 0.3},
-                   testa=1.25, pelle='#EDBEA0', guance='#E79A8E', labbra='#C7766E', sopracciglia='#4A3426', barba=0.0, rughe=0.0, lentiggini=0.35, macchie=0.0, occhiaie=0.15),
+                   testa=1.3, pelle='#EDBEA0', guance='#E79A8E', labbra='#C7766E', sopracciglia='#4A3426', barba=0.0, rughe=0.0, lentiggini=0.35, macchie=0.0, occhiaie=0.15),
 }
 
 # capelli: colore e attaccatura (metri sopra il centro degli occhi: davanti, ai lati, sulla nuca). La stessa attaccatura la usa personaggi.js
@@ -180,7 +180,8 @@ def dipingi(nome, o, P, F, FT, UV, J):
     Nn = np.stack([-gx * k, gy * k, np.ones_like(As)], -1); Nn /= np.linalg.norm(Nn, axis=-1, keepdims=True)
     Image.fromarray(((Nn * 0.5 + 0.5) * 255).astype(np.uint8)).save(os.path.join(OUT, f'{nome}_rilievo.png'))
 
-OCCHI_GRANDI = {'eyes/l-eye-scale-incr': 0.45, 'eyes/r-eye-scale-incr': 0.45, 'eyes/l-eye-height2-incr': 0.4, 'eyes/r-eye-height2-incr': 0.4}
+OCCHI_GRANDI = {'eyes/l-eye-scale-incr': 0.6, 'eyes/r-eye-scale-incr': 0.6, 'eyes/l-eye-height2-incr': 0.45, 'eyes/r-eye-height2-incr': 0.45,
+                'head/head-round': 0.15, 'cheek/l-cheek-volume-incr': 0.15, 'cheek/r-cheek-volume-incr': 0.15}     # un po' più cartone, come il video A (26/11: «miglioralo leggermente»)
 def costruisci(nome, o):
     print('==', nome, flush=True)
     forma = dict(OCCHI_GRANDI); [forma.__setitem__(k, forma.get(k, 0) + v) for k, v in o['forma'].items()]
