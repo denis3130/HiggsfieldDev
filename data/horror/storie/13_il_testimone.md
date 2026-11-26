@@ -58,3 +58,43 @@ Nel tuo telefono c'è ancora il video. «So che è lì dentro», dice piano. «H
 Cosa fai? La A: apri, e fai finta di non averlo riconosciuto. Oppure la B: non apri, e scappi dal balcone con il telefono. Scrivilo nei commenti, e seguimi per vedere come continua.
 
 **Bivio:** A: Apri e fingi / B: Scappi dal balcone
+
+## Episodio 2 — La mano tesa (bozza del 26/11, in attesa dell'ok dell'utente; ha vinto la B dell'episodio 1)
+Scritto solo il ramo B («non apri, e scappi dal balcone con il telefono»): l'episodio 1 è uscito sul canale nuovo e il 26/11 l'utente ha detto
+«hanno scelto l'opzione B continua pure». Il ramo A non si scrive. Regole del 26/11 applicate: la voce non descrive l'immagine, ogni frase regge
+alla logica, pochi dettagli e tutti usati (le chiavi lasciate alla vicina per le piante; la portafinestra socchiusa, da cui lo senti e da cui lui
+capisce dove sei; l'auto grigia con lei ancora nel bagagliaio).
+Perché regge: se non apri, un poliziotto chiede le chiavi alla vicina (lo senti dal muro); richiamare il 112 non serve, ti hanno mandato lui; giù
+non si scende (quarto piano), dalla vicina c'è lui, resta il balcone dell'appartamento vuoto dell'altra scala; lui entra, trova la portafinestra
+socchiusa e guarda oltre il divisorio. Il telefono lo chiede con un pretesto credibile («le servono tutte e due le mani»).
+Le regole (lontano dalle finestre, non si apre a nessuno, niente telefono) e le chiavi nella tasca del cappotto arrivano nell'episodio 3.
+
+Avete scelto la B.
+Non apri. Non rispondi. Resti immobile, al buio.
+Lui smette di bussare. E suona alla porta accanto.
+Lo senti attraverso il muro. «Polizia, signora. Il suo vicino non risponde. Lei ha per caso le chiavi?»
+Le ha. Gliele hai lasciate tu, per le piante.
+Richiamare il centododici? Ti hanno appena mandato lui.
+Prendi il telefono ed esci sul balcone. La portafinestra resta socchiusa.
+Sotto ci sono quattro piani di vuoto. E l'auto grigia. Lei è ancora lì dentro.
+Di fianco c'è il balcone di un appartamento vuoto da mesi. Lì non verrà a cercarti.
+Scavalchi la ringhiera. È bagnata. Non guardi giù.
+Un piede oltre il divisorio. Poi l'altro. Ci sei.
+Ti rannicchi contro il muro, al buio.
+In casa tua si accende la luce.
+«Permesso», dice lui. Come un ospite.
+Lo senti camminare. Apre le porte, una per una. Senza fretta.
+«Non deve avere paura di me», dice piano. «Sono qui per proteggerla.»
+Poi i suoi passi escono sul balcone. E si fermano.
+Trattieni il respiro.
+La sua faccia spunta da dietro il divisorio. Lentamente.
+«Eccola», dice, gentile. «Mi ha fatto spaventare. Pensavo si fosse buttato.»
+«Con questa pioggia si scivola. Basta un attimo.»
+Ti tende la mano, sopra il vuoto. «Venga. L'aiuto io.»
+«Prima però mi passi il telefono. Le servono tutte e due le mani.»
+Cosa fai? La A: gli passi il telefono, con dentro il video. Oppure la B: gli dici che ti è caduto di sotto. Scrivilo nei commenti, e seguimi per vedere come continua.
+
+**Bivio:** A: Gli passi il telefono / B: Dici che è caduto
+(nella mappa era «gli consegni il telefono / dici di averlo perso»: in questo ramo «perso» = caduto dal balcone; il freezer arriva nell'apertura B dell'episodio 3)
+**Parole:** 254
+
