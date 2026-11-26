@@ -24,6 +24,7 @@ function occhioTex(iride = '#5B7A4A', seed = 1) {
   c.fillStyle = ir; c.beginPath(); c.arc(cx, cy, R, 0, Math.PI * 2); c.fill();
   for (let i = 0; i < 140; i++) { const a = r(0, Math.PI * 2), l = r(0.4, 0.95); c.strokeStyle = `rgba(${r() < 0.5 ? '255,240,200' : '20,16,10'},${r(0.08, 0.22)})`; c.lineWidth = r(0.6, 1.6); c.beginPath(); c.moveTo(cx + Math.cos(a) * R * 0.32, cy + Math.sin(a) * R * 0.32); c.lineTo(cx + Math.cos(a) * R * l, cy + Math.sin(a) * R * l); c.stroke(); }
   c.fillStyle = '#060504'; c.beginPath(); c.arc(cx, cy, R * 0.36, 0, Math.PI * 2); c.fill();
+  const lu = c.createRadialGradient(cx - R * 0.3, cy - R * 0.32, 0, cx - R * 0.3, cy - R * 0.32, R * 0.2); lu.addColorStop(0, 'rgba(255,255,255,0.95)'); lu.addColorStop(0.5, 'rgba(255,255,255,0.5)'); lu.addColorStop(1, 'rgba(255,255,255,0)'); c.fillStyle = lu; c.fillRect(cx - R, cy - R, 2 * R, 2 * R);
   const t = new THREE.CanvasTexture(cv); t.colorSpace = THREE.SRGBColorSpace; return t;
 }
 function occhio(raggio, iride, seed) {
@@ -72,13 +73,13 @@ function vestitoMat(B, v) {
 }
 
 export const STILI = {
-  leon:   { iride: '#5A4632', capelli: { colore: 0x3A2A1E, spessore: 0.011, fronte: 0.05, lati: 0.035, nuca: -0.06, verso: 'indietro' }, vestito: { colore: 0x2B2E36, collo: -0.085 } },
-  victor: { iride: '#6E7C88', capelli: { colore: 0xA8A49C, spessore: 0.007, fronte: 0.075, lati: 0.03, nuca: -0.05, verso: 'riga' }, vestito: { colore: 0x3B3F46, collo: -0.09 }, occhiali: true },
-  elena:  { iride: '#4A3424', capelli: { colore: 0x2A1C14, spessore: 0.009, fronte: 0.055, lati: 0.025, nuca: -0.075, verso: 'indietro', chignon: 0.038, lucido: 0.3 }, vestito: { colore: 0x141416, collo: -0.08 } },
-  marcus: { iride: '#2E1E14', capelli: { colore: 0x161210, spessore: 0.003, fronte: 0.06, lati: 0.03, nuca: -0.06, verso: 'indietro' }, vestito: { colore: 0x4A3324, collo: -0.09 } },
-  nora:   { iride: '#3A2618', capelli: { colore: 0x1A1412, spessore: 0.013, fronte: 0.045, lati: -0.02, nuca: -0.09, verso: 'riga' }, vestito: { colore: 0x2F4A3C, collo: -0.075 } },
-  adrian: { iride: '#3E5466', capelli: { colore: 0x241A12, spessore: 0.01, fronte: 0.06, lati: 0.035, nuca: -0.06, verso: 'indietro', lucido: 0.6 }, vestito: { colore: 0x1B2236, collo: -0.09 } },
-  sophie: { iride: '#6A5232', capelli: { colore: 0x5A3A22, spessore: 0.011, fronte: 0.05, lati: 0.0, nuca: -0.08, verso: 'riga', coda: 0.028 }, vestito: { colore: 0x6B1D22, collo: -0.07 } },
+  leon:   { iride: '#5A4632', capelli: { colore: 0x3A2A1E, spessore: 0.011, fronte: 0.05, lati: 0.035, nuca: -0.06, verso: 'indietro' }, vestito: { colore: 0x2B2E36, collo: -0.108 } },
+  victor: { iride: '#6E7C88', capelli: { colore: 0xA8A49C, spessore: 0.007, fronte: 0.075, lati: 0.03, nuca: -0.05, verso: 'riga' }, vestito: { colore: 0x3B3F46, collo: -0.11 }, occhiali: true },
+  elena:  { iride: '#4A3424', capelli: { colore: 0x2A1C14, spessore: 0.009, fronte: 0.055, lati: 0.025, nuca: -0.075, verso: 'indietro', chignon: 0.038, lucido: 0.3 }, vestito: { colore: 0x141416, collo: -0.102 } },
+  marcus: { iride: '#2E1E14', capelli: { colore: 0x161210, spessore: 0.003, fronte: 0.06, lati: 0.03, nuca: -0.06, verso: 'indietro' }, vestito: { colore: 0x4A3324, collo: -0.11 } },
+  nora:   { iride: '#3A2618', capelli: { colore: 0x1A1412, spessore: 0.013, fronte: 0.045, lati: -0.02, nuca: -0.09, verso: 'riga' }, vestito: { colore: 0x2F4A3C, collo: -0.1 } },
+  adrian: { iride: '#3E5466', capelli: { colore: 0x241A12, spessore: 0.01, fronte: 0.06, lati: 0.035, nuca: -0.06, verso: 'indietro', lucido: 0.6 }, vestito: { colore: 0x1B2236, collo: -0.11 } },
+  sophie: { iride: '#6A5232', capelli: { colore: 0x5A3A22, spessore: 0.011, fronte: 0.05, lati: 0.0, nuca: -0.08, verso: 'riga', coda: 0.028 }, vestito: { colore: 0x6B1D22, collo: -0.098 } },
 };
 
 // il busto pronto: gruppo con pelle, occhi, capelli, vestito (dipinto: i vertici sotto lo scollo prendono il colore del tessuto)
@@ -123,11 +124,11 @@ function colletto(B, scollo, colore) {
 }
 // occhiali tondi a filo d'oro (fatti col codice): due cerchi davanti agli occhi, il ponte, le aste verso le orecchie
 function occhiali(B) {
-  const m = new THREE.MeshStandardMaterial({ color: 0xB8964A, roughness: 0.3, metalness: 1 }), g = new THREE.Group(), r = B.occhi.raggio * 1.9;
+  const m = new THREE.MeshStandardMaterial({ color: 0xB8964A, roughness: 0.3, metalness: 1 }), g = new THREE.Group(), r = 0.0205;
   const lente = new THREE.MeshPhysicalMaterial({ color: 0xffffff, roughness: 0.02, transparent: true, opacity: 0.12, envMapIntensity: 1.2 });
-  for (const s of ['S', 'D']) { const e = B.occhi[s], c = new THREE.Mesh(new THREE.TorusGeometry(r, 0.0011, 8, 48), m); c.position.set(e[0], e[1] - 0.002, e[2] + 0.019); g.add(c);
+  for (const s of ['S', 'D']) { const e = B.occhi[s], c = new THREE.Mesh(new THREE.TorusGeometry(r, 0.0011, 8, 48), m); c.position.set(e[0] * 1.08, e[1] - 0.003, e[2] + 0.024); g.add(c);
     const l = new THREE.Mesh(new THREE.CircleGeometry(r, 32), lente); l.position.copy(c.position); g.add(l);
-    const asta = new THREE.Mesh(new THREE.CylinderGeometry(0.0009, 0.0009, 0.1, 6), m); asta.rotation.x = Math.PI / 2; asta.position.set(e[0] + Math.sign(e[0]) * r, e[1], e[2] - 0.03); g.add(asta); }
-  const ponte = new THREE.Mesh(new THREE.TorusGeometry(Math.abs(B.occhi.S[0] - B.occhi.D[0]) / 2 - r, 0.001, 6, 16, Math.PI), m); ponte.position.set(0, B.occhi.S[1] + 0.002, B.occhi.S[2] + 0.021); g.add(ponte);
+    const asta = new THREE.Mesh(new THREE.CylinderGeometry(0.0009, 0.0009, 0.1, 6), m); asta.rotation.x = Math.PI / 2; asta.position.set(e[0] * 1.08 + Math.sign(e[0]) * r, e[1], e[2] - 0.026); g.add(asta); }
+  const ponte = new THREE.Mesh(new THREE.TorusGeometry(Math.max(0.004, Math.abs(B.occhi.S[0]) * 1.08 - r), 0.001, 6, 16, Math.PI), m); ponte.position.set(0, B.occhi.S[1] + 0.001, B.occhi.S[2] + 0.026); g.add(ponte);
   return g;
 }
