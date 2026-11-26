@@ -30,6 +30,8 @@ def discendenti(radice):
     return out
 TESTA = discendenti('head')
 W_TESTA = sum(PESI[b] for b in TESTA if b in PESI)
+import ossa7 as O7
+WB = O7.pesi_ridotti(PESI, NV0)                                                    # i pesi delle ossa ridotte (ossa7.py)
 MASCHERE = {n: np.asarray(Image.open(os.path.join(MP, 'textures', f'mpfb_{n}.jpg')).convert('L').resize((DIM, DIM)), float) / 255 for n in ('face', 'lips', 'eyelids', 'ears')}
 
 # ---- i personaggi: forma (bersagli MakeHuman, senza .target.gz), quanto ingrandire la testa, pelle e segni dell'età
@@ -193,13 +195,18 @@ def dipingi(nome, o, P, F, FT, UV, J):
 
 OCCHI_GRANDI = {'eyes/l-eye-scale-incr': 0.6, 'eyes/r-eye-scale-incr': 0.6, 'eyes/l-eye-height2-incr': 0.45, 'eyes/r-eye-height2-incr': 0.45,
                 'head/head-round': 0.15, 'cheek/l-cheek-volume-incr': 0.15, 'cheek/r-cheek-volume-incr': 0.15}     # un po' più cartone, come il video A (26/11: «miglioralo leggermente»)
-def costruisci(nome, o):
-    print('==', nome, flush=True)
+def forma_di(o):
+    """il corpo hm08 con la forma del personaggio e la testa da cartone (decimetri) e i giunti di testa e collo"""
     forma = dict(OCCHI_GRANDI); [forma.__setitem__(k, forma.get(k, 0) + v) for k, v in o['forma'].items()]
     H = mh.forma(V0, MP, forma)                                                     # decimetri
     J = {'testa': mh.capo(H, GRUPPI, RIG['head']['head']), 'collo': mh.capo(H, GRUPPI, RIG['neck01']['head'])}
     # la testa da cartone: ingrandita attorno al giunto della testa, pesata dalle ossa della testa (il collo raccorda da solo)
     s = o['testa']; w = np.clip(W_TESTA, 0, 1); H = J['testa'] + (H - J['testa']) * (1 + (s - 1) * w)[:, None]
+    return H, J
+
+def costruisci(nome, o):
+    print('==', nome, flush=True)
+    H, J = forma_di(o)
     for l, s_ in (('l', 'S'), ('r', 'D')):
         J['occhio' + s_] = mh.giunto(H, GRUPPI, f'joint-{l}-eye')
         occhio = H[GRUPPI[f'helper-{l}-eye']]; J['r_occhio'] = float(np.linalg.norm(occhio - occhio.mean(0), axis=1).max())
@@ -209,8 +216,8 @@ def costruisci(nome, o):
     tieni = (G0 == ID_BODY) & (H[F0][:, :, 1].min(1) > taglio)
     F = [list(f) for f in F0[tieni]]; FT = [list(f) for f in FT0[tieni]]
     usati = np.unique(np.array(F).ravel()); nuovo = -np.ones(NV0, int); nuovo[usati] = np.arange(len(usati))
-    P = H[usati]; F = [list(nuovo[f]) for f in F]
-    P, F, _, FT, UV = maglia.catmull_clark(P, F, (), FT, UV0)
+    P = H[usati]; F = [list(nuovo[f]) for f in F]; Wb = WB[usati]
+    P, F, (Wb,), FT, UV = maglia.catmull_clark(P, F, (Wb,), FT, UV0)
     dipingi(nome, o, P, F, FT, UV, J)
     # vertici da disegnare: uno per coppia (punto, uv); normali lisce sui punti
     N = np.zeros_like(P)
@@ -229,6 +236,7 @@ def costruisci(nome, o):
     rv = np.array(rv); T = lambda X: (np.asarray(X) - J['testa']) * 0.1
     POS = T(P[rv]).astype('<f4'); NOR = N[rv].astype('<f4'); UVS = np.array(uv, '<f4'); IDX = np.array(tri, '<u4').ravel()
     open(os.path.join(OUT, nome + '.bin'), 'wb').write(POS.tobytes() + NOR.tobytes() + UVS.tobytes() + IDX.tobytes())
+    ji, jw = O7.quattro(Wb[rv]); open(os.path.join(OUT, nome + '_ossa.bin'), 'wb').write(ji.tobytes() + jw.tobytes())     # i pesi delle ossa (per i corpi interi)
     json.dump(dict(nome=nome, vertici=len(rv), indici=len(IDX), ordine=['pos f4 vertici*3', 'nor f4 vertici*3', 'uv f4 vertici*2', 'idx u4 indici'],
                    occhi={'S': T(J['occhioS']).tolist(), 'D': T(J['occhioD']).tolist(), 'raggio': J['r_occhio'] * 0.1}, testa2=T(J['testa2']).tolist(), collo=T(J['collo']).tolist(),
                    taglio=float((taglio - J['testa'][1]) * 0.1), pelle=o['pelle'], sopracciglia=o['sopracciglia'], capelli=o.get('capelli')), open(os.path.join(OUT, nome + '.json'), 'w'))
@@ -246,6 +254,7 @@ def costruisci(nome, o):
     json.dump(j, open(os.path.join(OUT, nome + '.json'), 'w'))
     print(f'  capelli: vertici {len(hv)} triangoli {len(ht)}', flush=True)
 
-for nome, o in PERSONAGGI.items():
-    if SOLO and nome not in SOLO: continue
-    costruisci(nome, o)
+if __name__ == '__main__':
+    for nome, o in PERSONAGGI.items():
+        if SOLO and nome not in SOLO: continue
+        costruisci(nome, o)

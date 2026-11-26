@@ -93,7 +93,7 @@ function mani(posto, { manica = 0x2B2E36, polsino = null, pelle = '#D9A583', ung
   return g;
 }
 
-export function salaSet() {
+export function salaSet({ mani: conMani = true } = {}) {
   materiali();
   const scene = new THREE.Scene(), cam = G.camera(38, 0.02, 60);
   scene.background = new THREE.Color(0x020306); scene.fog = new THREE.FogExp2(0x030408, 0.22); scene.environment = G.ENV; scene.environmentIntensity = 0.12;
@@ -124,7 +124,7 @@ export function salaSet() {
   const tov = add(new THREE.BoxGeometry(T.largo + 0.02, 0.004, T.lungo + 0.02), MAT.tovaglia, 0, T.y + 0.002, 0); tov.castShadow = false;
   for (const [x, z] of [[-0.48, -1.6], [0.48, -1.6], [-0.48, 1.6], [0.48, 1.6]]) add(new THREE.BoxGeometry(0.08, T.y - 0.05, 0.08), MAT.tavolo, x, (T.y - 0.05) / 2, z);
   // gli otto posti
-  const segna = [];
+  const segna = [], sedie = [];
   POSTI.forEach(([x, z, yaw, nome], i) => {
     const g = new THREE.Group(); g.position.set(x, T.y + 0.004, z); g.rotation.y = yaw * R2; scene.add(g);
     const sotto = piatto(0.165, 0.012, MAT.porcellana); sotto.castShadow = true; sotto.receiveShadow = true; g.add(sotto); g.add(filetto(0.165, 0.012));
@@ -133,7 +133,7 @@ export function salaSet() {
     const k = posata('coltello'); k.position.set(0.2, 0.002, 0); g.add(k); const cu = posata('cucchiaio'); cu.position.set(0.235, 0.002, 0); g.add(cu);
     const c = calice(); c.position.set(0.17, 0.0, -0.2); g.add(c);
     const sp = segnaposto(nome, i === 7); sp.position.set(0, 0.0, -0.205); sp.rotation.y = Math.PI; g.add(sp); segna.push(sp);
-    const se = sedia(); const d = i === 0 || i === 7 ? 0.5 : 0.58; se.position.set(x + Math.sin(yaw * R2) * d, 0, z + Math.cos(yaw * R2) * d); se.rotation.y = yaw * R2; scene.add(se);
+    const se = sedia(); const d = i === 0 || i === 7 ? 0.5 : 0.58; se.position.set(x + Math.sin(yaw * R2) * d, 0, z + Math.cos(yaw * R2) * d); se.rotation.y = yaw * R2; scene.add(se); sedie.push(se);
   });
   const sp = new THREE.SpotLight(0x8FA8E8, 1.6, 5, 0.42, 0.6, 1.5); sp.position.set(-0.9, 2.6, -2.9); sp.target.position.set(0, 0.95, -1.98); scene.add(sp, sp.target);
   const rosa = rosaSecca(); rosa.position.set(OTTAVO.x - 0.01, T.y + 0.025, OTTAVO.z + 0.02); rosa.rotation.y = 0.5; scene.add(rosa);
@@ -160,9 +160,9 @@ export function salaSet() {
     { manica: 0x1B2236, polsino: 0xDDE2EA, pelle: PELLI[1], orologio: true },                  // Adrian, imprenditore: blu, orologio d'oro
     { manica: 0x6B1D22, pelle: PELLI[6], unghia: '#E7B9A8' },                                  // Sophie: maglia bordeaux
   ];
-  for (let i = 0; i <= 6; i++) scene.add(mani(POSTI[i], ABITI[i]));
+  if (conMani) for (let i = 0; i <= 6; i++) scene.add(mani(POSTI[i], ABITI[i]));
   return {
-    scene, camera: cam, bloom: 0.7, bloomThreshold: 1.3, bloomRadius: 0.5, segna, candele, polvere,
+    scene, camera: cam, bloom: 0.7, bloomThreshold: 1.3, bloomRadius: 0.5, segna, candele, polvere, sedie, luna, rosa, fin,
     update(t, u, o = {}) {
       G.R.toneMappingExposure = 1.22; cam.position.set(...(o.cam || [0, 2.2, 2.6])); cam.up.set(...(o.up || [0, 1, 0])).normalize(); cam.lookAt(...(o.look || [0, T.y, 0]));
       if (o.fov) { cam.fov = o.fov; cam.updateProjectionMatrix(); }

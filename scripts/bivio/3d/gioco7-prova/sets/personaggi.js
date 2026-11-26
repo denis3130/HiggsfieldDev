@@ -104,7 +104,7 @@ export const STILI = {
 };
 
 // il busto pronto: gruppo con pelle, occhi, capelli, vestito (dipinto: i vertici sotto lo scollo prendono il colore del tessuto)
-export async function busto(nome) {
+export async function busto(nome, { intero = false } = {}) {
   const B = await leggi(nome), st = STILI[nome];
   const [mappa, rilievo] = await Promise.all([carica(BASE + nome + '_pelle.jpg', true), carica(BASE + nome + '_rilievo.png', false)]);
   const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(B.pos, 3)); g.setAttribute('normal', new THREE.BufferAttribute(B.nor, 3)); g.setAttribute('uv', new THREE.BufferAttribute(B.uv, 2)); g.setIndex(new THREE.BufferAttribute(B.idx, 1));
@@ -113,13 +113,16 @@ export async function busto(nome) {
   const sotto = (i) => B.pos[i * 3 + 1] < scollo(B.pos[i * 3], B.pos[i * 3 + 2]);
   const pelleI = [], stoffaI = [];
   for (let t = 0; t < B.idx.length; t += 3) { const a = B.idx[t], b = B.idx[t + 1], c = B.idx[t + 2]; ((sotto(a) + sotto(b) + sotto(c)) >= 2 ? stoffaI : pelleI).push(a, b, c); }
+  if (intero) { pelleI.push(...stoffaI); stoffaI.length = 0; }
   g.setIndex([...pelleI, ...stoffaI]); g.addGroup(0, pelleI.length, 0); g.addGroup(pelleI.length, stoffaI.length, 1);
   const pelle = new THREE.MeshPhysicalMaterial({ map: mappa, normalMap: rilievo, roughness: 0.55, sheen: 0.35, sheenColor: new THREE.Color(0xFFB09A), sheenRoughness: 0.5, envMapIntensity: 0.35 });
   const stoffa = maglia(st.vestito.colore);
-  const grp = new THREE.Group(), corpo = new THREE.Mesh(g, [pelle, stoffa]); grp.add(corpo); grp.add(colletto(B, scollo, stoffa.color));
-  for (const s of ['S', 'D']) { const o = occhio(B.occhi.raggio * 0.97, st.iride, s === 'S' ? 3 : 4); o.position.set(...B.occhi[s]); grp.add(o); grp.userData['occhio' + s] = o; }
-  grp.add(B.capelli_mesh ? await capelliForma(nome, B, st) : capelli(B, st.capelli));
-  if (st.occhiali) grp.add(occhiali(B));
+  const grp = new THREE.Group(), corpo = new THREE.Mesh(g, [pelle, stoffa]); grp.add(corpo); if (!intero) grp.add(colletto(B, scollo, stoffa.color));
+  const rigida = new THREE.Group(); grp.add(rigida); grp.userData.rigida = rigida; grp.userData.corpo = corpo; grp.userData.pelle = pelle;    // ciò che gira tutto d'un pezzo con la testa
+  for (const s of ['S', 'D']) { const o = occhio(B.occhi.raggio * 0.97, st.iride, s === 'S' ? 3 : 4); o.position.set(...B.occhi[s]); rigida.add(o); grp.userData['occhio' + s] = o; }
+  rigida.add(B.capelli_mesh ? await capelliForma(nome, B, st) : capelli(B, st.capelli));
+  if (st.occhiali) { const oc = occhiali(B); rigida.add(oc); grp.userData.occhiali = oc; }
+  if (intero) { const b = await fetch(BASE + nome + '_ossa.bin').then((r) => r.arrayBuffer()); grp.userData.ji = new Uint8Array(b, 0, B.vertici * 4); grp.userData.jw = new Uint8Array(b, B.vertici * 4, B.vertici * 4); }
   grp.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   grp.userData.B = B; return grp;
 }

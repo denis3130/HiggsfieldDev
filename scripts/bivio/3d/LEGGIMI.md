@@ -300,3 +300,22 @@ Storia dell'utente in `data/horror/storie/14_il_gioco_dei_sette.md`; formato da 
   (indietro, di traverso dalla riga, giù dove cadono). La distanza dalla pelle si prende dal piano tangente dei 6 punti più vicini:
   dal punto più vicino esce una perlina per vertice. Pettinature in `PETTINATURE` di `converti_teste.py`. `gioco7-scheda/` li mostra uno per uno. I dati generati (`personaggi/dati/`) non stanno
   nel repository: si rifanno col comando sopra (mpfb2 = `pip download anny==0.6.2 --no-deps`, vedi `cast/sets/corpi/LICENZE.md`).
+
+## «Il gioco dei sette», episodio 1 «L'ottavo invitato» (26/11): il film completo
+- `gioco7-ep1/`: il film (`film.js`, 146,6 s), le inquadrature della scaletta (`data/horror/il_gioco_dei_sette/ep1/scaletta.md`) sui tempi
+  veri della voce di Luc (`assets/parole.json`, allineata con `allinea.py`; l'audio di Luc sta solo nella cartella di lavoro). Ogni avvenimento
+  (la busta, la serratura, la grata, il televisore, Victor che si alza, il buio, le luci, il biglietto, Sophie) è legato a una parola.
+- **I sette a corpo intero**: `gioco7-prova/personaggi/corpi_sette.py` fa il corpo con la STESSA forma delle teste approvate
+  (`converti_teste.forma_di`), i vestiti e le scarpe di MakeHuman (in dotazione, CC0: completo per Leon, Victor, Elena, Adrian; giacca per
+  Marcus; maglia e gonna per Nora; maglietta e jeans per Sophie) ridipinti coi colori dei personaggi, la pelle tolta sotto la stoffa e i pesi
+  delle ossa ridotte (`ossa7.py`). Anche il busto (testa) ora ha i pesi (`<nome>_ossa.bin`). `sets/corpi7.js` li mette in posa con lo
+  skinning: bacino, schiena, collo, IK a due ossa per braccia e gambe, il palmo della mano, gli occhi (al massimo 28° di lato e 14° in su/giù,
+  se no l'iride sparisce sotto la palpebra: per guardare la camera si gira la TESTA). Sui polsi c'è la mano modellata approvata
+  (`mano_mesh.js`), orientata come la mano del corpo, che si chiude dentro la manica. `sets/tavola7.js` = i posti a tavola e la posa da seduto.
+- Set nuovi: `sala7.js` (portone con la serratura, grata, televisore a tubo, applique, candele che si spengono col fumo), `casa.js` (casa di
+  Leon: busta, cartoncino a macchina, foto di Clara e ritaglio di giornale, chiavi; il verbale della questura), `extra7.js` (l'uomo
+  mascherato, la foto della fornace coi sette in piedi, il corridoio della carta B, l'effetto televisore). Le immagini fisse (uomo mascherato,
+  foto, carte) si fanno all'avvio: l'avvio è lungo, per i fermi immagine si usa la copia di `render.mjs` con l'attesa a 15 minuti
+  (`lavoro3d/rr/render.mjs`).
+- Suoni veri CC0 dell'episodio in `gioco7-ep1/audio_ep1/` (licenze in `licenze.json`); il mix è `mix_ep1.py` (la voce del televisore filtrata,
+  musica circa 20 dB sotto la voce, -14 LUFS).

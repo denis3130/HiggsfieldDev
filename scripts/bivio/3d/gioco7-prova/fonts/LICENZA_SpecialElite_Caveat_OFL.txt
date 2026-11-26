@@ -1,0 +1,3 @@
+Special Elite (macchina da scrivere: la busta, il cartoncino, il verbale) — Astigmatic (Brian J. Bonislawsky), Apache License 2.0
+Caveat (scrittura a mano: il biglietto) — Impallari Type (Pablo Impallari), SIL Open Font License 1.1
+Presi dai pacchetti npm @fontsource/special-elite e @fontsource/caveat (Google Fonts). Uso libero anche commerciale, con questa nota.
