@@ -34,6 +34,23 @@
     "titolo": "Hai filmato un omicidio dalla finestra. Ora bussano alla tua porta: apri o scappi? #shorts",
     "didascalia": "Sono quasi le tre di notte. Dalla finestra vedi quello che non dovevi vedere. E lui ha visto te.\nChiami il 112. Poco dopo qualcuno bussa alla tua porta.\n\nCosa fai?\nA: apri e fai finta di niente\nB: non apri e scappi dal balcone\n\nScrivi A o B nei commenti: l'episodio 2 segue la scelta più votata.\n\nIl testimone, episodio 1 · Il Bivio: storie in cui scegli tu.\n\n#ilbivio #iltestimone #thriller #storiehorror #horror #shorts"
    }
+  },
+  {
+   "storia": "13_il_testimone",
+   "episodio": 2,
+   "titolo": "La mano tesa",
+   "ramo": "B dell'episodio 1",
+   "film": "scripts/bivio/3d/ep2",
+   "copione": "data/horror/il_testimone/ep2/episodio.json",
+   "stato": "IN LAVORAZIONE (26/11). Testo mandato all'utente e in attesa del suo ok (con tre correzioni fatte costruendo le scene: porta di fronte; telefono in tasca; «Non vorrà che le cada di sotto» / B = «gli dici che ti è già caduto di sotto»). Scene (34 inquadrature), set del balcone, suoni CC0 e mix pronti sui tempi provvisori; mandato un foglio di provini. Manca: ok al testo → voce di Luc (circa 5 crediti: controllare il preventivo e dirgli la spesa) → tempi veri → render → mix → un solo video. Lo pubblica lui sul canale nuovo.",
+   "bivio": {
+    "A": "Gli passi il telefono",
+    "B": "Dici che ti è già caduto di sotto"
+   },
+   "testi_per_il_canale_nuovo": {
+    "titolo": "L'ispettore è entrato in casa tua. Sei nascosto sul balcone accanto: gli passi il telefono? #shorts",
+    "didascalia": "Il Bivio — «Il testimone», episodio 2. Avete scelto la B: non hai aperto e sei scappato dal balcone. Ma lui ha le chiavi. E adesso ti tende la mano, sopra quattro piani di vuoto.\n\nCosa fai?\nA: gli passi il telefono, con dentro il video\nB: gli dici che ti è già caduto di sotto\n\nScrivi A o B nei commenti: l'episodio 3 segue la scelta più votata.\n\n#ilbivio #storieinterattive #thriller #horror #shorts"
+   }
   }
  ]
 }

@@ -117,7 +117,7 @@ function sequenza() {
   // --- «Prendi il telefono ed esci sul balcone. La portafinestra resta socchiusa.»
   const esce = r(7) - 0.3, soc = w(7, 'portafinestra') - 0.2;
   // (esci, vai verso la ringhiera; l'anta torna indietro da sola ma non si chiude: resta una fessura e il vento ne tira fuori la tenda)
-  sc(esce, (t, k) => { const ap = io(prog(t, esce + 0.1, esce + 0.8)), va = io(prog(t, esce + 0.5, esce + 2.3)), ch = io(prog(t, esce + 1.8, soc + 0.3)), av = io(prog(t, soc - 0.2, soc + 1.6)), cm = io(prog(t, soc - 0.3, r(8) - 0.3));
+  sc(esce, (t, k) => { const ap = io(prog(t, esce + 0.1, esce + 0.8)), va = io(prog(t, esce + 0.5, esce + 2.3)), ch = io(prog(t, esce + 1.8, soc + 0.3)), av = io(prog(t, soc - 0.5, soc + 0.9)), cm = io(prog(t, soc + 0.6, r(8) - 0.3));
     return { ...FB, id: 'esci', cam: v3(v3([5.75, FY + 1.5, 2.9], [5.6, FY + 1.46, 2.6], io(prog(k, 0, 0.5))), [4.95, FY + 1.32, 1.5], cm), look: v3([4.78, FY + 1.1, 0], [4.52, FY + 1.05, -0.1], cm), fov: lerp(36, 30, cm), porta: lerp(0.55 * ap, 0.12 + 0.035 * sin(t * 1.9) * ch, ch), tendaScosta: ap * (1 - ch), vento: 1, telTu: t < esce + 1.75 ? 1 : 0, telSchermo: 0.5,
       tu: { pos: [lerp(lerp(4.78, 4.95, va), 5.5, av), FY, lerp(lerp(-0.85, 0.42, va), 0.7, av)], yaw: 0.9 * av, ...PAURA, breathe: sin(t * 5), headYaw: -0.6 * bump(t, esce + 2.3, 0.7), gambe: (va > 0.01 && va < 0.99) || (av > 0.01 && av < 0.99) ? passi(va * 9 + av * 5, 0.32) : {}, armR: t < esce + 2.6 ? mixA(TEL_PETTO, IN_TASCA, io(prog(t, esce + 0.9, esce + 1.7))) : undefined } }; });
 
