@@ -28,7 +28,8 @@ function tempi(righe, { wps = 2.85, inizio = 0.35, virgola = 0.22, punto = 0.5 }
   });
   return out;
 }
-const WORDS = tempi(RIGHE);
+// i tempi veri della voce (assets/parole.json, da Whisper sulla voce di Luc); senza voce si calcolano dal testo
+const WORDS = (await fetch('assets/parole.json').then((r) => (r.ok ? r.json() : null)).catch(() => null)) || tempi(RIGHE);
 const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z']/g, '');
 const w = (parola, fine = 0, quale = 0) => { const h = WORDS.filter((x) => norm(x[2]) === norm(parola)); const x = h[Math.min(quale, h.length - 1)]; return x ? x[fine] : 0; };
 const riga = (n) => WORDS.find((x) => x[3] === n - 1)[0];
