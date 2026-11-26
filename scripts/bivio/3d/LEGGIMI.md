@@ -276,3 +276,22 @@ Dopo la mano, l'utente ha chiesto lo stesso per corpo, vestiti e scarpe. Teste, 
   versione con i soli archi (CC0).
 - Dropbox: ogni link di download ha un indirizzo diverso (`uc….dl.dropboxusercontent.com`) che va aggiunto alla rete dell'ambiente con una
   richiesta da approvare, prima che il link scada (15 minuti).
+
+## «Il gioco dei sette» nel formato del video A (26/11): prova di stile e personaggi
+Storia dell'utente in `data/horror/storie/14_il_gioco_dei_sette.md`; formato da copiare in `data/horror/VIDEO_A.md`.
+- `gioco7-prova/`: il gancio dell'episodio 1 (13 s). `sets/look.js` = l'aspetto del video A fatto col codice (texture disegnate su tela:
+  legno, damasco, carta da parati, carta dei segnaposti; materiali fisici con riflessi; candele con fiamma, alone e luce che tremola;
+  pulviscolo e fascio di luna). `sets/sala.js` = la sala da pranzo (otto posti, le mani modellate dei sette con le maniche, segnaposto
+  di Clara listato a lutto, rosa secca, sedie, finestra con la luna). `sets/villa.js` = la villa di notte (cipressi, luna, nebbia, la
+  finestra accesa con le sagome degli invitati). `film.js` = sottotitoli del video A (Figtree, parola chiave nel riquadro coi pallini),
+  firma «@DOPE696», camera quasi ferma con gli scatti veloci sulle parole (inOutQuint, scia del movimento solo negli scatti: 8 campioni).
+  Senza voce i tempi delle parole si calcolano dal testo al ritmo di Luc. `mix.py` = i suoni veri (CC0, licenze in `audio/sfx/licenze.json`).
+- Render (cartella di lavoro fuori dal repository con `node_modules`, e collegamenti a `gioco7-prova`, `gioco7-scheda` e `cast`):
+  `node <skill>/scripts/render.mjs --film gioco7-prova --format 9x16 --video-only --fps 30 --workers 3` (circa 28 minuti per 13 s:
+  gli scatti con la scia costano 8 volte). Un pezzo si rifà con `--range a:b` e si rimonta con ffmpeg.
+- Personaggi nell'aspetto del video A: `gioco7-prova/personaggi/converti_teste.py <mpfb2> dati` fa i busti dei sette dal corpo MakeHuman
+  CON la testa (forme per età, sesso, peso, origine, viso; testa ingrandita 1,18–1,25; occhi più grandi), e dipinge la pelle nello spazio
+  uv guardando dove sta ogni texel sulla testa (lentiggini, macchie, labbra, sopracciglia, barba, rughe e pori nel rilievo, capelli dipinti
+  sotto l'attaccatura). `sets/personaggi.js` aggiunge occhi veri, capelli scolpiti (guscio con le ciocche e il bordo che sfuma; chignon,
+  coda), maglia con colletto, occhiali di Victor. `gioco7-scheda/` li mostra uno per uno. I dati generati (`personaggi/dati/`) non stanno
+  nel repository: si rifanno col comando sopra (mpfb2 = `pip download anny==0.6.2 --no-deps`, vedi `cast/sets/corpi/LICENZE.md`).
