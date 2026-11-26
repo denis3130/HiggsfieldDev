@@ -201,9 +201,10 @@ export function balconi({ scene, amb, fuori, FY }) {
   tendaG.setAttribute('color', new THREE.BufferAttribute(new Float32Array(tendaG.attributes.position.count * 3).fill(1), 3));
   { const ix = tendaG.index.array, tieni = []; for (let q = 0; q < ix.length; q += 6) if ((q / 6) % TNX !== TNX / 2) tieni.push(...ix.slice(q, q + 6)); tendaG.setIndex(tieni); }      // due teli che si incontrano al centro: tra l'uno e l'altro niente stoffa (se no, scostandoli, si stirerebbe)
   const tc = tendaG.attributes.color, tp = tendaG.attributes.position, tx0 = Float32Array.from({ length: tp.count }, (_, i) => (i % (TNX + 1) === TNX / 2 + 1 ? (PX0 + PX1) / 2 + 0.004 : tp.getX(i))), ty0 = Float32Array.from({ length: tp.count }, (_, i) => tp.getY(i));
-  function muoviTenda(t, apre, vento, scosta = 0) {
+  // scosta: il telo di destra raccolto verso lo stipite (in basso di più, come tirato da una mano); larga: raccolto del tutto, anche in alto (ci passa una persona)
+  function muoviTenda(t, apre, vento, scosta = 0, larga = 0) {
     const tn = tendaG.attributes.normal, cx = (PX0 + PX1) / 2;
-    for (let i = 0; i < tp.count; i++) { const xr = tx0[i], y = ty0[i], h = 1 - y / HP, x = xr > cx ? TX1 - (TX1 - xr) * (1 - 0.78 * scosta * (0.35 + 0.65 * h)) : xr;                                  // h: 0 in alto (bastone), 1 in basso (libera)
+    for (let i = 0; i < tp.count; i++) { const xr = tx0[i], y = ty0[i], h = 1 - y / HP, x = xr > cx ? TX1 - (TX1 - xr) * (1 - scosta * (0.78 * (0.35 + 0.65 * h) * (1 - larga) + 0.88 * larga)) : xr;                                  // h: 0 in alto (bastone), 1 in basso (libera)
       const pieghe = 0.014 * Math.sin(x * 34) + 0.006 * Math.sin(x * 71 + 1.3);
       const g = Math.exp(-(((x - (PX0 + PX1) / 2 + 0.03) / 0.3) ** 2)) * h ** 1.4 * apre * vento;                        // il vento la spinge fuori dall'anta socchiusa
       const fuoriZ = g * (0.17 + 0.09 * Math.sin(t * 2.3 + y * 2.1) + 0.05 * Math.sin(t * 5.1 + x * 9));
@@ -296,7 +297,7 @@ export function balconi({ scene, amb, fuori, FY }) {
   return { Q, S, antaD, antaS, tenda, LS, LG, LC, LD, piani, DIV, montante,
     update(t, o = {}) {
       const ap = M.clamp(o.porta ?? 0), casa = o.casa || {}, ks = M.clamp(casa.soggiorno ?? 0), kc = M.clamp(casa.corridoio ?? 0), vento = o.vento ?? 1;
-      antaD.rotation.y = -1.75 * ap; muoviTenda(t, Math.min(1, ap * 6) * (1 - M.clamp(o.tendaScosta ?? 0)), vento, M.clamp(o.tendaScosta ?? 0));
+      antaD.rotation.y = -1.75 * ap; muoviTenda(t, Math.min(1, ap * 6) * (1 - M.clamp(o.tendaScosta ?? 0)), vento, M.clamp(o.tendaScosta ?? 0), M.clamp(o.tendaLarga ?? 0));
       LS.intensity = 11 * ks; LG.intensity = 0.8 * ks + 0.35 * kc * (1 - ks); LD.intensity = (o.luceBalcone ?? 5) * ks; LB.intensity = (o.luceBassa ?? 0) * ks; LC.intensity = 7 * kc * (1 - 0.7 * ks);
       // una luce spenta non deve costare (le sue ombre si calcolerebbero lo stesso)
       for (const l of [LS, LD, LB, LG, LC]) l.visible = l.intensity > 0.001;

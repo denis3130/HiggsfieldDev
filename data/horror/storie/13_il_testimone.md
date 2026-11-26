@@ -59,7 +59,7 @@ Cosa fai? La A: apri, e fai finta di non averlo riconosciuto. Oppure la B: non a
 
 **Bivio:** A: Apri e fingi / B: Scappi dal balcone
 
-## Episodio 2 — La mano tesa (bozza del 26/11, in attesa dell'ok dell'utente; ha vinto la B dell'episodio 1)
+## Episodio 2 — La mano tesa (testo approvato dall'utente il 26/11 sera con «vai»; ha vinto la B dell'episodio 1)
 Scritto solo il ramo B («non apri, e scappi dal balcone con il telefono»): l'episodio 1 è uscito sul canale nuovo e il 26/11 l'utente ha detto
 «hanno scelto l'opzione B continua pure». Il ramo A non si scrive. Regole del 26/11 applicate: la voce non descrive l'immagine, ogni frase regge
 alla logica, pochi dettagli e tutti usati (le chiavi lasciate alla vicina per le piante; la portafinestra socchiusa, da cui lo senti e da cui lui

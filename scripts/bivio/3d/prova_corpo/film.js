@@ -52,6 +52,13 @@ const POSE = [
   { nome: 'collo, testa in su e inclinata', centro: [0, 1.5, 0.03], raggio: 0.62, posa: { headPitch: -0.45, headRoll: 0.2 } },
   // il telefono che filma dalla finestra (di traverso nella mano: dita dietro con le punte agganciate al bordo, pollice sullo schermo)
   { nome: 'telefono che filma', centro: [0.13, 1.4, 0.3], raggio: 0.8, posa: { telefono: 1, filma: 1, armR: { a: [0.206, 0.329, 0.268], gomito: [1, -0.8, 0], dita: [-1, 0.06, 0], dorso: [0, -0.5, 0.87], mano: 'filma' } } },
+  // il telefono infilato in tasca (episodio 2, dal secondo 54): la posa com'era e le varianti col gomito indietro
+  { nome: 'in tasca (com era)', centro: [0.2, 1.12, 0.03], raggio: 1.3, posa: { armR: { a: [0.215, -0.1, 0.06], gomito: [1, -0.3, -0.7], dita: [0, -1, 0.15], dorso: [1, 0, 0.1], mano: 'presa' } } },
+  { nome: 'in tasca (com era, solo pelle)', centro: [0.2, 1.12, 0.03], raggio: 1.3, posa: { solo: 'pelle', armR: { a: [0.215, -0.1, 0.06], gomito: [1, -0.3, -0.7], dita: [0, -1, 0.15], dorso: [1, 0, 0.1], mano: 'presa' } } },
+  { nome: 'in tasca B gomito 0.45 0 -1', centro: [0.2, 1.12, 0.03], raggio: 1.3, posa: { armR: { a: [0.19, 0.0, 0.07], gomito: [0.45, 0, -1], dita: [-0.1, -1, 0.1], dorso: [0.6, 0, 0.8], mano: 'presa' } } },
+  { nome: 'in tasca C gomito 0.2 0 -1', centro: [0.2, 1.12, 0.03], raggio: 1.3, posa: { armR: { a: [0.19, 0.0, 0.07], gomito: [0.2, 0, -1], dita: [-0.1, -1, 0.1], dorso: [0.6, 0, 0.8], mano: 'presa' } } },
+  { nome: 'in tasca D piu giu', centro: [0.2, 1.12, 0.03], raggio: 1.3, posa: { armR: { a: [0.2, -0.06, 0.06], gomito: [0.45, 0, -1], dita: [-0.1, -1, 0.1], dorso: [0.6, 0, 0.8], mano: 'presa' } } },
+  { nome: 'in tasca E dorso fuori', centro: [0.2, 1.12, 0.03], raggio: 1.3, posa: { armR: { a: [0.19, 0.0, 0.07], gomito: [0.45, 0, -1], dita: [-0.1, -1, 0.1], dorso: [1, 0, 0.2], mano: 'presa' } } },
 ];
 function scatto(c, set, o, x, y, wd, hg) { c.save(); c.translate(x, y); c.beginPath(); c.rect(0, 0, wd, hg); c.clip(); set.camera.aspect = wd / hg; c.scale(wd / W, hg / H); G.renderSet(c, set, 0, 0, o); c.restore(); }
 M.film({ fonts: [M.font(20, 700, 'Display')], samples: 1,

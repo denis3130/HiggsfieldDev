@@ -46,7 +46,11 @@ const TEL_BASSO = { a: [0.13, 0.2, 0.26], gomito: [1, -0.7, -0.2], dita: [0, 0.9
 const TEL_GUARDA = { a: [0.1, 0.3, 0.3], gomito: [1, -0.8, -0.1], dita: [-0.1, 0.9, -0.3], dorso: [0, 0.45, 1], mano: 'presa' };
 const TEL_PETTO = { a: [0.05, 0.25, 0.2], gomito: [0.8, -1, -0.1], dita: [-0.55, 0.75, 0.1], dorso: [0.15, 0.1, 1], mano: 'presa' };
 // il telefono finisce in tasca quando esci (la sinistra lo infila nella tasca della tuta); da rannicchiato una mano resta sopra la tasca, l'altra sul ginocchio
-const IN_TASCA = { a: [0.215, -0.1, 0.06], gomito: [1, -0.3, -0.7], dita: [0, -1, 0.15], dorso: [1, 0, 0.1], mano: 'presa' };
+// (il gomito va INDIETRO, non di lato: di lato sembra un'ala e nella portafinestra, larga 60 cm, finisce dentro lo stipite)
+const IN_TASCA = { a: [0.2, -0.06, 0.06], gomito: [0.3, 0, -1], dita: [-0.1, -1, 0.1], dorso: [0.6, 0, 0.8], mano: 'presa' };
+// (dal petto alla tasca la mano gira al largo del busto: in linea retta lo attraversava. FUORI è il punto di controllo della curva)
+const FUORI_TASCA = { a: [0.275, 0.065, 0.27], gomito: [0.6, -0.2, -0.8], dita: [0, -0.8, 0.6], dorso: [0.8, 0.2, 0.6], mano: 'presa' };
+const versoTasca = (k) => mixA(mixA(TEL_PETTO, FUORI_TASCA, k), mixA(FUORI_TASCA, IN_TASCA, k), k);
 // (la mano sta sulla coscia sinistra, verso l'anca: agganciata al ginocchio e tirata indietro lungo la coscia; il delta è nel mondo e vale per la posa da rannicchiato, yaw = Y_ANG)
 const SU_TASCA = { proprio: 'ginocchioS', delta: [0.164, -0.073, -0.159], gomito: [1, -0.3, -0.6], dita: [0, 0.6, 0.8], dorso: [0.6, 0.64, -0.48], mano: 'piatta' };
 const SUL_GINOCCHIO = { proprio: 'ginocchioD', delta: [0, 0.075, 0], gomito: [-1, -0.5, -0.2], dita: [0, -0.35, 1], dorso: [0, 1, 0.3], mano: 'piatta' };
@@ -92,7 +96,7 @@ function sequenza() {
   const DIST_SU = { a: [-0.1, 0.33, 0.33], gomito: [-1, -0.8, -0.1], dita: [0, 1, 0.05], dorso: [0, 0, -1], mano: 'tessera' };
   const tS = r(3) - 0.25, tGira = r(3) + 0.3, tVa = tGira + 0.9, tArr = w(3, 'suona') + 0.5, tSuona = tArr + 0.15, tApre = r(4) - 0.35, tChiude = r(5) + 0.1, tVolta = r(5) + 0.9, buioA = w(5, 'piante') + 0.1;
   const spio = (t) => { const gira = io(prog(t, tGira, tVa + 0.2)), va = io(prog(t, tVa, tArr)), suona = bump(t, tSuona + 0.35, 0.45), apre = io(prog(t, tApre, tApre + 0.5)) * (1 - 0.72 * io(prog(t, tChiude, tChiude + 0.5)));
-    const mostra = io(prog(t, tApre + 0.25, tApre + 0.8)) * (1 - io(prog(t, tChiude - 0.5, tChiude))), volta = io(prog(t, tVolta, tVolta + 1.4)), nero = t > buioA && t < buioA + 0.55 ? 1 : 0, dopo = t >= buioA + 0.55 ? 1 : 0;
+    const mostra = io(prog(t, tApre + 0.25, tApre + 0.8)) * (1 - io(prog(t, tChiude - 0.5, tChiude))), volta = io(prog(t, tVolta, tVolta + 1.4)), nero = t > buioA && t < buioA + 0.45 ? 1 : 0, dopo = t >= buioA + 0.45 ? 1 : 0;
     const z = lerp(lerp(0.72, 2.72, va), 1.9, dopo), x = lerp(0.02, -0.12, va), cam = prog(t, tVa, tArr + 1);
     return { set: 'P', id: 'spio', spioncino: 1, cam: [0.008 * M.noise1(t * 0.6, 3), 1.56 + 0.005 * M.noise1(t * 0.5, 4), 0.03], look: [lerp(0, -0.1, cam), lerp(1.6, 1.5, cam), 1], fov: lerp(72, lerp(46, 40, prog(t, tArr, tChiude)), io(cam)) + 10 * dopo,
       porta11: apre, buio: 0.25 + 0.6 * dopo, luce: nero ? 0 : 1,
@@ -109,17 +113,23 @@ function sequenza() {
   sc(asc1, spio);
 
   // --- «Richiamare il centododici? Ti hanno appena mandato lui.»: ti stacchi dalla porta, guardi il telefono, lo abbassi
-  sc(r(6) - 0.25, (t, k, s) => { const ind = io(prog(t, s.t0, s.t0 + 0.9)), giuT = io(prog(t, w(6, 'mandato') - 0.2, rf(6) + 0.2));
+  sc(r(6) - 0.12, (t, k, s) => { const ind = io(prog(t, s.t0, s.t0 + 0.9)), giuT = io(prog(t, w(6, 'mandato') - 0.2, rf(6) - 0.1));
     return { set: 'I', id: 'richiami', ui: 'chiamate', cam: v3([0.55, 1.42, -0.3], [0.5, 1.4, -0.05], io(k)), look: [0, 1.25, -1.7], fov: 40, piedi: 0, telefono: 1, amb: 0.22,
       tu: { pos: [0, 0, lerp(-2.08, -1.55, ind)], yaw: Math.PI - 0.5 * ind, breathe: sin(t * 4), ...PAURA, headPitch: 0.35 * (1 - giuT), gazeY: -0.5 * (1 - giuT), gambe: { aL: -0.3 * bump(ind, 0.3, 0.3), gL: 0.25 * bump(ind, 0.3, 0.3), aR: -0.3 * bump(ind, 0.72, 0.28), gR: 0.25 * bump(ind, 0.72, 0.28) },
         armR: mixA(TEL_GUARDA, TEL_BASSO, giuT) } }; });
 
-  // --- «Prendi il telefono ed esci sul balcone. La portafinestra resta socchiusa.»
-  const esce = r(7) - 0.3, soc = w(7, 'portafinestra') - 0.2;
-  // (esci, vai verso la ringhiera; l'anta torna indietro da sola ma non si chiude: resta una fessura e il vento ne tira fuori la tenda)
-  sc(esce, (t, k) => { const ap = io(prog(t, esce + 0.1, esce + 0.8)), va = io(prog(t, esce + 0.5, esce + 2.3)), ch = io(prog(t, esce + 1.8, soc + 0.3)), av = io(prog(t, soc - 0.5, soc + 0.9)), cm = io(prog(t, soc + 0.6, r(8) - 0.3));
-    return { ...FB, id: 'esci', cam: v3(v3([5.75, FY + 1.5, 2.9], [5.6, FY + 1.46, 2.6], io(prog(k, 0, 0.5))), [4.95, FY + 1.32, 1.5], cm), look: v3([4.78, FY + 1.1, 0], [4.52, FY + 1.05, -0.1], cm), fov: lerp(36, 30, cm), porta: lerp(0.55 * ap, 0.12 + 0.035 * sin(t * 1.9) * ch, ch), tendaScosta: ap * (1 - ch), vento: 1, telTu: t < esce + 1.75 ? 1 : 0, telSchermo: 0.5,
-      tu: { pos: [lerp(lerp(4.78, 4.95, va), 5.5, av), FY, lerp(lerp(-0.85, 0.42, va), 0.7, av)], yaw: 0.9 * av, ...PAURA, breathe: sin(t * 5), headYaw: -0.6 * bump(t, esce + 2.3, 0.7), gambe: (va > 0.01 && va < 0.99) || (av > 0.01 && av < 0.99) ? passi(va * 9 + av * 5, 0.32) : {}, armR: t < esce + 2.6 ? mixA(TEL_PETTO, IN_TASCA, io(prog(t, esce + 0.9, esce + 1.7))) : undefined } }; });
+  // --- «Ti infili il telefono in tasca ed esci sul balcone. La portafinestra resta socchiusa.»
+  const esce = r(7) - 0.3, soc = w(7, 'portafinestra') - 0.2, tTel = w(7, 'telefono') - 0.15, tIn = w(7, 'tasca') + 0.35, tEd = w(7, 'ed');
+  const GIU_S = { a: [0.253, -0.21, 0.035], gomito: [0.6, -0.3, -0.75], dita: [0, -1, 0.05], dorso: [0, 0, 1], mano: 'rilassata' };
+  // L'anta si apre verso l'interno fin quasi ad angolo retto e tu passi al centro del varco (60 cm: con l'anta a metà e passando di lato, mezzo braccio
+  // finiva dentro lo stipite e da davanti sembrava staccato); scosti la tenda passando. Un passo fuori dalla soglia infili il telefono in tasca,
+  // poi vai alla ringhiera ed esci dall'inquadratura; l'anta torna indietro da sola ma non si chiude: resta una fessura e il vento ne tira fuori la tenda.
+  sc(esce, (t, k) => { const ap = io(prog(t, esce + 0.1, esce + 0.75)), va = io(prog(t, esce + 0.55, tTel + 0.45)), ch = io(prog(t, tEd + 0.7, soc + 0.35)), av = io(prog(t, tEd + 0.15, tEd + 1.65)), cm = io(prog(t, soc + 0.1, r(8) - 0.3));
+    const ts = io(prog(t, esce + 0.15, esce + 0.7)) * (1 - io(prog(t, tIn, tIn + 0.9)));
+    return { ...FB, id: 'esci', cam: v3(v3([5.75, FY + 1.5, 2.9], [5.6, FY + 1.46, 2.6], io(prog(k, 0, 0.5))), [4.95, FY + 1.32, 1.5], cm), look: v3([4.78, FY + 1.22, 0], [4.52, FY + 1.05, -0.1], cm), fov: lerp(42, 30, cm),
+      porta: lerp(0.85 * ap, 0.12 + 0.035 * sin(t * 1.9) * ch, ch), tendaScosta: ts, tendaLarga: ts, vento: 1, telTu: t < tIn - 0.12 ? 1 : 0, telSchermo: 0.5,
+      tu: { pos: [lerp(lerp(4.78, 4.86, io(prog(va, 0.7, 1))), 5.75, av), FY, lerp(lerp(-0.85, 0.3, va), 0.7, av)], yaw: 0.9 * av, ...PAURA, breathe: sin(t * 5), headYaw: -0.6 * bump(t, tEd + 0.35, 0.55), gambe: (va > 0.01 && va < 0.99) || (av > 0.01 && av < 0.99) ? passi(va * 9 + av * 6, 0.32) : {},
+        armR: t < tIn + 0.15 ? versoTasca(io(prog(t, tTel, tIn - 0.1))) : mixA(IN_TASCA, GIU_S, io(prog(t, tIn + 0.15, tIn + 0.75))) } }; });
 
   // --- «Sotto ci sono quattro piani di vuoto. E l'auto grigia. Lei è ancora lì dentro.»: quello che vedi dalla ringhiera, poi il baule
   const TR = [5.35, FY, 0.72], auto = w(8, "l'auto") - 0.25, bx = AUTO[0] - 1.75;
@@ -130,9 +140,9 @@ function sequenza() {
   // --- «Di fianco c'è il balcone di un appartamento vuoto da mesi. Lì non verrà a cercarti.»: ti sporgi a guardare oltre il divisorio
   const li = w(9, 'lì') - 0.2;
   sc(r(9) - 0.25, (t, k, s) => { const gira = io(prog(t, s.t0 + 0.2, s.t0 + 1.0)), sp = io(prog(t, s.t0 + 0.9, s.t0 + 2.2));
-    return { ...FB, id: 'guardi', cam: v3([7.75, FY + 1.5, 2.6], [7.6, FY + 1.46, 2.4], io(k)), look: [5.85, FY + 1.2, 0.85], fov: 40,
-      tu: { pos: [lerp(5.45, 5.72, sp), FY, lerp(0.72, 0.84, sp)], yaw: 0.15 * gira, lean: 0.3 * sp, side: -0.12 * sp, twist: 0.1 * sp, headYaw: 0.75 * gira + 0.1 * sp, headPitch: 0.1 * sp, breathe: sin(t * 5), ...PAURA, mouth: 0.1,
-        armL: { sbarra: CR(lerp(5.2, 5.38, sp), 1), gomitoM: [-1, -0.5, -0.1] }, armR: { sbarra: CR(lerp(5.7, 6.14, sp), -1), gomitoM: [0.4, -1, -0.3] } } }; });
+    return { ...FB, id: 'guardi', cam: v3([7.75, FY + 1.5, 2.6], [7.6, FY + 1.46, 2.4], io(k)), look: [5.85, FY + 1.33, 0.85], fov: 40,
+      tu: { pos: [lerp(5.45, 5.62, sp), FY, lerp(0.72, 0.86, sp)], yaw: 0.15 * gira, lean: 0.36 * sp, side: -0.12 * sp, twist: 0.1 * sp, headYaw: 0.75 * gira + 0.1 * sp, headPitch: 0.1 * sp, breathe: sin(t * 5), ...PAURA, mouth: 0.1,
+        armL: { sbarra: CR(lerp(5.2, 5.3, sp), 1), gomitoM: [-1, -0.5, -0.1] }, armR: { sbarra: CR(lerp(5.7, 5.86, sp), -1), gomitoM: [-0.2, -0.6, -1] } } }; });      // (la sinistra resta dalla tua parte del divisorio: oltre il bordo, da quest'inquadratura, sembrava un avambraccio che usciva dal pannello)
   sc(li, (t, k) => ({ ...FB, id: 'vuoto2', cam: su([6.06, FY + 1.5, 1.24], trema(t), 1), look: v3([7.9, FY + 0.7, 0.5], [7.3, FY + 0.35, 0.25], io(k)), fov: 54, tu: lontano }));
 
   // --- «Scavalchi la ringhiera. È bagnata. Non guardi giù.»
@@ -153,21 +163,21 @@ function sequenza() {
     const x = 5.72 + 0.3 * ca + 0.32 * cb, xd = lerp(lerp(5.96, 6.3, ma), 6.6, cb), xs = lerp(lerp(5.48, 5.62, ca), 6.1, mb);
     return fuori(t, x, { headYaw: -0.45 * (1 - cb), headPitch: 0.1, gambe: { oL: 0.36 * pa * (1 - ca) + 0.0, gL: 0.14 * bump(pa, 0.5, 0.5), oR: -0.3 * pb * (1 - cb) + 0.3 * ca * (1 - pb), gR: 0.14 * bump(pb, 0.5, 0.5) },
       armL: { sbarra: CR(xd, -1), gomitoM: [0.5, -0.8, 0.6] }, armR: { sbarra: CR(xs, 1), gomitoM: [-0.5, -0.8, 0.6] } }); };
-  sc(r(11) - 0.25, (t, k, s) => ({ ...FB, id: 'piede1', ambiente: 0.4, fronte: 0.5, cam: v3([6.98, FY + 0.52, 0.34], [6.92, FY + 0.5, 0.4], io(k)), look: [6.2, FY + 0.42, 1.1], fov: 56, tu: passoFuori(t, prog(t, s.t0 + 0.1, poi + 0.1)) }));
-  sc(poi, (t, k) => ({ ...FB, id: 'piede2', pioggia: 0.5, cam: su(v3([7.9, FY + 1.5, 3.7], [7.75, FY + 1.45, 3.5], io(k)), trema(t), 1), look: [6.2, FY + 0.9, 1.1], fov: 34, tu: passoFuori(t, 1 + prog(t, poi + 0.05, cisei + 0.1)) }));
+  // (una sola inquadratura bassa per i due piedi: prima il destro oltre il montante, poi il sinistro accanto)
+  sc(r(11) - 0.25, (t, k, s) => ({ ...FB, id: 'piede1', ambiente: 0.4, fronte: 0.5, cam: v3([6.98, FY + 0.52, 0.34], [6.9, FY + 0.5, 0.42], io(k)), look: [6.25, FY + 0.2, 1.1], fov: 56, tu: passoFuori(t, prog(t, s.t0 + 0.1, poi + 0.05) + prog(t, poi + 0.05, cisei - 0.1)) }));
   const dentro = (t, x = {}) => ({ pos: [6.5, FY, 0.72], yaw: 0, lean: 0.35, breathe: sin(t * 6.5), ...PAURA, mouth: 0.3, headPitch: 0.35, gambe: { aL: 0.35, gL: 0.6, aR: 0.2, gR: 0.45 }, bacino: { sposta: [0, -0.07, 0] }, armL: { sbarra: CR(6.28, 1), gomitoM: [-0.6, -0.4, -0.7] }, armR: { sbarra: CR(6.72, -1), gomitoM: [0.6, -0.4, -0.7] }, ...x });
-  sc(cisei, (t, k) => ({ ...FB, id: 'cisei', cam: v3([7.4, FY + 1.3, 3.6], [7.3, FY + 1.25, 3.3], io(k)), look: [6.5, FY + 0.92, 0.8], fov: 34, tu: dentro(t, { headYaw: -0.5 * io(prog(k, 0.4, 0.9)), headPitch: 0.35 - 0.3 * io(prog(k, 0.4, 0.9)) }) }));
+  sc(cisei, (t, k) => ({ ...FB, id: 'cisei', cam: v3([7.4, FY + 1.3, 3.6], [7.3, FY + 1.25, 3.3], io(k)), look: [6.5, FY + 1.2, 0.8], fov: 34, tu: dentro(t, { headYaw: -0.5 * io(prog(k, 0.4, 0.9)), headPitch: 0.35 - 0.3 * io(prog(k, 0.4, 0.9)) }) }));
 
   // --- «Ti rannicchi contro il muro, al buio.»: indietro fino al muro, giù a sedere, il telefono contro il petto perché non faccia luce
   // (i piedi restano a terra mentre il bacino scende: l'angolo dell'anca e del ginocchio si ricavano da dove sta il piede; alla fine è la posa di tuAngolo)
   const gambaA = (h, f) => { const { T1, T2 } = PT, d = Math.min(T1 + T2 - 0.002, Math.hypot(f, h)), a = Math.atan2(f, h) + Math.acos(clamp((T1 * T1 + d * d - T2 * T2) / (2 * T1 * d), -1, 1)), g = Math.PI - Math.acos(clamp((T1 * T1 + T2 * T2 - d * d) / (2 * T1 * T2), -1, 1)); return [a, g]; };
   sc(r(12) - 0.3, (t, k, s) => { const ind = io(prog(t, s.t0, s.t0 + 0.9)), giu = io(prog(t, s.t0 + 0.75, s.t0 + 2.1)), A = tuAngolo(t);
-    if (giu >= 0.999) return { ...FB, id: 'rannicchi', cam: v3([7.6, FY + 0.85, 2.5], [7.42, FY + 0.74, 2.15], io(k)), look: [6.8, FY + 0.5, 0.35], fov: 36, tu: A };
+    if (giu >= 0.999) return { ...FB, id: 'rannicchi', cam: v3([7.6, FY + 0.85, 2.5], [7.42, FY + 0.74, 2.15], io(k)), look: [6.8, FY + 0.58, 0.35], fov: 36, tu: A };
     // dove finisce ogni piede rispetto all'anca nella posa seduta (dagli angoli di tuAngolo), e dove sta da in piedi
     const fine = (aF, gF) => [PT.T1 * Math.cos(aF) + PT.T2 * Math.cos(aF - gF), PT.T1 * Math.sin(aF) + PT.T2 * Math.sin(aF - gF)], cav = PT.hy - PT.T1 - PT.T2, hA = lerp(PT.hy, 0.115, giu);
     const gamba = (aF, gF) => { const [hF, fF] = fine(aF, gF); return gambaA(hA - lerp(cav, 0.115 - hF, giu), lerp(0.03, fF, giu)); };
     const [aL, gL] = gamba(1.5 + 0.8, 1.5 + 0.5), [aR, gR] = gamba(1.5 + 0.72, 1.5 + 0.3);
-    return { ...FB, id: 'rannicchi', cam: v3([7.6, FY + 0.85, 2.5], [7.42, FY + 0.74, 2.15], io(k)), look: [6.8, FY + 0.5, 0.35], fov: 36,
+    return { ...FB, id: 'rannicchi', cam: v3([7.6, FY + 0.85, 2.5], [7.42, FY + 0.74, 2.15], io(k)), look: [6.8, FY + 0.58, 0.35], fov: 36,
       tu: { ...A, pos: [lerp(6.5, P_ANG[0], ind), FY - (PT.hy - hA), lerp(0.72, P_ANG[2], ind)], yaw: lerp(0, Y_ANG, ind), sit: 0, gambe: giu > 0.001 ? { aL, gL, aR, gR } : passi(ind * 5, 0.25 * bump(ind, 0.5, 0.5)), lean: lerp(0.1, -0.04, giu), headPitch: lerp(0.3, -0.1, giu), headYaw: -0.25 * giu,
         armR: giu > 0.7 ? SU_TASCA : undefined, armL: giu > 0.85 ? SUL_GINOCCHIO : undefined } }; });
 
@@ -177,7 +187,7 @@ function sequenza() {
     return { ...FB, id: 'luce', pioggia: 0.45, cam: v3([5.75, FY + 0.5, 21.5], [5.75, FY + 0.6, 20.3], io(k)), look: [5.75, FY + 0.85, 0], fov: 26, porta: 0.07, casa: { corridoio: c, soggiorno: 0 }, tu: tuAngolo(t) }; });
 
   // --- «Permesso», dice lui. Come un ospite.: dietro il velo della tenda, in fondo, la porta del corridoio accesa e lui fermo sulla soglia; poi accende
-  const sogg = rf(14) + 0.25;
+  const sogg = rf(14) + 0.05;
   sc(r(14) - 0.25, (t, k) => { const entra = io(prog(t, r(14) - 0.2, r(14) + 0.9));
     return { ...FB, id: 'permesso', cam: v3([5.6, FY + 1.42, 2.4], [5.48, FY + 1.4, 2.0], io(k)), look: [4.28, FY + 1.3, -2.6], fov: 30,      // (da destra: visto dritto, la sua testa finiva proprio dietro i montanti al centro della portafinestra)
       porta: 0.07, ambiente: 0.13, fronte: 0.03, casa: { corridoio: 1, soggiorno: t > sogg ? 1 : 0 }, tu: lontano,
@@ -185,7 +195,7 @@ function sequenza() {
 
   // --- «Lo senti camminare. Apre le porte, una per una. Senza fretta.»: il tuo viso; poi, da fuori, la luce della cucina e lui alla tua finestra
   const apre = w(15, 'apre') - 0.2;
-  sc(r(15) - 0.25, (t, k) => ({ ...FB, id: 'senti', mira: { chi: 'tu', da: v3([-0.3, 0.04, 0.95], [-0.27, 0.03, 0.84], io(k)) }, fov: 24, ...LUCE, porta: 0.07, tendaScosta: 0,
+  sc(r(15) - 0.08, (t, k) => ({ ...FB, id: 'senti', mira: { chi: 'tu', da: v3([-0.3, 0.04, 0.95], [-0.27, 0.03, 0.84], io(k)) }, fov: 24, ...LUCE, porta: 0.07, tendaScosta: 0,
     tu: tuAngolo(t, { headYaw: -0.25 - 0.3 * io(prog(k, 0.2, 0.7)), gazeX: -0.5 * io(prog(k, 0.1, 0.6)), headPitch: -0.05 }) }));
   sc(apre, (t, k) => { const va = io(prog(t, apre + 0.2, apre + 2.2)), guarda = io(prog(t, apre + 2.0, apre + 2.8));
     return { ...FB, id: 'cucina', pioggia: 0.45, cam: v3([3.1, FY + 1.3, 16.5], [3.1, FY + 1.35, 15.6], io(k)), look: [3.1, FY + 1.25, 0], fov: 26, cucina: t > apre + 0.35 ? 1 : 0, tenda: 1, casa: { corridoio: 1, soggiorno: 1 }, porta: 0.07, tu: tuAngolo(t),
@@ -194,7 +204,7 @@ function sequenza() {
   // --- «Non deve avere paura di me», dice piano. «Sono qui per proteggerla.»: la sua ombra sul velo; poi le dita sul bordo dell'anta socchiusa, che si apre
   const dita = w(16, 'sono') - 0.3;
   sc(r(16) - 0.3, (t, k) => { const va = io(prog(t, r(16) - 0.3, dita - 0.2));
-    return { ...FB, id: 'ombra', cam: v3([5.1, FY + 1.4, 2.5], [4.95, FY + 1.36, 2.0], io(k)), look: [4.5, FY + 1.2, -0.25], fov: 30, porta: 0.07, casa: { corridoio: 1, soggiorno: 1 }, luceBalcone: 2, tu: lontano,
+    return { ...FB, id: 'ombra', cam: v3([5.1, FY + 1.4, 2.5], [4.95, FY + 1.36, 2.0], io(k)), look: [4.5, FY + 1.4, -0.25], fov: 30, porta: 0.07, casa: { corridoio: 1, soggiorno: 1 }, luceBalcone: 2, tu: lontano,
       riva: { pos: [lerp(4.2, 4.62, va), FY, lerp(-2.7, -0.85, va)], yaw: lerp(0.25, 0.02, va), breathe: sin(t * 1.8), open: 0.72, gambe: va > 0.01 && va < 0.99 ? passi(va * 6.5, 0.3) : {}, ...parla('isp', t) } }; });
   // l'anta si apre piano verso l'interno (la tira lui, la mano sulla maniglia dietro il vetro) e sposta la tenda: nella fessura, metà del suo viso
   sc(dita, (t, k) => { const tira = io(prog(t, dita + 0.4, rf(16) + 0.9)), ap = lerp(0.07, 0.53, tira), m = SF.BL.montante(ap, 1.03);
@@ -226,7 +236,7 @@ function sequenza() {
 
   // --- «Con questa pioggia si scivola. Basta un attimo.»: da giù, dal parcheggio: lui sporto sul vuoto, tu nell'angolo
   sc(r(21) - 0.25, (t, k) => { const giuG = bump(t, w(21, 'scivola') + 0.2, 0.7);
-    return { ...FB, id: 'scivola', pioggia: 0.6, cam: v3([9.6, FY - 1.5, 6.2], [9.4, FY - 1.4, 5.8], io(k)), look: su([6.35, FY + 0.95, 0.8], trema(t, 1), 1), fov: 23, ...LUCE, ambiente: 0.2, fronte: 0.12,
+    return { ...FB, id: 'scivola', pioggia: 0.6, cam: v3([9.6, FY - 1.5, 6.2], [9.4, FY - 1.4, 5.8], io(k)), look: su([6.35, FY + 1.11, 0.8], trema(t, 1), 1), fov: 23, ...LUCE, ambiente: 0.2, fronte: 0.12,
       tu: tuAngolo(t, { headYaw: -0.45, headPitch: -0.3 }), riva: rivaSporge(t, 1, { x: { ...parla('isp', t), smile: 0.5, headPitch: 0.1 + 0.35 * giuG, gazeY: -0.15 - 0.5 * giuG } }) }; });
 
   // --- «Ti tende la mano, sopra il vuoto. «Venga. L'aiuto io.»»
@@ -236,7 +246,7 @@ function sequenza() {
   // --- «Prima però mi passi il telefono. Non vorrà che le cada di sotto.»: la tua mano che stringe la tasca (ti tradisce); poi le sue dita che lo chiamano
   const due = w(23, 'non') - 0.2;
   sc(r(23) - 0.3, (t, k) => { const pr = io(prog(t, r(23) + 0.5, r(23) + 1.1)), p = PT.tasca;
-    return { ...FB, id: 'tasca', cam: v3([p[0] + 0.5, p[1] + 0.42, p[2] + 0.36], [p[0] + 0.45, p[1] + 0.38, p[2] + 0.33], io(k)), look: [p[0] - 0.03, p[1] + 0.03, p[2]], fov: 32, ...LUCE, fronte: 0.22,
+    return { ...FB, id: 'tasca', cam: v3([p[0] + 0.44, p[1] + 0.42, p[2] + 0.44], [p[0] + 0.39, p[1] + 0.38, p[2] + 0.41], io(k)), look: [p[0] - 0.075, p[1] + 0.05, p[2] + 0.06], fov: 34, ...LUCE, fronte: 0.22,
       riva: rivaSporge(t, 1, { mano: 1 }), tu: tuAngolo(t, { headYaw: -0.5, headPitch: -0.25, breathe: sin(t * 6), armR: { ...SU_TASCA, delta: [0.164 - 0.004 * pr, -0.073 - 0.004 * pr, -0.159], mano: pr > 0.5 ? { indice: { mcp: 22, pip: 30, dip: 16 }, medio: { mcp: 24, pip: 32, dip: 18 }, anulare: { mcp: 24, pip: 32, dip: 18, ab: 4 }, mignolo: { mcp: 24, pip: 30, dip: 16, ab: 7 }, pollice: { ab: 20, fl: 14, roll: 10, mcp: 12, ip: 12 } } : 'piatta' } }) }; });
   sc(due, (t, k) => { const d = 0.5 * (bump(t, due + 0.55, 0.3) + bump(t, due + 1.2, 0.3));
     return { ...FB, id: 'dammi', pioggia: 0.4, cam: su(v3([7.0, FY + 0.98, 0.72], [6.95, FY + 1.0, 0.76], io(k)), trema(t, 0.5), 1), look: [6.26, FY + 1.16, 1.2], fov: 26, ...LUCE, tu: lontano,
@@ -294,7 +304,7 @@ function spioncino(ctx) {
 }
 // lo schermo del telefono con le chiamate recenti: il 112 in cima, il pollice sopra «Richiama»; poi lo schermo scende via
 function schermoChiamate(ctx, t, s) {
-  const k = E.outCubic(prog(t, s.t0 + 0.15, s.t0 + 0.6)) * (1 - E.inCubic(prog(t, w(6, 'mandato') - 0.1, rf(6) + 0.1))), pw = 600, ph = 1180, x = (W - pw) / 2 + 5 * M.noise1(t * 3, 11), y = 470 + (1 - k) * 320 + 4 * M.noise1(t * 3.4, 12);
+  const k = E.outCubic(prog(t, s.t0 + 0.15, s.t0 + 0.6)) * (1 - E.inCubic(prog(t, w(6, 'mandato') - 0.1, rf(6) - 0.1))), pw = 600, ph = 1180, x = (W - pw) / 2 + 5 * M.noise1(t * 3, 11), y = 470 + (1 - k) * 320 + 4 * M.noise1(t * 3.4, 12);
   if (k <= 0.01) return;
   ctx.save(); ctx.globalAlpha = Math.min(1, k * 1.2);
   ctx.shadowColor = 'rgba(150,190,255,0.35)'; ctx.shadowBlur = 90; M.rrect(ctx, x, y, pw, ph, 64); ctx.fillStyle = '#0B0C0F'; ctx.fill(); ctx.shadowBlur = 0;

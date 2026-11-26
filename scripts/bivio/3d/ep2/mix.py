@@ -7,7 +7,7 @@
 #   "lufs": livello prima del volume finale, misurato senza i bassi sotto 200 Hz, cioè come si sente da un telefono (lì la voce è a -22,9 e la pioggia intorno a -31,5)}.
 #   Può essere anche una lista di brani da sovrapporre. Un brano che manca (quelli dell'utente stanno solo sulla macchina, in musica/utente) si salta con un avviso.
 #   Per provarne un'altra senza toccare musica.json: MUSICA=<file> oppure MUSICA='{"file": ..., "lufs": ...}' (o una lista); MUSICA=no la toglie.
-# MIX=<file.wav> scrive il mix altrove (per le prove); SENZA_VOCE=1 lascia fuori la voce (per misurare i livelli).
+# MIX=<file.wav> scrive il mix altrove (per le prove); SENZA_VOCE=1 lascia fuori la voce, GREZZO=1 non normalizza (per misurare i livelli dei suoni contro la voce).
 import json, math, os, re, subprocess, sys, unicodedata
 D = os.path.dirname(os.path.abspath(__file__))
 LIB = os.environ.get('LIB') or os.path.normpath(os.path.join(D, '../../sfx'))
@@ -36,7 +36,7 @@ K2 = [r(2) + 0.55, r(2) + 0.9, r(2) + 1.25]; resti = w(2, 'resti') - 0.15
 tS = r(3) - 0.25; tGira = r(3) + 0.3; tVa = tGira + 0.9; tArr = w(3, 'suona') + 0.5; tSuona = tArr + 0.15; tApre = r(4) - 0.35; tChiude = r(5) + 0.1; buioA = w(5, 'piante') + 0.1
 esce = r(7) - 0.3; soc = w(7, 'portafinestra') - 0.2; auto = w(8, "l'auto") - 0.25
 bagn = w(10, 'è') - 0.15; nong = w(10, 'non') - 0.15; poi = w(11, 'poi') - 0.15; cisei = w(11, 'ci') - 0.2
-acc = w(13, 'accende') + 0.15; sogg = rf(14) + 0.25; apre = w(15, 'apre') - 0.2; dita = w(16, 'sono') - 0.3; spunta = w(19, 'spunta') - 0.1
+acc = w(13, 'accende') + 0.15; sogg = rf(14) + 0.05; apre = w(15, 'apre') - 0.2; dita = w(16, 'sono') - 0.3; spunta = w(19, 'spunta') - 0.1
 
 ING, FIL = [], []          # ingressi di ffmpeg e catene di filtri
 def lunghezza(f): return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], capture_output=True, text=True).stdout or 0)
@@ -90,7 +90,9 @@ for i, m in enumerate(MUS):
     if r_: suono(r_[0], T0, r_[1], dur=FINE, dentro=float(m.get('entra', 1.0)), fuori=1.5, lib=False); LETTI.append((m, r_[1], r_[2], r_[0]))
 # --- ambienti: in casa la pioggia dietro i vetri; dal balcone in poi la pioggia vera, col vento a folate; il buio di fondo per tutto l'episodio
 suono('pioggia_finestra.mp3', 0, 0.4, dur=esce + 0.3, ciclo=True, filtri='lowpass=f=2200', dentro=0.4, fuori=0.5)
-suono('pioggia_notte.mp3', esce, 0.95, ss=8, dur=END - esce, ciclo=True, filtri='lowpass=f=6000', dentro=0.6, fuori=0.6)
+# (la registrazione della pioggia nei primi 57 secondi ha dei colpi secchi, uno fortissimo a 49 s: si usa solo la parte pulita, in due pezzi incrociati)
+suono('pioggia_notte.mp3', esce, 0.95, ss=58, dur=60, filtri='lowpass=f=6000', dentro=0.6, fuori=2.0)
+suono('pioggia_notte.mp3', esce + 58, 0.95, ss=70, dur=END - esce - 58, filtri='lowpass=f=6000', dentro=2.0, fuori=0.6)
 suono('amb_slow.mp3', 0, 0.15, ss=6, dur=END, ciclo=True, dentro=1.5, fuori=1.2)
 for t in (soc + 0.2, nong - 0.1, r(13) - 1.2, r(18) + 0.3, r(21) - 0.2): suono('vento.mp3', t, 5.0, filtri='lowpass=f=3000', dentro=0.8, fuori=1.5, dur=5.3)
 MURO = 'lowpass=f=1500,aecho=0.8:0.5:60|130:0.25|0.12'          # un suono che arriva da dietro la porta di casa
@@ -107,7 +109,7 @@ suono('catenella.mp3', tApre - 0.25, 0.5, filtri=MURO)
 suono('porta_cigola.mp3', tApre + 0.05, 0.22, dur=1.2, filtri=MURO, fuori=0.3)
 suono('legno.mp3', tChiude, 0.3, ss=3.28, dur=0.75, filtri=MURO, fuori=0.1)
 suono('interruttore.mp3', buioA - 0.02, 0.5, filtri=MURO)
-suono('colpo.mp3', buioA + 0.55, 0.5, filtri=COLPO)
+suono('colpo.mp3', buioA + 0.45, 0.5, filtri=COLPO)
 # --- il telefono; fuori dalla porta tornano le chiavi
 suono('chiavi.mp3', w(6, 'mandato') - 0.1, 0.5, filtri=MURO)
 suono('riser.mp3', r(7) - 3.6, 0.2)
@@ -119,7 +121,7 @@ suono('ringhiera.mp3', r(10) + 0.12, 0.3, filtri='lowpass=f=2400')
 suono('stoffa.mp3', bagn + 0.3, 0.35)
 suono('ringhiera.mp3', bagn + 0.42, 0.18, filtri='lowpass=f=1800')
 suono('riser.mp3', nong - 0.4, 0.2)
-suono('heart60.mp3', nong, 1.0, dur=r(12) - nong, ciclo=True, dentro=0.6, fuori=1.0, filtri="atempo=1.25,volume='0.5':eval=frame")
+suono('heart60.mp3', nong, 1.0, dur=r(12) - nong, ciclo=True, dentro=0.6, fuori=1.0, filtri="atempo=1.25,volume='0.42':eval=frame")
 for t in (r(11) + 0.55, poi + 0.45): suono('scivolata.mp3', t, 0.3, dur=0.6, fuori=0.15)
 for t in (r(11) + 0.25, poi + 0.15): suono('ringhiera.mp3', t, 0.14, filtri='lowpass=f=1800')
 suono('tonfo.mp3', cisei + 0.1, 0.35, filtri='lowpass=f=1800')
@@ -137,10 +139,10 @@ suono('interruttore.mp3', apre + 0.33, 0.35, filtri=DENTRO)
 suono('rise_long.mp3', r(16) - 0.2, 0.45, ss=12, dur=rf(16) + 1.0 - r(16), dentro=1.0, fuori=0.5)
 suono('finestra.mp3', dita + 0.45, 1.0, fuori=0.5)
 # --- i passi escono sul balcone e si fermano; il respiro trattenuto
-suono('passi_piastrelle.mp3', r(17) + 0.15, 11.0, ss=7.6, dur=max(0.7, w(17, 'fermano') + 0.25 - r(17)), filtri='lowpass=f=4000', fuori=0.12)
-suono('heart60.mp3', w(17, 'fermano') + 0.3, 1.0, dur=r(20) - w(17, 'fermano') - 0.3, ciclo=True, dentro=0.5, fuori=1.2, filtri="atempo=1.3,volume='0.5+0.25*min(1,t/5)':eval=frame")
+suono('passi_piastrelle.mp3', r(17) + 0.15, 7.0, ss=7.6, dur=max(0.7, w(17, 'fermano') + 0.25 - r(17)), filtri='lowpass=f=4000', fuori=0.12)
+suono('heart60.mp3', w(17, 'fermano') + 0.3, 1.0, dur=r(20) - w(17, 'fermano') - 0.3, ciclo=True, dentro=0.5, fuori=1.2, filtri="atempo=1.3,volume='0.42+0.2*min(1,t/5)':eval=frame")
 # --- la sua faccia: un crescendo scuro e il colpo quando è fuori del tutto
-suono('rise_long.mp3', r(19) - 0.3, 0.6, ss=14, dur=rf(19) + 0.9 - r(19), dentro=0.8, fuori=0.5)
+suono('rise_long.mp3', r(19) - 0.3, 0.5, ss=14, dur=rf(19) + 0.9 - r(19), dentro=0.8, fuori=0.5)
 suono('colpo.mp3', rf(19) + 0.45, 0.6, filtri=COLPO)
 suono('ringhiera.mp3', r(19) - 0.1, 0.16, filtri='lowpass=f=1800')
 suono('colpo.mp3', w(22, 'mano') + 0.3, 0.35, filtri=COLPO)
@@ -152,6 +154,8 @@ n = len(ING); pre = f'{D}/audio/_premix.wav'
 graf = ';'.join(FIL) + ';' + ''.join(f'[s{i}]' for i in range(n)) + f'amix=inputs={n}:normalize=0:duration=longest,atrim=0:{FINE},afade=t=out:st={FINE - 0.8:.2f}:d=0.8[a]'
 cmd = ['ffmpeg', '-v', 'error', '-y'] + sum(ING, []) + ['-filter_complex', graf, '-map', '[a]', '-c:a', 'pcm_f32le', '-ar', '48000', pre]
 subprocess.run(cmd, check=True)
+if os.environ.get('GREZZO'):          # per misurare i livelli: il mix com'è, senza portarlo a -14 LUFS
+    os.replace(pre, MIX); print('mix grezzo (senza normalizzare) in', MIX); sys.exit(0)
 # volume a -14 LUFS in due passate (misura, poi correzione lineare: niente pompaggio)
 m = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', pre, '-af', 'loudnorm=I=-14:TP=-1:LRA=11:print_format=json', '-f', 'null', '-'], capture_output=True, text=True).stderr
 j = json.loads(m[m.rindex('{'):m.rindex('}') + 1])

@@ -372,9 +372,10 @@ MakeHuman ha misure vere (11,3 cm a metà), ma sotto una testa disegnata piccola
 
 L'episodio 1 l'ha pubblicato l'utente sul canale nuovo; il 26/11: «ok hanno scelto l'opzione B continua pure». Testo in
 `data/horror/storie/13_il_testimone.md`, copione in `data/horror/il_testimone/ep2/episodio.json` (con `pausa` = secondi di silenzio dopo
-ogni riga: li legge `prepara_voce.py`). **Il testo aspetta l'ok dell'utente: la voce di Luc si genera solo dopo.** Intanto le scene sono
-costruite sui tempi provvisori (`prepara_voce.py <cartella voce> ep2 --finta`); quando arriva la voce vera si rifanno `parole.json`, la
-durata, `bocca.json` e si ricontrollano le inquadrature.
+ogni riga: li legge `prepara_voce.py`). Il testo l'ha approvato il 26/11 sera («vai») e solo allora si è generata la voce di Luc (una
+richiesta sola, 118 secondi, 4,35 crediti: preventivo controllato prima). Le scene erano già costruite sui tempi provvisori
+(`prepara_voce.py <cartella voce> ep2 --finta`); con la voce vera si sono rifatti `parole.json`, la durata (131,06 s), `bocca.json` e si
+sono ricontrollate tutte le inquadrature (vedi «Sui tempi veri» qui sotto).
 
 - **Il set** (`cast/sets/balcone.js`, acceso con `fuoriSet({ balcone: true })`; senza opzioni `fuoriSet()` resta quello dell'episodio 1,
   controllato pixel per pixel su 8 fotogrammi col codice di prima). Su ogni piano due balconi affiancati divisi da un pannello di vetro
@@ -406,21 +407,21 @@ durata, `bocca.json` e si ricontrollano le inquadrature.
   a quella distanza dal viso. Evitare il profilo pieno: `da` va messo dalla parte verso cui guarda.
 - **Pianerottolo**: `pianerottoloSet({ vano11: true })` ha il vano vero della porta dell'interno 11, che si socchiude con la catenella
   (`porta11`); nell'episodio 1 quella porta è DI FRONTE alla tua: per questo nel testo «porta di fronte», non «accanto».
-- **Inquadrature** (`ep2/film.js`, 34): scelta votata → corridoio e viso → spioncino (va alla porta di fronte, suona, la vicina
+- **Inquadrature** (`ep2/film.js`, 33): scelta votata → corridoio e viso → spioncino (va alla porta di fronte, suona, la vicina
   socchiude, lui aspetta e si volta verso di te; la luce delle scale si spegne e quando torna è più vicino) → telefono (il 112 tra le
   chiamate) → esci (l'anta resta socchiusa e dondola) → il vuoto dalla ringhiera con le tue mani, il baule dell'auto grigia → ti
   sporgi oltre il divisorio, il balcone vuoto → le mani sul corrimano, la mano che scivola, tu fuori dalla ringhiera visto dall'alto →
-  il piede oltre il divisorio, il passo di lato (`passoFuori`), dentro → rannicchiato dietro le sbarre → i due balconi da lontano e la
+  i due piedi oltre il divisorio, uno dopo l'altro in un'inquadratura sola (`passoFuori`), dentro → rannicchiato dietro le sbarre → i due balconi da lontano e la
   luce che si accende → lui dietro il velo della tenda → il tuo viso → lui alla finestra della cucina → la sua ombra sul velo, l'anta
   che si apre e metà del suo viso → le scarpe sotto il divisorio con la loro ombra sul vetro → la mano sulla bocca → dita sul corrimano
-  e la faccia che spunta → primo piano → i due da sotto → la mano tesa → il telefono al petto → le dita che chiamano → carte.
+  e la faccia che spunta → primo piano → i due da sotto → la mano tesa → la tua mano che stringe la tasca → le dita che chiamano → carte.
 - **Laboratorio**: `prova_balcone/` (da 0 a 14 s il set da quattordici punti, con e senza luce; da 20 s le pose a tre viste).
   Fogli di provini: `provini.py ep2 t1,t2,… out/ep2/foglio.jpg 9`; i tempi delle scene con `tempi.cjs` (legge `window.TEMPI`).
 - **Suoni nuovi** (CC0, in `scripts/bivio/sfx`, licenze in `licenze_suoni.json`): campanello, chiavi, serratura, chiavi nella porta,
   catenella, passi sulle piastrelle, ringhiera, finestra, vento. Scelti dal titolo e dalla forma d'onda (`analizza_suono.py` nella
   cartella di lavoro): i volumi si ricontrollano col mix vero. `ep2/mix.py` li aggancia alle stesse parole del film; la musica
   (`ep2/musica.json`) per ora è quella dell'episodio 1.
-- **Il telefono** (corretto il 26/11 rileggendo il testo): quando esci lo infili in tasca (`IN_TASCA`, il telefono sparisce a metà gesto);
+- **Il telefono** (corretto il 26/11 rileggendo il testo): quando esci lo infili in tasca (`IN_TASCA`, il telefono sparisce quando arriva alla tasca);
   da rannicchiato una mano resta sulla tasca (`SU_TASCA`: agganciata al ginocchio con `proprio: 'ginocchioS'` e tirata indietro lungo la
   coscia; con un punto fisso nel busto la mano finiva dentro la gamba) e l'altra sul ginocchio. Lui il telefono non lo vede: così la
   scelta B («gli dici che ti è già caduto di sotto») regge. Il primo piano «tasca» mostra la tua mano che la stringe.
@@ -438,8 +439,39 @@ durata, `bocca.json` e si ricontrollano le inquadrature.
   controllo: nessuna riga con `//` seguito da un'altra istruzione (lo script di ricerca è nella storia della sessione del 26/11).
 - **Bozza a bassa cadenza**: `render.mjs --film <copia congelata> --fps 10 --video-only --noblur` rende tutto l'episodio in una ventina
   di minuti; poi con ffmpeg (`fps=…,scale=270:480,tile=12x1`) si tagliano strisce di una scena per guardare i movimenti.
-- **Cosa manca**: ok dell'utente al testo → voce di Luc (controllare il preventivo, dirgli la spesa) → `voce_esterna.py`,
-  `prepara_voce.py`, `bocca.py` → ricontrollo delle scene sui tempi veri → render → mix → un solo video, titolo e didascalia.
+- **La voce vera** (26/11 sera). Preventivo, generazione in un colpo solo (le righe separate da un a capo), poi `voce_esterna.py`. Su
+  una voce di due minuti il riconoscimento delle parole può saltare un tratto intero (qui le righe 11-13 e la parola «tasca»): la voce è
+  giusta, mancano solo i tempi. `ripara_tempi.py <cartella voce> <riga da> <riga a>` riascolta soltanto quel tratto col testo delle
+  righe come suggerimento e rimette i tempi; quelle che ancora non sente le distribuisce dentro i tratti in cui c'è davvero voce. Dopo
+  `prepara_voce.py`, il controllo è riascoltare la voce GIÀ montata e confrontarla col copione parola per parola
+  (`controlla_voce.py <vo.wav> <episodio.json>`): 258 parole su 258.
+- **Sui tempi veri** si è riguardato tutto su fogli di provini (due o tre fotogrammi per scena) e poi a grandezza piena. Trovato e corretto:
+  - *L'uscita sul balcone.* Il varco dell'anta aperta è largo 60 cm. Con l'anta a metà e lui che passava spostato di lato, mezzo
+    braccio finiva dentro lo stipite: da davanti si vedevano la manica, poi il muro, poi un avambraccio staccato. Sembrava un difetto
+    del braccio e non lo era (nel laboratorio del corpo la stessa posa era intera). Ora l'anta si apre fin quasi ad angolo retto
+    (`porta` 0,85), lui passa al centro (x = 4,78), il telo di destra della tenda si raccoglie tutto contro lo stipite mentre passa
+    (`tendaLarga`, nuovo: `tendaScosta` da solo lo raccoglie solo in basso). Quando un pezzo di corpo sparisce, prima di toccare il
+    personaggio si guarda la scena da più lati (`ep2_dbg/`: i collegamenti a `ep2` più un `film.json` con `"viste"`).
+  - *Il telefono in tasca.* Il gomito va indietro (`gomito: [0.3, 0, -1]`), non di lato; e dal petto alla tasca la mano gira al largo
+    del busto lungo una curva (`versoTasca`: Bézier con `FUORI_TASCA` come punto di controllo): in linea retta lo attraversava. Il
+    telefono resta visibile finché non è alla tasca, poi il braccio torna giù con una dissolvenza (`GIU_S`), senza scatto. Le pose
+    sono nel laboratorio del corpo (`prova_corpo`, dal secondo 54).
+  - *Guardare oltre il divisorio.* La mano sinistra resta sul corrimano dalla sua parte: portata oltre il bordo, vista dal balcone
+    vuoto sembrava un avambraccio che usciva dal pannello; e il corpo sta 10 cm più indietro (la manica bucava il pannello).
+  - *Teste e sottotitoli.* I sottotitoli occupano il quinto in alto dell'immagine: in cinque inquadrature una testa ci finiva sotto
+    («Ci sei.» era scritto sulla sua faccia). Si alza il punto guardato (`look`) finché gli occhi stanno sotto un terzo dell'altezza.
+  - *I due piedi* erano due inquadrature da un secondo l'una: ora è una sola (prima il destro oltre il montante, poi il sinistro).
+  - *Cose agganciate alla fine di una frase* che cadevano dopo il taglio: il telefono che si abbassa, lo schermo delle chiamate, la
+    luce del soggiorno (ora si accende appena lui ha finito «Come un ospite.» e l'immagine si tiene mezzo secondo).
+- **Il mix con la voce vera** (`ep2/mix.py`): non potendolo ascoltare, i livelli si misurano. `GREZZO=1` scrive il mix senza
+  portarlo a -14 LUFS e `SENZA_VOCE=1` lascia fuori la voce: così si confronta, tratto per tratto, il volume percepito (LUFS) dei suoni
+  con quello della voce (`lufs_tratti.py <file> <guadagno dB> a:b …`, `livelli.py <suoni.wav> <vo.wav> <guadagno voce dB>`). I suoni stanno tra 6 e 12 dB sotto la voce; nel
+  tratto della faccia che spunta, il più carico, 5,6 (abbassati il battito del cuore, a 0,42-0,62 come nell'episodio 1, il crescendo
+  e i passi sul balcone). Cercando i picchi è saltato fuori un «tic» secco a 1:09: era nella registrazione della pioggia
+  (`pioggia_notte.mp3` ha colpi secchi nei primi 57 secondi, uno fortissimo a 49 s). Se ne usa solo la parte pulita, da 58 s in
+  poi, in due pezzi incrociati. Vale anche per i prossimi episodi.
+- **Render definitivo**: 3932 fotogrammi in quattro pezzi insieme (`--range 0:33`, `33:66`, `66:99`, `99:131.06`, un processo
+  ciascuno, da una copia congelata `ep2_r`), poi uniti con ffmpeg. Le scene sul balcone con le luci di casa accese sono le più lente.
 
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 
