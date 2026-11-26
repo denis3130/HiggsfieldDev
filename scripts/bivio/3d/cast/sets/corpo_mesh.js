@@ -106,7 +106,8 @@ export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani 
   const lega = (n, B) => INV[K[n]].copy(B).invert();
   // ---- riposo: i telai delle ossa nel corpo modellato (spazio della radice, personaggio in piedi nell'origine)
   const perno = upper.position.clone(), pernoCollo = perno.clone().add(collo.position), lati = [['D', -1, AL, GL], ['S', 1, AR, GR]], R0 = {};
-  for (const n of ['bacino', 'spina5', 'spina4', 'spina3', 'spina2', 'spina1', 'collo1', 'collo2', 'collo3', 'testa']) lega(n, I4);
+  for (const n of ['bacino', 'spina5', 'spina4', 'spina3', 'spina2', 'spina1', 'collo1', 'collo2', 'collo3', 'testa', 'borsa']) if (K[n] !== undefined) lega(n, I4);
+  const pernoBorsa = K.borsa !== undefined ? P('borsa') : null, eB = new THREE.Euler();
   for (const [s, lato, A, Gm] of lati) {
     lega('clav' + s, I4); for (const n of TAPPE) if (K[n[0] + s] !== undefined) lega(n[0] + s, I4);
     const S = P('brac1' + s), E = P('ava1' + s), W = P('mano' + s), h = E.clone().sub(S).cross(W.clone().sub(E)).normalize(), T = telaiBraccio(S, E, W, h);
@@ -128,6 +129,9 @@ export function vesti(parti, nome, { materiali = {}, raggioBraccio = 1.04, mani 
   function aggiorna() {
     root.updateMatrixWorld(true); ri.copy(root.matrixWorld).invert(); U.multiplyMatrices(ri, upper.matrixWorld);
     SK[K.bacino].multiplyMatrices(ri, fianchi.matrixWorld);                 // i fianchi di solito stanno fermi nella radice, ma una scena può rovesciarli (chi cade, chi è sdraiato)
+    // la borsa a tracolla: di solito ferma sul bacino; parti.borsa = { gira: [x, y, z], sposta: [x, y, z] } (nello spazio del corpo) la fa cadere o pendere
+    if (pernoBorsa) { SK[K.borsa].copy(SK[K.bacino]); const b = parti.borsa;
+      if (b) { const sp = b.sposta || [0, 0, 0], gi = b.gira || [0, 0, 0]; SK[K.borsa].multiply(M.makeTranslation(pernoBorsa.x + sp[0], pernoBorsa.y + sp[1], pernoBorsa.z + sp[2])).multiply(M2.makeRotationFromEuler(eB.set(gi[0], gi[1], gi[2]))).multiply(M.makeTranslation(-pernoBorsa.x, -pernoBorsa.y, -pernoBorsa.z)); } }
     for (const n of ['spina5', 'spina4', 'spina3']) SK[K[n]].copy(SK[K.bacino]).multiply(Tp).multiply(M.makeRotationFromQuaternion(q.copy(q0).slerp(upper.quaternion, FR[n]))).multiply(Tpi);
     M.copy(U).multiply(Tpi); for (const n of ['spina2', 'spina1']) SK[K[n]].copy(M);
     // collo e testa: attorno al perno del collo, sempre di più verso la testa
@@ -234,10 +238,21 @@ export function appoggiaSulleDita(g, m, { spessore = 0.004, verso = 0.02, gioco 
 // La presa di un oggetto piatto tra le dita distese (dietro) e il pollice (davanti): mette la mano nella posa data, appoggia l'oggetto alle dita
 // e chiude il pollice sulla sua faccia davanti, in basso. Torna la posa completa della mano modellata (da dare come posa «propria» al braccio).
 // g = gruppo dell'oggetto (vedi appoggiaSulleDita); largo, alto = misure dell'oggetto; dove = a che altezza preme il pollice (0 = centro, 1 = bordo verso il polso).
-export function presaPiatta(g, m, posa, { spessore = 0.004, verso = 0.0, largo = 0.084, alto = 0.125, dove = 0.6, rollio = 60, inclina = 0, lato = 0 } = {}) {
-  const P0 = posaDaPupazzo(posa); m.userData.posa(P0); appoggiaSulleDita(g, m, { spessore, verso, gioco: 0.002, inclina, alto, lato });
-  g.updateMatrix(); const mi = m.matrix.clone().invert(), nel = (x, y, z) => V(x, y, z).applyMatrix4(g.matrix).applyMatrix4(mi).toArray(), sc = m.userData.scalaMano || 1.1;
-  const og = { a: nel(-largo / 2, dove * alto / 2, -spessore), b: nel(largo / 2, dove * alto / 2, -spessore), r: 0.002 / sc };
+export function presaPiatta(g, m, posa, { spessore = 0.004, verso = 0.0, largo = 0.084, alto = 0.125, dove = 0.6, rollio = 60, inclina = 0, lato = 0, bordo = 0, aggancia = 0 } = {}) {
+  let P0 = posaDaPupazzo(posa); m.userData.posa(P0); appoggiaSulleDita(g, m, { spessore, verso, gioco: 0.002, inclina, alto, lato });
+  g.updateMatrix(); const sc = m.userData.scalaMano || 1.1;
+  if (aggancia) {
+    // aggancia = gradi: le punte delle dita si chiudono attorno al bordo lontano dell'oggetto, invece di restare dritte oltre il bordo (una mano che tiene, non una mensola).
+    // L'oggetto scorre lungo le dita finché il suo bordo arriva un raggio di dito prima dell'ultima nocca più vicina al polso (tra indice, medio e anulare):
+    // così l'ultima falange, girando, scende lungo lo spessore senza entrarci. Il mignolo si chiude solo se arriva oltre il bordo.
+    const O = m.userData.ossa, gi = g.matrix.clone().invert(), yG = (k) => V(0, 0, 0).setFromMatrixPosition(O[k]).applyMatrix4(m.matrix).applyMatrix4(gi).y, r = 0.0068 * sc;
+    const yd = QUATTRO.map((f) => yG(CATENE[f][3])), ye = Math.max(yd[0], yd[1], yd[2]) + r;
+    g.position.add(V(0, ye + alto / 2, 0).applyQuaternion(g.quaternion)); g.updateMatrix();
+    P0 = JSON.parse(JSON.stringify(P0)); QUATTRO.forEach((f, i) => { if (yd[i] <= ye - 0.6 * r) P0[f].dip = aggancia; }); m.userData.posa(P0);
+  }
+  const mi = m.matrix.clone().invert(), nel = (x, y, z) => V(x, y, z).applyMatrix4(g.matrix).applyMatrix4(mi).toArray();
+  // bordo = +1 o -1: il pollice non preme sulla faccia davanti ma si chiude lungo il bordo lungo di quel lato (un telefono all'orecchio: la faccia sta contro la guancia)
+  const og = bordo ? { a: nel(bordo * largo / 2, 0.5 * alto, 0), b: nel(bordo * largo / 2, -0.1 * alto, 0), r: Math.max(0.002, spessore) / sc } : { a: nel(-largo / 2, dove * alto / 2, -spessore), b: nel(largo / 2, dove * alto / 2, -spessore), r: 0.002 / sc };
   const P1 = avvolgiPollice(P0, og, { rollio, passo: 5, fine: 1 }); m.userData.posa(P1); m.userData.sporca = true; return P1;
 }
 

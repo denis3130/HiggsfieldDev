@@ -11,6 +11,7 @@ Qui ci sono solo i dati già convertiti per `corpo_mesh.js`; gli originali non s
 | Scarpe da ginnastica (`shoes05`) | idem | Jonas Hauquier | idem |
 | Scarpe nere (`shoes03`) | idem | Manuel Bastioni | idem |
 | Borsa a tracolla di Elena (borsa, patta, cinghia) | nessun originale: è costruita dal convertitore (`tracolla()`) | fatta per questo progetto | — |
+| Auto del parcheggio (`../auto_mesh.js`: carrozzeria, cofano, bagagliaio, ruote, texture) | nessun originale: è costruita tutta col codice | fatta per questo progetto | — |
 
 **Sulla licenza dei vestiti e delle scarpe.** Nei file del pacchetto npm (del 2017) c'è ancora scritta la licenza di allora (AGPL3, con
 l'eccezione CC0 per i modelli esportati). Da MakeHuman 1.2 il progetto ha rilasciato in CC0 tutto il materiale grafico in dotazione; nel
@@ -21,7 +22,8 @@ proprio quelli in dotazione al programma. Il codice di MakeHuman (AGPL) e quello
 **Che cosa ho fatto io sopra gli originali** (`converti_corpo.py`): forma del corpo per ogni personaggio, vestiti adattati al corpo, pelle
 tolta sotto i vestiti, testa e mani tolte (restano la testa disegnata e la mano modellata), ossa ridotte a quelle del pupazzo, lisciatura,
 il cappotto dell'ispettore e quello di Elena (la giacca allungata fino al ginocchio), le spalle a tappe (tre ossa in più per lato tra busto e
-braccio), le maniche della maglietta più aderenti, texture ridipinte coi colori piatti dei personaggi (`pittura.py`).
+braccio), l'osso della borsa di Elena (così può cadere a terra con lei), le maniche della maglietta più aderenti, texture ridipinte coi
+colori piatti dei personaggi (`pittura.py`).
 
 **Per rifare i dati da capo:**
 ```

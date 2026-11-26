@@ -6,6 +6,7 @@ import * as M from './lib/motion.js';
 import * as G from './lib/gl.js';
 import { THREE } from './sets/stile.js';
 import { fuoriSet, WX, FY, AUTO } from './sets/esterno_set.js';
+import { suCofano, ZC0, ZC1, PAV } from './sets/auto_mesh.js';
 import { ingressoSet, pianerottoloSet, LEVA_INGRESSO } from './sets/testimone_set.js';
 import { attacca, stacca, presaSu, presaNocche, nelModello, afferra, avvolgiPollice } from './sets/mano_mesh.js';
 import { battito } from './sets/pupazzi.js';
@@ -24,6 +25,7 @@ const v3 = (a, b, k) => [lerp(a[0], b[0], k), lerp(a[1], b[1], k), lerp(a[2], b[
 const su = (p, d, k) => [p[0] + d[0] * k, p[1] + d[1] * k, p[2] + d[2] * k];
 const loc = (p, yaw, v) => [p[0] + v[0] * Math.cos(yaw) + v[2] * Math.sin(yaw), p[1] + v[1], p[2] - v[0] * Math.sin(yaw) + v[2] * Math.cos(yaw)];   // punto locale di un personaggio → mondo
 const verso = (da, a) => Math.atan2(a[0] - da[0], a[2] - da[2]);
+const versoM = (yaw, v) => [v[0] * Math.cos(yaw) + v[2] * Math.sin(yaw), v[1], -v[0] * Math.sin(yaw) + v[2] * Math.cos(yaw)];      // direzione locale di un personaggio → mondo
 const io = E.inOutSine, mixA = (A, B, k) => ({ a: v3(A.a, B.a, k), gomito: v3(A.gomito, B.gomito, k), dita: v3(A.dita, B.dita, k), dorso: v3(A.dorso, B.dorso, k), mano: k < 0.5 ? A.mano : B.mano });
 const VOC = { a: [0.25, 0], e: [0.75, 0], i: [0.9, 0], o: [-0.2, 1], u: [-0.3, 0.9] };
 function parla(chi, t) {
@@ -45,6 +47,26 @@ const sottoLampione = [3.7, 0, 13.9], yFin = (p) => verso(p, FIN);
 const TU_FIN = { pos: [WX + 0.04, FY, -0.52], yaw: 0 };
 const lontano = { pos: [60, 0, 60] }, TIENE = { dita: [0.14, 0.12, 0.12, 0.16], pollice: 0.45, apri: 0 };
 
+// Elena a terra dopo la caduta: sul fianco sinistro, ABBANDONATA (l'utente il 26/11: era «rigida come un manichino»). La gamba di sopra piegata
+// in avanti, quella di sotto appena; il braccio di sotto disteso oltre la testa, quello di sopra caduto davanti al petto; la testa appoggiata;
+// la borsa scivolata a terra dietro la schiena (borsa: di quanto gira e si sposta, nello spazio del corpo).
+const BORSA_FIANCO = { gira: [0.0, 0.69, 0.3], sposta: [0.21, -0.07, -0.2] }, BORSA_SUPINA = { gira: [0.25, 2.26, 0], sposta: [-0.16, -0.1, 0.03] };
+const GIACE = { lean: 0.24, twist: 0.32, headRoll: -0.42, headPitch: 0.16, gambe: { aL: 0.95, gL: 1.25, aR: 0.22, gR: 0.62 },
+  armR: { a: [0.2, 0.72, 0.08], gomito: [1, 0.2, -0.4], dita: [0.2, 1, 0.1], dorso: [0, 0, -1], mano: 'rilassata' }, armL: { a: [0.08, 0.16, 0.4], gomito: [-0.7, -0.5, 0.4], dita: [0.6, 0.1, 0.8], dorso: [-0.4, 0.2, 0.6], mano: 'rilassata' }, borsa: BORSA_FIANCO };
+// la mano sulla bocca (l'utente il 26/11: era piatta e rigida davanti al mento, non copriva la bocca): a coppa, il palmo sulle labbra, le dita piegate
+// sulla guancia sinistra, il pollice dall'altra parte; il gomito alzato di lato, così il polso resta in linea con l'avambraccio
+const MANO_BOCCA = { a: [-0.079, 0.508, 0.147], gomito: [-1, -0.42, 0.3], dita: [0.9, 0.25, -0.25], dorso: [-0.25, 0.1, 1],
+  mano: { indice: { mcp: 16, pip: 26, dip: 14, ab: -3 }, medio: { mcp: 20, pip: 30, dip: 16 }, anulare: { mcp: 24, pip: 32, dip: 18, ab: 4 }, mignolo: { mcp: 28, pip: 34, dip: 18, ab: 7 }, pollice: { ab: 34, fl: 12, roll: 30, mcp: 10, ip: 12 } } };
+const MOLLE = { dita: [0.5, 0.56, 0.6, 0.62], pollice: 0.4, apri: 0.15 };      // una mano abbandonata: dita mezze chiuse
+const borsaK = (B, k) => ({ gira: B.gira.map((v) => v * k), sposta: B.sposta.map((v) => v * k) });
+// l'auto è girata col muso a +x: un punto (x, y, z) dell'auto sta a (AUTO.x + z, y, AUTO.z - x) nel mondo, e una direzione gira allo stesso modo
+const daAuto = ([x, y, z]) => [AUTO[0] + z, y, AUTO[2] - x], versoAuto = ([x, y, z]) => [z, y, -x];
+
+// Elena nel baule (dn: 0 = ancora sollevata sopra il bordo, 1 = adagiata sul fondo): rannicchiata sul fianco destro, la testa verso il palazzo
+// (dalla tua finestra si vedono i capelli, il viso e una mano), le ginocchia verso il paraurti
+const nelBaule = (dn) => ({ pos: [AUTO[0] + ZC1 + lerp(0.36, 0.5, dn), PAV + lerp(0.3, 0, dn), BAULE[2] + 0.8], yaw: -Math.PI / 2, cade: 1, lato: -1, dritta: 1, blink: 1, lean: 0.5, twist: -0.1, headPitch: 0.3, headRoll: 0.25,
+  gambe: { aR: 1.3, gR: 1.75, aL: 1.12, gL: 1.9 }, armL: { a: [-0.1, 0.4, 0.22], gomito: [-1, -0.2, 0.3], mano: MOLLE }, armR: { a: [0.03, 0.1, 0.32], gomito: [0.5, -0.6, 0.5], mano: MOLLE } });
+
 // la colluttazione: A = { tG: il graffio, tL: il luccichio, tC: lei comincia a cadere }
 function zuffa(t, A) {
   const tira = 0.5 * Math.sin(t * 7.3) + 0.5 * Math.sin(t * 11.1 + 1);
@@ -58,15 +80,17 @@ function zuffa(t, A) {
       : (colpo > 0.02 || dopoL > 0) ? { mondo: su(loc(pR, yR, [0.16, 1.12, 0.2]), fV, 0.3 * colpo), gomito: [0.6, -0.6, -0.4], mano: 'pugno' }
       : { a: [0.075, 0.625, 0.17], gomito: [1, -0.5, 0.2], dita: [0, 1, 0.1], dorso: [0.3, 0, 1], mano: 'piatta' } };
   const mani = { dita: [0.4, 0.45, 0.45, 0.5], pollice: 0.3, apri: 1 };
-  const elena = { pos: [pE[0], pE[1] - 0.1 * cede * (1 - cade), pE[2]], yaw: yEl, breathe: Math.sin(t * 3.4), lean: -0.1 * tiene + 0.22 * graffio + 0.3 * cede, twist: 0.25 * tira * tiene, headPitch: 0.25 * cede, fear: 1,
-    armL: tiene > 0.02 ? { a: [-0.2, 0.2, 0.22], mano: 'pugno' } : cede > 0.05 ? { a: [-0.06, 0.06, 0.17], mano: 'piatta' } : { a: [-0.16, 0.3, 0.3], dita: [0, 1, 0.3], dorso: [0, 0, -1], mano: 'aperta' },
+  const cd = io(cade), g = GIACE, molle = cd > 0.35 ? 'rilassata' : 'piatta';                  // mentre cade le membra si abbandonano fino alla posa a terra
+  const elena = { pos: [pE[0], pE[1] - 0.1 * cede * (1 - cade), pE[2]], yaw: yEl, breathe: Math.sin(t * 3.4) * (1 - cd), lean: lerp(-0.1 * tiene + 0.22 * graffio + 0.3 * cede, g.lean, cd), twist: lerp(0.25 * tira * tiene, g.twist, cd),
+    headPitch: lerp(0.25 * cede, g.headPitch, cd), headRoll: g.headRoll * cd, fear: 1 - cd, blink: cd,
+    armL: tiene > 0.02 ? { a: [-0.2, 0.2, 0.22], mano: 'pugno' } : cede > 0.05 ? { ...g.armL, a: v3([-0.06, 0.06, 0.17], g.armL.a, cd), dita: cd > 0.35 ? g.armL.dita : undefined, dorso: cd > 0.35 ? g.armL.dorso : undefined, mano: molle } : { a: [-0.16, 0.3, 0.3], dita: [0, 1, 0.3], dorso: [0, 0, -1], mano: 'aperta' },
     armR: graffio > 0.02 ? { mondo: guancia, gomito: [0.5, -0.7, -0.2], dita: [0, 0.4, 1], mano: mani }
       : tiene > 0.02 ? { mondo: loc(pR, yR, [0.0, 1.38, 0.14]), gomito: [0.6, -0.6, -0.2], dita: [0, 0.5, 1], dorso: [0, 1, 0], mano: 'aperta' }
-      : cede > 0.05 ? { a: [0.06, 0.05, 0.17], mano: 'piatta' } : { a: [0.16, 0.3, 0.3], dita: [0, 1, 0.3], dorso: [0, 0, -1], mano: 'aperta' },
-    gambe: { aL: 0.5 * cede, gL: 1.0 * cede, aR: 0.4 * cede, gR: 0.85 * cede }, cade };
+      : cede > 0.05 ? { ...g.armR, a: v3([0.06, 0.05, 0.17], g.armR.a, cd), dita: cd > 0.35 ? g.armR.dita : undefined, dorso: cd > 0.35 ? g.armR.dorso : undefined, mano: molle } : { a: [0.16, 0.3, 0.3], dita: [0, 1, 0.3], dorso: [0, 0, -1], mano: 'aperta' },
+    gambe: { aL: lerp(0.5 * cede, g.gambe.aL, cd), gL: lerp(1.0 * cede, g.gambe.gL, cd), aR: lerp(0.4 * cede, g.gambe.aR, cd), gR: lerp(0.85 * cede, g.gambe.gR, cd) }, cade, borsa: cd > 0 ? borsaK(BORSA_FIANCO, cd) : null };
   return { riva, elena };
 }
-const aTerra = () => ({ pos: pEf, yaw: yE, cade: 1, lean: 0.3, headPitch: 0.25, gambe: { aL: 0.5, gL: 1.0, aR: 0.4, gR: 0.85 }, armL: { a: [-0.06, 0.06, 0.17], mano: 'piatta' }, armR: { a: [0.06, 0.05, 0.17], mano: 'piatta' }, blink: 1 });
+const aTerra = () => ({ pos: pEf, yaw: yE, cade: 1, ...GIACE, blink: 1 });
 // Riva col dito alzato che conta i piani (piano = 1..4, anche con la virgola mentre sale)
 // il braccio che filma dalla finestra: il telefono all'altezza del petto, di traverso dietro le dita e inclinato verso il parcheggio (lui guarda lo schermo dall'alto)
 const FILMA = { a: [0.206, 0.329, 0.268], gomito: [1, -0.8, 0], dita: [-1, 0.06, 0], dorso: [0, -0.5, 0.87], mano: 'filma' };
@@ -119,7 +143,7 @@ function sequenza() {
   // «Non si muove più.»: tu alla finestra, la mano sulla bocca
   sc(r(8) - 0.1, (t, k) => { const m = E.outCubic(prog(t, r(8) - 0.05, r(8) + 0.4));
     return { set: 'F', id: 'tu1', pioggia: 0.7, cucina: 1, tenda: 1, cam: v3([WX - 0.4, FY + 1.74, 2.3], [WX - 0.3, FY + 1.73, 2.05], io(k)), look: [WX + 0.03, FY + 1.66, -0.5], fov: 22,
-      tu: tuFin(t, { fear: 1, browUp: 0.6, mouth: 0.25 * (1 - m), armL: m > 0.02 ? { a: v3([-0.2, 0.0, 0.1], [-0.085, 0.458, 0.146], m), gomito: [-0.8, -0.8, 0.1], dita: [1, 0.2, 0.05], dorso: [0, 0.1, 1], mano: { dita: [0.1, 0.1, 0.12, 0.16], pollice: 0.3, apri: 0 } } : undefined }) }; });
+      tu: tuFin(t, { fear: 1, browUp: 0.6, mouth: 0.25 * (1 - m), armL: m > 0.02 ? { ...MANO_BOCCA, a: v3([-0.2, 0.0, 0.1], MANO_BOCCA.a, m), mano: m > 0.5 ? MANO_BOCCA.mano : 'rilassata' } : undefined }) }; });
   sc(r(9) - 0.1, (t, k) => ({ set: 'F', id: 'intorno', pov: 1, pioggia: 1, tenda: 1, tu: lontano, cam: CW, look: su([3.3, 1.2, 13.8], scuote(t), 0.4), fov: lerp(8.2, 7.2, io(k)), elena: aTerra(),
     riva: { pos: pRf, yaw: yR + 0.15, breathe: Math.sin(t * 1.7), headPitch: 0.42 - 0.34 * prog(t, r(9) + 0.2, r(9) + 0.7), headYaw: M.kf(t, [[r(9) + 0.3, 0], [w(9, 'intorno') + 0.25, -1.0], [w(9, 'calmo') + 0.2, 0.95], [rf(9), 0.15]], io), open: 0.7,
       armR: { a: v3([0.16, 0.08, 0.2], [0.253, -0.21, 0.035], io(prog(t, r(9), r(9) + 0.8))), mano: 'pugno' } } }));
@@ -129,25 +153,32 @@ function sequenza() {
   sc(r(10) - 0.1, (t, k) => { const al = io(prog(t, r(10) + 0.1, w(10, 'filmi')));
     return { set: 'F', id: 'tu2', pioggia: 0.7, cucina: 1, tenda: 1, telTu: 1, telFuori: 1, cam: v3([WX - 0.3, FY + 1.73, 2.05], [WX + 0.35, FY + 1.72, 2.2], io(k)), look: [WX + 0.05, FY + 1.6, -0.5], fov: 24,
       tu: tuFin(t, { fear: 0.9, browUp: 0.4, headPitch: 0.34 - 0.1 * al, armR: { ...FILMA, a: v3([0.2, 0.0, 0.12], FILMA.a, al) } }) }; });
-  // lui la trascina verso il baule
-  const testaE = loc(pEf, yE, [1.5, 0.14, 0]), dTr = [0.12, 0, 0.62];
-  sc(tRec, (t, k) => { const tr = io(prog(k, 0.35, 1)), pE = su(pEf, dTr, tr), giuK = io(prog(k, 0, 0.3)), pR = su(su(testaE, [-0.02, 0, 0.42], 1), dTr, tr); pR[1] = 0;
+  // lui la trascina verso il baule tenendola per le caviglie: lei supina, le gambe sollevate, le braccia e i capelli che strisciano dietro,
+  // la borsa trascinata di fianco. Lui cammina all'indietro, appena chinato (prima era piegato in due sopra di lei, con le braccia a penzoloni).
+  const bTr = (() => { const d = [BAULE[0] - pEf[0], 0, BAULE[2] - pEf[2]], l = Math.hypot(d[0], d[2]); return [d[0] / l, 0, d[2] / l]; })(), yTrE = Math.atan2(bTr[0], bTr[2]), yTrR = yTrE + Math.PI, anca0 = su(pEf, bTr, 0.55);
+  sc(tRec, (t, k) => { const tr = io(prog(k, 0.25, 1)), passo = Math.sin(tr * 10), anca = su(anca0, bTr, 0.7 * tr), pE = su(anca, bTr, 0.8), pR = su(anca, bTr, 0.9); pE[1] = 0.13;
     return { set: 'F', id: 'rec1', rec: { sec: sec(t), zoom: '2,0x' }, pioggia: 0.6, tenda: 1, tu: lontano, cam: CW, look: su([4.1, 0.6, 14.1], scuote(t, 1.6), 1), fov: 13.5,
-      elena: { ...aTerra(), pos: pE }, riva: { pos: pR, yaw: Math.PI + 0.1, lean: 0.95 * giuK, headPitch: 0.3, breathe: Math.sin(t * 3),
-        armL: { mondo: su(loc(pE, yE, [1.28, 0.2, -0.17]), [0, 0, 0], 0), gomito: [-0.5, -0.4, -0.8], mano: 'presa' }, armR: { mondo: loc(pE, yE, [1.28, 0.2, 0.17]), gomito: [0.5, -0.4, -0.8], mano: 'presa' },
-        gambe: { aL: 0.35 * giuK + 0.3 * Math.sin(tr * 9) * tr, gL: 0.5 * giuK, aR: 0.35 * giuK - 0.3 * Math.sin(tr * 9) * tr, gR: 0.5 * giuK } } }; });
-  // la carica nel baule (le gambe che entrano)
+      elena: { pos: pE, yaw: yTrE, sdraiata: 1, blink: 1, lean: 0.1, twist: 0.1, headPitch: -0.15, headYaw: 0.55, headRoll: 0.2, gambe: { aL: 0.56 + 0.03 * passo, gL: 0.2, aR: 0.5 - 0.03 * passo, gR: 0.3 }, borsa: BORSA_SUPINA,
+        armL: { a: [-0.42, 0.5, -0.03], gomito: [-1, -0.2, 0.3], dita: [-0.7, 0.7, 0], dorso: [0, 0, -1], mano: MOLLE }, armR: { a: [0.1, 0.74, -0.02], gomito: [1, 0.3, 0.2], dita: [0.1, 1, 0], dorso: [0, 0, -1], mano: MOLLE } },
+      riva: { pos: pR, yaw: yTrR, sit: 0.3, lean: 0.6, headPitch: 0.25, breathe: Math.sin(t * 3), gambe: { aL: 0.22 * passo * tr, gL: 0.25 * Math.max(0, -passo) * tr, aR: -0.22 * passo * tr, gR: 0.25 * Math.max(0, passo) * tr },
+        armR: { su: 'cavigliaD', delta: [0, 0.035, 0], gomito: [0.7, -0.6, -0.4], ditaM: [0, -1, 0], dorsoM: versoM(yTrR, [1, 0, 0]), mano: 'presa' }, armL: { su: 'cavigliaS', delta: [0, 0.035, 0], gomito: [-0.7, -0.6, -0.4], ditaM: [0, -1, 0], dorsoM: versoM(yTrR, [-1, 0, 0]), mano: 'presa' } } }; });
+  // la cala nel baule: lei rannicchiata sul fianco (la testa a +z, il viso verso il paraurti), lui chinato dentro la tiene sotto il ginocchio e alla spalla
   const zB = BAULE[2], chiude = w(11, 'chiude') - 0.25;
-  sc(r(11) - 0.1, (t, k) => { const dn = io(prog(k, 0.15, 0.9));
-    return { set: 'F', id: 'rec2', rec: { sec: sec(t), zoom: '4,0x' }, pioggia: 0.6, tenda: 1, tu: lontano, cofano: 1, cam: CW, look: su([BAULE[0] + 0.25, 0.95, zB], scuote(t, 1.3), 1), fov: 8.2,
-      elena: { pos: [BAULE[0] - 0.62 + 0.78 * dn, 0.82, zB], yaw: -Math.PI / 2, sdraiata: 1, blink: 1, gambe: { gL: 1.25 * (1 - dn), gR: 1.12 * (1 - dn) } },
-      riva: { pos: [BAULE[0] - 0.52, 0, zB + 0.04], yaw: Math.PI / 2, lean: 0.5 - 0.15 * dn, headPitch: 0.3, breathe: Math.sin(t * 3),
-        armL: { mondo: [BAULE[0] - 0.22 + 0.55 * dn, 0.78, zB - 0.11], gomito: [-0.6, -0.6, -0.3], mano: 'presa' }, armR: { mondo: [BAULE[0] - 0.22 + 0.55 * dn, 0.78, zB + 0.11], gomito: [0.6, -0.6, -0.3], mano: 'presa' } } }; });
-  // e chiude piano
-  sc(chiude, (t, k, s) => { const c = 1 - io(prog(t, chiude + 0.25, rf(11) + 0.3)), th = 1.2 * c, bx = AUTO[0] - 1.3 - 0.8 * Math.cos(th), by = 0.915 + 0.8 * Math.sin(th);
-    return { set: 'F', id: 'rec3', rec: { sec: sec(t), zoom: '4,0x' }, pioggia: 0.6, tenda: 1, tu: lontano, cofano: c, cam: CW, look: su([BAULE[0] + 0.3, 1.05, zB], scuote(t, 1.3), 1), fov: 8.6, elena: { nascosta: true },
-      riva: { pos: [BAULE[0] - 0.2, 0, zB + 0.02], yaw: Math.PI / 2, lean: 0.12 + 0.2 * (1 - c), headPitch: 0.2, breathe: Math.sin(t * 2.4),
-        armL: { mondo: [bx - 0.03, by + 0.03, zB - 0.26], gomito: [-0.8, -0.6, -0.2], ditaM: [0.8, 0.5, 0], dorsoM: [-0.5, 0.8, 0], mano: 'piatta' }, armR: { mondo: [bx - 0.03, by + 0.03, zB + 0.26], gomito: [0.8, -0.6, -0.2], ditaM: [0.8, 0.5, 0], dorsoM: [-0.5, 0.8, 0], mano: 'piatta' } } }; });
+  sc(r(11) - 0.1, (t, k) => { const dn = io(prog(k, 0.1, 0.72)), via = io(prog(k, 0.78, 1));
+    return { set: 'F', id: 'rec2', rec: { sec: sec(t), zoom: '4,0x' }, pioggia: 0.6, tenda: 1, tu: lontano, cofano: 1, cam: CW, look: su([BAULE[0] + 0.3, 0.95, zB], scuote(t, 1.3), 1), fov: 8.2,
+      elena: nelBaule(dn),
+      riva: { pos: [BAULE[0] - 0.2, 0, zB + 0.16], yaw: Math.PI / 2, lean: lerp(0.78, 0.95, dn) - 0.3 * via, headPitch: 0.3, breathe: Math.sin(t * 3),
+        armR: via > 0.01 ? { a: v3([0.2, 0.05, 0.42], [0.22, 0.02, 0.3], via), gomito: [0.8, -0.6, -0.2], mano: 'rilassata' } : { su: 'spallaS', delta: [-0.07, 0.07, 0], gomito: [0.8, -0.5, -0.3], ditaM: [1, -0.3, 0], dorsoM: [0, 1, 0], mano: 'presa' },
+        armL: via > 0.01 ? { a: v3([-0.2, 0.05, 0.42], [-0.22, 0.02, 0.3], via), gomito: [-0.8, -0.6, -0.2], mano: 'rilassata' } : { su: 'ginocchioS', delta: [-0.05, 0.07, 0], gomito: [-0.8, -0.5, -0.3], ditaM: [1, -0.3, 0], dorsoM: [0, 1, 0], mano: 'presa' } } }; });
+  // e chiude piano: afferra il bordo del cofano con tutte e due le mani, ciascuna dal suo lato (prima le braccia si incrociavano), e lo accompagna giù
+  // (il polso sta appena oltre il bordo dietro del cofano, le dita sopra: così il braccio non lo attraversa)
+  const manoCofano = (c, lato) => { const p = suCofano(c, 0.765, lato, 0.032), q = suCofano(c, 0.5, lato, 0.04), n = suCofano(c, 0.765, lato, 0.13); return { mondo: daAuto(p), ditaM: versoAuto([q[0] - p[0], q[1] - p[1], q[2] - p[2]]), dorsoM: versoAuto([n[0] - p[0], n[1] - p[1], n[2] - p[2]]) }; };
+  // (la mano parte da vicino al fianco e arriva sul bordo del cofano: lato dell'auto dove afferra, lato del corpo da cui parte)
+  const pChi = [BAULE[0] - 0.2, 0, zB + 0.16], verso3 = (c, lato, lc, k) => { const m = manoCofano(c, lato); return { ...m, mondo: v3(loc(pChi, Math.PI / 2, [0.25 * lc, 1.0, 0.3]), m.mondo, E.outCubic(k)) }; };
+  sc(chiude, (t, k, s) => { const c = 1 - io(prog(t, chiude + 0.3, rf(11) + 0.3)), su0 = io(prog(t, chiude, chiude + 0.3));
+    return { set: 'F', id: 'rec3', rec: { sec: sec(t), zoom: '4,0x' }, pioggia: 0.6, tenda: 1, tu: lontano, cofano: c, cam: CW, look: su([BAULE[0] + 0.3, 1.05, zB], scuote(t, 1.3), 1), fov: 8.6, elena: c > 0.05 ? nelBaule(1) : { nascosta: true },
+      riva: { pos: pChi, yaw: Math.PI / 2, lean: lerp(0.65, 0.62, su0) * (0.45 + 0.55 * c), headPitch: 0.15, breathe: Math.sin(t * 2.4),
+        armR: { ...verso3(c, 0.14, 1, su0), gomito: [0.9, -0.5, -0.2], mano: 'piatta' }, armL: { ...verso3(c, -0.46, -1, su0), gomito: [-0.9, -0.5, -0.2], mano: 'piatta' } } }; });
   // il fazzoletto sulla guancia; poi alza la testa
   const pFz = [BAULE[0] - 0.55, 0, zB - 0.2], su13 = r(13) + 0.05;
   const fazz = (t, x = {}) => ({ pos: pFz, yaw: yFin(pFz) - 0.2, breathe: Math.sin(t * 1.9), blink: battito(t, 21), fazzoletto: true, open: 0.7, ...x });
@@ -170,10 +201,10 @@ function sequenza() {
     return { set: 'F', id: 'conta', pov: 1, pioggia: 1, tenda: 1, tu: lontano, cam: CW, look: su([pC[0], 1.42, pC[2]], scuote(t, 0.7), 0.5), fov: lerp(7.4, 6.4, io(k)), elena: { nascosta: true },
       riva: { pos: pC, yaw: yC, breathe: Math.sin(t * 1.7), blink: battito(t, 21), headPitch: -0.66, gazeY: 0.4, lean: -0.06, open: 0.72,
         armR: al < 1 ? (al > 0.02 ? { ...cn, mondo: v3(loc(pC, yC, [0.26, 0.86, 0.06]), cn.mondo, al) } : undefined) : cn } }; });
-  sc(r(16) - 0.1, (t, k) => { const al = io(prog(t, r(16) + 0.1, w(16, 'labbra') + 0.1)), cn = conta(pC, yC, 4, 0), bocca = loc(pC, yC, [-0.014, 1.1025 + 0.492, 0.118]);
+  sc(r(16) - 0.1, (t, k) => { const al = io(prog(t, r(16) + 0.1, w(16, 'labbra') + 0.1)), cn = conta(pC, yC, 4, 0), bocca = loc(pC, yC, [-0.02, 1.562, 0.118]);
     return { set: 'F', id: 'zitto', pov: 1, pioggia: 1, tenda: 1, tu: lontano, cam: CW, look: su([pC[0], 1.55, pC[2]], scuote(t, 0.6), 0.5), fov: lerp(6.0, 4.6, io(k)), elena: { nascosta: true },
       riva: { pos: pC, yaw: yC, breathe: Math.sin(t * 1.7), headPitch: -0.66, gazeY: 0.4, lean: -0.06, open: 0.72, smile: 0.35 * prog(t, rf(16), rf(16) + 0.5),
-        armR: al < 0.5 ? { ...cn, mondo: v3(cn.mondo, bocca, al) } : { mondo: v3(cn.mondo, bocca, al), gomito: [0.6, -0.8, 0.1], dita: [0, 1, -0.12], dorso: [0, 0.1, 1], mano: 'indice' } } }; });
+        armR: al < 0.5 ? { ...cn, mondo: v3(cn.mondo, bocca, al) } : { mondo: v3(cn.mondo, bocca, al), gomito: [0.6, -0.8, 0.1], dita: [0.03, 1, -0.12], dorso: [0, 0.1, 1], mano: 'indice' } } }; });
 
   // --- spegni la luce, chiami il 112
   const buio = w(17, 'luce') + 0.12;
@@ -181,14 +212,16 @@ function sequenza() {
     return { set: 'F', id: 'spegni', pioggia: 1, cucina: c, tenda: 1, telTu: 1, telFuori: 1, cam: camGiu, look: [WX, FY + 1.55, 0], fov: lerp(12.5, 11.5, k), fronte: 0.1, riva: lontano, elena: { nascosta: true },
       tu: tuTel(t, { pos: [WX + 0.04 + 0.5 * via, FY, -0.52 - 0.5 * via], headPitch: 0.1, armR: undefined }) }; });
   // (il telefono all'orecchio: di traverso nella mano, le dita lo avvolgono da dietro: posa «orecchio»)
-  const tuTerra = (t, x = {}) => ({ pos: [WX + 0.12, FY, -0.5], yaw: Math.PI - 0.35, sit: 1, sedile: 0.03, gambe: { aL: 0.62, gL: 0.85, aR: 0.5, gR: 0.72 }, lean: 0.14, breathe: Math.sin(t * 4.2), blink: battito(t, 5), fear: 0.8, browUp: 0.4,
-    armR: { a: [0.112, 0.56, 0.14], gomito: [0.55, -1, 0.35], dita: [0, 0.33, -0.94], dorso: [1, 0, 0], mano: 'orecchio' }, armL: { a: [-0.1, 0.06, 0.3], gomito: [-1, -0.4, 0], mano: 'presa' }, ...x });
-  sc(r(18) - 0.2, (t, k) => ({ set: 'F', id: 'terra', interno: 1, cucina: 0, telTu: 1, fronte: 0.2, cam: v3([WX - 0.75, FY + 0.78, -2.5], [WX - 0.6, FY + 0.78, -2.25], io(k)), look: [WX + 0.1, FY + 0.6, -0.6], fov: 38,
+  // (rifatta il 26/11 sugli appunti dell'utente: seduto a terra con la schiena al muro e le ginocchia su, il telefono lungo la mano e la guancia
+  //  invece che di traverso sulla tempia, l'altra mano appoggiata sul ginocchio invece che ad artiglio tra le gambe)
+  const tuTerra = (t, x = {}) => ({ pos: [WX + 0.12, FY, -0.3], yaw: Math.PI - 0.35, sit: 1, sedile: 0.03, gambe: { aL: 0.86, gL: 0.46, aR: 0.7, gR: 0.22 }, lean: -0.06, headPitch: 0.08, breathe: Math.sin(t * 4.2), blink: battito(t, 5), fear: 0.8, browUp: 0.4,
+    armR: { a: [0.12, 0.452, 0.082], gomito: [0.8, -1, -0.1], dita: [-0.1, 0.87, -0.48], dorso: [1, 0, -0.15], mano: 'orecchio' }, armL: { proprio: 'ginocchioD', delta: [0, 0.075, 0], gomito: [-1, -0.5, -0.2], dita: [0, -0.35, 1], dorso: [0, 1, 0.3], mano: 'piatta' }, ...x });
+  sc(r(18) - 0.2, (t, k) => ({ set: 'F', id: 'terra', interno: 1, cucina: 0, telTu: 1, fronte: 0.2, cam: v3([WX - 0.8, FY + 0.82, -2.75], [WX - 0.66, FY + 0.8, -2.5], io(k)), look: [WX + 0.08, FY + 0.56, -0.6], fov: 37,
     tu: tuTerra(t, { yaw: Math.PI + 0.22, mouth: 0.18 + 0.16 * Math.sin(t * 13) * Math.sin(t * 5.1), headYaw: -0.12 + 0.25 * Math.sin(t * 1.3) }) }));      // girato verso la camera: il braccio del telefono si vede di fronte
   const agente = w(20, 'agente') - 0.15;
   sc(r(19) - 0.1, (t, k) => { const sol = io(prog(t, w(20, 'fortunato'), w(20, 'fortunato', 1) + 0.3));
-    return { set: 'F', id: 'ascolta', interno: 1, cucina: 0, telTu: 1, fronte: 0.26, cam: v3([WX + 0.58, FY + 0.92, -1.8], [WX + 0.5, FY + 0.92, -1.62], io(k)), look: [WX + 0.14, FY + 0.84, -0.6], fov: 30,
-      tu: tuTerra(t, { fear: 0.8 - 0.5 * sol, browUp: 0.4, mouth: 0.1 * (1 - sol), smile: 0.2 * sol, headPitch: 0.06 * Math.sin(t * 2.2) + 0.1 * bump(t, w(19, 'casa'), 0.3), breathe: Math.sin(t * (4.2 - 1.6 * sol)) }) }; });
+    return { set: 'F', id: 'ascolta', interno: 1, cucina: 0, telTu: 1, fronte: 0.26, cam: v3([WX + 0.58, FY + 0.98, -1.8], [WX + 0.5, FY + 0.98, -1.62], io(k)), look: [WX + 0.12, FY + 0.93, -0.4], fov: 23,
+      tu: tuTerra(t, { fear: 0.8 - 0.5 * sol, browUp: 0.4, mouth: 0.1 * (1 - sol), smile: 0.2 * sol, headPitch: 0.08 + 0.06 * Math.sin(t * 2.2) + 0.1 * bump(t, w(19, 'casa'), 0.3), breathe: Math.sin(t * (4.2 - 1.6 * sol)) }) }; });
   // «…un agente proprio lì sotto.»: giù, sotto il lampione, lui con la radio guarda la tua finestra
   sc(agente, (t, k) => ({ set: 'F', id: 'radio', pov: 1, pioggia: 1, cucina: 0, tenda: 1, tu: lontano, cam: CW, look: su([pC[0], 1.5, pC[2]], scuote(t, 0.6), 0.5), fov: lerp(7.0, 5.4, io(k)), elena: { nascosta: true },
     riva: { pos: pC, yaw: yC, breathe: Math.sin(t * 1.7), blink: battito(t, 21), headPitch: -0.6, gazeY: 0.4, lean: -0.05, open: 0.72, radio: true, mouth: 0.14 * Math.abs(Math.sin(t * 9)) * prog(t, agente + 0.5, agente + 0.7),
@@ -372,8 +405,9 @@ M.film({
     SEQ = sequenza(); window.TEMPI = SEQ.map((s) => [Math.round(s.t0 * 100) / 100, s.f(s.t0 + 0.01, 0, s).id]);
     // le immagini fisse: la miniatura del video e le due carte
     const zB = AUTO[2], bx = AUTO[0] - 2.15;
-    IMG.video = scatto(SF, { cam: CW, look: [bx + 0.2, 0.9, zB], fov: 9.5, tenda: 1, tu: lontano, cofano: 1, elena: { pos: [bx - 0.62, 0.82, zB], yaw: -Math.PI / 2, sdraiata: 1, blink: 1, gambe: { gL: 1.25, gR: 1.12 } },
-      riva: { pos: [bx - 0.52, 0, zB + 0.04], yaw: Math.PI / 2, lean: 0.5, headPitch: 0.3, armL: { mondo: [bx - 0.22, 0.78, zB - 0.11], mano: 'presa' }, armR: { mondo: [bx - 0.22, 0.78, zB + 0.11], mano: 'presa' } } });
+    IMG.video = scatto(SF, { cam: CW, look: [bx + 0.3, 0.95, zB], fov: 9.5, tenda: 1, tu: lontano, cofano: 1, elena: nelBaule(0.35),      // lo stesso momento della scena «rec2»: lui la cala nel baule
+      riva: { pos: [bx - 0.2, 0, zB + 0.16], yaw: Math.PI / 2, lean: 0.84, headPitch: 0.3,
+        armR: { su: 'spallaS', delta: [-0.07, 0.07, 0], gomito: [0.8, -0.5, -0.3], ditaM: [1, -0.3, 0], dorsoM: [0, 1, 0], mano: 'presa' }, armL: { su: 'ginocchioS', delta: [-0.05, 0.07, 0], gomito: [-0.8, -0.5, -0.3], ditaM: [1, -0.3, 0], dorsoM: [0, 1, 0], mano: 'presa' } } });
     IMG.cartaA = cartaA();
     IMG.cartaB = scatto(SF, { cam: [4.5, FY + 1.5, 0.2], look: [4.2, FY - 3.2, 6.5], fov: 30, cucina: 0, riva: lontano, elena: { nascosta: true }, tu: lontano }, 860, 1.7, 480);
   },
@@ -381,6 +415,10 @@ M.film({
     t += T0; { const k = t * 30; if (Math.abs(k - Math.round(k)) < 1e-6) t = Math.round(k) / 30; } u = M.U(t);      // i fotogrammi cadono esattamente dove cadevano nel film intero
     const o = shot(t);
     ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+    if (M.CFG.viste && o.set === 'F') {                                                          // controllo delle pose: la stessa scena da più lati, in chiaro (cartelle ep1_dbg*)
+      M.CFG.viste.forEach((v, i) => { const c0 = v.centro || o.look, oo = { ...o, pov: 0, rec: null, look: c0, cam: [c0[0] + v.dir[0] * v.dist, Math.max(0.25, c0[1] + v.dir[1] * v.dist), c0[2] + v.dir[2] * v.dist], fov: v.fov || 30, ambiente: 0.8, fronte: 0.45 };
+        ctx.save(); ctx.translate((i % 2) * W / 2, Math.floor(i / 2) * H / 2); ctx.beginPath(); ctx.rect(0, 0, W / 2, H / 2); ctx.clip(); ctx.scale(0.5, 0.5); G.renderSet(ctx, SF, t, u, oo); ctx.restore(); });
+      ctx.fillStyle = '#ff0'; ctx.font = '700 26px Display'; ctx.fillText(`${o.id}  t=${(t - T0).toFixed(2)}`, 14, 34); return; }
     G.renderSet(ctx, o.set === 'F' ? SF : o.set === 'I' ? SI : SP, t, u, o);
     if (o.sfoca) { ctx.fillStyle = 'rgba(4,6,10,0.72)'; ctx.fillRect(0, 0, W, H); }
     if (o.pioggia) pioggia(ctx, t, o.pioggia);

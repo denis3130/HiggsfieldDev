@@ -40,11 +40,11 @@ def riduci(nome):
     if b.startswith(('metacarpal', 'finger')): return 'mano' + lato
     if b.startswith('toe'): return 'piede' + lato
     return 'testa'
-CENTRO = ['bacino', 'spina5', 'spina4', 'spina3', 'spina2', 'spina1', 'collo1', 'collo2', 'collo3', 'testa']
+CENTRO = ['bacino', 'spina5', 'spina4', 'spina3', 'spina2', 'spina1', 'collo1', 'collo2', 'collo3', 'testa', 'borsa']      # borsa: un osso in più per la borsa a tracolla (di solito sta col bacino; una scena può farla cadere di lato)
 LATO = ['clav', 'spalla25', 'spalla', 'spalla75', 'brac1', 'brac2', 'ava1', 'ava2', 'mano', 'coscia1', 'coscia2', 'gamba1', 'gamba2', 'piede']
 OSSA = CENTRO + [b + s for s in 'DS' for b in LATO]; KO = {n: i for i, n in enumerate(OSSA)}
 # l'osso di MakeHuman che dà la posizione (testa dell'osso) a ogni osso ridotto
-ORIGINE = {'bacino': 'spine05', 'spina5': 'spine05', 'spina4': 'spine04', 'spina3': 'spine03', 'spina2': 'spine02', 'spina1': 'spine01', 'collo1': 'neck01', 'collo2': 'neck02', 'collo3': 'neck03', 'testa': 'head',
+ORIGINE = {'borsa': 'spine05', 'bacino': 'spine05', 'spina5': 'spine05', 'spina4': 'spine04', 'spina3': 'spine03', 'spina2': 'spine02', 'spina1': 'spine01', 'collo1': 'neck01', 'collo2': 'neck02', 'collo3': 'neck03', 'testa': 'head',
            'clav': 'clavicle', 'spalla': 'shoulder01', 'spalla25': 'shoulder01', 'spalla75': 'shoulder01', 'brac1': 'upperarm01', 'brac2': 'upperarm02', 'ava1': 'lowerarm01', 'ava2': 'lowerarm02', 'mano': 'wrist',
            'coscia1': 'upperleg01', 'coscia2': 'upperleg02', 'gamba1': 'lowerleg01', 'gamba2': 'lowerleg02', 'piede': 'foot'}
 
@@ -231,10 +231,10 @@ def tracolla(nome, o, capi, H):
     Pc = np.stack([B1, B2, B2 + nu * th, B1 + nu * th], 1).reshape(-1, 3); Fc = [[4 * j + k, 4 * j + (k + 1) % 4, 4 * j + 4 + (k + 1) % 4, 4 * j + 4 + k] for j in range(M - 1) for k in range(4)] + [[3, 2, 1, 0], [4 * M - 4, 4 * M - 3, 4 * M - 2, 4 * M - 1]]
     Fc = verso_fuori(Pc, Fc); uvc = np.array([[212 / 256, 1 - 44 / 256]]); pezzi.append((Pc, Fc, [[0] * len(f) for f in Fc], uvc))
     # ---- i pesi delle ossa: la borsa col bacino e la schiena bassa (niente gambe: non deve dondolare a ogni passo); la cinghia col cappotto che ha sotto
-    vicini = (np.abs(P[:, 1] - y0) < 0.8) & (((P - cen) @ fuori) > 0.6 * np.linalg.norm((P - cen)[:, [0, 2]], axis=1)); wb = W[vicini].mean(0); wb[[KO[x + s] for s in 'DS' for x in LATO]] = 0; wb /= wb.sum()
+    wb = np.zeros(nb); wb[KO['borsa']] = 1.0                                                        # la borsa ha il suo osso (a riposo segue il bacino)
     dist, vic = cKDTree(P).query(cx, k=8); pw = 1 / (dist + 0.2); wc = (W[vic] * pw[:, :, None]).sum(1) / pw.sum(1, keepdims=True); wc[:, arti] = 0; wc /= wc.sum(1, keepdims=True)
     for _ in range(6): wc = np.apply_along_axis(lambda a: np.convolve(np.pad(a, 1, mode='edge'), [0.25, 0.5, 0.25], mode='valid'), 0, wc)
-    sc = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(cx, axis=0), axis=1))]); t = np.clip(np.minimum(sc, sc[-1] - sc) / 1.5, 0, 1)[:, None]; wc = wb[None, :] * (1 - t) + wc * t; wc /= wc.sum(1, keepdims=True)
+    sc = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(cx, axis=0), axis=1))]); t = np.clip(np.minimum(sc, sc[-1] - sc) / 3.5, 0, 1)[:, None]; t = t * t * (3 - 2 * t); wc = wb[None, :] * (1 - t) + wc * t; wc /= wc.sum(1, keepdims=True)      # gli ultimi 35 cm di cinghia seguono via via la borsa
     Wt = [np.tile(wb, (len(pezzi[0][0]), 1)), np.tile(wb, (len(pezzi[1][0]), 1)), np.repeat(wc, 4, 0)]
     # ---- una maglia sola (tre pezzi) e la sua texture: pelle con una sfumatura, patta più chiara con la cucitura e il fermaglio, cinghia scura
     PP, FF, FTT, UU = [], [], [], []; n0 = u0 = 0
@@ -248,7 +248,7 @@ def tracolla(nome, o, capi, H):
     met = tuple(int(255 * x) for x in col['metallo']); dis.rectangle([72, 222, 88, 240], fill=met); dis.rectangle([76, 227, 84, 235], fill=tuple(int(0.55 * x) for x in met))
     os.makedirs(TEX, exist_ok=True); file = f'{nome}_borsa.png'; im.save(os.path.join(TEX, file))
     print(f'  borsa a tracolla: cinghia di {M} anelli, lunga {sc[-1] / 10:.2f} m; borsa {w / 10:.2f} x {h / 10:.2f} x {sp / 10:.2f} m, appoggiata a {a_ / 10:.3f} m dal centro, pendenza {pend:.2f}', flush=True)
-    return dict(nome='borsa', tipo='accessorio', P=np.vstack(PP), F=FF, W=np.vstack(Wt), FT=FTT, UV=np.vstack(UU), file=None, tex=dict(texture=file))
+    return dict(nome='borsa', tipo='accessorio', P=np.vstack(PP), F=FF, W=np.vstack(Wt), FT=FTT, UV=np.vstack(UU), file=None, tex=dict(texture=file), perno=mondo(np.array([0.0, 0.0, sp * 0.2])))
 
 def dipingi(nome, o, c):
     """la texture del capo ridipinta coi colori del personaggio -> tex/<personaggio>_<capo>.png (e, se c'è, la mappa delle pieghe)"""
@@ -408,6 +408,8 @@ def costruisci(nome, o):
     # ---- i giunti (teste delle ossa) e qualche punto utile, nella posa di riposo
     giunti = {}
     for rid in CENTRO: giunti[rid] = T(mh.capo(H, GRUPPI, RIG[ORIGINE[rid]]['head'])).tolist()
+    for p in parti:
+        if p.get('perno') is not None: giunti['borsa'] = T(p['perno']).tolist()                    # il punto attorno a cui gira la borsa: in mezzo al suo bordo alto
     giunti['testa2'] = T(mh.capo(H, GRUPPI, RIG['head']['tail'])).tolist()
     for s, sx in (('D', '.R'), ('S', '.L')):
         for rid in LATO: giunti[rid + s] = T(mh.capo(H, GRUPPI, RIG[ORIGINE[rid] + sx]['head'])).tolist()

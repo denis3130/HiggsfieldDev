@@ -61,12 +61,16 @@ function uomo(o) {
     collo.rotation.set(p.headPitch || 0, p.headYaw || 0, p.headRoll || 0);
     T.face(p);
     const g = p.gambe || {};
-    GL.set({ avanti: 1.5 * sit + (g.aL || 0), ginocchio: 1.5 * sit + (g.gL || 0), apri: 0.05 * sit });
-    GR.set({ avanti: 1.5 * sit + (g.aR || 0), ginocchio: 1.5 * sit + (g.gR || 0), apri: 0.05 * sit });
+    GL.set({ avanti: 1.5 * sit + (g.aL || 0), ginocchio: 1.5 * sit + (g.gL || 0), apri: 0.05 * sit + (g.oL || 0), piede: g.pL || 0 });      // oL/oR: gamba aperta di lato; pL/pR: piede
+    GR.set({ avanti: 1.5 * sit + (g.aR || 0), ginocchio: 1.5 * sit + (g.gR || 0), apri: 0.05 * sit + (g.oR || 0), piede: g.pR || 0 });
     const pos = p.pos || [0, 0, 0];
     root.position.set(pos[0], pos[1] - sit * (go.hy - (p.sedile ?? 0.46) - 0.085), pos[2]); root.rotation.y = p.yaw || 0; root.updateMatrixWorld(true);
+    // un braccio può puntare a un punto del proprio corpo: { proprio: 'ginocchioD' | 'ginocchioS', delta: [x, y, z] nel mondo } (la mano appoggiata sul ginocchio)
+    const mio = (a) => { if (!a || !a.proprio) return a; const gk = a.proprio === 'ginocchioD' ? GL.knee : GR.knee, w = gk.getWorldPosition(V(0, 0, 0)), d = a.delta || [0, 0, 0]; return { ...a, mondo: [w.x + d[0], w.y + d[1], w.z + d[2]] }; };
+    p = { ...p, armL: mio(p.armL), armR: mio(p.armR) };
     braccia(upper, AL, AR, p);
     if (o.posa) o.posa(p, parti);
+    parti.borsa = p.borsa || null;
     if (abito) { abito.aggiorna(); if (o.dopo) o.dopo(p, parti); }
   }
   pose({});
@@ -186,9 +190,10 @@ export function telefono(P, lato = 'AR', colore = '#BFD6FF', dy = 0) {
   const schermo = add(d, new THREE.PlaneGeometry(0.064, 0.136), basic(colore), V(0, -0.085 + dy, -0.0352)); schermo.rotation.y = Math.PI;
   add(d, new THREE.CircleGeometry(0.011, 16), basic('#2C3038'), V(-0.018, -0.135 + dy, -0.0252)); add(d, new THREE.CircleGeometry(0.006, 12), basic('#0A0B0E'), V(-0.018, -0.135 + dy, -0.0251));   // l'obiettivo sul retro
   // tre prese: dritto (in mano, per guardarlo), traverso (la scena lo gira per filmare), orecchio (posa della mano «orecchio»: la telefonata)
+  // (traverso: le punte delle dita agganciano il bordo lontano, «aggancia»; orecchio: il pollice si chiude lungo il bordo lungo, «bordo»)
   if (A.manoMesh) oggettoInMano(A, { g, gp, gr, scegli: () => (A.posaMano === 'orecchio' ? 'orecchio' : Math.abs(g.rotation.z) > 0.1 ? 'traverso' : 'dritto'), varianti: {
     dritto: { posa: 'telefono', spessore: 0.0045, largo: 0.072, alto: 0.148, verso: 0.012, dove: 0.3, inclina: 0.2 },
-    traverso: { posa: 'filma', spessore: 0.0045, largo: 0.148, alto: 0.072, verso: -0.005, dove: 0.15, inclina: 0.04, lato: -0.028, rz: Math.PI / 2 },
-    orecchio: { posa: 'orecchio', spessore: 0.0045, largo: 0.148, alto: 0.072, verso: 0.004, dove: 0.1, inclina: 0.0, lato: -0.012, rz: Math.PI / 2 } } });
+    traverso: { posa: 'filma', spessore: 0.0045, largo: 0.148, alto: 0.072, verso: -0.005, dove: 0.15, inclina: 0.04, lato: -0.028, rz: Math.PI / 2, aggancia: 72 },
+    orecchio: { posa: 'orecchio', spessore: 0.0045, largo: 0.072, alto: 0.148, verso: 0.03, inclina: 0.1, bordo: 1 } } });
   return { g, schermo };
 }

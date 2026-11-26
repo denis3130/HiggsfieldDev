@@ -9,29 +9,14 @@ import { THREE, V, rnd, tex, mat, piatto as basic, sfera, add, loft, tra, luci, 
 import { testimone, ispettore, elena, telefono } from './adulti.js';
 import { assi } from './cucina3.js';
 import { mix } from './pupazzi.js';
+import { auto } from './auto_mesh.js';
 
 export const WX = 1.5, FY = 12;                      // la tua finestra: colonna x = 1,5, pavimento del quarto piano a 12 m
 export const LAMP = [3.5, 6.2, 13.3], ZUFFA = [3.3, 0, 13.7], AUTO = [7.3, 0, 15.1];   // il baule dell'auto grigia è a x = AUTO.x - 1,7
 const macchia = (col, op = 1) => new THREE.MeshBasicMaterial({ map: alone(), color: col, transparent: true, opacity: op, depthWrite: false, blending: THREE.AdditiveBlending });
 
-// auto stilizzata: lunga lungo z (muso a +z), cofano del bagagliaio che si apre verso l'alto
-export function auto(colore = '#8C9096') {
-  const g = new THREE.Group(), c1 = mat(colore), nero = mat('#0D0E11');
-  const S = (y, rx, rz, cz = 0, n = 4.5) => ({ y, rx, rz, cz, n });
-  add(g, loft([S(0.2, 0.74, 2.0), S(0.36, 0.86, 2.13), S(0.7, 0.88, 2.15), S(0.86, 0.85, 2.1), S(0.9, 0.8, 2.04), S(0.905, 0.01, 0.01)], 56), c1);
-  const vetri = mat(0xffffff, { map: tex(512, 128, (c, w, h) => { c.fillStyle = colore; c.fillRect(0, 0, w, h); c.fillStyle = '#10151D'; c.fillRect(0, h * 0.55, w, h * 0.38);
-    c.fillStyle = colore; for (const u of [0.07, 0.25, 0.43, 0.57, 0.75, 0.93]) c.fillRect(u * w - 7, 0, 14, h); }) });
-  add(g, loft([S(0.86, 0.79, 1.2, -0.15), S(1.16, 0.71, 1.0, -0.17), S(1.39, 0.61, 0.74, -0.2), S(1.425, 0.5, 0.6, -0.2), S(1.43, 0.01, 0.01, -0.2)], 56), vetri);
-  for (const sx of [-1, 1]) for (const sz of [-1, 1]) { const w = add(g, new THREE.CylinderGeometry(0.33, 0.33, 0.24, 22), nero, V(sx * 0.8, 0.33, sz * 1.32)); w.rotation.z = Math.PI / 2;
-    const cp = add(g, new THREE.CylinderGeometry(0.19, 0.19, 0.25, 16), mat('#6E7278'), V(sx * 0.8, 0.33, sz * 1.32)); cp.rotation.z = Math.PI / 2; }
-  for (const sx of [-1, 1]) { add(g, new THREE.BoxGeometry(0.34, 0.12, 0.05), basic('#6A0F0A'), V(sx * 0.58, 0.72, -2.13)); add(g, new THREE.BoxGeometry(0.32, 0.12, 0.05), basic('#3A3D42'), V(sx * 0.58, 0.68, 2.13)); }
-  add(g, new THREE.BoxGeometry(0.46, 0.11, 0.02), mat('#E8E8E2'), V(0, 0.5, -2.14));
-  const vano = add(g, new THREE.PlaneGeometry(1.42, 0.78), basic('#040506'), V(0, 0.912, -1.68)); vano.rotation.x = -Math.PI / 2; vano.visible = false;
-  const perno = new THREE.Group(); perno.position.set(0, 0.915, -1.3); g.add(perno);
-  add(perno, new THREE.BoxGeometry(1.5, 0.035, 0.8), c1, V(0, 0, -0.4)); add(perno, new THREE.BoxGeometry(1.5, 0.1, 0.035), c1, V(0, -0.045, -0.8));
-  ombre(g, { fa: true, riceve: false });
-  return { group: g, cofano(k) { perno.rotation.x = 1.2 * M.clamp(k); vano.visible = k > 0.02; } };
-}
+// l'auto è un modello vero (auto_mesh.js): carrozzeria in una superficie, bagagliaio con vano e cofano incernierato
+export { auto } from './auto_mesh.js';
 
 export function fuoriSet() {
   const r = rnd(131), scene = new THREE.Scene(); scene.background = new THREE.Color('#060A13'); scene.fog = new THREE.Fog('#060A13', 45, 120);
@@ -164,11 +149,16 @@ export function fuoriSet() {
       grigia.cofano(o.cofano || 0);
       tel.g.visible = M.clamp(o.telTu ?? 0) > 0; tel.g.rotation.z = o.telFuori ? -Math.PI / 2 : 0;          // prima della posa: la mano modellata prende la presa dell'oggetto che si vede
       T.pose(o.tu || { pos: [WX, FY, -0.55] });
-      R.pose(o.riva || { pos: [ZUFFA[0] - 0.35, 0, ZUFFA[2]], yaw: Math.PI / 2 });
       const e = o.elena || { pos: [ZUFFA[0] + 0.35, 0, ZUFFA[2]], yaw: -Math.PI / 2 };
       const f = E.parti.fianchi, cade = M.clamp(e.cade || 0), sd = M.clamp(e.sdraiata || 0);      // prima della posa: le braccia «mondo» usano già il corpo ruotato
-      f.rotation.set(-Math.PI / 2 * sd + 0.25 * cade, 0, -Math.PI / 2 * cade); f.position.y = 0.14 * cade;
+      f.rotation.set(-Math.PI / 2 * sd + 0.25 * cade * (e.dritta ? 0 : 1), 0, -Math.PI / 2 * cade * (e.lato || 1)); f.position.y = 0.14 * cade;      // cade: sul fianco sinistro (lato: -1 = sul destro); sdraiata: supina
       E.group.visible = !e.nascosta; E.pose(e);
+      // i punti del corpo di Elena nel mondo: un braccio di Riva può dire { su: 'cavigliaD', delta: [x, y, z] } invece di un punto fisso (la tiene davvero)
+      const anc = {}, wp = (g, n) => { g.getWorldPosition(tmp); anc[n] = [tmp.x, tmp.y, tmp.z]; }, P = E.parti;
+      wp(P.GL.foot, 'cavigliaD'); wp(P.GR.foot, 'cavigliaS'); wp(P.GL.knee, 'ginocchioD'); wp(P.GR.knee, 'ginocchioS'); wp(P.AL.gH, 'polsoD'); wp(P.AR.gH, 'polsoS'); wp(P.AL.gU, 'spallaD'); wp(P.AR.gU, 'spallaS'); wp(E.head, 'testa');
+      const tiene = (a) => (a && a.su && anc[a.su] ? { ...a, mondo: anc[a.su].map((v, i) => v + ((a.delta || [0, 0, 0])[i])) } : a);
+      const rv = o.riva || { pos: [ZUFFA[0] - 0.35, 0, ZUFFA[2]], yaw: Math.PI / 2 };
+      R.pose({ ...rv, armL: tiene(rv.armL), armR: tiene(rv.armR) });
       bic.visible = !!o.bicchiere; LM.intensity = dn ? 0.75 * (1 - k) : 0;
       vetroB.material.opacity = dn ? 0 : 0.9 * (1 - k); vetroB.visible = vetroB.material.opacity > 0.01;
       // telFuori: il telefono che filma. Sta dritto, di traverso dietro le dita (posa della mano «filma», dita orizzontali e dorso verso fuori):

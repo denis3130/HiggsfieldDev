@@ -187,13 +187,16 @@ Dopo la mano, l'utente ha chiesto lo stesso per corpo, vestiti e scarpe. Teste, 
   dà la forma al corpo (uomo giovane per il testimone, più anziano e pesante per l'ispettore, donna giovane per Elena), adatta i vestiti al
   corpo (ogni vertice di un vestito è legato a tre vertici del corpo: ne segue la forma e ne eredita i pesi delle ossa), toglie la pelle
   sotto i vestiti (ma ne lascia un giro oltre i bordi, un filo più in dentro: niente buchi al colletto e all'orlo delle maniche), toglie
-  testa e mani, riduce le 163 ossa di MakeHuman a 38, liscia (Catmull-Clark) e scrive `<personaggio>.json` + `.bin`. I personaggi e i loro
+  testa e mani, riduce le 163 ossa di MakeHuman a 39, liscia (Catmull-Clark) e scrive `<personaggio>.json` + `.bin`. I personaggi e i loro
   vestiti sono in `PERSONAGGI` in cima al file. Rifatta due volte, la conversione dà file identici byte per byte.
 - **Elena** (la donna del parcheggio) è fatta allo stesso modo: corpo di donna, lo stesso completo adattato al suo corpo e dipinto come
   cappotto rosso su maglia scura, scarpe nere. La **borsa a tracolla** è un modello suo (`tracolla()` nel convertitore, niente di scaricato):
   corpo morbido e patta (due gabbie lisciate), appesa al fianco destro un po' indietro, e la cinghia che passa sulla spalla sinistra. La
   cinghia corre come una cinghia tesa: nel suo piano fa il giro più corto attorno al busto (l'involucro convesso del cappotto tagliato da
-  quel piano), appoggiata alla stoffa coi due bordi; si muove col cappotto (stessi pesi delle ossa), la borsa col bacino.
+  quel piano), appoggiata alla stoffa coi due bordi; si muove col cappotto (stessi pesi delle ossa). La borsa ha un osso suo (`borsa`,
+  perno dove la cinghia la regge): di solito segue il bacino, ma una scena può spostarla e girarla con `borsa: { gira: [x, y, z], sposta:
+  [x, y, z] }` nella posa di Elena (misure nel riferimento del corpo): serve quando lei cade e la borsa finisce a terra accanto a lei
+  invece di restarle incollata al fianco. Gli ultimi 35 cm di cinghia sfumano dall'osso della borsa al cappotto.
 - **Spalle a tappe** (`catena_spalla()` nel convertitore, `TAPPE` in `corpo_mesh.js`). Tra il busto, che sta fermo, e il braccio, che gira
   del tutto, i pesi di MakeHuman sfumano in linea retta: col braccio portato in avanti di 60-70 gradi (una telefonata) la stoffa a metà
   strada rientrava e si accartocciava, e la spalla sembrava una palla staccata dal busto. Ora la sfumatura passa per tre ossa intermedie
@@ -229,18 +232,25 @@ Dopo la mano, l'utente ha chiesto lo stesso per corpo, vestiti e scarpe. Teste, 
   dita dal lato del palmo e il pollice si chiude sulla faccia davanti; un po' inclinati, perché il palmo non è piatto. Con le posizioni
   pensate per la mano a pezzi le dita li attraversavano. Finché l'oggetto si vede (`g.visible`) la mano prende la sua presa, qualunque posa
   chieda la scena: per questo le scene accendono o spengono l'oggetto PRIMA di `pose()`. Il telefono (`telefono()` in `adulti.js`) ha tre
-  prese: dritto (per guardarlo), di traverso (per filmare), all'orecchio (posa della mano `orecchio`, per la telefonata). Il fazzoletto
-  dell'ispettore è stoffa appallottolata (`stoffaInPugno()`), non una palla liscia.
-- **La telefonata a terra** (episodio 1): chi telefona ha per forza il braccio portato in avanti (il polso sta a un palmo dalla spalla: il
-  gomito non può scendere lungo il fianco). Vista di tre quarti da quel lato, la spalla resta il punto debole del modello; nella scena lui è
-  girato verso la camera (`yaw` in `tuTerra`), così il braccio si vede di fronte e la posa si legge subito.
+  prese: dritto (per guardarlo), di traverso (per filmare), all'orecchio (posa della mano `orecchio`, per la telefonata). Due opzioni di
+  `presaPiatta` fanno la differenza tra una mano che tiene e una mensola: `aggancia` (gradi) chiude le punte delle dita attorno al bordo
+  lontano dell'oggetto (il telefono che filma: prima le dita restavano dritte oltre il bordo), facendolo scorrere finché il bordo sta un
+  raggio di dito prima dell'ultima nocca; `bordo` chiude il pollice lungo il bordo lungo invece che sulla faccia (il telefono all'orecchio:
+  la faccia sta contro la guancia). Il fazzoletto dell'ispettore è stoffa appallottolata (`stoffaInPugno()`), non una palla liscia.
+- **La telefonata a terra** (episodio 1, rifatta il 26/11): seduto a terra con la schiena al muro e le ginocchia su, il telefono lungo la
+  mano e la guancia (non di traverso sulla tempia: sembrava grattarsi la testa), l'altra mano appoggiata sul ginocchio (`proprio`, vedi
+  sotto). Il polso sta a un palmo dalla spalla, quindi il gomito è l'unica cosa che si sceglie: `gomito: [0.8, -1, -0.1]`, basso e lungo
+  il fianco. Portato davanti al petto (`[0.3, -1, 0.4]`) gonfia la manica come un palloncino; alzato di lato sembra un'ala. Nella scena
+  lui è girato verso la camera (`yaw` in `tuTerra`), così il braccio si vede di fronte e la posa si legge subito.
 - **Laboratori**: `prova_corpo/` (testimone), `prova_ispettore/` e `prova_elena/` (stesso `film.js`: sono cartelle con i collegamenti a
   `prova_corpo` e un `film.json` con `"chi"`): da 0 a 10 s le pose da sei punti, da 10 a 20 collo e mani, da 20 a 30 polso e spalla, da 30
   a 40 vestiti in chiaro e oggetti in mano, dal secondo 40 le pose prese dalle scene viste da vicino (la telefonata, con varie posizioni
-  del gomito). `cast4/` + `scheda_corpi.py`: la scheda prima/dopo mandata all'utente.
+  del gomito, la borsa, la mano sulla bocca, il telefono che filma). `prova_auto/`: l'auto da sei punti (chiusa, aperta, coda, muso,
+  dall'alto). `cast4/` + `scheda_corpi.py`: la scheda prima/dopo mandata all'utente.
 - **Tempi**: con i corpi modellati un fotogramma costa circa 1,7 s con 3 processi (prima la metà). L'episodio intero (4019 fotogrammi) si
   rende in due metà insieme, `--range 0:67` e `--range 67:133.963333` con 2 processi ciascuna (un comando in background non può durare più
-  di due ore), poi si uniscono con ffmpeg (`-f concat`, `-c copy`).
+  di due ore), poi si uniscono con ffmpeg (`-f concat`, `-c copy`). Ogni metà si rende da una copia congelata della cartella
+  (`cp -rL ep1 ep1_r`, 60 MB): così si può continuare a ritoccare l'altra metà senza che un processo ricarichi un file cambiato a metà.
 - **Confronto con foto vere**: `cerca.py` (nella cartella di lavoro `foto_rif/`) scarica da Openverse foto CC0 di scarpe, maglietta e jeans;
   messe accanto ai provini: suola, lacci e punta delle scarpe, lunghezza delle maniche, dove arriva l'orlo della maglietta, pieghe.
 - **Errori da non rifare**: tagliare il collo coi pesi della testa (sotto il mento resta un buco: i pesi della testa scendono fin lì);
@@ -248,6 +258,46 @@ Dopo la mano, l'utente ha chiesto lo stesso per corpo, vestiti e scarpe. Teste, 
   tinta messo a caso nella texture (finiva su una manica); aggiungere un commento in mezzo a una riga con più istruzioni (tutto quel che
   segue diventa commento: è successo in `film.js` e nel convertitore, dove ha spento un pezzo di `cappotto()` senza dare errore); guardare
   le pose solo in piccolo: la spalla accartocciata della telefonata si vedeva soltanto a grandezza piena.
+
+## Appunti dell'utente sul video definitivo (26/11): cinque schermate, «cosa capisci dalle immagini»
+
+Visto il video consegnato, l'utente ha mandato cinque schermate e ha chiesto cosa ci capivo; alla mia lista ha risposto «tutto giusto
+manca solo che le braccia quando chiude il bagagliaio sono incrociate non sembrano naturali». Quindi: prima gli si dice cosa si è capito,
+poi si agisce. Cosa non andava e com'è stato rifatto:
+- **L'auto era fatta di scatole** (ruota a spigoli, luci incollate, il bagagliaio un rettangolo nero senza fondo, il cofano una tavola
+  staccata). Ora è un modello vero, tutto col codice (`cast/sets/auto_mesh.js`, niente di scaricato): la carrozzeria è una superficie sola,
+  74 sezioni lungo l'auto, ognuna il contorno di «scocca più abitacolo», con una colonna di punti che corre proprio sul bordo del cofano;
+  il cofano è ritagliato dagli stessi punti, ha il suo spessore e gira sulla cerniera (`cofano(k)`, apertura massima `APRE` = 1 rad: a
+  1,25 dalla finestra si vedeva di taglio); il vano ha pareti e fondo (`PAV`); le gomme sono tornite, i cerchi dipinti; vetri, fari,
+  passaruota, portiere e targa sono dipinti in una texture calcolata punto per punto dalla posizione vera. `suCofano(k, dietro, lato,
+  sopra)` dà un punto sulla pelle del cofano: serve per metterci le mani. Nel set l'auto è girata di un quarto di giro: da coordinate
+  dell'auto a mondo `(x, y, z) → (AUTO.x + z, y, AUTO.z − x)` (`daAuto`, `versoAuto` in `ep1/film.js`).
+- **Elena a terra era rigida come un manichino, con la borsa incollata al fianco.** Ora cade molle (`GIACE` in `ep1/film.js`: busto
+  ruotato, testa abbandonata, un ginocchio piegato, un braccio sopra la testa e uno davanti, mani `rilassata`) e la borsa finisce a terra
+  (`BORSA_FIANCO`, `BORSA_SUPINA`). `zuffa()` sfuma dalla posa in piedi a `GIACE` mentre cade.
+- **L'ispettore la caricava stando piegato in due con le braccia a penzoloni.** Ora la trascina per le caviglie camminando all'indietro
+  (`rec1`), la cala nel bagagliaio tenendola per la spalla e il ginocchio (`rec2`) e lei resta rannicchiata sul fianco (`nelBaule`), ben
+  visibile finché il cofano non è chiuso (prima spariva quasi subito).
+- **Le mani sul cofano erano aperte e appoggiate, e le braccia incrociate.** Le braccia erano scambiate: con `yaw` = π/2 il braccio
+  `armR` (sinistro anatomico) sta dalla parte di −z nel mondo. Ora ogni mano va al bordo del cofano dal suo lato (`manoCofano`, `verso3`:
+  parte dal fianco, arriva sul bordo, le dita seguono la pelle del cofano) e scende col cofano.
+- **Ancore**: in `esterno_set.js` Elena si mette in posa per prima; le braccia di Riva possono puntare a un punto del suo corpo con
+  `{ su: 'cavigliaD' | 'cavigliaS' | 'ginocchioD' | 'ginocchioS' | 'polsoD' | 'polsoS' | 'spallaD' | 'spallaS' | 'testa', delta }`.
+  In `uomo.pose` un braccio può puntare al proprio ginocchio con `{ proprio: 'ginocchioD' | 'ginocchioS', delta }`. Così le mani restano
+  sul corpo anche quando la posa cambia.
+- **La mano sulla bocca era piatta e rigida davanti al mento.** Ora è a coppa (`MANO_BOCCA`): palmo sulle labbra, dita piegate sulla
+  guancia, pollice dall'altra parte, polso in linea col braccio, gomito alzato di lato.
+- **La telefonata a terra**: vedi sopra («La telefonata a terra»).
+- **Nel controllo ingrandito prima di rifare il render** ho trovato e sistemato altre due cose che non aveva segnato: il dito sulle labbra
+  dell'ispettore arrivava in mezzo agli occhi (abbassato di 3 cm: la punta sotto il naso, il dito sulle labbra) e la mano che tiene il
+  telefono mentre filma aveva le dita dritte oltre il bordo (`aggancia`).
+- **Viste di controllo**: `ep1_dbg/` e `ep1_dbg2/` sono cartelle con i collegamenti a `ep1` e un `film.json` con `"viste"`: la stessa
+  scena resa da quattro lati in una griglia, schiarita. Per confrontare varianti di una posa nella scena vera: una cartella di prova con
+  un `film.json` che porta i valori (`M.CFG`), letti da `film.js` con un valore di riserva; scelta la variante, si scrive il valore e si
+  toglie l'aggancio. Dopo ogni ritocco si rifanno i 67 fotogrammi di controllo e si confrontano pixel per pixel con quelli di prima:
+  devono cambiare solo le scene toccate.
+- **Foto di riferimento**: per bagagliaio, mano sulla bocca e telefonata Openverse non ha dato quasi niente (e limita le richieste):
+  queste pose sono state controllate su viste da più lati, non accanto a una foto.
 
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 

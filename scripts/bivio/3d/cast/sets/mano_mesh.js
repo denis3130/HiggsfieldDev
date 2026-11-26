@@ -269,10 +269,11 @@ const POSE_PROPRIE = {
   piatta: { indice: { mcp: 8, pip: 9, dip: 6, ab: -3.4 }, medio: { mcp: 9, pip: 10, dip: 6 }, anulare: { mcp: 10, pip: 10, dip: 6, ab: 7.2 }, mignolo: { mcp: 12, pip: 10, dip: 6, ab: 8 }, pollice: { ab: 14, fl: 12, roll: 10, mcp: 8, ip: 8 } },
   // un tesserino tenuto contro le dita distese, il pollice lo ferma sul davanti
   tessera: { indice: { mcp: 4, pip: 3, dip: 2, ab: 4 }, medio: { mcp: 3, pip: 2, dip: 2 }, anulare: { mcp: 4, pip: 3, dip: 2 }, mignolo: { mcp: 6, pip: 4, dip: 3, ab: -5 }, pollice: { ab: 52, fl: 26, roll: 55, mcp: 12, ip: 8 } },
-  // un telefono tenuto in mano per guardarlo: appoggiato alle dita un po' piegate; all'orecchio: di traverso, con le dita che lo avvolgono da dietro.
+  // un telefono tenuto in mano per guardarlo: appoggiato alle dita un po' piegate; all'orecchio: lungo la mano come quando lo guardi, le dita distese dietro
+  // (di traverso nel pugno sembrava un bastoncino tenuto sulla tempia: l'utente il 26/11).
   // Il pollice lo chiude presaPiatta di corpo_mesh.js.
   telefono: { indice: { mcp: 16, pip: 22, dip: 12, ab: -2 }, medio: { mcp: 18, pip: 24, dip: 12 }, anulare: { mcp: 20, pip: 26, dip: 14, ab: 5 }, mignolo: { mcp: 22, pip: 28, dip: 14, ab: 7 }, pollice: { ab: 40, fl: 20, roll: 50, mcp: 8, ip: 10 } },
-  orecchio: { indice: { mcp: 30, pip: 40, dip: 22, ab: -2 }, medio: { mcp: 32, pip: 42, dip: 24 }, anulare: { mcp: 34, pip: 44, dip: 24, ab: 5 }, mignolo: { mcp: 36, pip: 46, dip: 24, ab: 7 }, pollice: { ab: 40, fl: 20, roll: 50, mcp: 8, ip: 10 } },
+  orecchio: { indice: { mcp: 10, pip: 16, dip: 10, ab: -3.4 }, medio: { mcp: 12, pip: 18, dip: 10 }, anulare: { mcp: 14, pip: 20, dip: 12, ab: 7.2 }, mignolo: { mcp: 16, pip: 24, dip: 14, ab: 9 }, pollice: { ab: 40, fl: 20, roll: 50, mcp: 8, ip: 10 } },
   // un telefono tenuto di traverso per filmare: dietro le dita distese, il pollice sullo schermo
   filma: { indice: { mcp: 8, pip: 10, dip: 8, ab: 3 }, medio: { mcp: 8, pip: 10, dip: 8 }, anulare: { mcp: 9, pip: 11, dip: 8 }, mignolo: { mcp: 10, pip: 12, dip: 8, ab: -4 }, pollice: { ab: 48, fl: 22, roll: 55, mcp: 8, ip: 12 } },
   // le dita attorno a una sbarra (maniglia): per la presa precisa su una maniglia vera si usa afferra()

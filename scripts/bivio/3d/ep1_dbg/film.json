@@ -1,0 +1,48 @@
+{
+ "title": "Il testimone - episodio 1",
+ "duration": 133.963333,
+ "formats": [
+  "9x16"
+ ],
+ "poster": 30,
+ "inizio_fotogramma": 389,
+ "nota": "inizio_fotogramma: l'aggancio iniziale (righe 1 e 2 della voce) è tagliato su richiesta dell'utente; duration è quel che resta (la voce intera dura 146,93 s)",
+ "viste": [
+  {
+   "dir": [
+    -0.55,
+    0.62,
+    -0.56
+   ],
+   "dist": 4.2,
+   "fov": 30
+  },
+  {
+   "dir": [
+    0.0,
+    0.25,
+    1.0
+   ],
+   "dist": 3.8,
+   "fov": 30
+  },
+  {
+   "dir": [
+    -1.0,
+    0.3,
+    0.1
+   ],
+   "dist": 3.6,
+   "fov": 30
+  },
+  {
+   "dir": [
+    0.05,
+    1.0,
+    0.05
+   ],
+   "dist": 4.6,
+   "fov": 30
+  }
+ ]
+}
