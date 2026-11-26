@@ -8,6 +8,7 @@ import { THREE, V, rnd, tex, mat, piatto as basic, sfera, add, loft, tra, ombre,
 import { testa, capelli, chioma, ciuffi, braccio, gamba, chiavi, mix } from './pupazzi.js';
 import { CORPI, misure, vesti, texture, oggettoInMano } from './corpo_mesh.js';
 import { sbarra } from './prese.js';
+import { posaDaPupazzo } from './mano_mesh.js';
 
 // mondo: il punto da raggiungere in coordinate della scena. Le direzioni dita/dorso/gomito sono nel verso del PERSONAGGIO (z = davanti a lui);
 // per darle nel verso della scena si usano ditaM/dorsoM/gomitoM (se il personaggio è girato le due cose non coincidono).
@@ -27,10 +28,28 @@ function suSbarra(upper, A, q) {
   for (const g of [m[2] - 10, m[2] - 5, m[2] + 5, m[2] + 10]) { const x = prova(g); if (x[0] > m[0]) m = x; }
   return s.piega ? prova(m[2] + s.piega)[1] : m[1];
 }
+// Un braccio può dire `k` (0..1) = quanto del gesto è fatto, e `da` = la posa da cui parte (un'altra descrizione di braccio; senza `da`, il braccio
+// a riposo lungo il fianco). Polso, gomito, mano e dita passano dall'una all'altra senza scatti: la mano che lascia il corrimano, il braccio che
+// si posa sul ginocchio mentre ci si siede, le dita che si stringono. Senza `k` tutto resta com'era.
+const DITA5 = ['indice', 'medio', 'anulare', 'mignolo', 'pollice'];
+export function mixMano(a, b, k) {
+  const A = posaDaPupazzo(a || 'rilassata'), B = posaDaPupazzo(b || 'rilassata'), Q = {};
+  for (const f of DITA5) { Q[f] = {}; for (const c of new Set([...Object.keys(A[f] || {}), ...Object.keys(B[f] || {})])) Q[f][c] = ((A[f] || {})[c] ?? 0) * (1 - k) + ((B[f] || {})[c] ?? 0) * k; }
+  return Q;
+}
+const risolvi = (upper, A, q) => (q.sbarra ? suSbarra(upper, A, q) : locale(upper, q));
+function sfuma(A, r0, r1, k) {
+  const L = (x, y) => [x[0] + (y[0] - x[0]) * k, x[1] + (y[1] - x[1]) * k, x[2] + (y[2] - x[2]) * k], g0 = [A.side * 0.6, -0.3, -0.75], giu = [0, -1, 0.05];
+  const d0 = r0.dita || (r1.dita ? giu : null), d1 = r1.dita || (r0.dita ? giu : null);
+  return { a: L(r0.a || A.riposo, r1.a || A.riposo), gomito: L(r0.gomito || g0, r1.gomito || g0), dita: d0 ? L(d0, d1) : undefined, dorso: L(r0.dorso || [0, 0, 1], r1.dorso || [0, 0, 1]), mano: mixMano(r0.mano, r1.mano, k) };
+}
 function braccia(upper, AL, AR, p) {
   for (const [A, q] of [[AL, p.armL], [AR, p.armR]]) {
     if (!q) { A.a({}); continue; }
-    A.a(q.sbarra ? suSbarra(upper, A, q) : locale(upper, q));
+    const k = q.k === undefined ? 1 : M.clamp(q.k);
+    if (k >= 1) { A.a(risolvi(upper, A, q)); continue; }
+    const r0 = q.da ? risolvi(upper, A, q.da) : {};
+    A.a(k <= 0 ? r0 : sfuma(A, r0, risolvi(upper, A, q), k));
   }
 }
 
@@ -76,7 +95,7 @@ function uomo(o) {
     const pos = p.pos || [0, 0, 0];
     root.position.set(pos[0], pos[1] - sit * (go.hy - (p.sedile ?? 0.46) - 0.085), pos[2]); root.rotation.y = p.yaw || 0; root.updateMatrixWorld(true);
     // un braccio può puntare a un punto del proprio corpo: { proprio: 'ginocchioD' | 'ginocchioS', delta: [x, y, z] nel mondo } (la mano appoggiata sul ginocchio)
-    const mio = (a) => { if (!a || !a.proprio) return a; const gk = a.proprio === 'ginocchioD' ? GL.knee : GR.knee, w = gk.getWorldPosition(V(0, 0, 0)), d = a.delta || [0, 0, 0]; return { ...a, mondo: [w.x + d[0], w.y + d[1], w.z + d[2]] }; };
+    const mio = (a) => { if (a && a.da) a = { ...a, da: mio(a.da) }; if (!a || !a.proprio) return a; const gk = a.proprio === 'ginocchioD' ? GL.knee : GR.knee, w = gk.getWorldPosition(V(0, 0, 0)), d = a.delta || [0, 0, 0]; return { ...a, mondo: [w.x + d[0], w.y + d[1], w.z + d[2]] }; };
     p = { ...p, armL: mio(p.armL), armR: mio(p.armR) };
     braccia(upper, AL, AR, p);
     if (o.posa) o.posa(p, parti);

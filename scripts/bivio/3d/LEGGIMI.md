@@ -470,6 +470,24 @@ sono ricontrollate tutte le inquadrature (vedi «Sui tempi veri» qui sotto).
   e i passi sul balcone). Cercando i picchi è saltato fuori un «tic» secco a 1:09: era nella registrazione della pioggia
   (`pioggia_notte.mp3` ha colpi secchi nei primi 57 secondi, uno fortissimo a 49 s). Se ne usa solo la parte pulita, da 58 s in
   poi, in due pezzi incrociati. Vale anche per i prossimi episodi.
+- **Scatti da un fotogramma** (trovati guardando il render a strisce, 30 fotogrammi al secondo: sui provini fermi non si vedono).
+  Tre cause, tutte dello stesso tipo, una posa che cambia a soglia invece che a poco a poco:
+  - un braccio che passa da una descrizione a un'altra (`armR: giu > 0.7 ? SU_TASCA : undefined`; la mano dell'ispettore dal
+    corrimano alla mano tesa): ora un braccio può dire `k` (0..1, quanto del gesto è fatto) e `da` (la posa da cui parte; senza, il
+    braccio a riposo). Polso, gomito, mano e dita sfumano (`braccia()`/`sfuma()`/`mixMano()` in `adulti.js`); vale anche per le prese
+    sul corrimano (`sbarra`) e per i punti del proprio corpo (`proprio`);
+  - le dita che cambiano posa di colpo (`mano: pr > 0.5 ? … : 'piatta'`): stessa cosa, `da` + `k`, e le dita si chiudono in sei decimi;
+  - una camminata scritta `va > 0.01 && va < 0.99 ? passi(...) : {}`: all'ultimo fotogramma le gambe saltano da metà passo a unite
+    (sulle scarpe dell'ispettore che «si fermano» si vedeva benissimo). `cammina(va, fase, amp)` in `ep2/film.js` fa crescere e
+    spegnere l'ampiezza: i piedi si riuniscono da soli. Nelle altre scene il vecchio modo è rimasto dove le gambe non si vedono.
+  `scatti.py <video> <secondo d'inizio>` li cerca: un fotogramma molto diverso dal precedente mentre prima e dopo cambia poco
+  (i tagli di scena li elenca a parte). Va passato su ogni pezzo del render prima di unire.
+- **Rifare una scena dentro un render finito, senza ricomprimere**: `render.mjs --range a:b` rende i fotogrammi da `round(a·30)` a
+  `round(b·30) - 1`, e ogni fotogramma n è preso al tempo (n + 0,5)/30: una scena che comincia a t0 parte dal primo n con
+  (n + 0,5)/30 ≥ t0. x264 mette un fotogramma chiave sui cambi di scena netti (non su quelli tra due immagini buie: controllare con
+  `ffprobe -show_entries frame=key_frame,pts_time`); se sia l'inizio sia la fine cadono su un fotogramma chiave, il pezzo si taglia con
+  `ffmpeg -c copy -f segment -segment_frames N1,N2 -reset_timestamps 1` e si riunisce con `-f concat -c copy` (conteggio dei
+  fotogrammi e passo costante controllati). Se manca il fotogramma chiave, si rifà dal fotogramma chiave prima.
 - **Render definitivo**: 3932 fotogrammi in quattro pezzi insieme (`--range 0:33`, `33:66`, `66:99`, `99:131.06`, un processo
   ciascuno, da una copia congelata `ep2_r`), poi uniti con ffmpeg. Le scene sul balcone con le luci di casa accese sono le più lente.
 

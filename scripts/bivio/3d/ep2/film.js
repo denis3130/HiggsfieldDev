@@ -41,6 +41,9 @@ const lontano = { pos: [60, 0, 60] }, via = { nascosta: true };
 const PAURA = { fear: 1, browUp: 0.7, sad: 0.6, mouth: 0.16, open: 1 };
 const FB = { set: 'F', cucina: 0, tenda: 0, elena: via, riva: lontano, ambiente: 0.25, fronte: 0.13, pioggia: 0.3 };      // di base, fuori di notte
 const passi = (fase, amp = 0.4) => ({ aL: amp * sin(fase), gL: 0.06 + 0.8 * amp * Math.max(0, -Math.cos(fase)), aR: -amp * sin(fase), gR: 0.06 + 0.8 * amp * Math.max(0, Math.cos(fase)) });
+// una camminata che parte e si ferma senza scatti (va = 0..1 lungo il tragitto): l'ampiezza del passo cresce all'inizio e si spegne alla fine, così i piedi
+// si riuniscono da soli. Con `va > 0.01 && va < 0.99 ? passi(...) : {}` all'ultimo fotogramma le gambe saltavano da metà passo a unite (si vedeva sulle scarpe).
+const cammina = (va, fase, amp = 0.3) => { const f = Math.max(0, Math.min(1, va / 0.12, (1 - va) / 0.2)), p = va * fase, a = amp * f; return { aL: a * sin(p), gL: f * (0.06 + 0.8 * amp * Math.max(0, -Math.cos(p))), aR: -a * sin(p), gR: f * (0.06 + 0.8 * amp * Math.max(0, Math.cos(p))) }; };
 // il telefono in mano (AR): basso lungo il fianco, davanti per guardarlo, stretto al petto con lo schermo contro la maglia
 const TEL_BASSO = { a: [0.13, 0.2, 0.26], gomito: [1, -0.7, -0.2], dita: [0, 0.92, 0.25], dorso: [0, 0, 1], mano: 'presa' };
 const TEL_GUARDA = { a: [0.1, 0.3, 0.3], gomito: [1, -0.8, -0.1], dita: [-0.1, 0.9, -0.3], dorso: [0, 0.45, 1], mano: 'presa' };
@@ -69,7 +72,7 @@ const fuori = (t, x, o = {}) => ({ pos: [x, FY, 1.19], yaw: Math.PI, lean: 0.18,
 const rivaSporge = (t, k, { mano = 0, dammi = 0, x = {} } = {}) => { const m = io(clamp(mano));
   const presa = { sbarra: CR(lerp(6.12, 6.2, k) - 0.2 * (1 - io(clamp(x.arriva ?? 1))), -1), gomitoM: [0.3, -1, -0.3] }, tesa = { mondo: [6.28, FY + 1.13 + 0.012 * sin(t * 1.3), 1.22], gomitoM: [0.5, -1, 0.1], ditaM: [0.8, -0.05, -0.55], dorsoM: [0, -1, 0], mano: manoTesa(dammi) };
   return { pos: [lerp(5.6, 5.85, k), FY, lerp(0.8, 0.88, k)], yaw: 0, lean: lerp(0.16, 0.3, k), side: -0.14 * k, twist: 0.1 * k, headYaw: lerp(0.35, 0.9, k), headPitch: 0.1 * k, headRoll: -0.2 * k, breathe: sin(t * 1.8), blink: battito(t, 21), open: 0.72,
-    armL: { sbarra: CR(lerp(5.3, 5.45, k), 1), gomitoM: [-1, -0.5, -0.1] }, armR: m < 0.02 ? presa : m > 0.98 ? tesa : { mondo: v3([lerp(6.12, 6.2, k), YR + 0.06, ZR + 0.02], tesa.mondo, m), gomitoM: tesa.gomitoM, ditaM: v3([0.5, -0.5, -0.6], tesa.ditaM, m), dorsoM: v3([0.3, 1, 0.2], tesa.dorsoM, m), mano: manoTesa(0.5 * (1 - m)) }, ...x }; };
+    armL: { sbarra: CR(lerp(5.3, 5.45, k), 1), gomitoM: [-1, -0.5, -0.1] }, armR: m <= 0 ? presa : m > 0.98 ? tesa : { mondo: v3([lerp(6.12, 6.2, k), YR + 0.06, ZR + 0.02], tesa.mondo, m), gomitoM: tesa.gomitoM, ditaM: v3([0.5, -0.5, -0.6], tesa.ditaM, m), dorsoM: v3([0.3, 1, 0.2], tesa.dorsoM, m), mano: manoTesa(0.5 * (1 - m)), da: presa, k: io(clamp(m / 0.4)) }, ...x }; };      // (da: presa = la mano si stacca dal corrimano a poco a poco: prima saltava in un fotogramma)
 const POV = { cam: [7.25, FY + 0.82, 0.45], look: [6.2, FY + 1.42, 1.15], fov: 40, fronte: 0.19 };      // quello che vedi tu, rannicchiato, guardando il bordo del divisorio
 const LUCE = { casa: { soggiorno: 1, corridoio: 1 }, porta: 0.6, tendaScosta: 0.9 };       // casa tua con la luce accesa e la portafinestra aperta (lui è uscito)
 
@@ -179,7 +182,7 @@ function sequenza() {
     const [aL, gL] = gamba(1.5 + 0.8, 1.5 + 0.5), [aR, gR] = gamba(1.5 + 0.72, 1.5 + 0.3);
     return { ...FB, id: 'rannicchi', cam: v3([7.6, FY + 0.85, 2.5], [7.42, FY + 0.74, 2.15], io(k)), look: [6.8, FY + 0.58, 0.35], fov: 36,
       tu: { ...A, pos: [lerp(6.5, P_ANG[0], ind), FY - (PT.hy - hA), lerp(0.72, P_ANG[2], ind)], yaw: lerp(0, Y_ANG, ind), sit: 0, gambe: giu > 0.001 ? { aL, gL, aR, gR } : passi(ind * 5, 0.25 * bump(ind, 0.5, 0.5)), lean: lerp(0.1, -0.04, giu), headPitch: lerp(0.3, -0.1, giu), headYaw: -0.25 * giu,
-        armR: giu > 0.7 ? SU_TASCA : undefined, armL: giu > 0.85 ? SUL_GINOCCHIO : undefined } }; });
+        armR: { ...SU_TASCA, k: io(prog(giu, 0.3, 0.9)) }, armL: { ...SUL_GINOCCHIO, k: io(prog(giu, 0.45, 1)) } } }; });      // (k: le braccia arrivano sulla tasca e sul ginocchio mentre scende, non di colpo)
 
   // --- «In casa tua si accende la luce.»: i due balconi da fuori; il tuo si illumina, tu sei lì accanto al buio
   const acc = w(13, 'accende') + 0.15;
@@ -215,7 +218,7 @@ function sequenza() {
   // --- «Poi i suoi passi escono sul balcone. E si fermano.»: da sotto il divisorio, le sue scarpe nella luce; sopra, la sua ombra sul vetro
   sc(r(17) - 0.3, (t, k, s) => { const va = io(prog(t, s.t0 + 0.2, w(17, 'fermano') + 0.2)), gira = io(prog(t, w(17, 'fermano') + 0.3, rf(17) + 1.0));
     return { ...FB, id: 'passi', pioggia: 0, cam: v3([7.15, FY + 0.2, 0.5], [7.0, FY + 0.17, 0.5], io(k)), look: [6.0, FY + 0.07, 0.54], fov: 40, ...LUCE, luceBassa: 9, luceBalcone: 3, tu: lontano,
-      riva: { pos: [lerp(4.72, 5.52, va), FY, lerp(-0.2, 0.56, va)], yaw: lerp(0.6, 1.35, gira), breathe: sin(t * 1.8), gambe: va > 0.01 && va < 0.99 ? passi(va * 7, 0.3) : {} } }; });
+      riva: { pos: [lerp(4.72, 5.52, va), FY, lerp(-0.2, 0.56, va)], yaw: lerp(0.6, 1.35, gira), breathe: sin(t * 1.8), gambe: cammina(va, 7, 0.3) } }; });
 
   // --- «Trattieni il respiro.»: la mano sulla bocca, gli occhi al vetro
   sc(r(18) - 0.3, (t, k) => ({ ...FB, id: 'respiro', mira: { chi: 'tu', dy: -0.02, da: v3([-0.52, 0.02, 0.62], [-0.45, 0.02, 0.54], io(k)) }, fov: 24, ...LUCE,
@@ -247,7 +250,7 @@ function sequenza() {
   const due = w(23, 'non') - 0.2;
   sc(r(23) - 0.3, (t, k) => { const pr = io(prog(t, r(23) + 0.5, r(23) + 1.1)), p = PT.tasca;
     return { ...FB, id: 'tasca', cam: v3([p[0] + 0.44, p[1] + 0.42, p[2] + 0.44], [p[0] + 0.39, p[1] + 0.38, p[2] + 0.41], io(k)), look: [p[0] - 0.075, p[1] + 0.05, p[2] + 0.06], fov: 34, ...LUCE, fronte: 0.22,
-      riva: rivaSporge(t, 1, { mano: 1 }), tu: tuAngolo(t, { headYaw: -0.5, headPitch: -0.25, breathe: sin(t * 6), armR: { ...SU_TASCA, delta: [0.164 - 0.004 * pr, -0.073 - 0.004 * pr, -0.159], mano: pr > 0.5 ? { indice: { mcp: 22, pip: 30, dip: 16 }, medio: { mcp: 24, pip: 32, dip: 18 }, anulare: { mcp: 24, pip: 32, dip: 18, ab: 4 }, mignolo: { mcp: 24, pip: 30, dip: 16, ab: 7 }, pollice: { ab: 20, fl: 14, roll: 10, mcp: 12, ip: 12 } } : 'piatta' } }) }; });
+      riva: rivaSporge(t, 1, { mano: 1 }), tu: tuAngolo(t, { headYaw: -0.5, headPitch: -0.25, breathe: sin(t * 6), armR: { ...SU_TASCA, delta: [0.16, -0.077, -0.159], mano: { indice: { mcp: 22, pip: 30, dip: 16 }, medio: { mcp: 24, pip: 32, dip: 18 }, anulare: { mcp: 24, pip: 32, dip: 18, ab: 4 }, mignolo: { mcp: 24, pip: 30, dip: 16, ab: 7 }, pollice: { ab: 20, fl: 14, roll: 10, mcp: 12, ip: 12 } }, da: SU_TASCA, k: pr } }) }; });      // (le dita si stringono in sei decimi di secondo: prima scattavano da aperte a chiuse)
   sc(due, (t, k) => { const d = 0.5 * (bump(t, due + 0.55, 0.3) + bump(t, due + 1.2, 0.3));
     return { ...FB, id: 'dammi', pioggia: 0.4, cam: su(v3([7.0, FY + 0.98, 0.72], [6.95, FY + 1.0, 0.76], io(k)), trema(t, 0.5), 1), look: [6.26, FY + 1.16, 1.2], fov: 26, ...LUCE, tu: lontano,
       riva: rivaSporge(t, 1, { mano: 1, dammi: d, x: { ...parla('isp', t), smile: 0.6, gazeY: -0.15 } }) }; });
