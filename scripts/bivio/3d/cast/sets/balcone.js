@@ -199,7 +199,8 @@ export function balconi({ scene, amb, fuori, FY }) {
   const TX0 = PX0 - 0.02, TX1 = PX1 + 0.02, TNX = 40, TNY = 10, tendaG = new THREE.PlaneGeometry(TX1 - TX0, HP - 0.06, TNX, TNY); tendaG.translate((TX0 + TX1) / 2, (HP - 0.06) / 2 + 0.04, 0);
   const tendaM = new THREE.MeshLambertMaterial({ color: '#B9B2A2', transparent: true, opacity: 0.74, side: THREE.DoubleSide, depthWrite: false, vertexColors: true }), tenda = add(Q, tendaG, tendaM); tenda.receiveShadow = true; tenda.renderOrder = 2;
   tendaG.setAttribute('color', new THREE.BufferAttribute(new Float32Array(tendaG.attributes.position.count * 3).fill(1), 3));
-  const tc = tendaG.attributes.color, tp = tendaG.attributes.position, tx0 = Float32Array.from({ length: tp.count }, (_, i) => tp.getX(i)), ty0 = Float32Array.from({ length: tp.count }, (_, i) => tp.getY(i));
+  { const ix = tendaG.index.array, tieni = []; for (let q = 0; q < ix.length; q += 6) if ((q / 6) % TNX !== TNX / 2) tieni.push(...ix.slice(q, q + 6)); tendaG.setIndex(tieni); }      // due teli che si incontrano al centro: tra l'uno e l'altro niente stoffa (se no, scostandoli, si stirerebbe)
+  const tc = tendaG.attributes.color, tp = tendaG.attributes.position, tx0 = Float32Array.from({ length: tp.count }, (_, i) => (i % (TNX + 1) === TNX / 2 + 1 ? (PX0 + PX1) / 2 + 0.004 : tp.getX(i))), ty0 = Float32Array.from({ length: tp.count }, (_, i) => tp.getY(i));
   function muoviTenda(t, apre, vento, scosta = 0) {
     const tn = tendaG.attributes.normal, cx = (PX0 + PX1) / 2;
     for (let i = 0; i < tp.count; i++) { const xr = tx0[i], y = ty0[i], h = 1 - y / HP, x = xr > cx ? TX1 - (TX1 - xr) * (1 - 0.78 * scosta * (0.35 + 0.65 * h)) : xr;                                  // h: 0 in alto (bastone), 1 in basso (libera)

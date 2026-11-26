@@ -186,7 +186,7 @@ function sequenza() {
       riva: { pos: [lerp(4.2, 4.62, va), FY, lerp(-2.7, -0.85, va)], yaw: lerp(0.25, 0.02, va), breathe: sin(t * 1.8), open: 0.72, gambe: va > 0.01 && va < 0.99 ? passi(va * 6.5, 0.3) : {}, ...parla('isp', t) } }; });
   // l'anta si apre piano verso l'interno (la tira lui, la mano sulla maniglia dietro il vetro) e sposta la tenda: nella fessura, metà del suo viso
   sc(dita, (t, k) => { const tira = io(prog(t, dita + 0.4, rf(16) + 0.9)), ap = lerp(0.07, 0.53, tira), m = SF.BL.montante(ap, 1.03);
-    return { ...FB, id: 'apre', pioggia: 0.2, cam: v3([4.66, FY + 1.5, 1.7], [4.62, FY + 1.52, 1.15], io(k)), look: [4.6, FY + 1.5, -0.4], fov: 30, porta: ap, tendaScosta: tira, vento: 0.3, casa: { corridoio: 1, soggiorno: 1 }, luceBalcone: 2, fronte: 0.3, tu: lontano,
+    return { ...FB, id: 'apre', pioggia: 0.2, cam: v3([4.66, FY + 1.5, 1.7], [4.62, FY + 1.52, 1.15], io(k)), look: [4.6, FY + 1.5, -0.4], fov: 30, porta: ap, tendaScosta: tira, vento: 0.3, casa: { corridoio: 1, soggiorno: 1 }, luceBalcone: 2, fronte: 0.17, tu: lontano,
       riva: { pos: [4.6, FY, -0.86], yaw: 0, breathe: sin(t * 1.8), blink: battito(t, 21), open: 0.72 + 0.1 * tira, headPitch: 0.04, smile: 0.25 * tira, gazeX: -0.3 * tira, ...parla('isp', t),
         armR: { mondo: [m[0] + 0.03, m[1] - 0.02, m[2] - 0.085], gomitoM: [1, -0.6, -0.3], ditaM: [-0.6, 0.3, 0.75], dorsoM: [0.5, 0.2, -0.85], mano: 'presa' } } }; });
 
@@ -339,11 +339,13 @@ M.film({
     SEQ = sequenza(); window.TEMPI = SEQ.map((s) => [Math.round(s.t0 * 100) / 100, s.f(s.t0 + 0.01, 0, s).id]);
     // le immagini fisse: la carta votata nell'episodio 1 e le due carte nuove (la stessa soggettiva: col telefono teso verso la sua mano, o con la mano vuota)
     IMG.sceltaB = scatto(SF, { ...FB, cam: [4.5, FY + 1.5, 0.2], look: [4.2, FY - 3.2, 6.5], fov: 30, tu: lontano }, 860, 1.7, 480);
-    const cA = { ...FB, cam: [7.05, FY + 0.95, 0.62], look: [6.36, FY + 1.1, 1.14], fov: 30, ...LUCE, ambiente: 0.4, fronte: 0.3 };
-    IMG.cartaA = scatto(SF, { ...cA, telTu: 1, telSchermo: 0.6, riva: rivaSporge(0, 1, { mano: 1, x: { smile: 0.6 } }),
-      tu: tuAngolo(0, { senzaTesta: true, armR: { mondo: [6.5, FY + 1.02, 0.98], gomitoM: [0.3, -1, -0.2], ditaM: [-0.6, 0.35, 0.7], dorsoM: [0.2, 1, -0.2], mano: 'presa' }, armL: undefined }) }, 860, 1.25, 480);
-    IMG.cartaB = scatto(SF, { ...cA, telTu: 0, riva: rivaSporge(0, 1, { mano: 1, x: { smile: 0.1, angry: 0.3 } }),
-      tu: tuAngolo(0, { senzaTesta: true, armR: { mondo: [6.52, FY + 1.0, 0.95], gomitoM: [0.3, -1, -0.2], ditaM: [-0.5, 0.75, 0.4], dorsoM: [0.5, -0.2, -0.8], mano: 'aperta' }, armL: undefined }) }, 860, 1.25, 480);
+    // (tu mezzo alzato verso la ringhiera, visto da dietro la tua spalla: la tua mano e la sua al centro, sopra il vuoto)
+    const cA = { ...FB, cam: [6.78, FY + 1.3, 0.8], look: [6.36, FY + 1.17, 1.16], fov: 36, ...LUCE, ambiente: 0.42, fronte: 0.34, pioggia3: 0.6 };
+    const tuCarta = (x) => ({ pos: [6.66, FY, 0.6], yaw: -0.55, sit: 0.45, sedile: 0.25, gambe: { aL: 0.5, gL: 0.9, aR: 0.4, gR: 0.8 }, lean: 0.25, senzaTesta: true, ...x });
+    IMG.cartaA = scatto(SF, { ...cA, telTu: 1, telSchermo: 1, riva: rivaSporge(0, 1, { mano: 1, x: { smile: 0.6 } }),
+      tu: tuCarta({ armR: { mondo: [6.47, FY + 1.13, 1.07], gomitoM: [0.5, -1, -0.4], ditaM: [-0.15, 1, 0.15], dorsoM: [-0.7, 0, 0.7], mano: 'presa' } }) }, 860, 1.2, 480);
+    IMG.cartaB = scatto(SF, { ...cA, telTu: 0, riva: rivaSporge(0, 1, { mano: 1, x: { smile: 0.05, angry: 0.35 } }),
+      tu: tuCarta({ armR: { mondo: [6.52, FY + 1.16, 1.0], gomitoM: [0.5, -1, -0.4], ditaM: [-0.7, 0.15, 0.7], dorsoM: [0, -1, 0], mano: { indice: { mcp: 4, pip: 8, dip: 5, ab: -6 }, medio: { mcp: 6, pip: 10, dip: 6 }, anulare: { mcp: 8, pip: 12, dip: 7, ab: 6 }, mignolo: { mcp: 10, pip: 14, dip: 8, ab: 12 }, pollice: { ab: 34, fl: 6, roll: 20, mcp: 4, ip: 6 } } } }) }, 860, 1.2, 480);
   },
   draw(ctx, u, t) {
     t += T0; { const k = t * 30; if (Math.abs(k - Math.round(k)) < 1e-6) t = Math.round(k) / 30; } u = M.U(t);

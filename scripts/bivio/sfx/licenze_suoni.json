@@ -187,5 +187,75 @@
   "autore": "Anthousai",
   "licenza": "CC0 1.0",
   "pagina": "https://freesound.org/people/Anthousai/sounds/398741"
+ },
+ "campanello.mp3": {
+  "titolo": "Doorbell apartment front door",
+  "autore": "hanneswannerberger",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/hanneswannerberger/sounds/275629",
+  "nota": "i primi 2,3 s (episodio 2 de «Il testimone», 26/11; trovato con cerca_suoni.py su Openverse, filtro CC0)"
+ },
+ "chiavi.mp3": {
+  "titolo": "Keys Jingling 2_1",
+  "autore": "Joao_Janz",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Joao_Janz/sounds/485117",
+  "nota": "episodio 2 de «Il testimone», 26/11; trovato con cerca_suoni.py su Openverse, filtro CC0"
+ },
+ "serratura.mp3": {
+  "titolo": "unlock_door.wav",
+  "autore": "fuzzpapi",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/fuzzpapi/sounds/147347",
+  "nota": "la chiave che entra e gira (episodio 2 de «Il testimone», 26/11; trovato con cerca_suoni.py su Openverse, filtro CC0)"
+ },
+ "chiavi_porta.mp3": {
+  "titolo": "Keys Unlocking Door.aif",
+  "autore": "ftpalad",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/ftpalad/sounds/119918",
+  "nota": "episodio 2 de «Il testimone», 26/11; trovato con cerca_suoni.py su Openverse, filtro CC0"
+ },
+ "catenella.mp3": {
+  "titolo": "Chain door lock.wav",
+  "autore": "Sadiquecat",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/Sadiquecat/sounds/659433",
+  "nota": "da 0,1 a 2,7 s (episodio 2 de «Il testimone», 26/11; trovato con cerca_suoni.py su Openverse, filtro CC0)"
+ },
+ "passi_piastrelle.mp3": {
+  "titolo": "Footsteps, Tile, Male Tennis Shoes, Slow Pace.wav",
+  "autore": "SpliceSound",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/SpliceSound/sounds/170498",
+  "nota": "da 0,2 a 22 s: un passo ogni 0,6 s circa (episodio 2 de «Il testimone», 26/11; trovato con cerca_suoni.py su Openverse, filtro CC0)"
+ },
+ "passi_bagnati.mp3": {
+  "titolo": "footsteps on wet concrete, sneakers (wind).wav",
+  "autore": "bushi3593",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/bushi3593/sounds/215990",
+  "nota": "i primi 8 s (episodio 2 de «Il testimone», 26/11; trovato con cerca_suoni.py su Openverse, filtro CC0)"
+ },
+ "ringhiera.mp3": {
+  "titolo": "Metal Rail Strike",
+  "autore": "alegemaate",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/alegemaate/sounds/364686",
+  "nota": "il primo colpo (0,6 s) (episodio 2 de «Il testimone», 26/11; trovato con cerca_suoni.py su Openverse, filtro CC0)"
+ },
+ "finestra.mp3": {
+  "titolo": "window with heavy metal frame latch open close creak squeak various.wav",
+  "autore": "kyles",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/kyles/sounds/407325",
+  "nota": "da 2,0 a 5,3 s: un cigolio lungo (episodio 2 de «Il testimone», 26/11; trovato con cerca_suoni.py su Openverse, filtro CC0)"
+ },
+ "vento.mp3": {
+  "titolo": "Wind gust",
+  "autore": "wintuh",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/wintuh/sounds/471854",
+  "nota": "episodio 2 de «Il testimone», 26/11; trovato con cerca_suoni.py su Openverse, filtro CC0"
  }
 }

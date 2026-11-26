@@ -368,6 +368,61 @@ MakeHuman ha misure vere (11,3 cm a metà), ma sotto una testa disegnata piccola
 - **Trappola trovata nel montaggio finale**: `mix.py` univa video e audio con `-shortest`; con il video copiato com'è, l'ordine dei
   fotogrammi B faceva perdere gli ultimi (fino a tre). Tolto: video e audio finiscono a 3 millesimi l'uno dall'altro.
 
+## Episodio 2 de «Il testimone» (26/11): «La mano tesa», il ramo B (scappi dal balcone)
+
+L'episodio 1 l'ha pubblicato l'utente sul canale nuovo; il 26/11: «ok hanno scelto l'opzione B continua pure». Testo in
+`data/horror/storie/13_il_testimone.md`, copione in `data/horror/il_testimone/ep2/episodio.json` (con `pausa` = secondi di silenzio dopo
+ogni riga: li legge `prepara_voce.py`). **Il testo aspetta l'ok dell'utente: la voce di Luc si genera solo dopo.** Intanto le scene sono
+costruite sui tempi provvisori (`prepara_voce.py <cartella voce> ep2 --finta`); quando arriva la voce vera si rifanno `parole.json`, la
+durata, `bocca.json` e si ricontrollano le inquadrature.
+
+- **Il set** (`cast/sets/balcone.js`, acceso con `fuoriSet({ balcone: true })`; senza opzioni `fuoriSet()` resta quello dell'episodio 1,
+  controllato pixel per pixel su 8 fotogrammi col codice di prima). Su ogni piano due balconi affiancati divisi da un pannello di vetro
+  retinato; al quarto piano il tuo (portafinestra vera a due ante, quella di destra si apre verso l'interno: `porta` 0..1; tenda in due
+  teli: `tendaScosta`; soggiorno dietro; le piante) e quello dell'appartamento vuoto (tapparella giù, cartello AFFITTASI, pianta secca,
+  foglie). Tutta la facciata ha vani veri con le tapparelle a stecche. Misure in `BAL` (corrimano: asse a 1,00 m, raggio 2,1 cm, a
+  z = 1,03; il divisorio a x = 6,0; soletta fino a z = 1,13: fuori dalla ringhiera restano 8-10 cm di bordo).
+- **Luci di casa** (`casa: { corridoio, soggiorno }`): il lampadario del soggiorno (`LS`, con le ombre: la sagoma di chi passa cade sul
+  velo della tenda), la luce che esce dalla portafinestra e corre lungo il balcone (`LD`, `luceBalcone`: fa l'ombra di chi sta sul
+  balcone sul vetro del divisorio), una lama bassa radente (`LB`, `luceBassa`: passa sotto il divisorio e allunga a terra l'ombra delle
+  scarpe). Le pareti del soggiorno fermano la luce (`shadowSide` doppio), se no esce dai muri.
+- **Vetro e tenda che lasciano passare le sagome.** La faccia del divisorio verso il balcone vuoto e il velo della tenda hanno le
+  normali girate verso la luce di casa (materiale a una faccia sola: three.js non le rigira): prendono luce e ombre che arrivano
+  dall'altra parte, come un vetro smerigliato. Niente trucchi disegnati: è l'ombra vera del personaggio.
+- **Pioggia**: gocce nello spazio davanti al palazzo (`pioggia3`), sgocciolio dal bordo delle solette, perle d'acqua sul corrimano del tuo
+  piano. Sopra resta, leggera, la pioggia disegnata dell'episodio 1 (`pioggia`).
+- **Mani sul corrimano** (`cast/sets/prese.js` + `braccia()` in `adulti.js`): un braccio può dire `sbarra: { a, b, r }` (a = estremo dal
+  lato del pollice, b = dal lato del mignolo) invece di polso e direzioni. Le dita si chiudono sulla sbarra finché la toccano (`stretta`,
+  calcolata una volta per raggio); il **rollio attorno alla sbarra lo sceglie il codice**, quello che lascia il polso in linea con
+  l'avambraccio (prima, scelto a occhio, il polso veniva spezzato). In `ep2/film.js`: `CR(x, lato)` = un punto del corrimano davanti;
+  `lato` = +1 se il pollice sta dalla parte delle x che crescono (chi guarda fuori: destra +1, sinistra −1; chi sta fuori dalla
+  ringhiera e guarda il palazzo: il contrario).
+- **Errore da non rifare**: con `yaw = π` la destra del personaggio (`AL`) è dalla parte delle x che CRESCONO. Messe al contrario, le
+  braccia si incrociano davanti al corpo e le spalle si gonfiano (è lo stesso errore del bagagliaio dell'episodio 1).
+- **Il cappotto dell'ispettore** si deforma male col braccio teso in avanti o di lato all'altezza della spalla (spalla a palla, torace
+  gonfio). La mano tesa è quindi col gomito piegato e il braccio basso (`rivaSporge`, variante scelta tra quattro in `prova_balcone/`);
+  il corpo si vede poco: in soggettiva sporgono testa e braccio da dietro il divisorio.
+- **Camera sul viso** (`mira: { chi: 'tu' | 'riva', da: [x, y, z] }` in `esterno_set.js`): punta alla testa dovunque sia e, con `da`, sta
+  a quella distanza dal viso. Evitare il profilo pieno: `da` va messo dalla parte verso cui guarda.
+- **Pianerottolo**: `pianerottoloSet({ vano11: true })` ha il vano vero della porta dell'interno 11, che si socchiude con la catenella
+  (`porta11`); nell'episodio 1 quella porta è DI FRONTE alla tua: per questo nel testo «porta di fronte», non «accanto».
+- **Inquadrature** (`ep2/film.js`, 34): scelta votata → corridoio e viso → spioncino (va alla porta di fronte, suona, la vicina
+  socchiude, lui aspetta e si volta verso di te; la luce delle scale si spegne e quando torna è più vicino) → telefono (il 112 tra le
+  chiamate) → esci (l'anta resta socchiusa e dondola) → il vuoto dalla ringhiera con le tue mani, il baule dell'auto grigia → ti
+  sporgi oltre il divisorio, il balcone vuoto → le mani sul corrimano, la mano che scivola, tu fuori dalla ringhiera visto dall'alto →
+  il piede oltre il divisorio, il passo di lato (`passoFuori`), dentro → rannicchiato dietro le sbarre → i due balconi da lontano e la
+  luce che si accende → lui dietro il velo della tenda → il tuo viso → lui alla finestra della cucina → la sua ombra sul velo, l'anta
+  che si apre e metà del suo viso → le scarpe sotto il divisorio con la loro ombra sul vetro → la mano sulla bocca → dita sul corrimano
+  e la faccia che spunta → primo piano → i due da sotto → la mano tesa → il telefono al petto → le dita che chiamano → carte.
+- **Laboratorio**: `prova_balcone/` (da 0 a 14 s il set da quattordici punti, con e senza luce; da 20 s le pose a tre viste).
+  Fogli di provini: `provini.py ep2 t1,t2,… out/ep2/foglio.jpg 9`; i tempi delle scene con `tempi.cjs` (legge `window.TEMPI`).
+- **Suoni nuovi** (CC0, in `scripts/bivio/sfx`, licenze in `licenze_suoni.json`): campanello, chiavi, serratura, chiavi nella porta,
+  catenella, passi sulle piastrelle, ringhiera, finestra, vento. Scelti dal titolo e dalla forma d'onda (`analizza_suono.py` nella
+  cartella di lavoro): i volumi si ricontrollano col mix vero. `ep2/mix.py` li aggancia alle stesse parole del film; la musica
+  (`ep2/musica.json`) per ora è quella dell'episodio 1.
+- **Cosa manca**: ok dell'utente al testo → voce di Luc (controllare il preventivo, dirgli la spesa) → `voce_esterna.py`,
+  `prepara_voce.py`, `bocca.py` → ricontrollo delle scene sui tempi veri → render → mix → un solo video, titolo e didascalia.
+
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 
 - La musica la sceglie l'utente. Se non ne manda una sua, gli si propongono tre brani veri e gratuiti (CC0), montati sotto lo stesso pezzo
