@@ -7,7 +7,7 @@
  "stato": "BOZZA del 26/11: il testo aspetta l'ok dell'utente; la voce di Luc si genera solo dopo. «pausa» = secondi di silenzio dopo la riga (per le azioni): li legge prepara_voce.py.",
  "bivio": {
   "A": "Gli passi il telefono",
-  "B": "Dici che è caduto"
+  "B": "Dici che ti è già caduto"
  },
  "righe": [
   {
@@ -42,7 +42,7 @@
   },
   {
    "id": 7,
-   "voce": "Prendi il telefono ed esci sul balcone. La portafinestra resta socchiusa.",
+   "voce": "Ti infili il telefono in tasca ed esci sul balcone. La portafinestra resta socchiusa.",
    "pausa": 0.6
   },
   {
@@ -122,7 +122,7 @@
   },
   {
    "id": 23,
-   "voce": "«Prima però mi passi il telefono. Le servono tutte e due le mani.»",
+   "voce": "«Prima però mi passi il telefono. Non vorrà che le cada di sotto.»",
    "pausa": 0.8
   },
   {
@@ -137,7 +137,7 @@
   },
   {
    "id": 26,
-   "voce": "Oppure la B: gli dici che ti è caduto di sotto.",
+   "voce": "Oppure la B: gli dici che ti è già caduto di sotto.",
    "pausa": 0.25
   },
   {
@@ -145,5 +145,5 @@
    "voce": "Scrivilo nei commenti, e seguimi per vedere come continua."
   }
  ],
- "nota_testo": "26/11, costruendo le scene: la porta dell'interno 11, nell'episodio 1, è DI FRONTE alla tua (si vede dallo spioncino dietro l'ispettore), non accanto. Quindi «E suona alla porta di fronte» (era «accanto») e via «Lo senti attraverso il muro.»: lo guardi dallo spioncino. Da dire all'utente insieme al resto del testo."
+ "nota_testo": "26/11, costruendo le scene: la porta dell'interno 11, nell'episodio 1, è DI FRONTE alla tua (si vede dallo spioncino dietro l'ispettore), non accanto. Quindi «E suona alla porta di fronte» (era «accanto») e via «Lo senti attraverso il muro.»: lo guardi dallo spioncino. Da dire all'utente insieme al resto del testo. Sempre il 26/11, rileggendo: se il telefono resta in mano davanti a lui, la B («gli dici che ti è caduto») non regge. Quindi «Ti infili il telefono in tasca ed esci sul balcone» (era «Prendi il telefono…»: ce l'aveva già in mano dall'episodio 1), lui dice «Non vorrà che le cada di sotto» (era «Le servono tutte e due le mani») e la B diventa «gli dici che ti è già caduto di sotto»: la bugia riprende le sue parole e il telefono resta nascosto in tasca."
 }

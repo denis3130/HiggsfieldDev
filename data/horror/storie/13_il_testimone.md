@@ -66,7 +66,7 @@ alla logica, pochi dettagli e tutti usati (le chiavi lasciate alla vicina per le
 capisce dove sei; l'auto grigia con lei ancora nel bagagliaio).
 Perché regge: se non apri, un poliziotto chiede le chiavi alla vicina (lo vedi dallo spioncino: la porta dell'interno 11, nell'episodio 1, è di fronte alla tua, non accanto; per questo il 26/11 «porta accanto» è diventata «porta di fronte» ed è stata tolta «Lo senti attraverso il muro»); lei va a prenderle, e in quel tempo tu scappi; richiamare il 112 non serve, ti hanno mandato lui; giù
 non si scende (quarto piano), dalla vicina c'è lui, resta il balcone dell'appartamento vuoto dell'altra scala; lui entra, trova la portafinestra
-socchiusa e guarda oltre il divisorio. Il telefono lo chiede con un pretesto credibile («le servono tutte e due le mani»).
+socchiusa e guarda oltre il divisorio. Il telefono è in tasca da quando esci (lui non lo vede): lo chiede con un pretesto credibile («non vorrà che le cada di sotto»), e la bugia della B riprende le sue parole («mi è già caduto»). Se lo tenessi in mano davanti a lui la B non reggerebbe.
 Le regole (lontano dalle finestre, non si apre a nessuno, niente telefono) e le chiavi nella tasca del cappotto arrivano nell'episodio 3.
 
 Avete scelto la B.
@@ -75,7 +75,7 @@ Lui smette di bussare. E suona alla porta di fronte.
 «Polizia, signora. Il suo vicino non risponde. Lei ha per caso le chiavi?»
 Le ha. Gliele hai lasciate tu, per le piante.
 Richiamare il centododici? Ti hanno appena mandato lui.
-Prendi il telefono ed esci sul balcone. La portafinestra resta socchiusa.
+Ti infili il telefono in tasca ed esci sul balcone. La portafinestra resta socchiusa.
 Sotto ci sono quattro piani di vuoto. E l'auto grigia. Lei è ancora lì dentro.
 Di fianco c'è il balcone di un appartamento vuoto da mesi. Lì non verrà a cercarti.
 Scavalchi la ringhiera. È bagnata. Non guardi giù.
@@ -91,10 +91,10 @@ La sua faccia spunta da dietro il divisorio. Lentamente.
 «Eccola», dice, gentile. «Mi ha fatto spaventare. Pensavo si fosse buttato.»
 «Con questa pioggia si scivola. Basta un attimo.»
 Ti tende la mano, sopra il vuoto. «Venga. L'aiuto io.»
-«Prima però mi passi il telefono. Le servono tutte e due le mani.»
-Cosa fai? La A: gli passi il telefono, con dentro il video. Oppure la B: gli dici che ti è caduto di sotto. Scrivilo nei commenti, e seguimi per vedere come continua.
+«Prima però mi passi il telefono. Non vorrà che le cada di sotto.»
+Cosa fai? La A: gli passi il telefono, con dentro il video. Oppure la B: gli dici che ti è già caduto di sotto. Scrivilo nei commenti, e seguimi per vedere come continua.
 
-**Bivio:** A: Gli passi il telefono / B: Dici che è caduto
+**Bivio:** A: Gli passi il telefono / B: Dici che ti è già caduto
 (nella mappa era «gli consegni il telefono / dici di averlo perso»: in questo ramo «perso» = caduto dal balcone; il freezer arriva nell'apertura B dell'episodio 3)
-**Parole:** 250
+**Parole:** 254
 
