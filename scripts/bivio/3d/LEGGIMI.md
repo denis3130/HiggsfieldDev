@@ -420,6 +420,24 @@ durata, `bocca.json` e si ricontrollano le inquadrature.
   catenella, passi sulle piastrelle, ringhiera, finestra, vento. Scelti dal titolo e dalla forma d'onda (`analizza_suono.py` nella
   cartella di lavoro): i volumi si ricontrollano col mix vero. `ep2/mix.py` li aggancia alle stesse parole del film; la musica
   (`ep2/musica.json`) per ora è quella dell'episodio 1.
+- **Il telefono** (corretto il 26/11 rileggendo il testo): quando esci lo infili in tasca (`IN_TASCA`, il telefono sparisce a metà gesto);
+  da rannicchiato una mano resta sulla tasca (`SU_TASCA`: agganciata al ginocchio con `proprio: 'ginocchioS'` e tirata indietro lungo la
+  coscia; con un punto fisso nel busto la mano finiva dentro la gamba) e l'altra sul ginocchio. Lui il telefono non lo vede: così la
+  scelta B («gli dici che ti è già caduto di sotto») regge. Il primo piano «tasca» mostra la tua mano che la stringe.
+- **Sedersi coi piedi a terra** (`gambaA` in `ep2/film.js`): mentre il bacino scende lungo il muro, anca e ginocchio si ricavano da dove
+  sta il piede (due ossa, il ginocchio in avanti); il punto d'arrivo è quello della posa seduta, così non c'è scatto. Sfumando `sit` da 0
+  a 1 i piedi affondavano nel pavimento e a metà strada un ginocchio restava sollevato per aria.
+- **Sagome dietro la portafinestra**: da una camera dritta di fronte, a cinque metri, la testa di chi sta in fondo alla stanza finisce
+  esattamente dietro i due montanti centrali e la figura sembra senza testa (ci ho perso mezz'ora a cercare un errore che non c'era).
+  Queste inquadrature si fanno di sbieco, guardando attraverso un vetro. E la luce del corridoio (`LC`) sta dietro la porta, dentro il
+  corridoio: davanti alla porta accendeva la testa di chi stava sulla soglia fino a farla sparire contro il muro.
+- **Luci spente**: `balcone.js` rende invisibili le luci a intensità zero (le loro ombre si calcolerebbero lo stesso: a luci di casa
+  spente il render va quasi il doppio più veloce).
+- **Errore rifatto, e ritrovato solo guardando i provini**: un commento aggiunto in mezzo a una riga con più istruzioni si è mangiato
+  `LC.intensity = …` e la luce del corridoio è rimasta spenta. In fondo a una riga un commento solo se dopo non c'è altro codice; il
+  controllo: nessuna riga con `//` seguito da un'altra istruzione (lo script di ricerca è nella storia della sessione del 26/11).
+- **Bozza a bassa cadenza**: `render.mjs --film <copia congelata> --fps 10 --video-only --noblur` rende tutto l'episodio in una ventina
+  di minuti; poi con ffmpeg (`fps=…,scale=270:480,tile=12x1`) si tagliano strisce di una scena per guardare i movimenti.
 - **Cosa manca**: ok dell'utente al testo → voce di Luc (controllare il preventivo, dirgli la spesa) → `voce_esterna.py`,
   `prepara_voce.py`, `bocca.py` → ricontrollo delle scene sui tempi veri → render → mix → un solo video, titolo e didascalia.
 

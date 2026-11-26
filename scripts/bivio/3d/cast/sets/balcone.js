@@ -241,7 +241,7 @@ export function balconi({ scene, amb, fuori, FY }) {
   // la parte bassa della portafinestra: una lama di luce radente che passa sotto il divisorio e allunga sul pavimento l'ombra di chi sta sul balcone
   const LB = new THREE.SpotLight('#FFC68A', 0, 7, 0.5, 0.7, 1.0); LB.position.set(PX0 + 0.3, FY + 0.3, 0.12); LB.target.position.set(XD + 0.9, FY, 0.6); scene.add(LB, LB.target);
   LB.castShadow = true; LB.shadow.mapSize.set(2048, 2048); LB.shadow.camera.near = 0.15; LB.shadow.camera.far = 7; LB.shadow.bias = -0.002; LB.shadow.normalBias = 0.02; LB.shadow.radius = 5;
-  const LC = new THREE.PointLight('#FFD9A6', 0, 5, 1.3); LC.position.set(SX0 + 0.75, FY + 1.4, SZ + 0.35); scene.add(LC);
+  const LC = new THREE.PointLight('#FFD9A6', 0, 5, 1.3); LC.position.set(SX0 + 0.75, FY + 1.75, SZ - 0.55);      // dentro il corridoio, dietro la porta: chi sta sulla soglia resta in controluce (davanti alla porta gli accendeva la testa) scene.add(LC);
 
   // ------------------------------------------------------------------ le tue piante; dall'altra parte la pianta secca, il cartello, le foglie
   const P4 = new THREE.Group(); P4.position.y = FY; scene.add(P4);
@@ -297,7 +297,9 @@ export function balconi({ scene, amb, fuori, FY }) {
     update(t, o = {}) {
       const ap = M.clamp(o.porta ?? 0), casa = o.casa || {}, ks = M.clamp(casa.soggiorno ?? 0), kc = M.clamp(casa.corridoio ?? 0), vento = o.vento ?? 1;
       antaD.rotation.y = -1.75 * ap; muoviTenda(t, Math.min(1, ap * 6) * (1 - M.clamp(o.tendaScosta ?? 0)), vento, M.clamp(o.tendaScosta ?? 0));
-      LS.intensity = 11 * ks; LG.intensity = 0.8 * ks + 0.1 * kc; LD.intensity = (o.luceBalcone ?? 5) * ks; LB.intensity = (o.luceBassa ?? 0) * ks; LC.intensity = 2.2 * kc * (1 - 0.6 * ks);
+      LS.intensity = 11 * ks; LG.intensity = 0.8 * ks + 0.35 * kc * (1 - ks); LD.intensity = (o.luceBalcone ?? 5) * ks; LB.intensity = (o.luceBassa ?? 0) * ks; LC.intensity = 7 * kc * (1 - 0.7 * ks);
+      // una luce spenta non deve costare (le sue ombre si calcolerebbero lo stesso)
+      for (const l of [LS, LD, LB, LG, LC]) l.visible = l.intensity > 0.001;
       globo.material.color.copy(gSp).lerp(gAc, ks); alS.material.opacity = 0.7 * ks; portaC.material.color.copy(cBuio).lerp(cLuce, kc);
       piove(t, o.pioggia3 ?? 1, ks, vento);
     } };

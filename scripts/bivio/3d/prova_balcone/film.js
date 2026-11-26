@@ -20,7 +20,10 @@ const SHOTS = [
   { ...B, cam: [5.5, FY + 1.6, 4.5], look: [4.6, FY + 1.1, 0], fov: 34, casa: { soggiorno: 1 }, porta: 0.6, tendaScosta: 1 },                   // 10 anta aperta
   { ...B, cam: [8.4, FY + 1.6, 0.5], look: [7.2, FY + 0.7, 0.4], fov: 55 },                                    // 11 il balcone vuoto da dentro
   { ...B, cam: [5.2, FY - 4.5, 7.5], look: [6.0, FY + 0.8, 0.5], fov: 40, casa: { soggiorno: 1 }, porta: 0.05 },     // 12 da sotto
-  { ...B, cam: [3.4, 1.7, 17], look: [4.5, 9.5, 0], fov: 52 },                                                 // 13 la facciata dal parcheggio
+  { ...B, cam: [3.4, 1.7, 17], look: [4.5, 9.5, 0], fov: 52 },
+  { ...B, cam: [4.9, FY + 1.4, 2.2], look: [4.4, FY + 1.25, -0.3], fov: 30, casa: { corridoio: 1 }, porta: 0.07, riva: { pos: [4.05, FY, -3.3] }, ambiente: 0.5, fronte: 0.4 },      // 14 lui sulla soglia, dietro il velo
+  { ...B, cam: [4.9, FY + 1.4, 2.2], look: [4.4, FY + 1.25, -0.3], fov: 30, casa: { corridoio: 1 }, porta: 0.07, riva: { pos: [4.05, FY, -2.2] }, ambiente: 0.5, fronte: 0.4 },      // 15 più vicino
+  { ...B, cam: [4.9, FY + 1.4, 2.2], look: [4.4, FY + 1.25, -0.3], fov: 30, casa: { corridoio: 0 }, porta: 0.07, riva: { pos: [4.05, FY, -3.3] }, ambiente: 0.5, fronte: 0.4 },      // 16 sulla soglia, corridoio spento                                                 // 13 la facciata dal parcheggio
 ];
 const { XA, XD, XB, ZR, HR, RT } = BAL, YR = FY + HR;
 // tu alla ringhiera, le due mani sul corrimano
