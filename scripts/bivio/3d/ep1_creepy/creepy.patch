@@ -1,0 +1,52 @@
+--- ep1/film.js
++++ ep1_creepy/film.js
+@@ -258,13 +258,21 @@
+   sc(r(27) - 0.12, (t, k) => ({ set: 'I', id: 'video', ui: 'video', sfoca: 1, cam: [0.5, 1.5, 0.4], look: [0, 1.0, -2.4], fov: 40, piedi: 1, tu: { pos: [0, 0, -1.54], yaw: Math.PI } }));
+   // «So che è lì dentro»… «Sono qui per proteggerla.»
+   const sorr = w(29, 'sorride');
+-  sc(r(28) - 0.12, (t, k, s) => { const vic = io(prog(t, s.t0, s.t0 + 0.8)), sm = io(prog(t, sorr - 0.1, sorr + 0.5)), fine = io(prog(t, rf(29) + 0.1, rf(29) + 0.8));
+-    return { set: 'P', id: 'pov2', spioncino: 1, cam: [0.008 * M.noise1(t * 0.6, 3), 1.56 + 0.005 * M.noise1(t * 0.5, 4), 0.03], look: [0.0, lerp(1.62, 1.735, vic), 0.7], fov: lerp(70, 58, vic) - 5 * fine,
+-      isp: { pos: [0.02, 0, lerp(0.8, 0.6, vic)], yaw: Math.PI, breathe: Math.sin(t * 1.9), blink: battito(t, 21), ...parla('isp', t), lean: 0.1 * vic, headPitch: 0.08, headRoll: 0.07 * sm, open: 0.66 + 0.1 * sm, smile: 0.12 + 0.75 * sm, gazeY: -0.15,
++  // PROVA «PIÙ CREEPY» (26/11): pianerottolo quasi al buio con la plafoniera alle sue spalle che trema; lui vicino allo spioncino, testa bassa e occhi
++  // in su, non batte mai le palpebre; il sorriso cresce piano e gli occhi restano sbarrati; alla fine la luce delle scale si spegne mezzo secondo
++  // e, quando torna, lui è contro lo spioncino.
++  sc(r(28) - 0.12, (t, k, s) => { const vic = io(prog(t, s.t0, rf(28))), sm = io(prog(t, sorr - 0.1, sorr + 1.7)), spento = rf(29) + 0.12, torna = spento + 0.5;
++    const nero = t >= spento && t < torna, dopo = t >= torna ? 1 : 0, dt = t - torna;
++    const trema = 1 - 0.6 * bump(t % 2.3, 1.7, 0.05) - 0.45 * bump(t % 3.1, 0.9, 0.04) - 0.3 * Math.max(0, M.noise1(t * 9, 5)) ** 3;
++    const luce = nero ? 0 : dopo ? (dt < 0.07 ? 0.55 : dt < 0.13 ? 0.04 : 1) : trema;
++    const z = dopo ? 0.47 : lerp(0.66, 0.56, vic) - 0.03 * sm, giu = 0.05 * vic + 0.05 * sm + 0.09 * dopo;
++    return { set: 'P', id: 'pov2', spioncino: 1, creepy: 1, buio: nero ? 1 : 0.85, luce, cam: [0.006 * M.noise1(t * 0.4, 3), 1.56 + 0.004 * M.noise1(t * 0.35, 4), 0.03], look: [0, 1.7, 0.7], miraViso: dopo ? -0.006 : lerp(-0.02, -0.032, sm), miraX: dopo ? 0.03 : 0, fov: dopo ? 34 - 3 * io(prog(dt, 0.1, 1.6)) : lerp(62, 52, vic) + 3 * sm,
++      isp: { pos: [0.02, -giu, z], yaw: Math.PI, breathe: Math.sin(t * 1.2), ...parla('isp', t), blink: 0, lean: 0.14 + 0.06 * vic + 0.04 * dopo, headPitch: 0.22, headRoll: 0.16 * sm + 0.06 * dopo,
++        open: 1.0 + 0.12 * sm + 0.18 * dopo, smile: 0.06 + 0.82 * sm, grin: 0.25 * sm, angry: 0.16, gazeY: 0.32, gazeX: dopo ? 0.55 * Math.sin((dt - 0.15) * 4.2) * prog(dt, 0.15, 0.3) * (1 - io(prog(dt, 0.75, 1.15))) : 0,
+         armR: prog(t, w(28, 'visto') - 0.3, w(28, 'luce', 1)) * (1 - prog(t, sorr - 0.4, sorr)) > 0.02 ? { a: [0.1, 0.34, 0.42], gomito: [1, -0.8, 0], dita: [0, 1, 0.3], dorso: [0, 0, -1], mano: 'indice' } : undefined } }; });
+ 
+   // --- cosa fai?
+-  sc(r(30) - 0.2, (t, k) => ({ set: 'I', id: 'carte', carte: 1, sfoca: 1, cam: [0.5, 1.5, 0.4], look: [0, 1.0, -2.4], fov: 40, piedi: 1, telefono: 1, tu: { pos: [0, 0, -1.54], yaw: Math.PI, breathe: Math.sin(t * 4), armR: { a: [0.13, 0.2, 0.26], gomito: [1, -0.7, -0.2], dita: [0, 0.92, 0.25], dorso: [0, 0, 1], mano: 'presa' } } }));
++  sc(r(30) + 0.95, (t, k) => ({ set: 'I', id: 'carte', carte: 1, sfoca: 1, cam: [0.5, 1.5, 0.4], look: [0, 1.0, -2.4], fov: 40, piedi: 1, telefono: 1, tu: { pos: [0, 0, -1.54], yaw: Math.PI, breathe: Math.sin(t * 4), armR: { a: [0.13, 0.2, 0.26], gomito: [1, -0.7, -0.2], dita: [0, 0.92, 0.25], dorso: [0, 0, 1], mano: 'presa' } } }));
+   S.sort((a, b) => a.t0 - b.t0); S.forEach((s, i) => { s.t1 = i + 1 < S.length ? S[i + 1].t0 : END; });
+   return S;
+ }
+@@ -331,6 +339,15 @@
+   const v = ctx.createRadialGradient(cx - r0 * 0.35, cy - r0 * 0.4, 0, cx - r0 * 0.35, cy - r0 * 0.4, r0 * 0.9);
+   v.addColorStop(0, 'rgba(255,240,200,0.07)'); v.addColorStop(1, 'rgba(255,240,200,0)'); ctx.fillStyle = v; ctx.beginPath(); ctx.arc(cx, cy, r1, 0, Math.PI * 2); ctx.fill();
+ }
++// prova «più creepy»: bordi più neri, un velo freddo verdastro, grana
++function creepy(ctx, t) {
++  const cx = W / 2, cy = H * 0.47, r1 = W * 0.57, g = ctx.createRadialGradient(cx, cy, r1 * 0.3, cx, cy, r1);
++  g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.7, 'rgba(0,0,0,0.45)'); g.addColorStop(1, 'rgba(0,0,0,0.95)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
++  ctx.save(); ctx.globalCompositeOperation = 'multiply'; ctx.fillStyle = 'rgb(200,216,196)'; ctx.fillRect(0, 0, W, H); ctx.restore();
++  const f = Math.round(t * 30); ctx.save();
++  for (let i = 0; i < 2400; i++) { ctx.fillStyle = M.hash01(i, f * 3 + 3) > 0.5 ? 'rgba(255,255,255,0.045)' : 'rgba(0,0,0,0.09)'; ctx.fillRect(M.hash01(i, f * 3 + 1) * W, H * 0.16 + M.hash01(i, f * 3 + 2) * H * 0.62, 2.5, 2.5); }
++  ctx.restore();
++}
+ // lo schermo del telefono con il video ancora lì (galleria)
+ function schermoVideo(ctx, t, s) {
+   const k = E.outCubic(prog(t, s.t0, s.t0 + 0.45)), pw = 600, ph = 1180, x = (W - pw) / 2 + 5 * M.noise1(t * 3, 11), y = 470 + (1 - k) * 260 + 4 * M.noise1(t * 3.4, 12);
+@@ -425,6 +442,7 @@
+     if (o.pov) finestra(ctx);
+     if (o.rec) rec(ctx, t, o.rec);
+     if (o.spioncino) spioncino(ctx);
++    if (o.creepy) creepy(ctx, t);
+     if (o.ui === 'video') schermoVideo(ctx, t, SEQ.find((s) => t >= s.t0 && t < s.t1));
+     if (o.carte) carte(ctx, t);
+     subtitles(ctx, t);

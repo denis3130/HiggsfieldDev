@@ -127,7 +127,7 @@ export function pianerottoloSet() {
   add(asc, new THREE.PlaneGeometry(0.2, 0.1), mat(0xffffff, { map: tex(128, 64, (c, w, h) => { c.fillStyle = '#16181A'; c.fillRect(0, 0, w, h); c.fillStyle = '#FF8A2A'; c.font = '700 46px Display'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText('4', w / 2, h / 2 + 3); }) }), V(0, 2.16, 0.035));
   add(asc, sfera(0.016, 10), basic('#FFA23A'), V(0.66, 1.1, 0.02));
   // plafoniera con la luce gialla, un po' tremolante
-  add(amb, new THREE.CylinderGeometry(0.17, 0.17, 0.05, 28), mat('#E9E2C8'), V(0, 2.67, 1.6)); add(scene, new THREE.CircleGeometry(0.15, 28), basic('#FFF1BE'), V(0, 2.642, 1.6)).rotation.x = Math.PI / 2;
+  add(amb, new THREE.CylinderGeometry(0.17, 0.17, 0.05, 28), mat('#E9E2C8'), V(0, 2.67, 1.6)); const disco = add(scene, new THREE.CircleGeometry(0.15, 28), basic('#FFF1BE'), V(0, 2.642, 1.6)); disco.rotation.x = Math.PI / 2;
   const al = new THREE.Sprite(macchia('#FFE08A')); al.position.set(0, 2.55, 1.6); al.scale.set(1.6, 1.2, 1); al.material.opacity = 0.5; scene.add(al);
   ombre(amb, { fa: true, riceve: true });
   const L = luci(scene, { amb: 0.5, fronte: 0.3, alto: 0.26, colore: 0xfff0c2, altoPos: [0.1, 2.6, 1.5], altoVerso: [0, 0, 1.1], area: 2.4 });
@@ -136,7 +136,13 @@ export function pianerottoloSet() {
     update(t, u, o = {}) {
       G.lookFrom(cam, o.cam || [0, 1.52, 0.03], o.look || [0, 1.5, 1], o.roll || 0); cam.fov = o.fov || 75; cam.updateProjectionMatrix(); L.segui(cam, o.look || [0, 1.5, 1]);
       const fk = 0.94 + 0.06 * Math.sin(t * 23) * Math.sin(t * 7.1) - 0.25 * M.bump(t % 5.3, 4.1, 0.06);
-      L.T.intensity = 0.26 * PI * fk; L.A.intensity = 0.5 * PI * (0.9 + 0.1 * fk); al.material.opacity = 0.5 * fk;
+      // buio (0..1): il pianerottolo quasi al buio, con la sola plafoniera alle spalle di chi sta alla porta (controluce); luce (0..1): la plafoniera
+      // che la scena fa tremare o spegnere (la luce delle scale a tempo). Senza questi due comandi è tutto come prima.
+      const bu = M.clamp(o.buio ?? 0), lv = M.clamp(o.luce ?? 1, 0, 1.5);
+      L.T.intensity = 0.26 * PI * fk * lv * (1 + 2.2 * bu); L.A.intensity = 0.5 * PI * (0.9 + 0.1 * fk) * (1 - bu * (0.8 + 0.19 * (1 - Math.min(1, lv)))) * (bu ? 0.6 + 0.4 * Math.min(1, lv) : 1); L.F.intensity = 0.3 * PI * (1 - 0.93 * bu) * (bu ? Math.min(1, lv) : 1);
+      al.material.opacity = 0.5 * fk * Math.min(1, lv); disco.material.color.set('#FFF1BE').multiplyScalar(bu ? 0.12 + 0.88 * Math.min(1, lv) : 1);
       I.pose(o.isp || { pos: [0.03, 0, 0.82], yaw: Math.PI });
+      // miraViso (metri sopra il centro della testa): la camera dello spioncino punta al suo viso dovunque sia, così resta nel cerchio anche da vicinissimo
+      if (o.miraViso !== undefined) { I.group.updateMatrixWorld(true); const p = I.head.localToWorld(V(o.miraX || 0, o.miraViso, 0.08)); G.lookFrom(cam, o.cam || [0, 1.52, 0.03], [p.x, p.y, p.z], o.roll || 0); cam.updateProjectionMatrix(); L.segui(cam, [p.x, p.y, p.z]); }
     } };
 }

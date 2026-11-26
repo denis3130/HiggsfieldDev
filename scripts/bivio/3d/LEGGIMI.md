@@ -299,6 +299,26 @@ poi si agisce. Cosa non andava e com'è stato rifatto:
 - **Foto di riferimento**: per bagagliaio, mano sulla bocca e telefonata Openverse non ha dato quasi niente (e limita le richieste):
   queste pose sono state controllate su viste da più lati, non accanto a una foto.
 
+## Prova «più creepy» (26/11): «ed i video li renderei più creepy non so se sai che intendo»
+
+Gli ho detto cosa ho capito (vedi `data/horror/FORMATO_STORIA.md`, «Più creepy») e gli ho mandato una prova di 13 secondi sulla scena dello
+spioncino («So che è lì dentro… Sono qui per proteggerla»), per farmi dire se la direzione è giusta prima di rifare altro. Il video
+consegnato non cambia: la prova è una copia a parte.
+- **Come si rifà**: `ep1_creepy/` è una cartella con i collegamenti a `ep1` (come `ep1_dbg`), il suo `film.json` e una copia di `film.js`
+  ritoccata: `cp ep1/film.js ep1_creepy/ && patch -p0 < ep1_creepy/creepy.patch` (dalla cartella `3d`). Render: `--range 105.5:118.6`.
+- **Cosa cambia nella scena** (`pov2`): pianerottolo quasi al buio con la plafoniera alle sue spalle, quindi lui è in controluce; non batte
+  mai le palpebre; occhi sbarrati anche quando sorride (`open` alto: di suo il sorriso li stringe e viene una faccia simpatica); testa bassa
+  e occhi in su; il sorriso cresce in quasi due secondi e la testa si inclina; si avvicina piano e si china verso lo spioncino. La
+  plafoniera trema; finita la battuta la luce delle scale si spegne mezzo secondo (è a tempo: niente di soprannaturale; si sente lo scatto
+  dell'interruttore, lo stesso suono vero usato in cucina) e quando torna nello spioncino c'è il suo occhio, coi tre graffi di fianco, che
+  cerca a destra e a sinistra e poi si ferma. Le carte arrivano un secondo dopo, così «Cosa fai?» cade sull'occhio.
+- **Nel set** (`pianerottoloSet` in `cast/sets/testimone_set.js`, tutto facoltativo: senza questi comandi rende come prima, controllato
+  pixel per pixel): `buio` (0..1), `luce` (0..1, la plafoniera che la scena fa tremare o spegnere), `miraViso` e `miraX` (la camera punta
+  al suo viso dovunque sia: da vicinissimo un punto fisso lo faceva uscire dal cerchio dello spioncino).
+- **Sopra l'immagine** (`creepy()` nella copia): bordi dello spioncino più neri, un velo freddo verdastro, grana.
+- In attesa del suo giudizio. Se è la direzione giusta: stessa mano per le altre scene col cattivo (alza la testa, conta i piani, il dito
+  sulle labbra, il distintivo) e per i prossimi episodi.
+
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 
 - La musica la sceglie l'utente. Se non ne manda una sua, gli si propongono tre brani veri e gratuiti (CC0), montati sotto lo stesso pezzo
