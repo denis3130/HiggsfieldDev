@@ -319,6 +319,29 @@ consegnato non cambia: la prova è una copia a parte.
 - In attesa del suo giudizio. Se è la direzione giusta: stessa mano per le altre scene col cattivo (alza la testa, conta i piani, il dito
   sulle labbra, il distintivo) e per i prossimi episodi.
 
+## Tagliare una frase dalla voce (26/11): «taglia senza spendere»
+
+L'utente ha fatto togliere «Sotto l'unico lampione,» dall'episodio 1 (frase che non regge e dettaglio trascurabile: vedi
+`data/horror/FORMATO_STORIA.md`). Si fa col montaggio, senza rigenerare la voce e senza rifare tutto il render:
+1. `python3 taglia_frase.py <film> <riga> <prima parola> <ultima parola>` (con `--prova` stampa soltanto). Toglie le parole da `audio/vo.wav`
+   tagliando nel silenzio vero, prima della prima parola e prima di quella che segue; il pezzo tolto dura un numero intero di fotogrammi e
+   comincia su un fotogramma del video; la pausa prima della parola che segue resta quella di prima. Aggiorna `assets/parole.json` (parole
+   tolte, tempi spostati, maiuscola alla parola che ora apre la frase), `assets/bocca.json` e la durata in `film.json`; tiene le copie
+   `*.prima_del_taglio`. Per l'episodio 1: da 23,4667 a 25,3 s della voce, 55 fotogrammi (da 315 a 369 del video), tutti e due i punti a -80 dB.
+2. I confini delle scene sono agganciati alle parole, quindi dopo il taglio il film è lo stesso spostato di 55 fotogrammi. Si rifanno solo le
+   scene toccate, da un confine di scena all'altro (qui «finestra» e «alto»: `--range 8.7:14.466667`, 173 fotogrammi, tre minuti), e si
+   attaccano ai fotogrammi già resi: `trim=end_frame=261` del video di prima, il pezzo nuovo, `trim=start_frame=489` del video di prima,
+   `concat`, `libx264 -crf 14`. Le giunte cadono su stacchi di scena, quindi non si vedono.
+3. In `ep1/musica.json` si spostano dello stesso tempo i momenti agganciati al film (gli archi: 55, 94 e 112 s); il livellamento dell'audio
+   dell'utente segue il suo file e non si tocca. Poi `mix.py`.
+4. Controlli fatti: i fotogrammi dopo il taglio sono quelli di prima spostati (PSNR 48-55 dB, cioè solo la ricodifica; il fotogramma con lo
+   stesso numero invece è diverso, 18 dB); Whisper sulla voce nuova sente «Scosti la tenda. Un uomo con un cappotto scuro…» senza resti;
+   lo scarto tra voce e video è lo stesso (+2,9 ms) dall'inizio alla fine.
+- Nel copione (`data/horror/il_testimone/ep1/episodio.json`) la riga 5 tiene in «voce» il testo registrato, che serve a `voce_esterna.py`
+  per i tempi, con accanto «tolto» e «nel_video». Se si rifà la voce da capo: `voce_esterna.py`, `prepara_voce.py`, poi `taglia_frase.py`.
+- Limite: funziona se prima e dopo le parole da togliere c'è un silenzio (qui 800 e 186 ms). Dentro una frase detta tutta d'un fiato lo
+  script si ferma e lo dice, invece di tagliare dentro una parola.
+
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 
 - La musica la sceglie l'utente. Se non ne manda una sua, gli si propongono tre brani veri e gratuiti (CC0), montati sotto lo stesso pezzo

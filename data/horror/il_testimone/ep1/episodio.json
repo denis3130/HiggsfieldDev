@@ -27,7 +27,9 @@
   },
   {
    "id": 5,
-   "voce": "Sotto l'unico lampione, un uomo con un cappotto scuro tiene una donna per il braccio."
+   "voce": "Sotto l'unico lampione, un uomo con un cappotto scuro tiene una donna per il braccio.",
+   "tolto": "Sotto l'unico lampione,",
+   "nel_video": "Un uomo con un cappotto scuro tiene una donna per il braccio."
   },
   {
    "id": 6,
@@ -141,5 +143,6 @@
    "id": 33,
    "voce": "Scrivilo nei commenti, e seguimi per vedere come continua."
   }
- ]
+ ],
+ "nota_taglio_frase": "Il 26/11 l'utente ha fatto togliere «Sotto l'unico lampione,» dalla riga 5 («taglia senza spendere»; l'aveva presa come esempio di frase che non regge, un parcheggio non ha un lampione solo, e di dettaglio trascurabile). La voce registrata la contiene ancora e «voce» resta il testo registrato, perché serve a voce_esterna.py per mettere i tempi; dopo prepara_voce.py si lancia `python3 taglia_frase.py ep1 5 Sotto lampione` (scripts/bivio/3d), che toglie quei 55 fotogrammi da vo.wav e dai tempi. «tolto» = le parole tolte, «nel_video» = la riga come si sente e si legge nel video."
 }

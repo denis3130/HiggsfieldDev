@@ -23,7 +23,7 @@
 
 ## Luoghi
 - **La tua cucina:** piccola, finestra sul parcheggio, ceppo dei coltelli sul piano, frigorifero con le calamite.
-- **Il parcheggio:** visto dall'alto, un solo lampione, auto grigia, asfalto bagnato.
+- **Il parcheggio:** visto dall'alto, un lampione col suo cono di luce (non «l'unico»: un parcheggio ne ha più d'uno, e l'utente la logica la controlla), auto grigia, asfalto bagnato.
 - **L'ingresso di casa:** corridoio stretto e buio, porta blindata con lo spioncino, striscia di luce sotto la porta.
 - **Il pianerottolo:** luce gialla delle scale, muri a due colori, la porta dell'interno 11, l'ascensore.
 
@@ -44,7 +44,7 @@ Ogni scelta cambia l'apertura dell'episodio dopo; poi i rami si ricongiungono. N
 ## Episodio 1 — La finestra accesa (approvato dall'utente il 25/11; video in `scripts/bivio/3d/ep1/`)
 Alle tre di notte, dalla finestra di casa tua, vedi un uomo uccidere una donna. Dieci minuti dopo, quell'uomo bussa alla tua porta. E ha un distintivo in mano.
 Non riesci a dormire. Sei in cucina, al quarto piano, con la luce accesa, quando giù nel parcheggio qualcuno grida. Scosti la tenda.
-Sotto l'unico lampione, un uomo con un cappotto scuro tiene una donna per il braccio. Lei si divincola. Lo graffia in faccia. Poi qualcosa luccica, e lei cade. Non si muove più. L'uomo si guarda intorno. Calmo. Come chi l'ha già fatto.
+Un uomo con un cappotto scuro tiene una donna per il braccio. Lei si divincola. Lo graffia in faccia. Poi qualcosa luccica, e lei cade. Non si muove più. L'uomo si guarda intorno. Calmo. Come chi l'ha già fatto.
 Prendi il telefono e filmi. Dodici secondi, con le mani che tremano. Lui la carica nel bagagliaio di un'auto grigia, e chiude piano. Poi si pulisce la guancia con un fazzoletto.
 E alza la testa. In tutto il palazzo c'è una sola finestra accesa. La tua.
 Ti guarda. Conta i piani con il dito: uno, due, tre, quattro. E si porta l'indice alle labbra.
