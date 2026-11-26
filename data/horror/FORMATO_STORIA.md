@@ -1,5 +1,10 @@
 # IL BIVIO — bibbia della serie (formato obbligatorio per ogni storia)
 
+> **Dal 26/11 vale il nuovo format del video A** (`CLAUDE.md`, punto «Il Bivio, nuovo format», e l'analisi in `data/horror/VIDEO_A.md`).
+> Dove questo file dice altro vale il nuovo format: apertura di 10–13 secondi come nel video A (non più vietata), tante scoperte per
+> episodio invece di una sola, carte e chiusura come nel video A, personaggi e ambienti con l'aspetto del video A. Questo file va riscritto
+> quando il nuovo format è approvato.
+
 Serie horror/thriller interattiva per Short di YouTube, in italiano. Ogni storia = 8 episodi da circa 2 minuti (formato del reel di riferimento, dal 24/11; i primi episodi di prova erano da 50–60 secondi).
 Alla fine di ogni episodio il pubblico sceglie A o B nei commenti; l'episodio dopo segue la scelta più votata.
 Obiettivo: qualità da cinema. Chi scorre deve fermarsi nei primi 2 secondi e voler vedere l'episodio dopo.
