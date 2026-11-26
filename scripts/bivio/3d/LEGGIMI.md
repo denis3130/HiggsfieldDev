@@ -284,7 +284,7 @@ Storia dell'utente in `data/horror/storie/14_il_gioco_dei_sette.md`; formato da 
   pulviscolo e fascio di luna). `sets/sala.js` = la sala da pranzo (otto posti, le mani modellate dei sette con le maniche, segnaposto
   di Clara listato a lutto, rosa secca, sedie, finestra con la luna). `sets/villa.js` = la villa di notte (cipressi, luna, nebbia, la
   finestra accesa con le sagome degli invitati). `film.js` = sottotitoli del video A (Figtree, parola chiave nel riquadro coi pallini),
-  firma «@DOPE696», camera quasi ferma con gli scatti veloci sulle parole (inOutQuint, scia del movimento solo negli scatti: 8 campioni).
+  firma «@STACAPPELLA», camera quasi ferma con gli scatti veloci sulle parole (inOutQuint, scia del movimento solo negli scatti: 8 campioni).
   Senza voce i tempi delle parole si calcolano dal testo al ritmo di Luc. `mix.py` = i suoni veri (CC0, licenze in `audio/sfx/licenze.json`).
 - Render (cartella di lavoro fuori dal repository con `node_modules`, e collegamenti a `gioco7-prova`, `gioco7-scheda` e `cast`):
   `node <skill>/scripts/render.mjs --film gioco7-prova --format 9x16 --video-only --fps 30 --workers 3` (circa 28 minuti per 13 s:

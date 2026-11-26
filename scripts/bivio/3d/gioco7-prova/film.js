@@ -104,7 +104,7 @@ function sottotitoli(ctx, t) {
 }
 function firma(ctx) {
   ctx.save(); ctx.font = font(46, 800, 'Sub'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.globalAlpha = 0.5;
-  ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.shadowBlur = 8; ctx.fillStyle = '#FFFFFF'; ctx.fillText('@DOPE696', W / 2, H * 0.665); ctx.restore();
+  ctx.shadowColor = 'rgba(0,0,0,0.5)'; ctx.shadowBlur = 8; ctx.fillStyle = '#FFFFFF'; ctx.fillText('@STACAPPELLA', W / 2, H * 0.665); ctx.restore();
 }
 
 // ------------------------------------------------------------------ il film
