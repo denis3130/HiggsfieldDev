@@ -9,6 +9,15 @@ Obiettivo: qualità da cinema. Chi scorre deve fermarsi nei primi 2 secondi e vo
 - Anche le battute e le urla del protagonista le dice il narratore, dentro la narrazione; le urla in MAIUSCOLO
   (es. «Gridi con tutte le tue forze: SONO QUI! SONO QUI, AIUTO!»). Le frasi degli altri le riferisce lui tra «».
 - Frasi brevi, italiano parlato, concreto. Niente spiegoni: una rivelazione per episodio.
+- **La voce non descrive l'immagine** (26/11, l'utente sulla frase «Sotto l'unico lampione, un uomo…» dell'episodio 1 de «Il testimone»: la prende
+  «come esempio per farti capire come non vorrei i prossimi script», cioè «dire e scrivere cosa senza senso come in questo caso l'unico lampione non
+  può essercene solo uno ma soprattutto riprendi un dettaglio trascurabile, non devi per forza descrivere ogni minima cosa che vedi ma usare bene
+  quelle che ci sono»). Due regole:
+  1. Ogni frase deve stare in piedi: niente affermazioni che nella realtà non reggono (un parcheggio non ha un lampione solo). Lui la logica la controlla.
+  2. Niente dettagli di contorno detti solo perché si vedono (dove sta il lampione, com'è fatto il posto): quelli li mostra il video. La voce dice
+     quello che conta: cosa succede, cosa capisci, cosa rischi. I dettagli sono pochi e scelti, e ognuno si usa bene. Mia lettura di «usare bene quelle
+     che ci sono»: un dettaglio nominato deve servire, cioè fa paura subito oppure torna più avanti (i tre graffi sulla guancia che rivedi dallo spioncino).
+  Le storie già scritte (comprese le puntate dalla 2 alla 8 de «Il testimone») si ripassano con queste due regole prima di produrre ogni episodio.
 - Ritmo del reel: racconto continuo, circa 3 parole al secondo, con la voce nuova 2 «più chiara» (l'unica scelta dall'utente).
   Ogni episodio pubblicato ha circa 330 parole in tutto, bivio compreso.
 
@@ -22,6 +31,12 @@ Obiettivo: qualità da cinema. Chi scorre deve fermarsi nei primi 2 secondi e vo
 - Scheda visiva: vestiti e oggetti del protagonista, luoghi, colori e motivi ricorrenti descritti una volta e ripetuti identici, così le immagini restano coerenti.
 - Le immagini le genera un modello open-source in locale e poi vengono animate col codice (movimenti di camera, nebbia, pioggia, luci che tremano, grana). Preferisci ambienti, oggetti, dettagli, sagome; evita folle, volti in primo piano e mani complicate.
 - Testo leggibile (messaggi sul telefono, biglietti, cartelli, scritte): non farlo generare al modello. Scrivilo nella colonna «Si vede» come TESTO A SCHERMO: «…»: lo aggiungiamo in montaggio su schermo o foglio vuoto.
+
+- **Più creepy** (26/11, l'utente: «ed i video li renderei più creepy non so se sai che intendo»). Mia lettura, da farmi confermare da lui prima di
+  rifare scene: meno cronaca raccontata in chiaro e più inquietudine. Si vede meno e peggio (buio vero, facce a metà nell'ombra, l'uomo come sagoma
+  sotto la luce); il cattivo è lento e calmo, ti fissa troppo a lungo, sorride appena, fa piccoli gesti strani; inquadrature tenute e silenzi prima
+  dei colpi; primi piani che disturbano (l'occhio nello spioncino, l'ombra dei piedi sotto la porta, una mano); camera che si avvicina piano, un po'
+  storta; un suono basso che sale, respiro, battito. Sempre senza soprannaturale e senza sangue esplicito.
 
 ## 3. Suono
 - Per ogni inquadratura i suoni reali che servono (passi sulle foglie, colpi alla porta, vibrazione, respiro, pioggia…): useremo registrazioni vere da librerie libere.
