@@ -230,7 +230,7 @@ function posaDi(n, i, t, q) {
     else if (n === 'victor') { verso(cam, 0.75); chiave = 'camera' + cam.map((x) => x.toFixed(2)).join(); }
     else if (n === 'sophie') { verso(cam); chiave = 'fissa' + cam.map((x) => x.toFixed(2)).join(); }
   } else if (t >= e.nessuno - 0.2 && t < e.tv) {                 // si guardano di sfuggita
-    const altri = NOMI.filter((m) => m !== n), j = Math.floor((t - e.nessuno) * 0.9 + i * 0.37) % altri.length, chi = altri[(j * 3 + i) % altri.length];
+    const altri = NOMI.filter((m) => m !== n), mod = (a, b) => ((a % b) + b) % b, j = mod(Math.floor((t - e.nessuno + 0.3) * 0.9 + i * 0.37), altri.length), chi = altri[mod(j * 3 + i, altri.length)];
     verso(testaDi(chi), 0.8); chiave = 'sguardo' + chi;
   } else if (t >= e.tv && t < e.victorAlza + 0.8) { const k = sm(e.accese, e.accese + 0.6, t); verso(TV, k); chiave = 'tv' + Math.round(k * 12); }
   else if (t >= e.victorAlza + 0.8 && t < e.spensero) { if (n !== 'victor') { verso(testaDi('victor'), sm(e.alzo, e.alzo + 0.5, t)); chiave = 'victor' + Math.round(sm(e.alzo, e.alzo + 0.5, t) * 10); } }
@@ -383,6 +383,22 @@ function fotoPiena(ctx, t) {
   ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.globalAlpha = 0.35; ctx.drawImage(F, dx, dy, fw * s, fh * s); ctx.restore();
 }
 
+// la prova a vuoto (rr/render.mjs --secco a:b): tutta la logica di un fotogramma senza disegnare la scena 3D
+let PROVA = null;
+window.__prova = (t) => {
+  try {
+    if (!PROVA) { PROVA = document.createElement('canvas'); PROVA.width = W; PROVA.height = H; }
+    const c = PROVA.getContext('2d'), q = inquadratura(t);
+    if (!q.set) throw new Error('nessuna inquadratura');
+    if (q.A && [...q.cam, ...q.look, q.fov].some((x) => !Number.isFinite(x))) throw new Error('camera non valida');
+    if (q.set === 'sala') { metti(t, q); oggettiAlTempo(t, q); if (q.segui) testaDi(q.segui); statoSala(t); if (statoSala(t).tv > 0) schermoTv(SALA.tela.getContext('2d'), t, 0, 0, SALA.tela.width, SALA.tela.height); }
+    else if (q.set === 'casa') statoCasa(t, q);
+    else if (q.set === '2d') { if (q.foto) fotoPiena(c, t); else tvPieno(c, t, q); }
+    if (q.carte || (t >= EV.mani && t < EV.commento + 0.2)) carte(c, t);
+    sottotitoli(c, t); firma(c);
+    return null;
+  } catch (err) { return String((err && err.stack) || err).slice(0, 400); }
+};
 // ------------------------------------------------------------------ il film
 let SALA = null, VILLA = null, CASA = null, OCCH = null, FARI = null, MANI_L = null, NOTA = null, BIGL = null, PUGNO_NOTA = null, OGG = {};
 M.film({
