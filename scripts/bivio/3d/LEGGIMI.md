@@ -365,6 +365,8 @@ MakeHuman ha misure vere (11,3 cm a metà), ma sotto una testa disegnata piccola
 - **Video**: si rifanno solo le scene in cui si vede lui (`scene_ep1`: cucina, finestra, tu1, tu2, palazzo, spegni, terra, ascolta, corridoio,
   viso, passo, piede, video, carte: 2138 fotogrammi su 3964) e si attaccano alle altre, che non cambiano. L'elenco delle scene coi
   fotogrammi si legge dalla pagina del film (`window.TEMPI`).
+- **Trappola trovata nel montaggio finale**: `mix.py` univa video e audio con `-shortest`; con il video copiato com'è, l'ordine dei
+  fotogrammi B faceva perdere gli ultimi (fino a tre). Tolto: video e audio finiscono a 3 millesimi l'uno dall'altro.
 
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 

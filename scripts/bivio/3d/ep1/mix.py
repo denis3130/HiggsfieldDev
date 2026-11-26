@@ -146,5 +146,5 @@ print(f"mix: {n} tracce, durata {FINE} s (dal secondo {T0:.2f} della voce), misu
 for _, _, _, f in LETTI:
     if os.path.exists(f): os.remove(f)
 if len(sys.argv) > 2:
-    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', sys.argv[1], '-i', MIX, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', '-shortest', sys.argv[2]], check=True)
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', sys.argv[1], '-i', MIX, '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', sys.argv[2]], check=True)
     print('scritto', sys.argv[2])
