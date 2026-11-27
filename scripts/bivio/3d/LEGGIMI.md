@@ -319,3 +319,9 @@ Storia dell'utente in `data/horror/storie/14_il_gioco_dei_sette.md`; formato da 
   (`lavoro3d/rr/render.mjs`).
 - Suoni veri CC0 dell'episodio in `gioco7-ep1/audio_ep1/` (licenze in `licenze.json`); il mix è `mix_ep1.py` (la voce del televisore filtrata,
   musica circa 20 dB sotto la voce, -14 LUFS).
+- Finale con tre carte (27/11): A azzurra, B rossa, C dorata con solo «Scegli tu» (fumetto col cuore); Luc dice la C dopo la B
+  («Altrimenti la C: se il commento con più cuori supera le opzioni, sarà la scelta definitiva.»). Una frase nuova si genera da sola con Luc
+  (0,3 crediti), si allinea con Whisper e si monta nella voce intera nel silenzio tra due frasi; in `parole.json`/`copione.json` diventa una
+  riga nuova e le righe dopo scalano di uno (in `film.js` anche `EV` e `CHIAVI`, in `mix_ep1.py` le righe dei suoni). Poi si renderizza
+  solo il pezzo cambiato (`--range 127.9:154.18`, un'ora) e lo si attacca al video già fatto tagliato al fotogramma (`trim=end_frame=3837`),
+  e si rifà il mix: `mix_ep1.py <video> <uscita> <voce.wav>`. Le parole nuove si concordano con l'utente PRIMA di generarle.
