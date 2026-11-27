@@ -160,8 +160,8 @@ suono('stoffa.mp3', tVaso + 1.25, 0.25)
 # --- «Aspetti il tuono.»: il cuore, il lampo lontano col suo brontolio, poi il tuono vero che copre il vetro (il colpo del tuono cade insieme al vetro)
 suono('heart60.mp3', tAsp, 1.0, dur=tRompe - tAsp, ciclo=True, dentro=0.6, fuori=0.15, filtri="atempo=1.45,volume='0.32+0.3*min(1,t/4)':eval=frame")
 suono('tuono.mp3', lampoL + 0.7, 0.35, ss=4.0, dur=3.0, filtri='lowpass=f=500', dentro=0.4, fuori=1.0)
-suono('tuono.mp3', tRompe - 0.78, 0.8, dur=9.0, fuori=3.0)
-suono('vetro.mp3', tRompe - 0.2, 0.55)
+suono('tuono.mp3', tRompe - 0.78, 0.7, dur=9.0, fuori=3.0)
+suono('vetro.mp3', tRompe - 0.2, 0.42, filtri='lowpass=f=9000')      # (l'attacco del vetro, troppo secco, l'AAC lo gonfiava fino a 0 dB)
 suono('vetro_schegge.mp3', tRompe + 0.15, 0.3, filtri='lowpass=f=7000')
 # --- la mano nel buco: la martellina che gira, l'anta che si apre; i vetri sotto le scarpe
 suono('maniglia_finestra.mp3', tMano + 0.02, 0.6)
@@ -211,7 +211,7 @@ if os.environ.get('GREZZO'):          # per misurare i livelli: il mix com'è, s
 m = subprocess.run(['ffmpeg', '-hide_banner', '-nostats', '-i', pre, '-af', 'loudnorm=I=-14:TP=-1:LRA=11:print_format=json', '-f', 'null', '-'], capture_output=True, text=True).stderr
 j = json.loads(m[m.rindex('{'):m.rindex('}') + 1])
 af = f"loudnorm=I=-14:TP=-1:LRA=11:measured_I={j['input_i']}:measured_TP={j['input_tp']}:measured_LRA={j['input_lra']}:measured_thresh={j['input_thresh']}:offset={j['target_offset']}:linear=true"
-af += ',alimiter=limit=0.79:level=disabled:attack=3:release=60'          # picchi a -2 dB: la codifica AAC li rialza di oltre 1 dB
+af += ',alimiter=limit=0.68:level=disabled:attack=3:release=60'          # picchi a -3,3 dB: la codifica AAC li rialza anche di 2,5 dB (episodio 2, col tuono: +0,6 dB con 0,79)
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', pre, '-af', af, '-ar', '48000', '-c:a', 'pcm_s16le', MIX], check=True); os.remove(pre)
 print(f"mix: {n} tracce, durata {FINE} s (dal secondo {T0:.2f} della voce), misurato {j['input_i']} LUFS / picco {j['input_tp']} dB -> -14 LUFS" + (''.join(f"; musica {os.path.basename(m['file'])} da {m.get('da', 0)} s a {m.get('lufs', -34)} LUFS da telefono (volume {v}, {g} giro/i)" for m, v, g, _ in LETTI) if LETTI else '; senza musica'))
 for _, _, _, f in LETTI:

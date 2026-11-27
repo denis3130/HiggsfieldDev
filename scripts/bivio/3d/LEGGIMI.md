@@ -537,7 +537,15 @@ si è riscritto tutto con le regole della sezione 5 di `data/horror/FORMATO_STOR
   cade insieme al vetro; il pendolo della signora Ada si sente già dentro il telefono e poi, vero, nella sua stanza. Livelli misurati
   contro la voce con `livelli.py` (i passi bagnati e la porta che cigola erano troppo forti: abbassati).
 - **Render**: `--range` vuole i SECONDI, non i fotogrammi (passati i fotogrammi, tre pezzi si sono fermati subito e il primo ha reso tutto
-  il film). Un processo solo usa già quasi quattro core (SwiftShader): i pezzi in parallelo servono a poco su questa macchina.
+  il film). Un processo solo usa già quasi quattro core (SwiftShader): i pezzi in parallelo servono a poco su questa macchina. Tutto il
+  film in 68 minuti (le scene finali, dalla signora Ada, sono le più lente).
+- **Dopo il render** `scatti.py` ha trovato un salto nella telefonata: il respiro scritto `sin(t * lerp(2.6, 5.5, pa))`. Col tempo
+  assoluto (96 s) cambiare la frequenza fa correre la fase: il petto vibrava. La fase va scritta come integrale della frequenza
+  (`2.6 * t + 2.9 * max(0, t - t1)`; nel respiro che rallenta `4.5 * u - 0.95 * u * k`, con u = t - inizio della scena). Rifatte le due
+  scene da un fotogramma chiave all'altro e incastrate senza ricomprimere (vedi sopra).
+- **Il picco dopo l'AAC**: il mix in WAV era limitato a -3,3 dB, ma nel video il colpo del tuono col vetro arrivava a 0 dB (l'AAC gonfia
+  i transitori secchi). Limite a 0,68 e il vetro un po' più basso e senza le frequenze sopra 9 kHz: picco vero -0,1 dB, -14,8 LUFS.
+  Si controlla sempre sul file finale (`ebur128=peak=true`), non sul WAV.
 
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 

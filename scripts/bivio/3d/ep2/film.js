@@ -259,7 +259,8 @@ function sequenza() {
   // --- «Per la prima volta stanotte, respiri.»: sotto il portico, la schiena al pilastro, gli occhi chiusi; il fiato si condensa
   const tVibra = r(17) - 0.1, tSchermo = w(17, 'è') - 0.05, tChiama = r(18) - 0.05, tAda = r(19) - 0.2, tChina = r(20) - 0.1, tDito = w(20, 'notte') + 0.45, tCarte = r(21) - 0.2;
   const APPOGGIATO = (t, x = {}) => ({ pos: [0, 0.165, -0.2], yaw: Math.PI, lean: -0.08, headPitch: -0.22, blink: 1, breathe: sin(t * 3.2), mouth: 0.25, open: 0.6, sad: 0.4, armL: { a: [-0.22, -0.2, -0.05] }, armR: { a: [0.22, -0.2, -0.05] }, ...x });
-  sc(tRespiri, (t, k) => ({ set: 'O', id: 'respiri', cam: v3([0.55, 1.8, -1.75], [0.38, 1.8, -1.2], io(k)), look: [0.0, 1.78, -0.12], fov: 40, fiato: 1, tu: APPOGGIATO(t, { breathe: lerp(1, 0.5, k) * sin(t * lerp(4.5, 2.6, k)) }) }));
+  // (il respiro che rallenta: la fase è l'integrale della frequenza. Scritto sin(t * lerp(...)), col tempo assoluto a 85 s, il petto vibrava)
+  sc(tRespiri, (t, k, s) => ({ set: 'O', id: 'respiri', cam: v3([0.55, 1.8, -1.75], [0.38, 1.8, -1.2], io(k)), look: [0.0, 1.78, -0.12], fov: 40, fiato: 1, tu: APPOGGIATO(t, { breathe: lerp(1, 0.5, k) * sin(4.5 * (t - s.t0) - 0.95 * (t - s.t0) * k) }) }));
   // --- «Il telefono vibra. È la signora Ada.»: lo tiri fuori, lo schermo ti illumina la faccia; poi lo schermo: chiamata in arrivo
   sc(tVibra, (t, k, s) => { const fu = io(prog(t, s.t0 + 0.15, s.t0 + 1.0));
     return { set: 'O', id: 'vibra', cam: v3([0.42, 1.3, -0.95], [0.3, 1.62, -0.98], fu), look: v3([0.12, 0.95, -0.3], [0.03, 1.74, -0.3], fu), fov: lerp(38, 48, fu), telTu: 1, telSchermo: 0.28, tremaTel: 1,
@@ -269,7 +270,7 @@ function sequenza() {
   const tPol = w(18, 'polizia') - 0.1;
   sc(tChiama, (t, k) => { const pa = io(prog(t, tPol, tPol + 0.9));
     return { set: 'O', id: 'chiamata', cam: v3([0.3, 1.86, -0.95], [0.25, 1.85, -0.82], io(k)), look: [0.02, 1.84, -0.18], fov: 36, telTu: 1, telSchermo: 0.4,
-      tu: APPOGGIATO(t, { blink: battito(t, 7) * (1 - pa), headPitch: lerp(0.0, 0.08, pa), breathe: sin(t * lerp(2.6, 5.5, pa)), smile: 0.25 * (1 - pa), sad: 0.4 * (1 - pa) + 0.6 * pa, fear: pa, browUp: 0.75 * pa, mouth: 0.1 + 0.12 * pa, open: 1, wide: 0.3 * pa, armR: ORECCHIO }) }; });
+      tu: APPOGGIATO(t, { blink: battito(t, 7) * (1 - pa), headPitch: lerp(0.0, 0.08, pa), breathe: sin(2.6 * t + 2.9 * Math.max(0, t - tPol - 0.45)), smile: 0.25 * (1 - pa), sad: 0.4 * (1 - pa) + 0.6 * pa, fear: pa, browUp: 0.75 * pa, mouth: 0.1 + 0.12 * pa, open: 1, wide: 0.3 * pa, armR: ORECCHIO }) }; });
   // --- la signora Ada nel suo soggiorno, che sorride al telefono; dietro di lei, nel buio, qualcuno in piedi
   sc(tAda, (t, k) => ({ set: 'A', id: 'ada', cam: v3([0.3, 1.18, 1.45], [0.22, 1.16, 1.2], io(k)), look: [0.08, 1.12, -0.45], fov: 38, lampada: 1,
     ada: adaSeduta(t, parla('ada', t)), riva: { pos: [0.5, 0, -1.12], yaw: -0.2, breathe: sin(t * 1.8), blink: battito(t, 21) } }));
