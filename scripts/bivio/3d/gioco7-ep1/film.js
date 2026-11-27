@@ -395,7 +395,7 @@ window.__prova = (t) => {
     else if (q.set === 'casa') statoCasa(t, q);
     else if (q.set === '2d') { if (q.foto) fotoPiena(c, t); else tvPieno(c, t, q); }
     if (q.carte || (t >= EV.mani && t < EV.commento + 0.2)) carte(c, t);
-    sottotitoli(c, t); firma(c);
+    sottotitoli(c, t);
     return null;
   } catch (err) { return String((err && err.stack) || err).slice(0, 400); }
 };
@@ -442,7 +442,7 @@ M.film({
     for (let i = 0; i < 900; i++) { ctx.fillStyle = M.hash01(i + f * 31, 5) > 0.5 ? '#fff' : '#000'; ctx.fillRect(M.hash01(i + f * 17, 8) * W, M.hash01(i + f * 19, 9) * H, 2, 2); }
     ctx.restore();
     if (q.carte || (t >= EV.mani && t < EV.commento + 0.2)) carte(ctx, t);
-    sottotitoli(ctx, t); firma(ctx);
+    sottotitoli(ctx, t);                        // niente firma: l'utente l'ha tolta il 27/11 («togli quel tag stacappella e non metterci niente»)
   },
 });
 

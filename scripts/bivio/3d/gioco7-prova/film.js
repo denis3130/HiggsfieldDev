@@ -124,6 +124,6 @@ M.film({
     const f = Math.floor(t * 30); ctx.save(); ctx.globalAlpha = 0.05;
     for (let i = 0; i < 900; i++) { ctx.fillStyle = M.hash01(i + f * 31, 5) > 0.5 ? '#fff' : '#000'; ctx.fillRect(M.hash01(i + f * 17, 8) * W, M.hash01(i + f * 19, 9) * H, 2, 2); }
     ctx.restore();
-    sottotitoli(ctx, t); firma(ctx);
+    sottotitoli(ctx, t);                        // niente firma: l'utente l'ha tolta il 27/11 («togli quel tag stacappella e non metterci niente»)
   },
 });

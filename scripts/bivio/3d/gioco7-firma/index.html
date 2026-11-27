@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<title>Il gioco dei sette - episodio 1</title>
+<style>
+  /* Sottotitoli come il video A: Figtree (OFL), sottile per le parole già dette, grassetto per quella in corso. Corsivo dei segnaposti: Pinyon Script (OFL). */
+  @font-face { font-family: Sub; src: url(fonts/figtree-500.woff2) format('woff2'); font-weight: 500; }
+  @font-face { font-family: Sub; src: url(fonts/figtree-700.woff2) format('woff2'); font-weight: 700; }
+  @font-face { font-family: Sub; src: url(fonts/figtree-800.woff2) format('woff2'); font-weight: 800; }
+  @font-face { font-family: Macchina; src: url(fonts/special-elite.woff2) format('woff2'); font-weight: 400; }
+  @font-face { font-family: Mano; src: url(fonts/caveat-400.woff2) format('woff2'); font-weight: 400; }
+  @font-face { font-family: Mano; src: url(fonts/caveat-700.woff2) format('woff2'); font-weight: 700; }
+  @font-face { font-family: Corsivo; src: url(fonts/pinyon-script.woff2) format('woff2'); font-weight: 400; }
+  html, body { margin: 0; height: 100%; background: #111; overflow: hidden; }
+  body { display: grid; place-items: center; }
+  canvas { display: block; max-width: 100vw; max-height: 100vh; width: auto; height: auto; }
+  #hud { position: fixed; left: 12px; bottom: 10px; font: 12px/1 ui-monospace, monospace; color: #888; }
+  .render #hud { display: none; }
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "/node_modules/three/build/three.module.js",
+  "three/addons/": "/node_modules/three/examples/jsm/",
+  "https://cdn.jsdelivr.net/npm/opentype.js@1.3.4/+esm": "/node_modules/opentype.js/dist/opentype.module.js"
+} }
+</script>
+</head>
+<body>
+<canvas id="film"></canvas>
+<div id="hud">spazio: play/pausa · ←/→: passo · clic: salta</div>
+<script type="module" src="film.js"></script>
+</body>
+</html>
