@@ -85,7 +85,7 @@ const LUCE = { casa: { soggiorno: 1, corridoio: 1 }, porta: 0.6, tendaScosta: 0.
 // dietro la signora Ada), silenzi senza voce né musica (l'ombra sotto la porta, lo scavalco, il muro), il cattivo gentile che alla fine guarda in macchina,
 // i dettagli che tornano (lo scricchiolio, le chiavi, la signora Ada tra le chiamate, il dito sulle labbra), la camera che passa attraverso il muro.
 const ORECCHIO = { a: [0.12, 0.452, 0.082], gomito: [0.8, -1, -0.1], dita: [-0.1, 0.87, -0.48], dorso: [1, 0, -0.15], mano: 'orecchio' };
-const DITO = { a: [-0.03, 0.385, 0.16], gomito: [0.5, -1, -0.2], dita: [0.1, 1, 0.1], dorso: [-0.5, 0, 0.87], mano: 'indice' };
+const DITO = { a: [-0.03, 0.373, 0.159], gomito: [0.5, -1, -0.2], dita: [0.1, 1, 0.1], dorso: [-0.5, 0, 0.87], mano: 'indice' };      // (27/11, l'utente: «fallo più basso»: il dito sulle labbra, prima la punta toccava il naso)
 const ADA_TEL = { a: [0.104, 0.393, 0.071], gomito: [0.8, -1, -0.1], dita: [-0.1, 0.87, -0.48], dorso: [1, 0, -0.15], mano: 'orecchio' };
 const ADA_GREMBO = { a: [-0.16, -0.08, 0.3], gomito: [-0.8, -0.6, -0.2], dita: [0.2, -0.4, 1], dorso: [0, 1, 0.2], mano: 'rilassata' };
 const adaSeduta = (t, x = {}) => ({ pos: [0, 0, -0.38], yaw: 0, sit: 1, sedile: 0.47, lean: 0.06, headYaw: 0.12, headPitch: 0.02, smile: 0.55, breathe: sin(t * 2.2), blink: battito(t, 33), armR: ADA_TEL, armL: ADA_GREMBO, ...x });

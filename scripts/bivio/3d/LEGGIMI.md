@@ -546,6 +546,10 @@ si è riscritto tutto con le regole della sezione 5 di `data/horror/FORMATO_STOR
 - **Il picco dopo l'AAC**: il mix in WAV era limitato a -3,3 dB, ma nel video il colpo del tuono col vetro arrivava a 0 dB (l'AAC gonfia
   i transitori secchi). Limite a 0,68 e il vetro un po' più basso e senza le frequenze sopra 9 kHz: picco vero -0,1 dB, -14,8 LUFS.
   Si controlla sempre sul file finale (`ebur128=peak=true`), non sul WAV.
+- **Il dito sulle labbra** (27/11, dopo la consegna: «mi rifai il video spostando il dito dell'ispettore sulle labbra? fallo più basso»).
+  Con `DITO.a.y` 0,385 la punta toccava il naso; a 0,362 si fermava sulla riga della bocca (il dito sotto le labbra); a 0,373 il dito
+  attraversa le labbra e la punta sta tra bocca e naso. Provato in `prova_ada/` (viste 9-16: quattro altezze) e poi sul fotogramma del
+  film con la sua camera; rifatto il finale dal fotogramma chiave 3273 (109,1 s) alla fine e incastrato senza ricomprimere.
 
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 
