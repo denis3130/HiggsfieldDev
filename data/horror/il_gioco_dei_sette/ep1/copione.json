@@ -1,8 +1,8 @@
 {
- "nota": "Episodio 1 de «Il gioco dei sette», testo dell'utente (data/horror/storie/14_il_gioco_dei_sette.md) letto da Luc in un colpo solo; il bivio nella forma «La A: … Oppure la B: …». Una riga per frase: le inquadrature si agganciano alle parole (gioco7-ep1/film.js). tv = detta dall'uomo mascherato nel televisore (filtro nel mix), sussurro = Sophie.",
+ "nota": "Episodio 1 de «Il gioco dei sette», testo dell'utente (data/horror/storie/14_il_gioco_dei_sette.md) letto da Luc in un colpo solo; il bivio nella forma «La A: … Oppure la B: …». Una riga per frase: le inquadrature si agganciano alle parole (gioco7-ep1/film.js). tv = detta dall'uomo mascherato nel televisore (filtro nel mix), sussurro = Sophie. Il 27/11 l'utente ha fatto togliere «sconosciuti» dalla prima frase (poi la foto mostra che si conoscevano già): tagliato dalla voce di Luc, niente voce nuova.",
  "righe": [
   {
-   "t": "Eravamo sette sconosciuti, invitati a cena in una villa isolata."
+   "t": "Eravamo sette, invitati a cena in una villa isolata."
   },
   {
    "t": "Eppure, sul tavolo c'erano otto piatti."

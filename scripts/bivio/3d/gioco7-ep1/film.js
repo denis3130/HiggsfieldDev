@@ -22,7 +22,7 @@ const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').rep
 const w = (parola, r = null, fine = 0) => { const x = WORDS.find((q) => norm(q[2]) === norm(parola) && (r === null || q[3] === r)); if (!x) throw new Error('parola ' + parola); return x[fine]; };
 const riga = (n) => WORDS.find((x) => x[3] === n)[0], rigaFine = (n) => { const q = WORDS.filter((x) => x[3] === n); return q[q.length - 1][1]; };
 // una parola chiave per frase (riga:parola)
-const CHIAVI = new Set(['0:sconosciuti,', '1:otto', '2:sorella.', '3:dieci', '4:mittente.', '5:indirizzo', '6:ucciso', '7:incidente.', '8:verità.', '9:persone.',
+const CHIAVI = new Set(['0:sette,', '1:otto', '2:sorella.', '3:dieci', '4:mittente.', '5:indirizzo', '6:ucciso', '7:incidente.', '8:verità.', '9:persone.',
   '10:Victor,', '11:Elena,', '12:Marcus,', '13:Nora,', '14:Adrian,', '15:fissarmi.', '16:altri.', '17:bloccarono.', '18:mascherato.', '19:morte', '20:vivo.»',
   '21:fotografia.', '22:abbandonato.', '23:noi.', '24:Dieci', '25:gelarmi.', '26:luogo.', '27:improvvisamente.', '28:organizzato', '29:spensero.', '30:sordo.', '31:urlo.',
   '32:morto.', '33:biglietto.', '34:vedere.', '35:scritto:', '36:morta.»', '37:sussurrò:', '38:dimostrartelo.»', '39:mani.', '42:definitiva.', '43:episodio.']);

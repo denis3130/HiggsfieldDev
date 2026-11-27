@@ -2,6 +2,8 @@
 
 > Storia scritta dall'utente e mandata il 26/11 per il nuovo format del video A (vedi `CLAUDE.md`, «Il Bivio, nuovo format»).
 > Il testo qui sotto è il suo, copiato com'è.
+> Cambio deciso dall'utente il 27/11: nel video la prima frase è «Eravamo sette, invitati a cena in una villa isolata.», senza
+> «sconosciuti», perché la foto mostra che si conoscevano già (vedi `data/horror/il_gioco_dei_sette/ep1/scaletta.md`).
 
 IL GIOCO DEI SETTE
 

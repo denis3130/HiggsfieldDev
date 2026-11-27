@@ -100,3 +100,7 @@ In grassetto la parola dove cade lo scatto di camera; [chiave] = parola nel riqu
 - Le luci: si spengono tutte le candele insieme (resta la luna con l'ombra della grata); quando «tornano» si accendono le applique
   elettriche, e dagli stoppini sale il fumo.
 - Victor accusa indicando verso il fondo della tavola, senza che si veda chi: non si scopre a chi pensava.
+- 27/11: la prima frase è diventata «Eravamo sette, invitati a cena in una villa isolata.». L'utente ha notato che «sconosciuti» non
+  reggeva: la foto mostra che dieci anni prima erano tutti e sette davanti alla fornace, quindi si conoscevano già («Nessuno ammetteva di
+  conoscere gli altri» vuol dire che fingevano). La parola è stata tagliata dalla voce di Luc (niente voce nuova); la pausa prima di
+  «Eppure» è di circa un secondo. Negli episodi dopo: i sette NON sono sconosciuti, fingono di esserlo.
