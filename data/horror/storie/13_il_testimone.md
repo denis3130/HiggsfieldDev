@@ -164,3 +164,35 @@ Cosa fai? La A: gli passi il telefono, con dentro il video. Oppure la B: gli dic
 (nella mappa era «gli consegni il telefono / dici di averlo perso»: in questo ramo «perso» = caduto dal balcone; il freezer arriva nell'apertura B dell'episodio 3)
 **Parole:** 254
 
+## Episodio 3 — Ci penso io (proposta del 27/11 sera, in attesa dell'ok; ha vinto la B dell'episodio 2: porti il video ai carabinieri)
+
+Avete scelto la B. [voce già fatta]
+Dai carabinieri lui non lo conosce nessuno. Non è dei loro.
+«Si vede un cappotto», dice il carabiniere. «La faccia no.»
+Il caso però è già della polizia. L'hai aperto tu, chiamando il centododici.
+«Arriva l'ispettore che se ne occupa», dice. «Si accomodi.»
+[senza voce: fuori, sotto la pioggia, si ferma un'auto scura; scende un uomo col cappotto scuro e si preme un cerotto sulla guancia; dietro il vetro, tu seduto di spalle non lo vedi]
+[senza voce: la porta che si apre, lui che entra; solo il ronzio del neon]
+Sotto quel cerotto ci sono tre graffi. Li hai visti dallo spioncino.
+Gridi: «È LUI! SOTTO IL CEROTTO HA TRE GRAFFI!»
+«Me li ha fatti il vetro che ha rotto lei», dice lui, gentile. «La stavo cercando.»
+«Grazie, collega», dice al carabiniere. «Da qui ci penso io.»
+[senza voce: la stanza degli interrogatori, la porta che si chiude; sul tavolo le tue chiavi e una tazzina a fiori]
+«Il caffè gliel'ha fatto la signora Ada», dice. «Ci teneva.»
+«Adesso dorme. La pastiglia gliel'ho data io.»
+«Questo dorme in una macchina, dietro il parcheggio. Ha un cappotto scuro, come nel video.»
+«Domattina gli troveranno in tasca un coltello di casa sua. Quello che manca dal ceppo.»
+«Firmi che ha visto lui, e torna a casa.»
+«Se non firma, il coltello lo trovano a lei.»
+[lui guarda in macchina e sorride come dalla signora Ada; l'orologio della caserma]
+Cosa fai? [voce già fatta]
+La A: firmi, e in prigione ci va un innocente.
+Oppure la B: non firmi, e rischi di finirci tu.
+Oppure la C: decidete voi come va avanti. Vale solo se il vostro commento supera i like delle altre due. [voce già fatta, episodio 2]
+Scrivilo nei commenti, e seguimi per vedere come continua. [voce già fatta]
+
+**Bivio:** A: Accusi un innocente / B: Non firmi e rischi tu / C: A vostra scelta.
+**Perché regge:** dai carabinieri vai perché lui è della polizia; ma il caso è della polizia proprio per la tua chiamata al 112 dell'episodio 1, e quando la caserma chiama la Questura avvisano chi lo segue: lui. Il video (dodici secondi, al buio, dal quarto piano) mostra un cappotto, non una faccia. I graffi li hai visti davvero dallo spioncino, e lui ha pronta una spiegazione che usa la tua fuga (il vetro rotto nell'appartamento vuoto): il carabiniere crede a un ispettore, non a uno che è scappato dalla polizia. Le tue chiavi gliele ha date la signora Ada; il coltello l'ha preso dal tuo ceppo quando è entrato in casa tua. Il prezzo della B dell'episodio 2: la signora Ada è rimasta con lui, e adesso «dorme». La scelta nuova non riguarda più il telefono né la signora Ada: firmare il falso e salvarti facendo condannare un innocente, o rifiutare e diventare tu il colpevole.
+**Tornano:** i graffi e lo spioncino (ep. 1), il vetro rotto, le chiavi e il caffè della signora Ada (ep. 2), il coltello del ceppo della cucina, il sorriso e lo sguardo in macchina. Da far tornare più avanti: la bugia del vetro (i graffi li aveva già quando ha bussato, prima del vetro).
+**Personaggi nuovi:** il carabiniere di turno; l'uomo che dorme in macchina (solo in foto). **Luoghi nuovi:** la caserma (ingresso col citofono sotto la pioggia, banco, sala d'attesa, stanza degli interrogatori).
+**Parole:** circa 217 (36 già registrate). Voce nuova solo per 16 righe.
