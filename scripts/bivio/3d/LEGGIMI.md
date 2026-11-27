@@ -550,6 +550,13 @@ si è riscritto tutto con le regole della sezione 5 di `data/horror/FORMATO_STOR
   Con `DITO.a.y` 0,385 la punta toccava il naso; a 0,362 si fermava sulla riga della bocca (il dito sotto le labbra); a 0,373 il dito
   attraversa le labbra e la punta sta tra bocca e naso. Provato in `prova_ada/` (viste 9-16: quattro altezze) e poi sul fotogramma del
   film con la sua camera; rifatto il finale dal fotogramma chiave 3273 (109,1 s) alla fine e incastrato senza ricomprimere.
+- **Il sorriso inquietante** (27/11 sera: «aggiungili un sorriso inquietante»). Cinque prove in `prova_ada/` (viste 17-21) con la camera
+  del film: largo a labbra chiuse (sembra contento, non fa paura), a denti stretti, col mento giù e gli occhi in su (guardava sopra la
+  camera). Scelto: denti stretti attorno al dito, occhi spalancati fissi in camera (`open` 1,25: con `smile` alto gli occhi si
+  socchiudono come in un sorriso vero), sopracciglia appena abbassate (`angry` 0,22), mento giù (`headPitch` 0,12) e testa inclinata
+  (`headRoll` 0,1): `SORRISO(k)` in `ep2/film.js`. Si allarga mentre si raddrizza e alza la mano, così il passaggio dalle labbra chiuse
+  ai denti (a `grin` 0,1 e 0,3 il disegno della bocca cambia) cade dentro il movimento. Col mento giù la bocca scende di circa 1,5 cm:
+  la mano va abbassata della stessa misura (`DITO.a` 0,357), se no la punta torna sul naso.
 
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 

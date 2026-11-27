@@ -85,7 +85,8 @@ const LUCE = { casa: { soggiorno: 1, corridoio: 1 }, porta: 0.6, tendaScosta: 0.
 // dietro la signora Ada), silenzi senza voce né musica (l'ombra sotto la porta, lo scavalco, il muro), il cattivo gentile che alla fine guarda in macchina,
 // i dettagli che tornano (lo scricchiolio, le chiavi, la signora Ada tra le chiamate, il dito sulle labbra), la camera che passa attraverso il muro.
 const ORECCHIO = { a: [0.12, 0.452, 0.082], gomito: [0.8, -1, -0.1], dita: [-0.1, 0.87, -0.48], dorso: [1, 0, -0.15], mano: 'orecchio' };
-const DITO = { a: [-0.03, 0.373, 0.159], gomito: [0.5, -1, -0.2], dita: [0.1, 1, 0.1], dorso: [-0.5, 0, 0.87], mano: 'indice' };      // (27/11, l'utente: «fallo più basso»: il dito sulle labbra, prima la punta toccava il naso)
+const SORRISO = (k) => ({ smile: lerp(0.25, 0.95, k), grin: 0.7 * k, wide: 0.2 * k, open: lerp(0.72, 1.25, k), angry: 0.22 * k, gazeY: 0.1 * k });      // il sorriso inquietante (k = 0..1)
+const DITO = { a: [-0.03, 0.357, 0.154], gomito: [0.5, -1, -0.2], dita: [0.1, 1, 0.1], dorso: [-0.5, 0, 0.87], mano: 'indice' };      // (27/11, l'utente: «fallo più basso»: il dito sulle labbra, prima la punta toccava il naso)
 const ADA_TEL = { a: [0.104, 0.393, 0.071], gomito: [0.8, -1, -0.1], dita: [-0.1, 0.87, -0.48], dorso: [1, 0, -0.15], mano: 'orecchio' };
 const ADA_GREMBO = { a: [-0.16, -0.08, 0.3], gomito: [-0.8, -0.6, -0.2], dita: [0.2, -0.4, 1], dorso: [0, 1, 0.2], mano: 'rilassata' };
 const adaSeduta = (t, x = {}) => ({ pos: [0, 0, -0.38], yaw: 0, sit: 1, sedile: 0.47, lean: 0.06, headYaw: 0.12, headPitch: 0.02, smile: 0.55, breathe: sin(t * 2.2), blink: battito(t, 33), armR: ADA_TEL, armL: ADA_GREMBO, ...x });
@@ -280,12 +281,15 @@ function sequenza() {
       ada: adaSeduta(t, { smile: 0.6, gazeX: 0.3 * ch }), riva: { pos: v3([0.5, 0, -1.12], [0.36, 0, -0.98], ch), yaw: lerp(-0.2, -0.32, ch), lean: 0.95 * ch, side: -0.18 * ch, twist: 0.1 * ch, headYaw: -0.25 * ch, headPitch: -0.35 * ch, smile: 0.3, open: 0.72, blink: battito(t, 21),
         gambe: { aL: -0.25 * ch, gL: 0.35 * ch, aR: -0.25 * ch, gR: 0.35 * ch }, ...parla('isp', t) } }; });
   // --- si raddrizza, guarda in macchina e si porta l'indice alle labbra. Tic tac.
-  sc(tDito, (t, k, s) => { const su4 = io(prog(t, s.t0, s.t0 + 0.9)), di = io(prog(t, s.t0 + 0.7, s.t0 + 1.5));
+  // (27/11, l'utente: «aggiungili un sorriso inquietante»: mentre si raddrizza e porta il dito alle labbra il sorriso si allarga a denti stretti,
+  //  gli occhi restano spalancati e fissi in camera, il mento scende e la testa si inclina. Scelto tra cinque prove in prova_ada, viste 17-21)
+  sc(tDito, (t, k, s) => { const su4 = io(prog(t, s.t0, s.t0 + 0.9)), di = io(prog(t, s.t0 + 0.7, s.t0 + 1.5)), sr = io(prog(t, s.t0 + 0.5, s.t0 + 1.8));
     return { set: 'A', id: 'dito', cam: v3([0.32, 1.48, 0.95], [0.32, 1.5, 0.72], io(k)), look: [0.33, 1.58, -0.85], fov: 32, lampada: 1,
-      ada: adaSeduta(t, { smile: 0.6 }), riva: { pos: v3([0.36, 0, -0.98], [0.42, 0, -1.05], su4), yaw: lerp(-0.32, -0.05, su4), lean: 0.95 * (1 - su4), side: -0.18 * (1 - su4), headPitch: -0.35 * (1 - su4) - 0.04 * su4, smile: 0.25, open: 0.72, blink: 0,
+      ada: adaSeduta(t, { smile: 0.6 }), riva: { pos: v3([0.36, 0, -0.98], [0.42, 0, -1.05], su4), yaw: lerp(-0.32, -0.05, su4), lean: 0.95 * (1 - su4), side: -0.18 * (1 - su4), headPitch: -0.35 * (1 - su4) + lerp(-0.04, 0.12, sr) * su4, headRoll: 0.1 * sr,
+        ...SORRISO(sr), blink: 0,
         gambe: { aL: -0.25 * (1 - su4), gL: 0.35 * (1 - su4), aR: -0.25 * (1 - su4), gR: 0.35 * (1 - su4) }, armR: di > 0.01 ? { ...DITO, k: di } : undefined } }; });
   // --- cosa fai?
-  sc(tCarte, (t) => ({ set: 'A', id: 'carte', carte: 1, sfoca: 1, cam: [0.32, 1.5, 0.72], look: [0.33, 1.58, -0.85], fov: 32, lampada: 1, ada: adaSeduta(t, { smile: 0.6 }), riva: { pos: [0.42, 0, -1.05], yaw: -0.05, headPitch: -0.04, smile: 0.25, open: 0.72, armR: DITO } }));
+  sc(tCarte, (t) => ({ set: 'A', id: 'carte', carte: 1, sfoca: 1, cam: [0.32, 1.5, 0.72], look: [0.33, 1.58, -0.85], fov: 32, lampada: 1, ada: adaSeduta(t, { smile: 0.6 }), riva: { pos: [0.42, 0, -1.05], yaw: -0.05, headPitch: 0.12, headRoll: 0.1, ...SORRISO(1), blink: 0, armR: DITO } }));
   S.sort((a, b) => a.t0 - b.t0); S.forEach((s, i) => { s.t1 = i + 1 < S.length ? S[i + 1].t0 : END; });
   return S;
 }
