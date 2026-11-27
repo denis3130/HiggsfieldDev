@@ -23,7 +23,7 @@ e = dict(eppure=w('Eppure'), ottavo=w("Sull'ottavo"), nome=w('nome', 2), sorella
          vivo=w('vivo', 20), dal=riga(21), fotografia=w('fotografia', 21), mostrava=riga(22), eravamo=riga(23), noi=w('noi', 23), dieci2=riga(24), sentii=riga(25), gelarmi=w('gelarmi', 25),
          avevo=riga(26), luogo=w('luogo', 26), victorAlza=riga(27), alzo=w('alzò', 27), soChi=riga(28), organizzato=w('organizzato', 28), luci=riga(29), spensero=w('spensero', 29),
          rumore=riga(30), urlo=riga(31), tornarono=w('tornarono', 32), morto=w('morto', 32), nella=riga(33), biglietto=w('biglietto', 33), raccolsi=riga(34), sul=riga(35), leon=riga(36),
-         mortaN=w('morta', 36), sophieV=riga(37), non=riga(38), vieni=w('Vieni', 38), destino=riga(39), mani=w('mani', 39), cartaA=riga(40), cartaB=riga(41), commento=riga(42))
+         mortaN=w('morta', 36), sophieV=riga(37), non=riga(38), vieni=w('Vieni', 38), destino=riga(39), mani=w('mani', 39), cartaA=riga(40), cartaB=riga(41), cartaC=riga(42), commento=riga(43))
 f = lambda d, n: os.path.join(d, n)
 # (file, inizio nel film, da dove nel file, quanto, volume dB, dissolvenza in, dissolvenza out)
 pezzi = [
@@ -96,6 +96,7 @@ pezzi = [
     # la scelta: le carte entrano, poi l'ottavo piatto
     (f(L7, 'whoosh_aria.mp3'), e['mani'] + 0.0, 0.0, 0.5, -14, 0.02, 0.1),
     (f(L7, 'whoosh_aria.mp3'), e['mani'] + 0.25, 0.0, 0.5, -14, 0.02, 0.1),
+    (f(L7, 'whoosh_aria.mp3'), e['mani'] + 0.5, 0.0, 0.5, -14, 0.02, 0.1),          # entra la carta C
     (f(L7, 'whoosh_profondo.mp3'), e['commento'] - 0.35, 0.2, 1.2, -14, 0.03, 0.5),
     (f(SFX, 'pendolo_tic.mp3'), e['commento'], 0.0, DUR - e['commento'], -26, 0.5, 1.0),
 ]

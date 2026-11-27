@@ -25,7 +25,7 @@ const riga = (n) => WORDS.find((x) => x[3] === n)[0], rigaFine = (n) => { const 
 const CHIAVI = new Set(['0:sconosciuti,', '1:otto', '2:sorella.', '3:dieci', '4:mittente.', '5:indirizzo', '6:ucciso', '7:incidente.', '8:verità.', '9:persone.',
   '10:Victor,', '11:Elena,', '12:Marcus,', '13:Nora,', '14:Adrian,', '15:fissarmi.', '16:altri.', '17:bloccarono.', '18:mascherato.', '19:morte', '20:vivo.»',
   '21:fotografia.', '22:abbandonato.', '23:noi.', '24:Dieci', '25:gelarmi.', '26:luogo.', '27:improvvisamente.', '28:organizzato', '29:spensero.', '30:sordo.', '31:urlo.',
-  '32:morto.', '33:biglietto.', '34:vedere.', '35:scritto:', '36:morta.»', '37:sussurrò:', '38:dimostrartelo.»', '39:mani.', '42:episodio.']);
+  '32:morto.', '33:biglietto.', '34:vedere.', '35:scritto:', '36:morta.»', '37:sussurrò:', '38:dimostrartelo.»', '39:mani.', '42:definitiva.', '43:episodio.']);
 
 // ------------------------------------------------------------------ i tempi degli avvenimenti
 const EV = {};
@@ -41,7 +41,7 @@ function eventi() {
     sentii: riga(25), gelarmi: w('gelarmi', 25), avevo: riga(26), luogo: w('luogo', 26), victorAlza: riga(27), alzo: w('alzò', 27), soChi: riga(28), organizzato: w('organizzato', 28),
     luci: riga(29), spensero: w('spensero', 29), rumore: riga(30), urlo: riga(31), quando: riga(32), tornarono: w('tornarono', 32), morto: w('morto', 32),
     nella: riga(33), biglietto: w('biglietto', 33), raccolsi: riga(34), vedere: w('vedere', 34), sul: riga(35), leon: riga(36), mortaN: w('morta', 36),
-    sophieV: riga(37), sussurro: w('sussurrò', 37), non: riga(38), vieni: w('Vieni', 38), destino: riga(39), mani: w('mani', 39), cartaA: riga(40), cartaB: riga(41), commento: riga(42),
+    sophieV: riga(37), sussurro: w('sussurrò', 37), non: riga(38), vieni: w('Vieni', 38), destino: riga(39), mani: w('mani', 39), cartaA: riga(40), cartaB: riga(41), cartaC: riga(42), commento: riga(43),
   });
 }
 
@@ -320,13 +320,14 @@ function firma(ctx) {
 }
 // ------------------------------------------------------------------ le carte A/B (come il video A)
 function carte(ctx, t) {
-  const e = EV, cw = W * 0.88, ch = H * 0.118, x0 = (W - cw) / 2, ys = [H * 0.385, H * 0.52];
+  const e = EV, cw = W * 0.88, ch = H * 0.118, x0 = (W - cw) / 2, ys = [H * 0.355, H * 0.488, H * 0.621];
   const dati = [{ l: 'A', c: [90, 180, 255], r1: 'Mostrare il biglietto a tutti', r2: 'e pretendere spiegazioni', img: IMG.cartaA, entra: e.mani + 0.05, accesa: [e.cartaA, e.cartaB - 0.1] },
-    { l: 'B', c: [255, 70, 70], r1: 'Nascondere il biglietto', r2: 'e seguire Sophie in segreto', img: IMG.cartaB, entra: e.mani + 0.3, accesa: [e.cartaB, e.commento - 0.1] }];
+    { l: 'B', c: [255, 70, 70], r1: 'Nascondere il biglietto', r2: 'e seguire Sophie in segreto', img: IMG.cartaB, entra: e.mani + 0.3, accesa: [e.cartaB, e.cartaC - 0.1] },
+    { l: 'C', c: [255, 196, 60], r1: 'Scegli tu', r2: '', img: IMG.cartaC, entra: e.mani + 0.55, accesa: [e.cartaC, e.commento - 0.1] }];
   const via = sm(e.commento - 0.4, e.commento, t);
   ctx.save(); ctx.globalAlpha = 0.55 * sm(e.mani - 0.2, e.mani + 0.2, t) * (1 - via); ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); ctx.restore();
   dati.forEach((d, i) => {
-    const k = E.outCubic(sm(d.entra, d.entra + 0.28, t)), dx = (1 - k) * (i === 0 ? -1 : 1) * W * 1.05, y = ys[i], acc = t >= d.accesa[0] && t < d.accesa[1] ? sm(d.accesa[0], d.accesa[0] + 0.25, t) : 0;
+    const k = E.outCubic(sm(d.entra, d.entra + 0.28, t)), dx = (1 - k) * (i === 1 ? 1 : -1) * W * 1.05, y = ys[i], acc = t >= d.accesa[0] && t < d.accesa[1] ? sm(d.accesa[0], d.accesa[0] + 0.25, t) : 0;
     if (k <= 0) return; ctx.save(); ctx.globalAlpha = 1 - via; ctx.translate(dx, 0);
     if (acc > 0) { ctx.shadowColor = `rgba(${d.c},${0.9 * acc})`; ctx.shadowBlur = 50 * acc; }
     ctx.fillStyle = 'rgba(12,12,16,0.78)'; M.rrect(ctx, x0, y, cw, ch, 28); ctx.fill(); ctx.shadowColor = 'transparent';
@@ -337,7 +338,7 @@ function carte(ctx, t) {
     const cx = x0 + pad * 2 + iw + ch * 0.26, cy = y + ch / 2; ctx.beginPath(); ctx.arc(cx, cy, ch * 0.2, 0, Math.PI * 2); ctx.fillStyle = `rgba(${d.c},0.95)`; ctx.fill();
     ctx.fillStyle = '#fff'; ctx.font = font(Math.round(ch * 0.24), 800, 'Sub'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(d.l, cx, cy + 2);
     ctx.textAlign = 'left'; ctx.font = font(Math.round(ch * 0.162), 800, 'Sub'); const tx = cx + ch * 0.3;
-    ctx.fillText(d.r1, tx, cy - ch * 0.14); ctx.fillText(d.r2, tx, cy + ch * 0.16);
+    if (d.r2) { ctx.fillText(d.r1, tx, cy - ch * 0.14); ctx.fillText(d.r2, tx, cy + ch * 0.16); } else { ctx.font = font(Math.round(ch * 0.24), 800, 'Sub'); ctx.fillText(d.r1, tx, cy + 2); }
     ctx.restore();
   });
 }
@@ -412,7 +413,7 @@ M.film({
     oggetti(); calcolaSiti(); inquadrature();
     // le immagini fatte una volta: l'uomo mascherato, la foto, le carte
     const MS = await mascheratoSet(); IMG.mas = [[0, 0, 0], [0.05, 0.12, 0.03], [-0.03, -0.1, -0.04], [0.08, 0.03, 0]].map((r, i) => scatta(MS, { cam: [0.02 * i, 1.56, 1.3 - 0.05 * i], look: [0, 1.55, 0], fov: 44, testa: r }, 4 / 3));
-    IMG.foto = await fotoFornace(); IMG.cartaA = await cartaA(); IMG.cartaB = await cartaB();
+    IMG.foto = await fotoFornace(); IMG.cartaA = await cartaA(); IMG.cartaB = await cartaB(); IMG.cartaC = cartaC();
     for (const [n, i] of ORDINE) { fatte[n] = null; }
     // i fari della macchina nella notte (solo nella scena della strada)
     FARI = [-0.7, 0.7].map((x) => { const L = new THREE.SpotLight(0xFFF2D8, 0, 60, 0.42, 0.5, 1.2); VILLA.scene.add(L, L.target); return { L, x }; });
@@ -572,6 +573,13 @@ async function fotoFornace() {
   IMG.volti = volti;
   for (const n of NOMI) { SALA.scene.add(P[n].g); fatte[n] = null; }
   return stampa(img);
+}
+function cartaC() {                                                 // la carta C: un fumetto dei commenti con un cuore (la tua idea, i cuori)
+  const cv = document.createElement('canvas'); cv.width = 500; cv.height = 400; const c = cv.getContext('2d');
+  const g = c.createLinearGradient(0, 0, 0, 400); g.addColorStop(0, '#2A2418'); g.addColorStop(1, '#120F0A'); c.fillStyle = g; c.fillRect(0, 0, 500, 400);
+  c.fillStyle = '#F4EBD8'; c.beginPath(); c.roundRect(90, 80, 320, 190, 40); c.fill(); c.beginPath(); c.moveTo(160, 262); c.lineTo(140, 330); c.lineTo(220, 262); c.fill();
+  c.fillStyle = '#E8423F'; c.save(); c.translate(250, 178); c.scale(2.6, 2.6); c.beginPath(); c.moveTo(0, 18); c.bezierCurveTo(-30, -2, -18, -26, 0, -12); c.bezierCurveTo(18, -26, 30, -2, 0, 18); c.fill(); c.restore();
+  return cv;
 }
 async function cartaA() {                                            // la carta A: il biglietto alzato sopra la tavola, gli altri che lo guardano
   for (const [n, i] of ORDINE) { if (n === 'leon') { P[n].g.visible = false; continue; } const o = seduto(i, { collo: guardaDa(i, [0.05, 1.45, 1.5]), sguardo: [0.05, 1.45, 1.5] }); siedi(P[n], o); fatte[n] = null; }
