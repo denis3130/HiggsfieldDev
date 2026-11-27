@@ -1,0 +1,117 @@
+{
+ "copione": "episodio.json",
+ "sorgenti": {
+  "vecchia": "/tmp/claude-0/-home-user-HiggsfieldDev/368c82ce-0008-5df1-a10b-0a4a69dda6d7/scratchpad/voce_ep2",
+  "nuova": "/tmp/claude-0/-home-user-HiggsfieldDev/368c82ce-0008-5df1-a10b-0a4a69dda6d7/scratchpad/voce_ep2_v3_nuove"
+ },
+ "nota": "le cartelle delle voci stanno solo sulla macchina (l'audio di Luc non va nel repository): «vecchia» = registrazione del 26/11, «nuova» = quella del 27/11",
+ "righe": [
+  [
+   "vecchia",
+   1
+  ],
+  [
+   "nuova",
+   1
+  ],
+  [
+   "vecchia",
+   4
+  ],
+  [
+   "vecchia",
+   5
+  ],
+  [
+   "nuova",
+   2
+  ],
+  [
+   "nuova",
+   3
+  ],
+  [
+   "nuova",
+   4
+  ],
+  [
+   "nuova",
+   5
+  ],
+  [
+   "nuova",
+   6
+  ],
+  [
+   "vecchia",
+   16
+  ],
+  [
+   "nuova",
+   7
+  ],
+  [
+   "nuova",
+   8
+  ],
+  [
+   "nuova",
+   9
+  ],
+  [
+   "nuova",
+   10
+  ],
+  [
+   "nuova",
+   11
+  ],
+  [
+   "nuova",
+   12
+  ],
+  [
+   "nuova",
+   13
+  ],
+  [
+   "nuova",
+   14
+  ],
+  [
+   "nuova",
+   15
+  ],
+  [
+   "nuova",
+   16
+  ],
+  [
+   "vecchia",
+   24
+  ],
+  [
+   "nuova",
+   17
+  ],
+  [
+   "nuova",
+   18
+  ],
+  [
+   "vecchia",
+   27
+  ]
+ ],
+ "parole": [
+  {
+   "riga": 13,
+   "parola": 5,
+   "da": [
+    "vecchia",
+    17,
+    6
+   ]
+  }
+ ]
+}

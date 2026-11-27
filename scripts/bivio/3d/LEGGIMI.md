@@ -491,6 +491,54 @@ sono ricontrollate tutte le inquadrature (vedi «Sui tempi veri» qui sotto).
 - **Render definitivo**: 3932 fotogrammi in quattro pezzi insieme (`--range 0:33`, `33:66`, `66:99`, `99:131.06`, un processo
   ciascuno, da una copia congelata `ep2_r`), poi uniti con ffmpeg. Le scene sul balcone con le luci di casa accese sono le più lente.
 
+## Episodio 2, terza versione (27/11): «Interno 11», approvata con «ok»
+
+La prima versione («La mano tesa») l'utente l'ha bocciata nella storia (la fuga votata si annullava); dopo «impara dai migliori registi»
+si è riscritto tutto con le regole della sezione 5 di `data/horror/FORMATO_STORIA.md`. Copione in `data/horror/il_testimone/ep2/episodio.json`
+(quello bocciato in `episodio_v1_bocciato.json`), film in `ep2/film.js` (39 inquadrature, 128,87 s), mix in `ep2/mix.py`.
+
+- **La voce, senza rifare quella che c'era**: sei righe vengono dalla registrazione della prima versione, le altre da una richiesta nuova
+  (2,7 crediti). `cuci_voce.py <cartella d'uscita> <montaggio_voce.json>` prende ogni riga dalla sua registrazione e taglia nel silenzio
+  vero; può anche sostituire una parola sola con la stessa parola di un'altra registrazione (qui Luc aveva detto «baicone»: preso
+  «balcone» da quella vecchia). Il punto debole per tagliare si cerca solo PRIMA dell'inizio della parola: dentro la parola c'è un'altra
+  consonante (il primo taglio aveva lasciato «bai… balcone»). Poi i soliti `prepara_voce.py`, `bocca.py`, `controlla_voce.py` (212/212).
+- **Set nuovi**: `vuoto.js` (l'appartamento vuoto da dentro: mobili sotto le lenzuola, la portafinestra col vetro che si rompe, la
+  martellina, la porta sull'altra scala; acceso da `fuoriSet({ balcone: true, vuoto: true })`), `scala.js` (la tromba vista dall'alto,
+  come in «La donna che visse due volte»), `portico.js` (il portico in strada sotto la pioggia), `ada_set.js` (il soggiorno della signora
+  Ada, col pendolo) e `ada()` in `adulti.js`; `ingressoSet({ entra: true })` (la porta di casa che si apre da fuori, lui in controluce).
+  Laboratori: `prova_vuoto/`, `prova_ada/` (dalla vista 8 la scheda del personaggio), `prova_set2/`.
+- **Trovato sui fogli di provini e corretto** (tutto a grandezza piena prima del render):
+  - *La porta che si apre da fuori.* Il muro di fondo del corridoio era un piano intero: aperta l'anta, dietro c'era il muro e lui
+    spariva. Con `entra` il muro ha il vano vero. Il bagliore dello spioncino (`alOcchio`, `occhio`) e la luce che filtra da sotto
+    (`lPorta`, striscia, pozza) sono della porta chiusa: a porta aperta si spengono, e resta il controluce (lui fermo sulla soglia).
+  - *Il vaso preso con due mani* (`presaVaso(p, yaw, k)`): i lati sono quelli di chi lo tiene, non della scena. Con i lati fissi nel
+    mondo, girato verso il palazzo, le braccia si incrociavano e le dita entravano nella terracotta. Il palmo sta sulla parete subito
+    sotto il bordo, le dita avanti attorno alla pancia. Il vaso ora ha il fondo (visto da sotto era aperto).
+  - *Accovacciarsi.* `bacino: { sposta }` NON esiste nel pupazzo (veniva ignorato in silenzio): si piegava in vita a gambe dritte e
+    non arrivava al vaso. Per accovacciarsi: `sit` + `sedile` (l'altezza del bacino, 0,24) + `gambe` (in più aL 0,2 e gL 0,75: i piedi
+    tornano sotto) + `lean` per arrivare avanti.
+  - *La mano dal buco nel vetro.* Il buco sta all'altezza della martellina (`BUCO.v` 0,46), così l'avambraccio entra dritto e la mano
+    la stringe di traverso: `sbarra` dal perno (lato del pollice) alla punta. La martellina gira attorno all'asse z e la mano la segue;
+    l'anta si apre di poco con la mano ancora sopra (`martellina(g, an)` in `ep2/film.js` la calcola nel mondo, girata con l'anta).
+  - *La bocca della paura.* Aperta con `smile` a zero sembra un sorriso (gli angoli stanno più su del centro): per la paura `smile`
+    negativo (da -0,35 a -0,5) e un po' di `round`. Vale per tutti (`PAURA` in `ep2/film.js`).
+  - *La pioggia disegnata* (`pioggia`) stava in tutte le scene del set di fuori, anche dentro le stanze: ora 0 al chiuso.
+  - *Il «fotogramma marrone vuoto»* del passo era il vaso: dopo il vetro vola dentro e resta per terra, e la camera era lì accanto.
+  - *Il tuo soggiorno* era buio dove stava lui: il lampadario illumina solo verso la portafinestra. `casa.riempi` accende una luce in
+    più senza ombre e con raggio corto (2,3 m: non passa dai muri e non tocca il balcone).
+  - *La luce del telefono* stava appena sopra la mano e bruciava la maglia: ora sta più su, verso la faccia.
+  - *La corsa*: il ginocchio si piega quando la gamba torna avanti (`corsaVera`; la vecchia `corsa` lo piegava mentre il piede è a
+    terra), le braccia piegate vanno al contrario delle gambe, il corpo si alza a metà falcata. Il percorso nella corsia libera (prima
+    passava dentro l'auto rossa). `nebbia` oltre 1 (fino a 1,6) perché il palazzo sparisca davvero nella pioggia.
+  - *Le teste sotto i sottotitoli* (respiri, telefono, telefonata) e la camera dietro la nuca nel viso che si gela: rifatte.
+- **Suoni nuovi** (CC0, licenze in `scripts/bivio/sfx/licenze_suoni.json`): vetro, vetro_schegge, scricchiolio, maniglia,
+  maniglia_finestra, corsa_scale, corsa_strada. Nel mix: la musica scende quasi a zero nei tre silenzi (l'ombra sotto la porta, lo
+  scavalco, il viso che si gela: `SILENZI`); la pioggia di fuori sale e scende con dove sta la camera (`inviluppo`); il colpo del tuono
+  cade insieme al vetro; il pendolo della signora Ada si sente già dentro il telefono e poi, vero, nella sua stanza. Livelli misurati
+  contro la voce con `livelli.py` (i passi bagnati e la porta che cigola erano troppo forti: abbassati).
+- **Render**: `--range` vuole i SECONDI, non i fotogrammi (passati i fotogrammi, tre pezzi si sono fermati subito e il primo ha reso tutto
+  il film). Un processo solo usa già quasi quattro core (SwiftShader): i pezzi in parallelo servono a poco su questa macchina.
+
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 
 - La musica la sceglie l'utente. Se non ne manda una sua, gli si propongono tre brani veri e gratuiti (CC0), montati sotto lo stesso pezzo

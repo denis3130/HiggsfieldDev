@@ -257,5 +257,54 @@
   "licenza": "CC0 1.0",
   "pagina": "https://freesound.org/people/wintuh/sounds/471854",
   "nota": "episodio 2 de «Il testimone», 26/11; trovato con cerca_suoni.py su Openverse, filtro CC0"
+ },
+ "vetro.mp3": {
+  "titolo": "Glass Break 1.wav",
+  "autore": "mccormick_iain",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/mccormick_iain/sounds/371094",
+  "nota": "la portafinestra rotta col vaso sotto il tuono (episodio 2 «Interno 11», 27/11; colpo a 0,2 s)"
+ },
+ "vetro_schegge.mp3": {
+  "titolo": "ZXAudiocraft - Glass - Break 017.wav",
+  "autore": "zxaudiocraft",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/zxaudiocraft/sounds/521340",
+  "nota": "le schegge che cadono; da 1,55 s i vetri sotto le scarpe (episodio 2 «Interno 11», 27/11)"
+ },
+ "scricchiolio.mp3": {
+  "titolo": "Wood Floor Creak",
+  "autore": "sthran",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/sthran/sounds/572645",
+  "nota": "«Il pavimento scricchiola» (episodio 2 «Interno 11», 27/11)"
+ },
+ "maniglia.mp3": {
+  "titolo": "Door Handle Open.aif",
+  "autore": "RutgerMuller",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/RutgerMuller/sounds/104020",
+  "nota": "la maniglia della porta dell'appartamento vuoto e le spinte alla portafinestra chiusa (colpo a 0,4 s)"
+ },
+ "maniglia_finestra.mp3": {
+  "titolo": "door handle 7.wav",
+  "autore": "FenrirFangs",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/FenrirFangs/sounds/214002",
+  "nota": "la martellina girata dal buco nel vetro (scatti a 0,3 e 0,7 s)"
+ },
+ "corsa_scale.mp3": {
+  "titolo": "005-Hotel run down stairs A.wav",
+  "autore": "TrashCanStudios",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/TrashCanStudios/sounds/616914",
+  "nota": "giù per l'altra scala di corsa (da 0,6 a 4,8 s)"
+ },
+ "corsa_strada.mp3": {
+  "titolo": "Footsteps Running On Concrete Floor Fast Pace.wav",
+  "autore": "ralph.whitehead",
+  "licenza": "CC0 1.0",
+  "pagina": "https://freesound.org/people/ralph.whitehead/sounds/565708",
+  "nota": "la corsa fuori sotto la pioggia (da 3 s)"
  }
 }

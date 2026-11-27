@@ -63,10 +63,12 @@ export function fuoriSet(opz = {}) {
   const muro = mat('#9C9284'), muro2 = mat('#857C6F'), telaio = mat('#C9C6BD');
   const wy0 = FY + 0.9, wy1 = FY + 2.3, wx0 = WX - 0.6, wx1 = WX + 0.6, HT = 18.7;
   const rect = (x0, x1, y0, y1, m = muro, z = 0, p = amb) => add(p, new THREE.PlaneGeometry(x1 - x0, y1 - y0), m, V((x0 + x1) / 2, (y0 + y1) / 2, z));
+  let colonna = null;
   if (!BALC) { rect(-9, wx0, 0, HT); rect(wx1, 9, 0, HT); rect(wx0, wx1, 0, wy0); rect(wx0, wx1, wy1, HT); }
   else {                                         // con i balconi veri la facciata ha i vani veri: sei colonne di buchi (portefinestre e finestre), dietro ci sono spallette e tapparelle (balcone.js)
+    // (colonna: la striscia di facciata tra la tua portafinestra e quella dell'appartamento vuoto: lo spaccato dell'episodio 2 la toglie)
     const PF = [1, 2, 3, 4, 5].map((f) => [3 * f, 3 * f + BAL.HP]), FI = [1, 2, 3, 4, 5].map((f) => [3 * f + 0.9, 3 * f + 2.3]); let x = -9;
-    for (const [a, b, buchi] of [[-BAL.NX1, -BAL.NX0, PF], [-BAL.PX1, -BAL.PX0, PF], [-2.1, -0.9, FI], [wx0, wx1, FI], [BAL.PX0, BAL.PX1, PF], [BAL.NX0, BAL.NX1, PF]]) { rect(x, a, 0, HT); let y = 0; for (const [u, v] of buchi) { rect(a, b, y, u); y = v; } rect(a, b, y, HT); x = b; }
+    for (const [a, b, buchi] of [[-BAL.NX1, -BAL.NX0, PF], [-BAL.PX1, -BAL.PX0, PF], [-2.1, -0.9, FI], [wx0, wx1, FI], [BAL.PX0, BAL.PX1, PF], [BAL.NX0, BAL.NX1, PF]]) { const col = rect(x, a, 0, HT); if (a === BAL.NX0) colonna = col; let y = 0; for (const [u, v] of buchi) { rect(a, b, y, u); y = v; } rect(a, b, y, HT); x = b; }
     rect(x, 9, 0, HT); }
   for (let f = 1; f <= 6; f++) box(18.1, 0.12, 0.09, muro2, V(0, 3 * f, 0.04)); box(18.4, 0.55, 0.36, muro2, V(0, HT + 0.25, 0.05)); box(18.1, 0.5, 0.07, muro2, V(0, 0.25, 0.03));
   const vetro = (tipo) => basic(0xffffff, { map: tex(128, 160, (c, w, h) => {
@@ -135,7 +137,7 @@ export function fuoriSet(opz = {}) {
   const alK = new THREE.Sprite(macchia('#FFD08A', 0.6)); alK.position.set(0.1, 2.0, -1.85); alK.scale.set(1.5, 1.5, 1); K.add(alK);
   const LK = new THREE.PointLight('#FFD9A6', 0, 9, 1.1); LK.position.set(0.1, 1.95, -1.85); K.add(LK);
   const LV = new THREE.PointLight('#FFD9A6', 0, 3, 1.4); LV.position.set(0, 1.75, 0.05); K.add(LV);       // riempimento sul viso quando sei alla finestra
-  const BL = BALC ? balconi({ scene, amb, fuori, FY }) : null;
+  const BL = BALC ? balconi({ scene, amb, fuori, FY, vuoto: !!opz.vuoto }) : null;
   ombre(amb, { fa: false, riceve: true }); ombre(K, { fa: false, riceve: false });
 
   // ---------------------------------------------------------------- luci e personaggi
@@ -160,7 +162,8 @@ export function fuoriSet(opz = {}) {
       SP.intensity = 15 * (o.lampione ?? 1); cono.material.opacity = 0.055 * (o.lampione ?? 1);
       grigia.cofano(o.cofano || 0);
       tel.g.visible = M.clamp(o.telTu ?? 0) > 0; tel.g.rotation.z = o.telFuori ? -Math.PI / 2 : 0;          // prima della posa: la mano modellata prende la presa dell'oggetto che si vede
-      if (BL) BL.update(t, o);
+      if (BL) BL.update(t, o); if (colonna) colonna.visible = !o.sezione;
+      if (o.nebbia !== undefined) { const kn = M.clamp(o.nebbia), k2 = M.clamp(o.nebbia - 1); scene.fog.near = 45 + (3 - 45) * kn - 1.4 * k2; scene.fog.far = 120 + (20 - 120) * kn - 9 * k2; }      // (oltre 1: la pioggia fitta che si mangia il palazzo) else { scene.fog.near = 45; scene.fog.far = 120; }      // (episodio 2: il palazzo che sparisce nella pioggia)
       bacino(T, o.tu); T.pose(o.tu || { pos: [WX, FY, -0.55] }); T.head.visible = !(o.tu && o.tu.senzaTesta);      // senzaTesta: per le soggettive (la camera sta al posto della tua testa)
       const e = o.elena || { pos: [ZUFFA[0] + 0.35, 0, ZUFFA[2]], yaw: -Math.PI / 2 };
       const f = E.parti.fianchi, cade = M.clamp(e.cade || 0), sd = M.clamp(e.sdraiata || 0);      // prima della posa: le braccia «mondo» usano già il corpo ruotato

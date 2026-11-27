@@ -209,6 +209,52 @@ export function elena({ modellato = true } = {}) {
       add(upper, new THREE.BoxGeometry(0.06, 0.2, 0.26), bg, V(-0.21 * k, -0.12 * k, 0.02)); tra(upper, V(-0.2 * k, -0.02 * k, 0.03), V(0.14 * k, 0.4 * k, 0.05), 0.008, 0.008, bg); } });
 }
 
+// ------------------------------------------------------------------ LA SIGNORA ADA (interno 11, la porta di fronte alla tua): ottant'anni, vestaglia trapuntata
+// color malva, capelli bianchi raccolti in una crocchia, occhiali di metallo sottile. Il corpo modellato è quello di Elena (corpi/elena), con la vestaglia
+// ridipinta dalla stessa texture (cuciture e tasche restano, sopra le trapuntature), le pantofole al posto delle scarpe, senza la borsa.
+function ridipingi(file, scuro, chiaro, { trapunta = 0, rif = 0.36 } = {}) {
+  const t = texture(file); if (!t || !t.image) return null;
+  const im = t.image, cv = document.createElement('canvas'); cv.width = im.width; cv.height = im.height; const c = cv.getContext('2d'); c.drawImage(im, 0, 0);
+  const d = c.getImageData(0, 0, cv.width, cv.height), a = new THREE.Color(scuro), b = new THREE.Color(chiaro), q = new THREE.Color();
+  for (let i = 0; i < d.data.length; i += 4) { const L = (0.3 * d.data[i] + 0.59 * d.data[i + 1] + 0.11 * d.data[i + 2]) / 255; q.copy(a).lerp(b, M.clamp(L / rif * 0.75)); d.data[i] = q.r * 255; d.data[i + 1] = q.g * 255; d.data[i + 2] = q.b * 255; }
+  c.putImageData(d, 0, 0);
+  if (trapunta) { const p = trapunta; c.lineWidth = 2; for (let k = -cv.height; k < cv.width + cv.height; k += p) { for (const [s, col] of [[1, 'rgba(60,40,50,0.28)'], [-1, 'rgba(60,40,50,0.28)']]) { c.strokeStyle = col; c.beginPath(); c.moveTo(k, 0); c.lineTo(k + s * cv.height, cv.height); c.stroke(); } }
+    c.fillStyle = 'rgba(255,240,245,0.35)'; for (let x = 0; x < cv.width; x += p) for (let y = 0; y < cv.height; y += p) { c.beginPath(); c.arc(x + p / 2, y, 1.6, 0, 7); c.fill(); } }
+  const nt = new THREE.CanvasTexture(cv); nt.colorSpace = THREE.SRGBColorSpace; nt.anisotropy = 8; nt.flipY = t.flipY; return new THREE.MeshLambertMaterial({ map: nt, side: THREE.DoubleSide });
+}
+// gli occhiali: due montature di filo (un tubo lungo un rettangolo arrotondato), il ponte, le aste fino alle orecchie e le lenti appena visibili
+function occhiali(head, F) {
+  const g = new THREE.Group(), filo = new THREE.MeshPhongMaterial({ color: '#B8A78A', specular: '#FFF4DC', shininess: 70 }), e = F.eye, z = F.S[2] * 1.02, y = e.y - 0.0015;
+  const rett = (cx) => { const P = []; for (let i = 0; i < 48; i++) { const a = (i / 48) * Math.PI * 2, c = Math.cos(a), s = Math.sin(a), ex = 2 / 5; P.push(V(cx + 0.0205 * Math.sign(c) * Math.abs(c) ** ex, y + 0.0145 * Math.sign(s) * Math.abs(s) ** ex, z - 0.006 * Math.abs(cx + 0.0205 * c) / 0.06)); } return new THREE.CatmullRomCurve3(P, true); };
+  for (const s of [-1, 1]) { const cv = rett(s * e.x); add(g, new THREE.TubeGeometry(cv, 64, 0.0011, 6, true), filo);
+    const l = add(g, new THREE.CircleGeometry(1, 24), new THREE.MeshPhongMaterial({ color: '#DDE6F0', specular: '#FFFFFF', shininess: 120, transparent: true, opacity: 0.12, depthWrite: false }), V(s * e.x, y, z - 0.003), [0.02, 0.0138, 1]);
+    tra(g, V(s * (e.x + 0.0205), y + 0.006, z - 0.006), V(s * 0.071, y + 0.004, -0.004), 0.0009, 0.0009, filo); }
+  tra(g, V(-e.x + 0.0205 - 0.0005, y + 0.004, z), V(e.x - 0.0205 + 0.0005, y + 0.004, z), 0.0010, 0.0010, filo);
+  head.add(g); return g;
+}
+// la crocchia: una treccia avvolta a spirale (un tubo che gira su se stesso stringendosi), con le ciocche disegnate lungo il tubo
+function crocchia(head, colore) {
+  const P = []; for (let i = 0; i <= 120; i++) { const u = i / 120, a = u * Math.PI * 2 * 2.6, r = 0.034 * (1 - 0.72 * u); P.push(V(Math.cos(a) * r, Math.sin(a) * r, 0.012 * u)); }
+  const t = tex(512, 64, (c, w, h) => { c.fillStyle = colore; c.fillRect(0, 0, w, h); const q = rnd(17); for (let i = 0; i < 260; i++) { c.strokeStyle = q() < 0.5 ? 'rgba(255,252,246,0.55)' : 'rgba(120,114,106,0.45)'; c.lineWidth = q(0.8, 2); const y = q() * h; c.beginPath(); c.moveTo(q() * w, y); c.lineTo(q() * w + q(40, 160), y + q(-6, 6)); c.stroke(); } });
+  const g = new THREE.Group(); g.position.set(0, 0.062, -0.072); g.rotation.set(-0.95, 0, 0.2); head.add(g);
+  add(g, new THREE.TubeGeometry(new THREE.CatmullRomCurve3(P), 160, 0.0135, 10, false), new THREE.MeshLambertMaterial({ map: t }));
+  add(g, sfera(0.009, 12), new THREE.MeshLambertMaterial({ color: colore }), V(0, 0, 0.012)); return g;
+}
+export function ada({ modellato = true } = {}) {
+  const C = { skin: '#E1B9A2', pant: '#6E5A66', scarpa: '#B99A9E', suola: '#8E7478', capelli: '#D3CEC5', unghie: '#EBD3C6' };
+  const F = { S: [0.074, 0.104, 0.09], forma: { jaw: 0.36, jawP: 1.6, cheek: 0.035, chinIn: 0.12 }, skin: C.skin, ombra: '#C79A84', linea: '#9C705E',
+    eye: { x: 0.0305, y: 0.006, w: 0.0142, h: 0.0084, hl: 0.0044, tilt: -0.05, ir: 0.0058, iris: '#6E7E8A', lash: '#6A5A50', lashW: 0.0012, hood: true, borse: true, open0: 0.76 },
+    brow: { dx: 0.001, y: 0.0205, len: 0.031, arch: 0.0045, thick: 0.0034, t0: 1, t1: 0.4, color: '#BDB5AA' },
+    nose: { tipo: 'vero', y: -0.026, w: 0.0116, h: 0.0148, d: 0.0165, ombra: 0.28 },
+    mouth: { y: -0.064, w: 0.0192, lip: '#B47E78', lipA: 0.35, line: '#7E5048', lineW: 0.0013, lipU: 0.0006, lipL: 0.0014, pieghe: 0.95 },
+    blush: { x: 0.045, y: -0.028, r: 0.025, color: 'rgba(215,125,115,0.24)' }, rughe: 1.15, orecchie: { y: -0.012, h: 0.027, w: 0.016 } };
+  const vest = modellato ? ridipingi('elena_male_elegantsuit01.png', '#5E4352', '#D9BFCB', { trapunta: 26 }) : null, pant = modellato ? ridipingi('elena_shoes03.png', '#8E6E74', '#E6CBCB') : null;
+  const materiali = modellato ? { ...(vest ? { vestito: vest } : {}), ...(pant ? { scarpa: pant } : {}), borsa: new THREE.MeshBasicMaterial({ visible: false }) } : {};
+  const vm = mat('#B58FA2'), lim = chiavi([[0, 0.94], [0.5, 0.92], [0.85, 1.12], [1.1, 1.5], [1.45, 1.62], [2.2, 1.7], [3.15, 1.76]]);
+  return uomo({ k: 0.87, largo: 0.88, C, F, corpo: modellato ? 'elena' : null, materiali, torso: vm, manica: vm, manica2: vm, polsino: vm, cappotto: mat('#B58FA2', { side: THREE.DoubleSide }),
+    capelli: (T) => { capelli(T, { polo: [0, 0.92, -0.38], scala: 1.04, limite: (ph) => lim(Math.abs(ph)), base: C.capelli, chiaro: '#F3EFEA', scuro: '#9E978E', n: 900, seme: 43 }); crocchia(T.head, C.capelli); occhiali(T.head, F); } });
+}
+
 // il telefono in mano (schermo acceso verso chi lo tiene): torna { g, schermo }
 export function telefono(P, lato = 'AR', colore = '#BFD6FF', dy = 0) {
   const A = P[lato], g = new THREE.Group(); A.gH.add(g); let d = g, gp = null, gr = null;

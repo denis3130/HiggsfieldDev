@@ -16,7 +16,7 @@ const sfum = (a, b) => tex(8, 128, (c, w, h) => { const g = c.createLinearGradie
 const macchia = (col) => new THREE.MeshBasicMaterial({ map: alone(), color: col, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending });
 
 // porta blindata con spioncino, maniglia e serratura; z = faccia verso chi guarda
-function porta(p, { numero = null, colore = '#4A3226' } = {}) {
+export function porta(p, { numero = null, colore = '#4A3226' } = {}) {
   const g = new THREE.Group(); p.add(g);
   const m = mat(0xffffff, { map: tex(256, 512, (c, w, h) => { c.fillStyle = colore; c.fillRect(0, 0, w, h); c.strokeStyle = mix(colore, '#000000', 0.35); c.lineWidth = 5;
     for (const [x, y, ww, hh] of [[28, 30, 200, 190], [28, 250, 200, 232]]) c.strokeRect(x, y, ww, hh);
@@ -36,7 +36,9 @@ function porta(p, { numero = null, colore = '#4A3226' } = {}) {
 // la leva della porta d'ingresso nel mondo (la porta sta a z = -2.56): a = punta libera, b = perno, r = raggio. Serve a chi la impugna.
 export const LEVA_INGRESSO = { a: [0.225, 1.02, -2.475], b: [0.365, 1.02, -2.475], r: 0.011 };
 // ------------------------------------------------------------------ l'ingresso di casa, di notte
-export function ingressoSet() {
+// opz.entra (episodio 2, «Interno 11»): la porta si apre da fuori con le tue chiavi, la luce del pianerottolo invade il corridoio buio e in mezzo c'è lui,
+// in controluce, con la sua ombra lunga sul pavimento. update: o.apre 0..1 (l'anta), o.isp (la sua posa, dietro la porta).
+export function ingressoSet(opz = {}) {
   const scene = new THREE.Scene(); scene.background = new THREE.Color('#05070c');
   const cam = G.camera(44, 0.03, 40); scene.add(cam);
   const amb = new THREE.Group(); scene.add(amb);
@@ -48,7 +50,9 @@ export function ingressoSet() {
   // muro di sinistra con l'apertura della cucina (z da -0.35 a 0.75)
   for (const [z0, z1] of [[-2.6, -0.35], [0.75, 2.4]]) { const w = add(amb, new THREE.PlaneGeometry(z1 - z0, 2.6), muro, V(-0.78, 1.3, (z0 + z1) / 2)); w.rotation.y = Math.PI / 2; }
   const sopra = add(amb, new THREE.PlaneGeometry(1.1, 0.5), muro, V(-0.78, 2.35, 0.2)); sopra.rotation.y = Math.PI / 2;
-  const fondo = add(amb, new THREE.PlaneGeometry(1.56, 2.6), muro, V(0, 1.3, -2.6));
+  // il muro di fondo; con opz.entra ha il vano vero della porta (x ±0.45, alto 2,08: lo copre il telaio), se no quando l'anta si apriva dietro c'era il muro
+  if (opz.entra) { for (const s of [-1, 1]) add(amb, new THREE.PlaneGeometry(0.33, 2.6), muro, V(s * 0.615, 1.3, -2.6)); add(amb, new THREE.PlaneGeometry(0.9, 0.52), muro, V(0, 2.34, -2.6)); }
+  else add(amb, new THREE.PlaneGeometry(1.56, 2.6), muro, V(0, 1.3, -2.6));
   const sof = add(amb, new THREE.PlaneGeometry(1.56, 5), mat('#DAD4C6'), V(0, 2.6, -0.1)); sof.rotation.x = Math.PI / 2;
   for (const s of [-1, 1]) box(0.02, 0.1, 5, mat('#6E5038'), V(s * 0.77, 0.05, -0.1));
   // la cucina dietro l'apertura: buio azzurro, la finestra accesa dalla luna
@@ -85,14 +89,28 @@ export function ingressoSet() {
   const T = testimone(); scene.add(T.group);
   // il telefono nella sua mano (schermo acceso verso di lui)
   const tel = telefono(T, 'AR').g;
+  let I = null, LE = null, fuoriP = null;
+  if (opz.entra) {
+    fuoriP = new THREE.Group(); scene.add(fuoriP);                                      // il pianerottolo dietro la porta: muro giallo illuminato, pavimento
+    add(fuoriP, new THREE.PlaneGeometry(3, 2.7), mat('#D9C98E'), V(0, 1.35, -4.4)); const pv = add(fuoriP, new THREE.PlaneGeometry(3, 1.9), mat('#B8AE98'), V(0, 0.001, -3.5)); pv.rotation.x = -Math.PI / 2;
+    for (const s of [-1, 1]) { const w = add(fuoriP, new THREE.PlaneGeometry(1.9, 2.7), mat('#CDBE88'), V(s * 1.5, 1.35, -3.5)); w.rotation.y = -s * Math.PI / 2; }
+    I = ispettore(); scene.add(I.group); ombre(I.group, { fa: true, riceve: false });
+    LE = new THREE.SpotLight('#FFD08A', 0, 9, 0.7, 0.5, 1.0); LE.position.set(0.15, 2.3, -4.2); LE.target.position.set(0, 0, -0.6); scene.add(LE, LE.target);
+    LE.castShadow = true; LE.shadow.mapSize.set(2048, 2048); LE.shadow.camera.near = 0.3; LE.shadow.camera.far = 9; LE.shadow.bias = -0.0015; LE.shadow.radius = 3;
+    amb.traverse((o) => { if (o.isMesh) o.receiveShadow = true; }); fuoriP.traverse((o) => { if (o.isMesh) o.receiveShadow = true; });
+  }
   const tmp = V(0, 0, 0);
-  return { scene, camera: cam, bloom: 0, T,
+  return { scene, camera: cam, bloom: 0, T, I,
     update(t, u, o = {}) {
+      const ka = I ? M.clamp(o.apre ?? 0) : 0;
+      if (I) { pg.userData.anta.rotation.y = -1.65 * ka; LE.intensity = 26 * M.clamp(ka * 4); LE.visible = LE.intensity > 0.001; fuoriP.visible = ka > 0.001; I.group.visible = !!o.isp; if (o.isp) I.pose(o.isp);
+        // a porta aperta non c'è più la luce che filtra da sotto (la striscia, la pozza, la luce calda bassa che lo illuminava da davanti): resta il controluce
+        const ch = 1 - M.clamp(ka * 3); lPorta.intensity = 0.45 * ch; striscia.visible = ch > 0.02; pozza.material.opacity = 0.55 * ch; }
       G.lookFrom(cam, o.cam || [0.4, 1.55, 1.3], o.look || [0, 1.0, -2.4], o.roll || 0); cam.fov = o.fov || 44; cam.updateProjectionMatrix(); L.segui(cam, o.look || [0, 1.0, -2.4]);
       const k = M.clamp(o.piedi || 0);
       piedi.forEach((g) => { g.position.x = g.userData.s * 0.1 + (1 - k) * 0.75 + (o.piediDx || 0); g.visible = k > 0.01; g.children[1].material.opacity = k; });
       pg.position.z = 0.012 * (o.colpo || 0); pg.rotation.x = 0.004 * (o.colpo || 0);
-      P.visible = o.porta !== false; alOcchio.visible = P.visible; lOcchio.intensity = o.occhio || 0;
+      P.visible = o.porta !== false; alOcchio.visible = P.visible && ka < 0.01; occhio.visible = ka < 0.01; lOcchio.intensity = o.occhio || 0;      // (il bagliore dello spioncino restava a mezz'aria nel vano)
       L.A.intensity = (o.amb ?? 0.2) * PI; L.F.intensity = (o.fronte ?? 0.1) * PI;
       if (o.luce) { lExtra.position.set(...o.luce.pos); lExtra.intensity = o.luce.k ?? 1; lExtra.color.set(o.luce.colore || '#FFE6C4'); } else lExtra.intensity = 0;
       tel.visible = (o.telefono ?? 1) > 0;                    // prima della posa: la mano modellata prende la presa del telefono se si vede

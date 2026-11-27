@@ -10,6 +10,7 @@
 import * as M from '../lib/motion.js';
 import { THREE, V, rnd, tex, mat, piatto as basic, sfera, add, loft, alone, PI } from './stile.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
+import { vuotoDentro } from './vuoto.js';
 
 // misure (metri; x e z nel mondo, y dal pavimento del balcone): XA..XD il tuo balcone, XD..XB quello vuoto; ZR asse della ringhiera, ZS bordo della soletta;
 // HR asse del corrimano, RT il suo raggio; PX la tua portafinestra, NX quella dell'appartamento vuoto, HP la loro altezza, SP lo spessore della soletta
@@ -58,7 +59,8 @@ function tapparella(w, h, colore = '#66756B', passo = 0.047, seme = 5) {
 function vaso(p, x, z, R = 0.13, H = 0.22, colore = '#A9593A') {
   const g = new THREE.Group(); g.position.set(x, 0, z); p.add(g);
   const pr = [[R * 0.62, 0], [R * 0.66, 0.01], [R * 0.93, H * 0.84], [R * 1.04, H * 0.85], [R * 1.06, H], [R * 0.95, H], [R * 0.9, H * 0.86], [R * 0.86, H * 0.84]].map(([a, b]) => new THREE.Vector2(a, b));
-  add(g, new THREE.LatheGeometry(pr, 28), mat(colore, { side: THREE.DoubleSide })); const terra = add(g, new THREE.CircleGeometry(R * 0.88, 24), mat('#3A2A20'), V(0, H * 0.86, 0)); terra.rotation.x = -Math.PI / 2;
+  add(g, new THREE.LatheGeometry(pr, 28), mat(colore, { side: THREE.DoubleSide })); add(g, new THREE.CircleGeometry(R * 0.62, 28), mat(colore), V(0, 0.002, 0)).rotation.x = Math.PI / 2;      // il fondo (visto da sotto era aperto)
+  const terra = add(g, new THREE.CircleGeometry(R * 0.88, 24), mat('#3A2A20'), V(0, H * 0.86, 0)); terra.rotation.x = -Math.PI / 2;
   return g;
 }
 // una foglia: striscia rastremata e curva, due facce, colore sui vertici (c0 alla base, c1 in punta, bordo)
@@ -98,7 +100,8 @@ function secca(p, x, z, seme = 4) {
   add(g, mergeGeometries(S), mat('#5C4630')); add(g, mergeGeometries(F), verde()); return g;
 }
 
-export function balconi({ scene, amb, fuori, FY }) {
+// vuoto (episodio 2, «Interno 11»): l'appartamento vuoto ha la tapparella alzata, la portafinestra vera e la stanza dentro (vuoto.js)
+export function balconi({ scene, amb, fuori, FY, vuoto = false }) {
   const B = BAL, r = rnd(402), { XA, XD, XB, ZR, ZS, HR, RT, PX0, PX1, NX0, NX1, HP, SP, ZT } = B;
   const RG = ringhiera(), ferroM = new THREE.MeshLambertMaterial({ vertexColors: true }), corrM = new THREE.MeshPhongMaterial({ color: '#30353D', specular: '#5F6E8C', shininess: 55 });
   // piastrelle di gres rosso, più scure e lucide (bagnate) verso il bordo; fughe grigie; la v della texture va dal muro (0) al bordo (1)
@@ -147,20 +150,20 @@ export function balconi({ scene, amb, fuori, FY }) {
     const top = add(g, new THREE.PlaneGeometry(sx, ZS), sopraM, V(cx, 0.001, ZS / 2)); top.rotation.x = -Math.PI / 2; top.receiveShadow = true;
     add(g, new THREE.BoxGeometry(sx, SP, ZS), intonaco, V(cx, -SP / 2, ZS / 2)).receiveShadow = true;
     add(g, new THREE.PlaneGeometry(sx, SP), bordoM, V(cx, -SP / 2, ZS + 0.001));
-    add(g, RG.ferro, ferroM).receiveShadow = true; add(g, RG.corrimano, corrM);
+    const fer = add(g, RG.ferro, ferroM); fer.receiveShadow = true; add(g, RG.corrimano, corrM);
     // divisorio: telaio di angolari e due lastre di vetro retinato. La faccia verso l'appartamento di destra (x maggiore) ha le normali girate dall'altra parte:
     // prende la luce e le ombre che arrivano sull'altra faccia, come un vetro smerigliato che lascia passare la sagoma di chi sta dietro.
     const tel = [];
     for (const z of [DIV.z0, DIV.z1]) tel.push(barra(0.035, DIV.y1, 0.035, XD, DIV.y1 / 2, z, r, 0.1));
     for (const yy of [DIV.y0, 1.03, DIV.y1]) tel.push(barra(0.03, 0.03, DIV.z1 - DIV.z0, XD, yy, (DIV.z0 + DIV.z1) / 2, r, yy < 0.5 ? 0.4 : 0.05));
-    add(g, mergeGeometries(tel), ferroM).receiveShadow = true;
+    const telD = add(g, mergeGeometries(tel), ferroM); telD.receiveShadow = true;
     const lastre = [];
     for (const [a, b] of [[DIV.y0 + 0.015, 1.015], [1.045, DIV.y1 - 0.015]]) {
       const w = DIV.z1 - DIV.z0 - 0.035, gA = new THREE.PlaneGeometry(w, b - a); gA.rotateY(-Math.PI / 2); gA.translate(XD - 0.003, (a + b) / 2, (DIV.z0 + DIV.z1) / 2);
       const gB = new THREE.PlaneGeometry(w, b - a); gB.rotateY(Math.PI / 2); gB.translate(XD + 0.003, (a + b) / 2, (DIV.z0 + DIV.z1) / 2); const nn = gB.attributes.normal; for (let i = 0; i < nn.count; i++) nn.setXYZ(i, -1, 0, 0);
       for (const [gg, mm] of [[gA, vetroA], [gB, vetroB]]) { const m = add(g, gg, mm); m.receiveShadow = true; lastre.push(m); } }
     if (!(y === FY && lato === 1)) { vano(g, PX0, PX1, 0, HP, stato()); vano(g, NX0, NX1, 0, HP, stato()); }      // le portefinestre degli altri (le due del tuo piano sono fatte più sotto)
-    return { g, lastre };
+    return { g, lastre, telD, fer };
   }
   const piani = [];
   for (const lato of [1, -1]) for (let f = 1; f <= 5; f++) piani.push(doppio(3 * f, lato));
@@ -171,14 +174,14 @@ export function balconi({ scene, amb, fuori, FY }) {
   const muroM = mat('#9C9284'), telaioM = mat('#CFCBC0'), marmo = mat('#B9B4A8');
   const qb = (w, h, d, m, x, y, z, p = Q) => { const o = add(p, new THREE.BoxGeometry(w, h, d), m, V(x, y, z)); o.receiveShadow = true; return o; };
   // lo spessore del muro attorno ai due vani (si vede come spalletta; fa ombra alla luce di casa)
+  const muriQ = [];                                             // (lo spaccato dell'episodio 2 li nasconde)
   for (const [x0, x1] of [[PX0, PX1], [NX0, NX1]]) {            // (a sinistra 0,6: fino alla parete del soggiorno, senza entrare in cucina; a destra 0,85: oltre la parete)
-    qb(0.6, HP + 0.5, 0.3, muroM, x0 - 0.3, (HP + 0.5) / 2, -0.151).castShadow = true; qb(0.85, HP + 0.5, 0.3, muroM, x1 + 0.425, (HP + 0.5) / 2, -0.151).castShadow = true;
-    qb(x1 - x0 + 1.45, 0.5, 0.3, muroM, (x0 + x1) / 2 + 0.125, HP + 0.25, -0.151).castShadow = true;
+    for (const m of [qb(0.6, HP + 0.5, 0.3, muroM, x0 - 0.3, (HP + 0.5) / 2, -0.151), qb(0.85, HP + 0.5, 0.3, muroM, x1 + 0.425, (HP + 0.5) / 2, -0.151), qb(x1 - x0 + 1.45, 0.5, 0.3, muroM, (x0 + x1) / 2 + 0.125, HP + 0.25, -0.151)]) { m.castShadow = true; muriQ.push(m); }
     qb(x1 - x0 + 0.08, 0.03, 0.26, marmo, (x0 + x1) / 2, 0.014, -0.09);                                             // soglia di marmo
     for (const s of [x0 + 0.012, x1 - 0.012]) qb(0.024, HP, 0.03, mat('#8D8E86'), s, HP / 2, -0.06);                 // guide della tapparella
   }
   // --- l'appartamento vuoto: tapparella giù, sporca
-  const tapN = add(Q, tapparella(NX1 - NX0 - 0.04, HP - 0.02, '#66756B', 0.047, 11), new THREE.MeshLambertMaterial({ vertexColors: true }), V((NX0 + NX1) / 2, 0.02, -0.066)); tapN.receiveShadow = true;
+  const tapN = add(Q, tapparella(NX1 - NX0 - 0.04, vuoto ? 0.13 : HP - 0.02, '#66756B', 0.047, 11), new THREE.MeshLambertMaterial({ vertexColors: true }), V((NX0 + NX1) / 2, vuoto ? HP - 0.13 : 0.02, -0.066)); tapN.receiveShadow = true;      // (vuoto: alzata)
   // --- la tua: cassonetto con tre stecche che sporgono, telaio fisso, due ante (quella di destra si apre verso l'interno), vetri, maniglia dentro
   add(Q, tapparella(PX1 - PX0 - 0.04, 0.13, '#7C8A80', 0.047, 12), new THREE.MeshLambertMaterial({ vertexColors: true }), V((PX0 + PX1) / 2, HP - 0.13, -0.066));
   for (const x of [PX0 + 0.025, PX1 - 0.025]) qb(0.05, HP - 0.03, 0.06, telaioM, x, (HP + 0.03) / 2, ZT).castShadow = true;
@@ -242,11 +245,14 @@ export function balconi({ scene, amb, fuori, FY }) {
   // la parte bassa della portafinestra: una lama di luce radente che passa sotto il divisorio e allunga sul pavimento l'ombra di chi sta sul balcone
   const LB = new THREE.SpotLight('#FFC68A', 0, 7, 0.5, 0.7, 1.0); LB.position.set(PX0 + 0.3, FY + 0.3, 0.12); LB.target.position.set(XD + 0.9, FY, 0.6); scene.add(LB, LB.target);
   LB.castShadow = true; LB.shadow.mapSize.set(2048, 2048); LB.shadow.camera.near = 0.15; LB.shadow.camera.far = 7; LB.shadow.bias = -0.002; LB.shadow.normalBias = 0.02; LB.shadow.radius = 5;
+  // (episodio 2) casa.riempi: il lampadario illumina anche la stanza attorno a sé (LS guarda solo verso la portafinestra: chi stava in mezzo al soggiorno
+  // restava al buio). Senza ombre e con un raggio corto (2,3 m), così non passa dai muri e non tocca il balcone.
+  const LR = new THREE.PointLight('#FFD3A0', 0, 2.3, 1.2); LR.position.set(LP[0], FY + LP[1] - 0.12, LP[2]); scene.add(LR);
   const LC = new THREE.PointLight('#FFD9A6', 0, 5, 1.3); LC.position.set(SX0 + 0.75, FY + 1.75, SZ - 0.55);      // dentro il corridoio, dietro la porta: chi sta sulla soglia resta in controluce (davanti alla porta gli accendeva la testa) scene.add(LC);
 
   // ------------------------------------------------------------------ le tue piante; dall'altra parte la pianta secca, il cartello, le foglie
   const P4 = new THREE.Group(); P4.position.y = FY; scene.add(P4);
-  sansevieria(P4, XA + 0.3, 0.3); geranio(P4, XA + 0.62, ZR - 0.2).rotation.y = 0.04; vaso(P4, XA + 0.72, 0.24, 0.1, 0.17); secca(P4, XB - 0.35, 0.3);
+  sansevieria(P4, XA + 0.3, 0.3); geranio(P4, XA + 0.62, ZR - 0.2).rotation.y = 0.04; vaso(P4, XA + 0.72, 0.24, 0.1, 0.17); const PS = secca(P4, XB - 0.35, 0.3);
   { const g = P4.children[2], G2 = [], rr = rnd(8); for (let i = 0; i < 16; i++) { const f = foglia(rr(0.07, 0.12), rr(0.025, 0.04), rr(0.3, 1.1), { c0: '#2C5A30', c1: '#5C9A4E', n: 5, punta: 1.1 }); f.rotateX(rr(0.2, 1.0)); f.rotateY(rr(0, TAU)); f.translate(rr(-0.03, 0.03), 0.15, rr(-0.03, 0.03)); G2.push(f); } add(g, mergeGeometries(G2), verde()); }     // basilico
   P4.traverse((o) => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
   // cartello AFFITTASI legato alla ringhiera dell'appartamento vuoto, verso la strada (da dentro se ne vede il retro bianco)
@@ -294,13 +300,17 @@ export function balconi({ scene, amb, fuori, FY }) {
   const cBuio = new THREE.Color('#07090E'), cLuce = new THREE.Color('#E9C58A'), gSp = new THREE.Color('#30343C'), gAc = new THREE.Color('#FFF2CC');
   muoviTenda(0, 0, 0);
   const montante = (ap, y = 1.1) => { const th = 1.75 * M.clamp(ap), d = LW - 0.0325; return [PX1 - 0.05 - d * Math.cos(th), FY + 0.033 + y, ZT - d * Math.sin(th)]; };
-  return { Q, S, antaD, antaS, tenda, LS, LG, LC, LD, piani, DIV, montante,
+  // l'appartamento vuoto da dentro (episodio 2, «Interno 11»); la ringhiera del tuo piano fa l'ombra delle sbarre sul pavimento della stanza
+  const EV = vuoto ? vuotoDentro({ scene, Q, FY, BAL: B, PS, P4 }) : null; if (EV) piani[3].fer.castShadow = true;
+  return { Q, S, antaD, antaS, tenda, LS, LG, LC, LD, piani, DIV, montante, EV, PS, muriQ,
     update(t, o = {}) {
+      if (EV) { EV.update(t, o); const sz = !o.sezione; muriQ.forEach((m) => { m.visible = sz; }); piani[3].telD.visible = sz; piani[3].lastre.forEach((m) => { m.visible = sz; }); }
       const ap = M.clamp(o.porta ?? 0), casa = o.casa || {}, ks = M.clamp(casa.soggiorno ?? 0), kc = M.clamp(casa.corridoio ?? 0), vento = o.vento ?? 1;
       antaD.rotation.y = -1.75 * ap; muoviTenda(t, Math.min(1, ap * 6) * (1 - M.clamp(o.tendaScosta ?? 0)), vento, M.clamp(o.tendaScosta ?? 0), M.clamp(o.tendaLarga ?? 0));
       LS.intensity = 11 * ks; LG.intensity = 0.8 * ks + 0.35 * kc * (1 - ks); LD.intensity = (o.luceBalcone ?? 5) * ks; LB.intensity = (o.luceBassa ?? 0) * ks; LC.intensity = 7 * kc * (1 - 0.7 * ks);
       // una luce spenta non deve costare (le sue ombre si calcolerebbero lo stesso)
-      for (const l of [LS, LD, LB, LG, LC]) l.visible = l.intensity > 0.001;
+      LR.intensity = 2.6 * ks * M.clamp(casa.riempi ?? 0);
+      for (const l of [LS, LD, LB, LG, LC, LR]) l.visible = l.intensity > 0.001;
       globo.material.color.copy(gSp).lerp(gAc, ks); alS.material.opacity = 0.7 * ks; portaC.material.color.copy(cBuio).lerp(cLuce, kc);
       piove(t, o.pioggia3 ?? 1, ks, vento);
     } };

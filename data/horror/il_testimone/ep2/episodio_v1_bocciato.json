@@ -1,0 +1,149 @@
+{
+ "serie": "Il Bivio",
+ "storia": "Il testimone",
+ "episodio": 2,
+ "titolo": "La mano tesa",
+ "ramo": "B dell'episodio 1 (non apri, e scappi dal balcone con il telefono)",
+ "stato": "Testo approvato dall'utente il 26/11 («vai»). Voce: Luc di Higgsfield, una sola generazione (job cc9e28fe-5f6a-4a19-941d-66dcc8f23ce2, 4,35 crediti, 118 s, 2,51 parole al secondo mentre parla: non si rallenta). «pausa» = secondi di silenzio aggiunti dopo la riga (per le azioni), oltre alla pausa naturale di Luc: li legge prepara_voce.py.",
+ "bivio": {
+  "A": "Gli passi il telefono",
+  "B": "Dici che ti è già caduto"
+ },
+ "righe": [
+  {
+   "id": 1,
+   "voce": "Avete scelto la B.",
+   "pausa": 0.3
+  },
+  {
+   "id": 2,
+   "voce": "Non apri. Non rispondi. Resti immobile, al buio.",
+   "pausa": 0.3
+  },
+  {
+   "id": 3,
+   "voce": "Lui smette di bussare. E suona alla porta di fronte.",
+   "pausa": 0.4
+  },
+  {
+   "id": 4,
+   "voce": "«Polizia, signora. Il suo vicino non risponde. Lei ha per caso le chiavi?»",
+   "pausa": 0.3
+  },
+  {
+   "id": 5,
+   "voce": "Le ha. Gliele hai lasciate tu, per le piante.",
+   "pausa": 0.4
+  },
+  {
+   "id": 6,
+   "voce": "Richiamare il centododici? Ti hanno appena mandato lui.",
+   "pausa": 0.3
+  },
+  {
+   "id": 7,
+   "voce": "Ti infili il telefono in tasca ed esci sul balcone. La portafinestra resta socchiusa.",
+   "pausa": 0.4
+  },
+  {
+   "id": 8,
+   "voce": "Sotto ci sono quattro piani di vuoto. E l'auto grigia. Lei è ancora lì dentro.",
+   "pausa": 0.4
+  },
+  {
+   "id": 9,
+   "voce": "Di fianco c'è il balcone di un appartamento vuoto da mesi. Lì non verrà a cercarti.",
+   "pausa": 0.3
+  },
+  {
+   "id": 10,
+   "voce": "Scavalchi la ringhiera. È bagnata. Non guardi giù.",
+   "pausa": 0.5
+  },
+  {
+   "id": 11,
+   "voce": "Un piede oltre il divisorio. Poi l'altro. Ci sei.",
+   "pausa": 0.5
+  },
+  {
+   "id": 12,
+   "voce": "Ti rannicchi contro il muro, al buio.",
+   "pausa": 0.7
+  },
+  {
+   "id": 13,
+   "voce": "In casa tua si accende la luce.",
+   "pausa": 0.5
+  },
+  {
+   "id": 14,
+   "voce": "«Permesso», dice lui. Come un ospite.",
+   "pausa": 0.3
+  },
+  {
+   "id": 15,
+   "voce": "Lo senti camminare. Apre le porte, una per una. Senza fretta.",
+   "pausa": 0.3
+  },
+  {
+   "id": 16,
+   "voce": "«Non deve avere paura di me», dice piano. «Sono qui per proteggerla.»",
+   "pausa": 0.5
+  },
+  {
+   "id": 17,
+   "voce": "Poi i suoi passi escono sul balcone. E si fermano.",
+   "pausa": 0.8
+  },
+  {
+   "id": 18,
+   "voce": "Trattieni il respiro.",
+   "pausa": 1.0
+  },
+  {
+   "id": 19,
+   "voce": "La sua faccia spunta da dietro il divisorio. Lentamente.",
+   "pausa": 0.6
+  },
+  {
+   "id": 20,
+   "voce": "«Eccola», dice, gentile. «Mi ha fatto spaventare. Pensavo si fosse buttato.»",
+   "pausa": 0.3
+  },
+  {
+   "id": 21,
+   "voce": "«Con questa pioggia si scivola. Basta un attimo.»",
+   "pausa": 0.4
+  },
+  {
+   "id": 22,
+   "voce": "Ti tende la mano, sopra il vuoto. «Venga. L'aiuto io.»",
+   "pausa": 0.4
+  },
+  {
+   "id": 23,
+   "voce": "«Prima però mi passi il telefono. Non vorrà che le cada di sotto.»",
+   "pausa": 0.6
+  },
+  {
+   "id": 24,
+   "voce": "Cosa fai?",
+   "pausa": 0.15
+  },
+  {
+   "id": 25,
+   "voce": "La A: gli passi il telefono, con dentro il video.",
+   "pausa": 0.2
+  },
+  {
+   "id": 26,
+   "voce": "Oppure la B: gli dici che ti è già caduto di sotto.",
+   "pausa": 0.2
+  },
+  {
+   "id": 27,
+   "voce": "Scrivilo nei commenti, e seguimi per vedere come continua."
+  }
+ ],
+ "nota_testo": "26/11, costruendo le scene: la porta dell'interno 11, nell'episodio 1, è DI FRONTE alla tua (si vede dallo spioncino dietro l'ispettore), non accanto. Quindi «E suona alla porta di fronte» (era «accanto») e via «Lo senti attraverso il muro.»: lo guardi dallo spioncino. Da dire all'utente insieme al resto del testo. Sempre il 26/11, rileggendo: se il telefono resta in mano davanti a lui, la B («gli dici che ti è caduto») non regge. Quindi «Ti infili il telefono in tasca ed esci sul balcone» (era «Prendi il telefono…»: ce l'aveva già in mano dall'episodio 1), lui dice «Non vorrà che le cada di sotto» (era «Le servono tutte e due le mani») e la B diventa «gli dici che ti è già caduto di sotto»: la bugia riprende le sue parole e il telefono resta nascosto in tasca."
+}

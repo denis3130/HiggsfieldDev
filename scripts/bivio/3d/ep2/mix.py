@@ -1,13 +1,16 @@
-# Mix dell'episodio 2 de «Il testimone» («La mano tesa»): la voce + suoni veri CC0 agganciati alle stesse parole delle inquadrature (assets/parole.json).
+# Mix dell'episodio 2 de «Il testimone» («Interno 11», la terza versione approvata il 27/11): la voce + suoni veri CC0 agganciati alle stesse parole
+# delle inquadrature (assets/parole.json, gli stessi conti di film.js). Il mix della prima versione («La mano tesa», bocciata) è nella storia del repository.
 # Uso: python3 mix.py [video_muto.mp4 uscita.mp4]     → audio/mix.wav (48 kHz, -14 LUFS) e, se indicato, il video con l'audio.
 # I suoni stanno in scripts/bivio/sfx (licenze in licenze_suoni.json); LIB=<cartella> per prenderli altrove. Quelli nuovi dell'episodio 2: campanello, chiavi,
-# serratura, chiavi_porta, catenella, passi_piastrelle, ringhiera, finestra, vento (tutti CC0, scelti dal titolo e dalla forma d'onda: i volumi vanno riascoltati).
+# serratura, chiavi_porta, catenella, passi_piastrelle, ringhiera, finestra, vento; per «Interno 11»: vetro, vetro_schegge, scricchiolio, maniglia,
+# maniglia_finestra, corsa_scale, corsa_strada (tutti CC0, scelti dal titolo e dalla forma d'onda: i volumi si misurano contro la voce).
 # La musica di sottofondo la sceglie l'utente: musica.json = {"file": brano in scripts/bivio/musica (licenze in licenze_musica.json),
 #   "da": secondo da cui parte, "coda": secondi finali da scartare, "incrocio": dissolvenza quando il brano ricomincia, "filtri": filtri di ffmpeg sul brano,
 #   "lufs": livello prima del volume finale, misurato senza i bassi sotto 200 Hz, cioè come si sente da un telefono (lì la voce è a -22,9 e la pioggia intorno a -31,5)}.
 #   Può essere anche una lista di brani da sovrapporre. Un brano che manca (quelli dell'utente stanno solo sulla macchina, in musica/utente) si salta con un avviso.
 #   Per provarne un'altra senza toccare musica.json: MUSICA=<file> oppure MUSICA='{"file": ..., "lufs": ...}' (o una lista); MUSICA=no la toglie.
 # MIX=<file.wav> scrive il mix altrove (per le prove); SENZA_VOCE=1 lascia fuori la voce, GREZZO=1 non normalizza (per misurare i livelli dei suoni contro la voce).
+# ELENCO=1 stampa ogni suono (inizio, fine, volume) senza fare il mix: per sapere cosa suona in un punto (es. `ELENCO=1 python3 mix.py | awk '$1 < 74 && $2 > 73'`).
 import json, math, os, re, subprocess, sys, unicodedata
 D = os.path.dirname(os.path.abspath(__file__))
 LIB = os.environ.get('LIB') or os.path.normpath(os.path.join(D, '../../sfx'))
@@ -31,18 +34,22 @@ def w(n, parola, fine=0, quale=0):
     h = [x for x in RIGHE[n - 1] if norm(x[2]) == norm(parola)]
     return h[min(quale, len(h) - 1)][fine] if h else r(n)
 
-# ---- gli stessi momenti del film (film.js)
-K2 = [r(2) + 0.55, r(2) + 0.9, r(2) + 1.25]; resti = w(2, 'resti') - 0.15
-tS = r(3) - 0.25; tGira = r(3) + 0.3; tVa = tGira + 0.9; tArr = w(3, 'suona') + 0.5; tSuona = tArr + 0.15; tApre = r(4) - 0.35; tChiude = r(5) + 0.1; buioA = w(5, 'piante') + 0.1
-esce = r(7) - 0.3; soc = w(7, 'portafinestra') - 0.2; auto = w(8, "l'auto") - 0.25
-bagn = w(10, 'è') - 0.15; nong = w(10, 'non') - 0.15; poi = w(11, 'poi') - 0.15; cisei = w(11, 'ci') - 0.2
-acc = w(13, 'accende') + 0.15; sogg = rf(14) + 0.05; apre = w(15, 'apre') - 0.2; dita = w(16, 'sono') - 0.3; spunta = w(19, 'spunta') - 0.1
+# ---- gli stessi momenti del film (film.js, sequenza())
+tOm = w(2, 'respiri') - 0.25; tVia = rf(2) + 0.75; tS = tVia + 0.55
+tGira = tS + 0.15; tVa = tGira + 0.45; tArr = tVa + 1.25; tSuona = tArr + 0.1; tApre = r(3) - 0.35; tChiude = r(4) + 0.1; buioA = w(4, 'piante') + 0.1
+tVai = r(5) - 0.28; esce = w(5, 'trovarle') + 0.35
+tGu = r(6) - 0.2; c0 = rf(6) + 0.15; tChiave = c0 + 2.35; tNg = tChiave + 1.45; tPd = tNg + 1.1; tCi = tPd + 1.45; tChiusa = r(7) - 0.1; bagn = c0 + 1.15
+tVaso = w(7, 'per') - 0.1; tAsp = w(8, 'aspetti') - 1.1; tRompe = rf(8) + 2.0; lampoL = tAsp + 2.9; tMano = tRompe + 1.05; tDentro = r(9) + 0.5
+tMuro = w(9, 'e') - 0.05; tLui = r(10) - 0.05; tPasso = r(11) - 0.15; tScr = w(11, 'scricchiola'); tGelo = tScr + 0.15; tSez = r(12) - 0.1; tRip = r(13) - 0.1
+tPorta = r(14) - 0.05; tScopre = w(14, 'dà') - 0.1; tScala = tScopre + 1.65; tFuori = r(15) - 0.1; tRespiri = r(16) - 0.25
+tVibra = r(17) - 0.1; tSchermo = w(17, 'è') - 0.05; tChiama = r(18) - 0.05; tPol = w(18, 'polizia') - 0.1; tAda = r(19) - 0.2; tChina = r(20) - 0.1; tDito = w(20, 'notte') + 0.45; tCarte = r(21) - 0.2
 
 ING, FIL = [], []          # ingressi di ffmpeg e catene di filtri
 def lunghezza(f): return float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], capture_output=True, text=True).stdout or 0)
 def suono(file, t, vol=1.0, ss=None, dur=None, filtri='', ciclo=False, dentro=0.0, fuori=0.0, lib=True):
     """mette un suono al tempo t (secondi della voce); quello che finisce prima dell'inizio del video (T0) si salta"""
     percorso = os.path.join(LIB, file) if lib else file
+    if os.environ.get('ELENCO'): print(f"{t:7.2f} {t + (dur if dur is not None else lunghezza(percorso) - (ss or 0)):7.2f} {vol:6.2f} {os.path.basename(file)}")
     if t < T0 and not ciclo and t + (dur if dur is not None else lunghezza(percorso) - (ss or 0)) <= T0 + 0.02: return
     arg = []
     if ciclo: arg += ['-stream_loop', '-1']
@@ -85,24 +92,45 @@ def musica(m, i=0):
     subprocess.run(['ffmpeg', '-v', 'error', '-y'] + ing + ['-filter_complex', g, '-map', '[m]', '-c:a', 'pcm_s24le', out], check=True)
     return out, round(10 ** ((float(m.get('lufs', -34)) - volume_di(out, TELEFONO)) / 20), 4), n
 LETTI = []
+def inviluppo(punti, da):
+    """volume a tratti lineari [(t, v), ...] nel tempo della voce, per un suono che parte al secondo `da` (dentro il filtro t è il tempo del suono)"""
+    T = f'(t+{da:.3f})'; e = f'{punti[-1][1]}'
+    for (t0, v0), (t1, v1) in reversed(list(zip(punti, punti[1:]))):
+        e = f'if(lt({T},{t1:.3f}),{v0}+({v1}-{v0})*({T}-{t0:.3f})/{max(0.001, t1 - t0):.3f},{e})'
+    return f"volume='if(lt({T},{punti[0][0]:.3f}),{punti[0][1]},{e})':eval=frame"
+# i silenzi alla maniera dei Coen (sezione 5 di FORMATO_STORIA): l'ombra sotto la porta, lo scavalco, il viso che si gela. Lì la musica scende quasi a zero.
+SILENZI = [(tOm - 0.3, tVia + 0.4), (c0 - 0.2, tCi + 0.2), (tGelo - 0.15, tSez + 1.7)]
+def duck(da=0.0, giu=0.2, rampa=0.5):
+    p = [(0, 1.0)]
+    for a, b in SILENZI: p += [(a - rampa, 1.0), (a, giu), (b, giu), (b + rampa, 1.0)]
+    return inviluppo(p, da)
 for i, m in enumerate(MUS):
     r_ = musica(m, i)
-    if r_: suono(r_[0], T0, r_[1], dur=FINE, dentro=float(m.get('entra', 1.0)), fuori=1.5, lib=False); LETTI.append((m, r_[1], r_[2], r_[0]))
-# --- ambienti: in casa la pioggia dietro i vetri; dal balcone in poi la pioggia vera, col vento a folate; il buio di fondo per tutto l'episodio
-suono('pioggia_finestra.mp3', 0, 0.4, dur=esce + 0.3, ciclo=True, filtri='lowpass=f=2200', dentro=0.4, fuori=0.5)
-# (la registrazione della pioggia nei primi 57 secondi ha dei colpi secchi, uno fortissimo a 49 s: si usa solo la parte pulita, in due pezzi incrociati)
-suono('pioggia_notte.mp3', esce, 0.95, ss=58, dur=60, filtri='lowpass=f=6000', dentro=0.6, fuori=2.0)
-suono('pioggia_notte.mp3', esce + 58, 0.95, ss=70, dur=END - esce - 58, filtri='lowpass=f=6000', dentro=2.0, fuori=0.6)
-suono('amb_slow.mp3', 0, 0.15, ss=6, dur=END, ciclo=True, dentro=1.5, fuori=1.2)
-for t in (soc + 0.2, nong - 0.1, r(13) - 1.2, r(18) + 0.3, r(21) - 0.2): suono('vento.mp3', t, 5.0, filtri='lowpass=f=3000', dentro=0.8, fuori=1.5, dur=5.3)
-MURO = 'lowpass=f=1500,aecho=0.8:0.5:60|130:0.25|0.12'          # un suono che arriva da dietro la porta di casa
-DENTRO = 'lowpass=f=900,aecho=0.8:0.5:70|150:0.3|0.15'           # un suono che arriva da dentro casa tua, sentito dal balcone accanto
+    if r_: suono(r_[0], T0, r_[1], dur=FINE, dentro=float(m.get('entra', 1.0)), fuori=1.5, lib=False, filtri=duck(T0)); LETTI.append((m, r_[1], r_[2], r_[0]))
+
+# --- ambienti. In casa tua e dalla signora Ada la pioggia dietro i vetri; fuori la pioggia vera, che si alza e si abbassa con dove sta la camera:
+#     forte sul balcone e in strada, attutita nell'appartamento vuoto (il vetro rotto) e nel tuo soggiorno, quasi niente sulla scala e dalla signora Ada.
+#     (la registrazione della pioggia nei primi 57 secondi ha dei colpi secchi, uno fortissimo a 49 s: si usa solo la parte pulita, in due pezzi)
+FUORI = [(esce, 0.95), (tChiave - 0.05, 0.95), (tChiave + 0.05, 0.3), (tNg - 0.05, 0.3), (tNg + 0.05, 1.0), (tRompe, 1.0), (tRompe + 1.5, 0.6), (tMuro + 0.9, 0.6), (tMuro + 1.1, 0.4),
+         (tGelo - 0.15, 0.4), (tGelo + 0.05, 0.12), (tSez - 0.05, 0.12), (tSez + 0.05, 0.75),      # (il viso che si gela: anche la pioggia si ritira) (tPorta - 0.05, 0.75), (tPorta + 0.05, 0.5), (tScopre - 0.05, 0.5), (tScopre + 0.05, 0.8), (tScala - 0.05, 0.8), (tScala + 0.05, 0.12),
+         (tFuori - 0.4, 0.12), (tFuori + 0.1, 1.2), (tRespiri - 0.05, 1.2), (tRespiri + 0.1, 0.75), (tAda - 0.05, 0.75), (tAda + 0.05, 0.0), (END, 0.0)]
+suono('pioggia_notte.mp3', esce, 1.0, ss=58, dur=58.0, filtri='lowpass=f=6000,' + inviluppo(FUORI, esce), dentro=0.6, fuori=1.5)
+suono('pioggia_notte.mp3', esce + 57.0, 1.0, ss=70, dur=END - esce - 57.0, filtri='lowpass=f=6000,' + inviluppo(FUORI, esce + 57.0), dentro=1.5, fuori=0.6)
+suono('pioggia_finestra.mp3', 0, 0.4, dur=esce + 0.4, ciclo=True, filtri='lowpass=f=2200', dentro=0.4, fuori=0.5)
+suono('pioggia_finestra.mp3', tChiave, 0.45, dur=tNg - tChiave, ciclo=True, filtri='lowpass=f=2200', dentro=0.05, fuori=0.05)
+suono('pioggia_finestra.mp3', tAda, 0.22, dur=END - tAda, ciclo=True, filtri='lowpass=f=1600', dentro=0.1, fuori=1.0)
+suono('amb_slow.mp3', 0, 0.15, ss=6, dur=END, ciclo=True, dentro=1.5, fuori=1.2, filtri=duck(0, 0.3))      # (anche il fondo scuro si ritira nei silenzi)
+for t in (esce + 0.3, tGu + 0.2, tNg - 0.2): suono('vento.mp3', t, 4.0, filtri='lowpass=f=3000', dentro=0.8, fuori=1.5, dur=5.3)
+MURO = 'lowpass=f=1500,aecho=0.8:0.5:60|130:0.25|0.12'          # da dietro la porta di casa (il pianerottolo)
+DENTRO = 'lowpass=f=700,aecho=0.8:0.5:70|150:0.3|0.15'           # da dietro il muro, nel tuo soggiorno
 COLPO = 'aecho=0.8:0.6:120|260:0.3|0.18'
-# --- «Avete scelto la B.» / lui bussa ancora, tu fermo
+SCALA = 'aecho=0.8:0.7:90|210|380:0.45|0.3|0.18'                 # la tromba delle scale: rimbomba
+NEL_TELEFONO = 'highpass=f=450,lowpass=f=3000'                    # sentito dentro il telefono
+# --- «Avete scelto la B.»; poi l'ombra dei suoi piedi sotto la porta, il cuore; l'ombra se ne va (i passi sul pianerottolo)
 suono('colpo.mp3', 0.15, 0.4, filtri=COLPO)
-for i, x in enumerate(K2): suono('bussata.mp3', x - 0.03, [2.5, 2.7, 1.05][i], ss=[0.97, 1.27, 1.57][i], dur=[0.3, 0.3, 0.45][i], filtri='equalizer=f=110:t=q:w=0.9:g=6,aecho=0.85:0.5:38|82:0.22|0.12', fuori=0.05)
-suono('heart60.mp3', resti, 1.0, dur=esce - resti, ciclo=True, dentro=0.8, fuori=0.8, filtri="atempo=1.1,volume='0.4':eval=frame")
-# --- dallo spioncino: i suoi passi sul pianerottolo, il campanello della vicina, la catenella, la luce delle scale che scatta
+suono('heart60.mp3', tOm - 0.4, 1.0, dur=esce - tOm + 0.4, ciclo=True, dentro=0.8, fuori=0.8, filtri="atempo=1.1,volume='0.42':eval=frame")
+suono('passi_piastrelle.mp3', tVia - 0.05, 6.5, ss=1.4, dur=1.4, filtri=MURO, fuori=0.5)
+# --- dallo spioncino: i suoi passi fino alla porta di fronte, il campanello, la catenella, la porta della vicina, la luce delle scale che scatta
 suono('passi_piastrelle.mp3', tVa, 7.5, ss=1.4, dur=max(0.6, tArr - tVa), filtri=MURO, fuori=0.15)
 suono('campanello.mp3', tSuona + 0.3, 0.2, filtri=MURO)
 suono('catenella.mp3', tApre - 0.25, 0.5, filtri=MURO)
@@ -110,46 +138,69 @@ suono('porta_cigola.mp3', tApre + 0.05, 0.22, dur=1.2, filtri=MURO, fuori=0.3)
 suono('legno.mp3', tChiude, 0.3, ss=3.28, dur=0.75, filtri=MURO, fuori=0.1)
 suono('interruttore.mp3', buioA - 0.02, 0.5, filtri=MURO)
 suono('colpo.mp3', buioA + 0.45, 0.5, filtri=COLPO)
-# --- il telefono; fuori dalla porta tornano le chiavi
-suono('chiavi.mp3', w(6, 'mandato') - 0.1, 0.5, filtri=MURO)
-suono('riser.mp3', r(7) - 3.6, 0.2)
-# --- sul balcone: la portafinestra, il vuoto, il corrimano
+# --- vai al balcone: la portafinestra
+suono('passi_piastrelle.mp3', tVai + 1.2, 2.2, ss=7.6, dur=esce - tVai - 1.0, filtri='lowpass=f=2500', fuori=0.2)
 suono('finestra.mp3', esce + 0.1, 0.9, fuori=0.4)
-suono('rise_long.mp3', r(8) - 0.2, 0.4, ss=14, dur=rf(8) + 0.6 - r(8), dentro=1.0, fuori=0.8)
-suono('colpo.mp3', w(8, 'lei') - 0.05, 0.35, filtri=COLPO)
-suono('ringhiera.mp3', r(10) + 0.12, 0.3, filtri='lowpass=f=2400')
-suono('stoffa.mp3', bagn + 0.3, 0.35)
-suono('ringhiera.mp3', bagn + 0.42, 0.18, filtri='lowpass=f=1800')
-suono('riser.mp3', nong - 0.4, 0.2)
-suono('heart60.mp3', nong, 1.0, dur=r(12) - nong, ciclo=True, dentro=0.6, fuori=1.0, filtri="atempo=1.25,volume='0.42':eval=frame")
-for t in (r(11) + 0.55, poi + 0.45): suono('scivolata.mp3', t, 0.3, dur=0.6, fuori=0.15)
-for t in (r(11) + 0.25, poi + 0.15): suono('ringhiera.mp3', t, 0.14, filtri='lowpass=f=1800')
-suono('tonfo.mp3', cisei + 0.1, 0.35, filtri='lowpass=f=1800')
-suono('respiro.mp3', cisei + 0.3, 0.5, dur=r(13) - cisei - 0.6, dentro=0.2, fuori=0.8)
-suono('stoffa.mp3', r(12) + 0.6, 0.3)
-# --- in casa tua: le chiavi nella porta, la luce, i suoi passi da una stanza all'altra
-suono('chiavi_porta.mp3', r(13) - 2.3, 1.3, filtri=DENTRO)
-suono('porta_cigola.mp3', r(13) - 0.2, 0.25, dur=1.6, filtri=DENTRO, fuori=0.4)
-suono('interruttore.mp3', acc - 0.02, 0.35, filtri=DENTRO)
-suono('colpo.mp3', acc + 0.05, 0.45, filtri=COLPO)
-suono('interruttore.mp3', sogg - 0.02, 0.4, filtri=DENTRO)
-suono('passi_piastrelle.mp3', r(15) - 0.1, 9.0, ss=2.0, dur=dita - r(15), filtri=DENTRO, dentro=0.3, fuori=0.3)
-suono('porta_cigola.mp3', apre, 0.22, dur=1.4, filtri=DENTRO, fuori=0.4)
-suono('interruttore.mp3', apre + 0.33, 0.35, filtri=DENTRO)
-suono('rise_long.mp3', r(16) - 0.2, 0.45, ss=12, dur=rf(16) + 1.0 - r(16), dentro=1.0, fuori=0.5)
-suono('finestra.mp3', dita + 0.45, 1.0, fuori=0.5)
-# --- i passi escono sul balcone e si fermano; il respiro trattenuto
-suono('passi_piastrelle.mp3', r(17) + 0.15, 7.0, ss=7.6, dur=max(0.7, w(17, 'fermano') + 0.25 - r(17)), filtri='lowpass=f=4000', fuori=0.12)
-suono('heart60.mp3', w(17, 'fermano') + 0.3, 1.0, dur=r(20) - w(17, 'fermano') - 0.3, ciclo=True, dentro=0.5, fuori=1.2, filtri="atempo=1.3,volume='0.42+0.2*min(1,t/5)':eval=frame")
-# --- la sua faccia: un crescendo scuro e il colpo quando è fuori del tutto
-suono('rise_long.mp3', r(19) - 0.3, 0.5, ss=14, dur=rf(19) + 0.9 - r(19), dentro=0.8, fuori=0.5)
-suono('colpo.mp3', rf(19) + 0.45, 0.6, filtri=COLPO)
-suono('ringhiera.mp3', r(19) - 0.1, 0.16, filtri='lowpass=f=1800')
-suono('colpo.mp3', w(22, 'mano') + 0.3, 0.35, filtri=COLPO)
-# --- le carte
-suono('colpo.mp3', r(24) - 0.12, 0.55, filtri=COLPO)
-suono('rise_long.mp3', r(24), 0.35, ss=20, dur=END - r(24), dentro=1.0, fuori=1.2)
+# --- lo scavalco, senza voce: il corrimano bagnato, la mano che scivola; la chiave che gira nella tua porta e la porta che si apre (lo sentiamo da dentro);
+#     fuori dalla ringhiera il cuore più veloce; il piede, l'atterraggio, il fiato
+suono('ringhiera.mp3', c0 + 0.12, 0.3, filtri='lowpass=f=2400')
+suono('stoffa.mp3', c0 + 0.5, 0.3)
+suono('scivolata.mp3', bagn + 0.33, 0.35, dur=0.5, fuori=0.15)
+suono('ringhiera.mp3', bagn + 0.4, 0.2, filtri='lowpass=f=1800')
+suono('serratura.mp3', tChiave - 0.35, 1.0)
+suono('porta_cigola.mp3', tChiave + 0.12, 0.35, dur=1.4, fuori=0.4)
+suono('heart60.mp3', tNg, 1.0, dur=tChiusa - tNg, ciclo=True, dentro=0.3, fuori=0.8, filtri="atempo=1.3,volume='0.45':eval=frame")
+for t in (tPd + 0.25, tPd + 0.85): suono('passi_bagnati.mp3', t, 0.25, ss=0.0, dur=0.45, fuori=0.15)
+for t in (tPd + 0.2, tPd + 0.8): suono('ringhiera.mp3', t, 0.14, filtri='lowpass=f=1800')
+suono('tonfo.mp3', tCi + 0.1, 0.3, filtri='lowpass=f=1800')
+suono('respiro.mp3', tCi + 0.3, 0.45, dur=tChiusa - tCi - 0.2, dentro=0.2, fuori=0.6)
+# --- la portafinestra chiusa: due spinte, il telaio che sbatte; il vaso
+for t in (tChiusa + 0.55, tChiusa + 1.3): suono('maniglia.mp3', t, 0.45, ss=0.3, dur=0.35, filtri='lowpass=f=2600', fuori=0.1)
+suono('stoffa.mp3', tVaso + 1.25, 0.25)
+# --- «Aspetti il tuono.»: il cuore, il lampo lontano col suo brontolio, poi il tuono vero che copre il vetro (il colpo del tuono cade insieme al vetro)
+suono('heart60.mp3', tAsp, 1.0, dur=tRompe - tAsp, ciclo=True, dentro=0.6, fuori=0.15, filtri="atempo=1.45,volume='0.32+0.3*min(1,t/4)':eval=frame")
+suono('tuono.mp3', lampoL + 0.7, 0.35, ss=4.0, dur=3.0, filtri='lowpass=f=500', dentro=0.4, fuori=1.0)
+suono('tuono.mp3', tRompe - 0.78, 0.8, dur=9.0, fuori=3.0)
+suono('vetro.mp3', tRompe - 0.2, 0.55)
+suono('vetro_schegge.mp3', tRompe + 0.15, 0.3, filtri='lowpass=f=7000')
+# --- la mano nel buco: la martellina che gira, l'anta che si apre; i vetri sotto le scarpe
+suono('maniglia_finestra.mp3', tMano + 0.02, 0.6)
+suono('finestra.mp3', tMano + 0.62, 0.3, dur=0.8, fuori=0.3)
+for t in (tDentro + 0.25, tDentro + 0.85): suono('vetro_schegge.mp3', t, 0.22, ss=1.55, dur=0.45, filtri='lowpass=f=5000', fuori=0.15)
+# --- la camera passa il muro: un colpo sordo; di là c'è lui
+suono('colpo.mp3', tMuro + 0.92, 0.35, filtri='lowpass=f=260,' + COLPO)
+# --- «Fai un passo. Il pavimento scricchiola.»: il parquet; poi il silenzio
+suono('scricchiolio.mp3', tScr - 0.45, 0.55)
+# --- lo spaccato: i suoi passi di là dal muro, si fermano; la mano sul muro; poi riprendono verso il balcone. I tuoi, piano, verso la porta
+suono('passi_piastrelle.mp3', tSez + 0.2, 4.5, ss=2.0, dur=1.45, filtri=DENTRO, fuori=0.2)
+suono('tonfo.mp3', tSez + 1.85, 0.18, filtri='lowpass=f=500')
+suono('heart60.mp3', tSez + 2.2, 1.0, dur=tScala - tSez - 2.2, ciclo=True, dentro=1.0, fuori=0.5, filtri="atempo=1.35,volume='0.4':eval=frame")
+suono('passi_piastrelle.mp3', tRip + 0.15, 4.0, ss=4.4, dur=2.9, filtri=DENTRO, dentro=0.1, fuori=0.4)
+suono('passi_piastrelle.mp3', tRip + 0.9, 1.4, ss=9.0, dur=2.4, filtri='lowpass=f=2000', fuori=0.3)
+# --- la porta d'ingresso dell'appartamento vuoto: la maniglia, la porta che si apre sull'altra scala; lui sul balcone che vede il vetro
+suono('maniglia.mp3', tPorta + 0.25, 0.5, ss=0.25, dur=0.7, fuori=0.15)
+suono('porta_cigola.mp3', tPorta + 1.1, 0.1, dur=1.3, filtri='lowpass=f=3500', fuori=0.4)
+suono('vento.mp3', tScopre + 0.2, 2.5, filtri='lowpass=f=3000', dentro=0.8, fuori=1.5, dur=4.0)
+suono('passi_bagnati.mp3', tScopre - 0.1, 0.18, ss=2.0, dur=1.0, fuori=0.3)
+suono('riser.mp3', tScopre + 0.1, 0.25)
+# --- giù per la scala di corsa, poi fuori sotto la pioggia
+suono('corsa_scale.mp3', tScala - 0.55, 0.9, dur=tFuori - tScala + 0.55, filtri=SCALA, fuori=0.3)
+suono('corsa_strada.mp3', tFuori - 0.05, 0.9, ss=3.0, dur=tRespiri - tFuori, filtri='lowpass=f=5000', dentro=0.1, fuori=0.6)
+# --- «Per la prima volta stanotte, respiri.»: il fiato che rallenta, le gocce dal portico
+suono('respiro.mp3', tRespiri + 0.2, 0.55, dur=tVibra - tRespiri, dentro=0.3, fuori=0.8)
+for t in (tRespiri + 1.3, tRespiri + 3.1, tVibra + 1.2): suono('gocce.mp3', t, 0.35, dur=1.2, fuori=0.4)
+# --- il telefono vibra in tasca, poi in mano; risponde. Nella chiamata, piano, il pendolo della signora Ada (lo stesso che sentiremo da lei)
+suono('phone_table.mp3', tVibra + 0.1, 0.5, dur=tChiama - 0.45 - tVibra - 0.1, filtri='lowpass=f=1200', fuori=0.1)
+suono('pendolo_tic.mp3', tChiama + 0.4, 0.22, dur=tAda - tChiama - 0.4, ciclo=True, filtri=NEL_TELEFONO, dentro=0.5, fuori=0.1)
+suono('heart60.mp3', tPol + 0.3, 1.0, dur=tAda - tPol - 0.3, ciclo=True, dentro=0.8, fuori=0.2, filtri="atempo=1.3,volume='0.4':eval=frame")
+# --- dalla signora Ada: il pendolo vero, nella stanza; lui che si china; il dito sulle labbra; le carte
+suono('pendolo_tic.mp3', tAda, 0.45, dur=END - tAda, ciclo=True, dentro=0.05, fuori=1.5)
+suono('rise_long.mp3', tChina, 0.35, ss=12, dur=tCarte - tChina + 0.5, dentro=1.5, fuori=0.5)
+suono('colpo.mp3', tDito + 0.85, 0.45, filtri=COLPO)
+suono('colpo.mp3', r(24) - 0.12, 0.5, filtri=COLPO)
+suono('rise_long.mp3', r(22), 0.22, ss=20, dur=END - r(22), dentro=1.0, fuori=1.2)
 
+if os.environ.get('ELENCO'): sys.exit(0)
 n = len(ING); pre = f'{D}/audio/_premix.wav'
 graf = ';'.join(FIL) + ';' + ''.join(f'[s{i}]' for i in range(n)) + f'amix=inputs={n}:normalize=0:duration=longest,atrim=0:{FINE},afade=t=out:st={FINE - 0.8:.2f}:d=0.8[a]'
 cmd = ['ffmpeg', '-v', 'error', '-y'] + sum(ING, []) + ['-filter_complex', graf, '-map', '[a]', '-c:a', 'pcm_f32le', '-ar', '48000', pre]
