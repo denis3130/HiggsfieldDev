@@ -71,3 +71,20 @@ Ogni parte è una tabella: `| # | Voce | Si vede | Suono |`
 Nelle storie scritte prima del 22/11 il bivio è ancora nella forma breve «A: … B: …»: quando si produce l'episodio si riscrive nella forma nuova.
 **Parole:** apertura A n · apertura B n · comune n
 Solo per l'Episodio 1 aggiungi **Prompt immagini (inglese)**: un prompt per inquadratura, con lo stesso suffisso di stile per tutte.
+
+## 5. Regia e racconto alla maniera dei grandi registi (richiesta dell'utente del 27/11: «broski impara dai migliori registi dei film da oscar ecc e prendi la loro arte»)
+Quello che si prende da loro, trasformato in regole per un episodio di due minuti:
+- **Suspense, non sorpresa** (Hitchcock, la bomba sotto il tavolo): il pubblico deve sapere del pericolo PRIMA del personaggio e aspettare con lui.
+  Si mostra anche quello che il protagonista non vede (mentre scavalchi, la sua chiave che gira nella tua serratura).
+- **Il silenzio fa più paura della musica** (i Coen, «Non è un paese per vecchi», Oscar al miglior film): nei momenti più tesi niente voce e
+  niente musica, solo suoni veri (pioggia, respiro, uno scricchiolio). La luce sotto una porta e l'ombra di due piedi ferme valgono più di una frase.
+- **Il cattivo educato** (Tarantino, «Bastardi senza gloria», Oscar a Christoph Waltz; Demme, «Il silenzio degli innocenti», Oscar al miglior
+  film): non minaccia mai apertamente, è gentile, calmo e un passo avanti. Una volta per episodio guarda in macchina, cioè te.
+- **Ogni dettaglio torna** (Bong Joon-ho, «Parasite», Oscar al miglior film: la pietra, l'odore): quello che si mostra o si nomina serve dopo,
+  e lo spazio racconta (piani, scale, muri: si sa sempre dove sono tutti).
+- **La voce non descrive l'immagine**: dice solo quello che l'immagine non può dire (cosa sai, cosa rischi, cosa pensi). Le azioni le
+  raccontano le immagini; ci sono tratti senza voce.
+- **Ogni episodio si rovescia**: alla fine la situazione è l'opposto dell'inizio (respiri, sei salvo → la telefonata che cambia tutto).
+- **La scelta impossibile** («La scelta di Sophie», Oscar a Meryl Streep): tutte e due le strade costano qualcosa a qualcuno.
+- **La camera** (Fincher): movimenti lenti e precisi, luci che vengono da fonti vere (lampade, schermi, la luce sotto una porta), buio vero;
+  la camera può passare attraverso i muri («Panic Room») per mostrare due persone ai due lati di una parete.

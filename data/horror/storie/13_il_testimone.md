@@ -88,6 +88,43 @@ Scrivilo nei commenti, e seguimi per vedere come continua. [voce già fatta]
 
 **Bivio nuovo:** A: La tiri fuori / B: Scappi e la lasci lì. Perché regge: sentendo i passi dalla portafinestra socchiusa, sai che lui capirà da dove sei uscito; la porta di un appartamento vuoto si apre da dentro con la maniglia; le finestre delle scale danno sul cortile come la tua cucina; lui ha il tuo numero (la centrale gli ha passato la tua chiamata) e chiama per vedere dove si accende uno schermo nel parcheggio buio; tutte e due le scelte sono possibili con quello che lui vede (sei nell'ombra dell'auto). Voce nuova solo per le frasi nuove: preventivo 2,55 crediti.
 
+**Seconda proposta (Elena viva): bocciata** («non mi piace ancora»). Anche l'idea della telefonata della signora Ada era stata accennata.
+
+**Terza proposta, 27/11 (dopo «broski impara dai migliori registi dei film da oscar ecc e prendi la loro arte»), episodio intero riscritto con le regole della sezione 5 di FORMATO_STORIA: «Interno 11».** La fuga riesce davvero (appartamento vuoto, altra scala, fuori); il rovesciamento è la telefonata dal numero della signora Ada, che gli ha dato le tue chiavi. Tornano: lo scricchiolio dell'episodio 1, le chiavi lasciate per le piante, la signora Ada nelle tue chiamate recenti, il suo gesto dell'indice sulle labbra. Il tuono che copre il vetro va preparato con un tuono lontano sul balcone. Sei frasi riprese dalla voce già fatta; preventivo per le nuove: 2,7 crediti. In attesa del suo ok.
+
+Avete scelto la B. [voce già fatta]
+Non apri. Non respiri.
+[la striscia di luce sotto la porta e l'ombra dei suoi piedi, ferma; silenzio, solo pioggia]
+«Polizia, signora. Il suo vicino non risponde. Lei ha per caso le chiavi?» [voce già fatta]
+Le ha. Gliele hai lasciate tu, per le piante. [voce già fatta]
+Hai il tempo che le serve per trovarle.
+Il balcone accanto è di un appartamento vuoto da mesi.
+[lo scavalco senza voce: respiro, pioggia, il piede che scivola; a metà, stacco sulla sua mano che gira la tua chiave nella tua serratura]
+La portafinestra è chiusa. Per romperla ti serve un rumore più forte del tuo.
+Aspetti il tuono.
+[tuono e vetro insieme]
+Di là dal muro c'è casa tua. E c'è lui.
+[la camera passa attraverso il muro: tu da una parte, lui dall'altra]
+«Non deve avere paura di me», dice piano. «Sono qui per proteggerla.» [voce già fatta]
+Fai un passo. Il pavimento scricchiola.
+Di là, i passi si fermano.
+Poi riprendono. Vanno verso il balcone.
+La porta d'ingresso si apre da dentro. Dà sull'altra scala.
+[quattro piani di scale al buio, visti dall'alto]
+Fuori piove. Corri, finché il palazzo non sparisce.
+Per la prima volta stanotte, respiri.
+Il telefono vibra. È la signora Ada.
+«Pronto, caro? C'è qui da me un signore della polizia. Gentilissimo.»
+«Dice che ti sei spaventato. Ti aspettiamo, ti faccio un caffè.»
+Poi la voce di lui, vicinissima: «Faccia con calma. Abbiamo tutta la notte.»
+[stacco nel soggiorno della signora Ada: lei sorride al telefono; dietro di lei, lui guarda in macchina e si porta l'indice alle labbra, come nell'episodio 1]
+Cosa fai? [voce già fatta]
+La A: torni indietro, per non lasciarla sola con lui.
+Oppure la B: porti il video ai carabinieri, e speri che lei se la cavi.
+Scrivilo nei commenti, e seguimi per vedere come continua. [voce già fatta]
+
+**Bivio:** A: Torni da lei / B: Vai dai carabinieri. Perché regge: lui non sa dove sei, quindi tutte e due le scelte sono possibili; la signora Ada ti chiama perché glielo chiede lui (lei crede a un poliziotto gentile), e lui usa il telefono di lei, non il suo; dai carabinieri ci vai di persona perché il 112 manderebbe di nuovo lui.
+
 **Versione consegnata e bocciata:**
 Scritto solo il ramo B («non apri, e scappi dal balcone con il telefono»): l'episodio 1 è uscito sul canale nuovo e il 26/11 l'utente ha detto
 «hanno scelto l'opzione B continua pure». Il ramo A non si scrive. Regole del 26/11 applicate: la voce non descrive l'immagine, ogni frase regge
