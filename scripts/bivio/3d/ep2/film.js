@@ -361,7 +361,7 @@ function chiamataArrivo(ctx, t, s) {
     ctx.fillStyle = 'rgba(255,230,215,0.35)'; ctx.beginPath(); ctx.ellipse(x + pw - 150 + 60 * (1 - pk) - 6, y + 900 + 380 * (1 - pk), 34, 26, -0.45, 0, 7); ctx.fill(); }
   ctx.restore();
 }
-function carta(ctx, t, y, lettera, col, testo, img, acc, k, spenta) { if (k <= 0) return; const x = 70, cw = 860, chh = 480, sc = 1 + 0.035 * acc;
+function carta(ctx, t, y, lettera, col, testo, img, acc, k, spenta, chh = 480) { if (k <= 0) return; const x = 70, cw = 860, sc = 1 + 0.035 * acc;
   ctx.save(); ctx.globalAlpha = k * (1 - 0.45 * spenta); ctx.translate(x + cw / 2 + (1 - k) * 220, y + chh / 2); ctx.scale(sc, sc); ctx.translate(-cw / 2, -chh / 2);
   ctx.shadowColor = acc > 0.1 ? col : 'rgba(0,0,0,0.6)'; ctx.shadowBlur = 30 + 50 * acc; M.rrect(ctx, 0, 0, cw, chh, 36); ctx.fillStyle = '#0D1016'; ctx.fill(); ctx.shadowBlur = 0;
   M.rrect(ctx, 0, 0, cw, chh, 36); ctx.save(); ctx.clip();
@@ -371,13 +371,17 @@ function carta(ctx, t, y, lettera, col, testo, img, acc, k, spenta) { if (k <= 0
   ctx.fillStyle = col; ctx.beginPath(); ctx.arc(74, 74, 46, 0, 7); ctx.fill(); ctx.fillStyle = '#0D1016'; ctx.font = font(60, 800, 'Display'); ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(lettera, 74, 79);
   ctx.fillStyle = '#fff'; ctx.textAlign = 'left'; ctx.font = font(58, 800, 'Display'); testo.forEach((riga, i) => ctx.fillText(riga, 40, chh - 46 - (testo.length - 1 - i) * 66));
   ctx.restore(); }
+// tre carte (27/11 sera, chiesto dall'utente): A e B come sempre, più la C con scritto solo «A VOSTRA SCELTA» (vince un commento con più like delle altre due).
+// Più basse delle due di prima (340 invece di 480) perché la scritta finale resti sopra la fascia dei comandi di YouTube.
 function carte(ctx, t) {
-  const ent = (d) => E.outCubic(prog(t, r(21) - 0.1 + d, r(21) + 0.45 + d)), a = prog(t, r(22) - 0.1, r(22) + 0.15) * (1 - prog(t, r(23) - 0.15, r(23) + 0.1)), b = prog(t, r(23) - 0.1, r(23) + 0.15) * (1 - prog(t, r(24) - 0.15, r(24) + 0.1));
-  const fin = prog(t, r(24) - 0.1, r(24) + 0.3);
-  carta(ctx, t, 470, 'A', '#F2B63C', ['TORNI', 'DA LEI'], IMG.cartaA, a, ent(0), b);
-  carta(ctx, t, 990, 'B', '#5CB8FF', ['VAI DAI', 'CARABINIERI'], IMG.cartaB, b, ent(0.18), a);
+  const on = (n, m) => prog(t, r(n) - 0.1, r(n) + 0.15) * (1 - prog(t, r(m) - 0.15, r(m) + 0.1));
+  const ent = (d) => E.outCubic(prog(t, r(21) - 0.1 + d, r(21) + 0.45 + d)), a = on(22, 23), b = on(23, 24), c = on(24, 25), H3 = 340;
+  const fin = prog(t, r(25) - 0.1, r(25) + 0.3);
+  carta(ctx, t, 420, 'A', '#F2B63C', ['TORNI', 'DA LEI'], IMG.cartaA, a, ent(0), Math.max(b, c), H3);
+  carta(ctx, t, 782, 'B', '#5CB8FF', ['VAI DAI', 'CARABINIERI'], IMG.cartaB, b, ent(0.18), Math.max(a, c), H3);
+  carta(ctx, t, 1144, 'C', '#C77DFF', ['A VOSTRA', 'SCELTA'], IMG.cartaC, c, ent(0.36), Math.max(a, b), H3);
   if (fin > 0) { ctx.save(); ctx.globalAlpha = fin; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.font = font(60, 800, 'Display'); ctx.lineWidth = 12; ctx.strokeStyle = 'rgba(0,0,0,0.7)'; ctx.lineJoin = 'round';
-    ctx.strokeText('Scrivi A o B nei commenti', W / 2 - 20, 1556); ctx.fillStyle = '#fff'; ctx.fillText('Scrivi A o B nei commenti', W / 2 - 20, 1556); ctx.restore(); }
+    ctx.strokeText('Scrivi A, B o C nei commenti', W / 2, 1556); ctx.fillStyle = '#fff'; ctx.fillText('Scrivi A, B o C nei commenti', W / 2, 1556); ctx.restore(); }
 }
 // «Avete scelto la B.»: la carta B dell'episodio 1, da sola, con il segno di chi ha vinto
 function scelta(ctx, t) {
@@ -409,6 +413,8 @@ M.film({
     // le immagini fisse: la carta votata nell'episodio 1 e le due carte nuove (la signora Ada al telefono con lui dietro; tu che te ne vai sotto la pioggia)
     IMG.sceltaB = scatto(SF, { ...FB, cam: [4.5, FY + 1.5, 0.2], look: [4.2, FY - 3.2, 6.5], fov: 30, tu: lontano }, 860, 1.7, 480);
     IMG.cartaA = scatto(AD, { cam: [0.25, 1.28, 1.25], look: [0.15, 1.3, -0.6], fov: 34, lampada: 1.2, ada: { pos: [0, 0, -0.38], yaw: 0, sit: 1, sedile: 0.47, lean: 0.06, headYaw: 0.12, smile: 0.55, armR: { a: [0.104, 0.393, 0.071], gomito: [0.8, -1, -0.1], dita: [-0.1, 0.87, -0.48], dorso: [1, 0, -0.15], mano: 'orecchio' }, armL: { a: [-0.16, -0.08, 0.3], gomito: [-0.8, -0.6, -0.2], dita: [0.2, -0.4, 1], dorso: [0, 1, 0.2], mano: 'rilassata' } }, riva: { pos: [0.45, 0, -1.08], yaw: -0.1, smile: 0.3, open: 0.72 } }, 860, 1.25, 480);
+    // la C: la tromba delle scale vista dall'alto, una strada che non si sa dove porta
+    IMG.cartaC = scatto(SC, { cam: [0.03, 14.2, 0.04], look: [0, 0, 0], fov: 62, tu: { pos: [30, 0, 30] } }, 860, 1.9, 480);
     IMG.cartaB = scatto(PO, { cam: [0.9, 1.6, -1.6], look: [3.5, 1.2, 6], fov: 40, pioggia: 1, tu: { pos: [2.3, 0, 4.2], yaw: 0.35, lean: 0.24, gambe: { aL: 0.5, gL: 0.3, aR: -0.45, gR: 0.6 }, armL: { a: [-0.24, 0.02, 0.24] }, armR: { a: [0.24, 0.02, -0.12] } } }, 860, 1.6, 480);
   },
   draw(ctx, u, t) {

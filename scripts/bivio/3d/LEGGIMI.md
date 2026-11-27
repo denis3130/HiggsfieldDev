@@ -557,6 +557,16 @@ si è riscritto tutto con le regole della sezione 5 di `data/horror/FORMATO_STOR
   (`headRoll` 0,1): `SORRISO(k)` in `ep2/film.js`. Si allarga mentre si raddrizza e alza la mano, così il passaggio dalle labbra chiuse
   ai denti (a `grin` 0,1 e 0,3 il disegno della bocca cambia) cade dentro il movimento. Col mento giù la bocca scende di circa 1,5 cm:
   la mano va abbassata della stessa misura (`DITO.a` 0,357), se no la punta torna sul naso.
+- **La terza carta, C** (27/11 sera, chiesta dall'utente: «aggiungi solamente una terza opzione cioe la c … a vostra scelta»). Una riga
+  nuova di Luc (`voce_ep2_c`, 0,45 crediti) cucita con `cuci_voce.py` come riga 24 del copione (la vecchia 24 è diventata 25): la voce resta
+  identica al bit fino a 122,9 s, così il video fino alle carte non cambia. Tre carte da 340 px invece di due da 480 (`carta(…, chh)`),
+  la C viola con la tromba delle scale vista dall'alto e solo «A VOSTRA SCELTA»; «Scrivi A, B o C nei commenti». Rifatto il finale dal
+  fotogramma chiave 3273 fino a 137,6 s e incastrato.
+- **Disco pieno** (27/11 sera): la copia congelata (`cp -rL ep2 ep2_r2`, che copia anche i corpi) ha riempito lo spazio della sessione e il
+  render si è fermato. Liberato spazio togliendo render vecchi, pezzi già usati, copie congelate, versioni superate e i pesi di LTX-Video
+  (prova scartata dall'utente). Un finale si rende anche senza copia congelata, se intanto non si toccano i set.
+- **Il picco dopo l'AAC, di nuovo**: con la voce più lunga il colpo del tuono col vetro è tornato a +1,2 dB nel file finale. Il vetro ora
+  passa da un suo limitatore (`alimiter` 0,5) a volume 0,3 e il tuono a 0,6: picco vero -2,1 dB.
 
 ## Musica di sottofondo (25/11): «manca solo la musica horror di sottofondo»
 

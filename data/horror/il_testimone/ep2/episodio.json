@@ -121,12 +121,18 @@
   },
   {
    "id": "r24",
+   "voce": "Oppure la C: decidete voi come va avanti. Vale solo se il vostro commento supera i like delle altre due.",
+   "pausa": 0.25
+  },
+  {
+   "id": "r25",
    "voce": "Scrivilo nei commenti, e seguimi per vedere come continua."
   }
  ],
  "bivio": {
   "A": "Torni da lei",
-  "B": "Vai dai carabinieri"
+  "B": "Vai dai carabinieri",
+  "C": "A vostra scelta: vale solo se un commento supera i like delle altre due"
  },
  "carte": {
   "A": [
@@ -136,7 +142,11 @@
   "B": [
    "VAI DAI",
    "CARABINIERI"
+  ],
+  "C": [
+   "A VOSTRA",
+   "SCELTA"
   ]
  },
- "stato": "Terza versione, approvata dall'utente il 27/11 («ok») dopo «impara dai migliori registi dei film da oscar ecc e prendi la loro arte». Voce: sei righe riprese dalla registrazione del 26/11 (job cc9e28fe-5f6a-4a19-941d-66dcc8f23ce2) e diciotto nuove (job 96100b5c-5366-4291-b757-8c75fe54eeca, 2,7 crediti); «balcone» della riga 13 preso dalla vecchia riga 17 (nella nuova Luc dice quasi «baicone»). Montaggio: montaggio_voce.json + scripts/bivio/3d/cuci_voce.py. «pausa» = secondi di silenzio dopo la riga (per le azioni e i silenzi voluti)."
+ "stato": "Terza versione, approvata dall'utente il 27/11 («ok») dopo «impara dai migliori registi dei film da oscar ecc e prendi la loro arte». Voce: sei righe riprese dalla registrazione del 26/11 (job cc9e28fe-5f6a-4a19-941d-66dcc8f23ce2) e diciotto nuove (job 96100b5c-5366-4291-b757-8c75fe54eeca, 2,7 crediti); «balcone» della riga 13 preso dalla vecchia riga 17 (nella nuova Luc dice quasi «baicone»). Montaggio: montaggio_voce.json + scripts/bivio/3d/cuci_voce.py. «pausa» = secondi di silenzio dopo la riga (per le azioni e i silenzi voluti). Il 27/11 sera l'utente ha chiesto una terza scelta: «aggiungi solamente una terza opzione cioe la c ( dovrà esserci scritto solo) a vostra scelta, e il bot che legge dovra dire tipo oppure la c scegliete voi come continua, solo se un commento supera i like delle 2 opzioni»: riga r24 nuova (job 502dd878-ddb1-458a-9a58-8420d707726b, 0,45 crediti), la vecchia r24 diventa r25."
 }

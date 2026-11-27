@@ -2,9 +2,10 @@
  "copione": "episodio.json",
  "sorgenti": {
   "vecchia": "/tmp/claude-0/-home-user-HiggsfieldDev/368c82ce-0008-5df1-a10b-0a4a69dda6d7/scratchpad/voce_ep2",
-  "nuova": "/tmp/claude-0/-home-user-HiggsfieldDev/368c82ce-0008-5df1-a10b-0a4a69dda6d7/scratchpad/voce_ep2_v3_nuove"
+  "nuova": "/tmp/claude-0/-home-user-HiggsfieldDev/368c82ce-0008-5df1-a10b-0a4a69dda6d7/scratchpad/voce_ep2_v3_nuove",
+  "c": "/tmp/claude-0/-home-user-HiggsfieldDev/368c82ce-0008-5df1-a10b-0a4a69dda6d7/scratchpad/voce_ep2_c"
  },
- "nota": "le cartelle delle voci stanno solo sulla macchina (l'audio di Luc non va nel repository): «vecchia» = registrazione del 26/11, «nuova» = quella del 27/11",
+ "nota": "le cartelle delle voci stanno solo sulla macchina (l'audio di Luc non va nel repository): «vecchia» = registrazione del 26/11, «nuova» = quella del 27/11; «c» = la riga della terza scelta (27/11 sera)",
  "righe": [
   [
    "vecchia",
@@ -97,6 +98,10 @@
   [
    "nuova",
    18
+  ],
+  [
+   "c",
+   1
   ],
   [
    "vecchia",
