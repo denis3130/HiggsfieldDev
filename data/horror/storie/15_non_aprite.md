@@ -54,6 +54,25 @@ La mamma
 Lucia
 - Prima che il nonno le prenda il telefono le arriva un messaggio da un numero sconosciuto: «Ci vediamo presto». Dice che è pubblicità.
 
+## Di notte i nonni scavano (aggiunto il 28/11: «aggiungi un fatto horror che fanno i nonni di notte, qualcosa di inquietante che non vogliono che si scopra»)
+- La scena, una notte in cui il narratore non beve il latte: «Alle 3:10 sentii aprirsi la porta sul retro. Dalla finestra vidi una luce
+  nell'orto. Il nonno scavava. La nonna teneva la lanterna. Una buca lunga e stretta, grande come una persona.» La mattina dopo, sulla
+  terra smossa, ci sono dei crisantemi: i fiori dei morti. «Perché i crisantemi?» «È novembre», dice la nonna.
+- Indizi dei giorni dopo: ogni mattina un rettangolo di terra smossa in più, ognuno coi crisantemi sopra, come tombe; il badile pulito ma
+  ancora bagnato; dall'armadio mancano due lenzuola (ci mettono sopra la terra, per non sporcare l'erba); alle 7 gli scarponi del nonno
+  sono già lucidati e lo straccio sotto il lavello è pieno di fango; il cane scava sempre sotto la sua cuccia e la nonna lo sgrida con
+  troppa paura; una notte, nella luce della lanterna, escono delle ossa (falsa pista: è Bobo, il vecchio cane, sepolto col collare);
+  il narratore sente il nonno: «Deve essere qui. L'ho messo io.» La nonna: «Franco, sono passati tredici anni.» «Se lo trova lui, siamo finiti.»
+- Cosa pensa chi guarda: sono tombe. Per chi? Per papà? Hanno già ucciso qualcuno?
+- La verità: la notte del 9 novembre 2013 il nonno tornò a casa alle 22:15 e seppellì nell'orto un sacco con il cappotto sporco del
+  sangue di Sergio e i guanti che aveva messo per non lasciare impronte sulla chiave inglese. Ora papà è fuori e ha un avvocato che chiede
+  di riaprire il processo: il nonno vuole bruciare il sacco, ma non lo trova più. Anni fa la nonna, che quella notte l'aveva visto dalla
+  finestra, l'ha spostato sotto la cuccia del cane: è l'unica prova che papà è innocente, e non ha mai avuto il coraggio né di usarla né
+  di distruggerla. Di notte aiuta il nonno a scavare e fa finta di cercare. I crisantemi li pianta lei (il nonno vuole che li tolga).
+- La regola delle 21:30 e i sonniferi nel latte servono anche a questo: di notte i ragazzi non devono vedere l'orto.
+- Bivio grande più avanti: chi trova il sacco per primo decide tutto. Se lo trova Lucia, lo dà a papà o lo porta ai carabinieri, che
+  sono amici del nonno?
+
 ## Da decidere
 Chi racconta: Luc ha una voce da uomo, quindi la proposta è che racconti Jason da grande («Avevo tredici anni quando…»); la voce dietro la
 porta direbbe il nome di sua sorella. Se racconta Lucia, serve una voce di donna.
