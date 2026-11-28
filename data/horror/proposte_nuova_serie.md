@@ -80,3 +80,17 @@ soprannaturale. In attesa della sua scelta.
 Preferenza mia: la C (la frase delle foto non si può lasciare lì, e c'è il conto alla rovescia fino a domenica).
 
 Risposta dell'utente alle tre idee del secondo giro: «nessuno mi dice niente». Prima di scriverne altre gli chiedo che paura vuole.
+
+# Terzo giro (28/11): sei inizi di una riga
+«Alle 3:00» episodio per episodio: «no». Per trovare la direzione, sei inizi molto diversi, una riga ciascuno; lui sceglie, poi si sviluppa.
+1. Tua sorella torna a casa dopo tre giorni dispersa nel bosco. È lei, parla come lei. Ma il cane non smette di ringhiarle, e di notte la
+   trovi in piedi accanto al tuo letto che conta a bassa voce.
+2. Al mercatino compri una vecchia videocamera. Dentro c'è ancora una cassetta: la tua famiglia che dorme, filmata stanotte.
+3. Da una settimana in casa sparisce il cibo. Metti una telecamera in camera. Alle 4:12 un uomo esce da sotto il tuo letto, ti guarda
+   dormire, poi guarda la telecamera e sorride.
+4. Ti assumono come guardia notturna in un manicomio chiuso da trent'anni. Regola numero uno: se qualcuno chiama il tuo nome, non
+   rispondere. Regola numero due: lì dentro nessuno sa come ti chiami.
+5. Il vicino ti saluta dalla finestra ogni mattina alle 7. Oggi la polizia ti dice che è morto da tre settimane. Domani alle 7 lui è di
+   nuovo alla finestra.
+6. Nella tua scuola, ogni anno, la notte di Halloween sparisce uno studente. Quest'anno trovi un biglietto nello zaino: «Tocca a te. Hai
+   sette giorni per capire chi sono.»
