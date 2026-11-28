@@ -48,3 +48,33 @@ Lucia (15 anni) racconta; con lei Jason (13).
 - Primo bivio: A: gli parlo attraverso la porta, senza aprire. B: sveglio il nonno, che dorme col fucile accanto.
 
 Preferenza mia: la 3, per il gancio più forte e perché ogni bivio nasce da solo (aprire o no, credere a papà o al nonno).
+
+# Secondo giro (28/11), ispirato ai grandi del cinema horror
+«Non aprite» e «Dopo le 21:30» scartate («non mi piace bro», «ancora non mi ispira prendi ispirazione dai migliori film/registi horror»).
+Tre idee nuove, raccontate in seconda persona come il video A (la voce di Luc va bene per tutte), tutte con cattivi umani e niente
+soprannaturale. In attesa della sua scelta.
+
+## A. «La babysitter»: come Halloween di Carpenter e la suspense di Hitchcock
+> «Ti pagano cento euro per una notte da babysitter, in una villa nel bosco. I genitori lasciano una sola regola: se senti bussare alla
+> finestra, non guardare. Alle 23:10 il bambino ti sveglia: "C'è di nuovo il signore in giardino."»
+- La verità: quei due non sono i suoi genitori, l'hanno rapito due anni fa. L'uomo in giardino è il suo vero padre. E loro ti guardano da
+  una telecamera nel rilevatore di fumo. Tutta la stagione è una notte sola: tornano alle 2:00.
+- L'immagine: l'uomo nella neve che appoggia al vetro il volantino «BAMBINO SCOMPARSO», con la foto del bambino che dorme di sopra.
+
+## B. «Lo scambio»: come Saw di James Wan e Prisoners di Villeneuve
+> «Tua sorella è sparita tre anni fa. Alle 3:12 di stanotte ti arriva un messaggio: "È viva. Se vuoi rivederla, una sola regola: non
+> dirlo a nessuno." Poi una foto. È lei, al buio, con in mano il giornale di oggi.»
+- La verità: l'uomo che scrive l'ha tenuta prigioniera tutto questo tempo. Te la restituisce, ma qualcuno deve prendere il suo posto.
+  Ogni episodio ti chiede qualcosa in cambio, sempre più terribile.
+- L'immagine: una botola in mezzo a un campo, e da sotto la voce di tua sorella che canta la ninna nanna della mamma.
+
+## C. «La foto di famiglia»: come Psycho di Hitchcock e la foto finale di Shining
+> «Sei in affido. La tua nuova famiglia vive in campagna ed è perfetta. Nel corridoio c'è una foto di famiglia per ogni anno. In ogni
+> foto il figlio è un ragazzo diverso. Sempre quindicenne, come te. La prima notte, alle 3:00, la madre entra in camera e ti misura con
+> un metro da sarta.»
+- La verità: il loro figlio è morto a quindici anni. Da allora ogni anno prendono in affido un ragazzo della stessa età e gli fanno
+  mettere il suo maglione. Quando compie sedici anni, sparisce: «è scappato». In giardino ci sono quindici ciliegi, uno per ogni anno.
+  Tu compi sedici anni domenica.
+- L'immagine: sul letto è già pronto il maglione della foto, e accanto ai ciliegi c'è una buca nuova.
+
+Preferenza mia: la C (la frase delle foto non si può lasciare lì, e c'è il conto alla rovescia fino a domenica).
