@@ -22,3 +22,45 @@ tua tasca, comincia a squillare. Sullo schermo c'è scritto: "Amore".»
 5. Ti mette un microfono addosso e ti manda dal tuo capo. Il capo ti abbraccia e lo trova. Fine: il capo ti sussurra: «Il poliziotto
    lavora per me. L'unico che può aiutarti davvero è l'uomo del bagagliaio. Ed è vivo.»
 Ogni persona che si offre di aiutarti ha un segreto: chi guarda non sa mai di chi fidarsi, e il cattivo sei tu.
+
+## Episodio 1 «Il bagagliaio»: testo (28/11, l'utente: «creami solo il primo ep»), da approvare
+Circa 280 parole, poco meno di 2 minuti con la voce di Luc. Scoperte: il morto nel bagagliaio, la regola del Sardo, Bruno che apre come
+se aspettasse qualcuno, la valigia pronta, la caduta, la foto con la donna dai capelli rossi, il messaggio di «Amore», la donna.
+
+Sono le 2:14. Piove. Stai guidando su una strada di campagna, da solo.
+Nel bagagliaio c'è un uomo. È morto. L'hai ucciso tu, un'ora fa.
+E adesso, dal bagagliaio, il suo telefono comincia a squillare.
+
+Un'ora prima.
+Lavori per il Sardo: riscuoti i suoi crediti. Il Sardo ha una sola regola: se qualcosa va storto, non chiamarlo.
+Stanotte tocca a Bruno Ferri. Ventimila euro, tre mesi di ritardo.
+È una casa isolata, con le luci accese. Bussi.
+Bruno apre subito. Come se aspettasse qualcuno.
+Vicino alla porta c'è una valigia. Già chiusa.
+«I soldi non ce li ho», dice. E sorride.
+Gli dai un pugno. Uno solo.
+Bruno cade all'indietro e batte la testa sullo spigolo del tavolo.
+Non si rialza.
+Gli tocchi il collo. Niente.
+Sono le 1:13.
+Non chiami il Sardo. Conosci la regola.
+In garage trovi un telo da imbianchino. Lo avvolgi e lo carichi nel bagagliaio.
+Prima di uscire, sulla parete, vedi la foto del matrimonio: Bruno e una donna con i capelli rossi.
+
+Ora sono le 2:14. Il telefono squilla ancora.
+La spia della benzina è accesa. C'è un solo distributore aperto. Ti fermi.
+Apri il bagagliaio, per spegnere quel telefono.
+Sullo schermo c'è scritto: «Amore».
+E sotto, un messaggio appena arrivato: «Lo so che non sei lui.»
+Dietro di te, una voce di donna: «So cosa c'è nel bagagliaio. Posso aiutarti.»
+Ti giri.
+Ha i capelli rossi.
+
+Cosa fai?
+La A: ti fidi di lei e la fai salire in macchina.
+Oppure la B: chiudi il bagagliaio e scappi da solo.
+Altrimenti la C: se il commento con più cuori supera le opzioni, sarà la scelta definitiva.
+Il commento con più like determinerà il prossimo episodio.
+
+(Per noi: la valigia era di Bruno, che stanotte voleva scappare coi risparmi; la moglie ha seguito il suo telefono con la
+localizzazione ed è al distributore: sa che chi ha il telefono non è lui perché ti ha visto.)
