@@ -78,3 +78,5 @@ soprannaturale. In attesa della sua scelta.
 - L'immagine: sul letto è già pronto il maglione della foto, e accanto ai ciliegi c'è una buca nuova.
 
 Preferenza mia: la C (la frase delle foto non si può lasciare lì, e c'è il conto alla rovescia fino a domenica).
+
+Risposta dell'utente alle tre idee del secondo giro: «nessuno mi dice niente». Prima di scriverne altre gli chiedo che paura vuole.
