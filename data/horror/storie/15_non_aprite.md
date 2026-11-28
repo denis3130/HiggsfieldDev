@@ -1,5 +1,7 @@
 # Non aprite
 
+> SCARTATA il 28/11: «non ci ho capito un cazzo», «non mi piace bro». Al suo posto `16_dopo_le_21_30.md`.
+
 > Serie nuova (28/11). L'utente ha scelto la versione 3 di `data/horror/proposte_nuova_serie.md` e ha chiesto «più indizi che facciano
 > venire i dubbi, come il telefono di casa col filo tagliato»: oggetti normali con un dettaglio che non torna, che fanno sospettare di
 > tutti senza spiegare niente. Stato: storia e indizi proposti il 28/11, in attesa del suo ok. Da decidere: chi racconta (vedi in fondo).
