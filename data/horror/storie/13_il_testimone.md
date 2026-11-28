@@ -164,7 +164,40 @@ Cosa fai? La A: gli passi il telefono, con dentro il video. Oppure la B: gli dic
 (nella mappa era «gli consegni il telefono / dici di averlo perso»: in questo ramo «perso» = caduto dal balcone; il freezer arriva nell'apertura B dell'episodio 3)
 **Parole:** 254
 
-## Episodio 3 — Ci penso io (proposta del 27/11 sera, in attesa dell'ok; ha vinto la B dell'episodio 2: porti il video ai carabinieri)
+## Episodio 3 — Senza sirene (seconda proposta, 28/11 notte, in attesa dell'ok; ha vinto la B dell'episodio 2: porti il video ai carabinieri)
+
+**La prima proposta («Ci penso io», qui sotto) l'utente l'ha bocciata con «no bro».** Mia lettura, detta a lui: i carabinieri ti riconsegnavano subito a lui, cioè la B votata si annullava in un minuto (lo stesso difetto della prima versione bocciata dell'episodio 2); e metà episodio era un monologo seduto in una stanza.
+
+Avete scelto la B. [voce già fatta]
+«Mezza targa basta», dice il maresciallo.
+La macchina è intestata a un poliziotto. Adesso ha un nome: Dario Riva.
+«Andiamo», dice. «Senza sirene. Non deve sentirci arrivare.»
+[senza voce: la gazzella sotto la pioggia; in fondo alla strada due fanali grigi girano l'angolo: il pubblico lo vede, tu no]
+Sull'asfalto bagnato c'è un rettangolo asciutto. È andato via da un minuto.
+[senza voce: le scale, la porta dell'interno 11 socchiusa, il pendolo]
+Il pendolo batte ancora. Il cuore della signora Ada no.
+Sul tavolino, la scatola delle sue pastiglie è vuota.
+«Un malore», dirà il medico. «A ottant'anni succede.»
+L'hai lasciata sola con lui.
+Il telefono vibra. Chiama la signora Ada.
+«Mi dispiace per la signora», dice lui. «Il cuore.»
+«Lei vuole la macchina. Io le dico dove sta.»
+«Ma viene da solo. Se vedo un lampeggiante, la macchina brucia. Con la ragazza dentro.»
+Un colpevole gli serve ancora. Anche morto.
+[senza voce: lui al buio, in macchina, fa scattare un accendino; guarda in macchina e sorride]
+Cosa fai? [voce già fatta]
+La A: vai da solo, e forse non torni.
+Oppure la B: lo dici al maresciallo, e la prova brucia.
+Oppure la C: decidete voi come va avanti. Vale solo se il vostro commento supera i like delle altre due. [voce già fatta, episodio 2]
+Scrivilo nei commenti, e seguimi per vedere come continua. [voce già fatta]
+
+**Bivio:** A: Vai da solo / B: Lo dici al maresciallo / C: A vostra scelta.
+**Perché regge:** la B votata funziona: il video ha mezza targa, la macchina grigia è intestata a lui (è la sua, privata: con quella era venuto all'appuntamento con Elena), il maresciallo ti crede e parte subito, senza sirene. Lui però è un passo avanti: se n'è andato da un minuto con la macchina e il corpo (il rettangolo asciutto sotto dove era parcheggiata). Il prezzo della B: la signora Ada poteva raccontare che lui l'ha tenuta sveglia tutta la notte e ti ha chiamato col suo telefono, cioè confermare la tua storia: l'ha fatta tacere con le sue pastiglie, e sembrerà un malore. Il suo telefono l'ha preso lui (ti chiama da lì, come nell'episodio 2). La prova vera è il corpo di Elena (sotto le unghie ha la sua pelle, i tre graffi): è nella sua macchina. Ti offre il posto per attirarti da solo: un colpevole morto gli serve quanto uno vivo. Problema nuovo: non più il telefono né la signora Ada, ma la prova e la trappola.
+**Tornano:** la macchina grigia, il pendolo e il telefono della signora Ada, il suo sorriso in macchina; i graffi (la pelle sotto le unghie) diventano la prova.
+**Personaggi nuovi:** il maresciallo dei carabinieri. **Luoghi nuovi:** la caserma (il banco col computer), la gazzella; la macchina di lui al buio.
+**Parole:** circa 176 (36 già registrate).
+
+### Prima proposta, bocciata («no bro»): Ci penso io
 
 Avete scelto la B. [voce già fatta]
 Dai carabinieri lui non lo conosce nessuno. Non è dei loro.
