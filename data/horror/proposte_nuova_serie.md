@@ -1,0 +1,50 @@
+# Nuova serie: tre versioni originali (28/11)
+
+L'utente ha proposto una storia che era la trama di «The Visit» (Shyamalan, 2015): due fratelli dai nonni mai visti, la regola delle
+21:30, i finti nonni evasi da un ospedale psichiatrico. Gli ho detto che era il film, e mi ha chiesto «una nuova [serie] e scrivimi due o
+tre versioni» che tengano gli ingredienti che gli piacciono: la visita ai parenti mai visti, una regola con un orario preciso, una casa da
+cui non si esce, cattivi umani, il dubbio su chi dice la verità. Trame originali, nel formato del video A (apertura di 10–13 s con «una
+sola regola» e il primo spavento con l'orario, una scoperta ogni 15 secondi circa, indizi che sono oggetti, tutto con una spiegazione
+umana), raccontate in prima persona e al passato come «Il gioco dei sette». In attesa della sua scelta.
+
+## 1. «Le 21:30»
+Lucia (15 anni) racconta; con lei il fratello Jason (13).
+> «Conobbi i miei nonni a quindici anni. Mia madre non gli parlava da quando ero nata. In casa loro c'era una sola regola: alle 21:30,
+> tutti in camera. La prima notte, alle 3:10, vidi il nonno trascinare qualcosa nel fienile.»
+
+- La verità: i nonni sono veri. Quindici anni fa il loro figlio Marco, il fratello della mamma, morì in un incidente alle 21:30; guidava
+  la mamma, o così ha sempre detto. La nonna non è malata: era la scusa per farci venire. Non vogliono noi, vogliono lei: fra sette
+  giorni è l'anniversario, e noi siamo l'esca. La verità su quella notte non è né quella della mamma né quella dei nonni.
+- Cosa si scopre: il filo del telefono tagliato con le forbici, non dal temporale; una camera chiusa a chiave, ferma al 2011; la foto di
+  famiglia col viso della mamma grattato via; nel fienile, sotto un telo, la macchina col muso distrutto e accanto un materasso con una catena.
+- Primo bivio: di notte sento il nonno al telefono: «Venerdì. Verrà.» A: sveglio Jason e scappiamo a piedi verso il paese. B: faccio
+  finta di niente e domani apro la stanza chiusa.
+
+## 2. «La lettera»
+Marta (30 anni) racconta.
+> «Mio padre se n'era andato quando avevo due anni. Ventotto anni dopo mi scrisse: "Sto morendo. Vorrei conoscerti." Sua moglie mi
+> accolse con una sola regola: dopo le 21:30, mai entrare nella sua stanza. La prima notte, alle 2:40, lo sentii chiamare il mio nome.»
+
+- La verità: non sta morendo, lo tengono addormentato. Irene, la badante che l'ha sposato due anni fa, ogni sera gli dà una pastiglia che
+  non è la sua. La lettera l'ha scritta lei: quando lui morirà, questa settimana, servirà un colpevole, e la figlia sparita che eredita
+  tutto ed era in casa quella notte è perfetta. La regola è fatta per essere infranta: nel corridoio c'è una telecamera. La neve ha chiuso
+  la strada e le chiavi della macchina le tiene lei.
+- Cosa si scopre: la «R» della lettera diversa da quella dei biglietti di compleanno di quando era piccola; nel portapillole della sera
+  una pastiglia in più; segni rossi sui polsi di lui; la telecamera nel rilevatore di fumo; un ritaglio di giornale: un altro anziano
+  morto, un altro figlio arrestato, la stessa badante con un altro nome.
+- Primo bivio: A: entro nella sua stanza, anche se è vietato. B: sveglio Irene.
+
+## 3. «Non aprite»
+Lucia (15 anni) racconta; con lei Jason (13).
+> «Mia madre ci aveva sempre detto che nostro padre era morto. Poi, all'improvviso, ci mandò dai nonni che non avevamo mai visto. Lì
+> c'era una sola regola: dopo le 21:30, se qualcuno bussa, non si apre. La prima notte, alle 23:50, qualcuno bussò. E disse il mio nome.»
+
+- La verità: il padre è vivo. Tredici anni fa fu condannato per aver ucciso un uomo, e la settimana scorsa è uscito di prigione. La mamma
+  ci ha portati dai suoi genitori perché il nonno è un ex carabiniere e ha un fucile. Ma nel cassetto del nonno ci sono tredici anni di
+  lettere di papà per Lucia, spedite lì perché era l'unico indirizzo che conosceva, e mai consegnate. In tutte la stessa frase: «Non sono
+  stato io. Chiedilo a tuo nonno.»
+- Cosa si scopre: il fucile carico dietro la porta; l'articolo con la foto di papà e il nome del nonno tra i testimoni; sul gradino, il
+  coniglio di pezza dell'unica foto di Lucia in braccio a lui; la nonna che di nascosto porta fiori sulla tomba dell'uomo ucciso.
+- Primo bivio: A: gli parlo attraverso la porta, senza aprire. B: sveglio il nonno, che dorme col fucile accanto.
+
+Preferenza mia: la 3, per il gancio più forte e perché ogni bivio nasce da solo (aprire o no, credere a papà o al nonno).
