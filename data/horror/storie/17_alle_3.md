@@ -32,3 +32,27 @@ Halloween).
 - C'è tutto: la casa infestata, la persona di cui ti fidi che è il mostro, i giochi crudeli, la caccia.
 - Il colpo più forte: nella storia sono gli spettatori del suo canale segreto a votare chi muore, come i nostri votano A o B.
 - I bivi vengono da soli: rispondi alla voce o no, fai la prova o ti rifiuti, ti fidi di lui o lo dici a tua madre.
+
+## Episodio per episodio (28/11, dopo «non ci siamo ancora deve invogliare gli spettatori a vedere il continuo, sempre suspense e colpi di scena»)
+Ogni episodio finisce con una frase che obbliga a vedere il successivo, e ogni due o tre episodi cambia di chi si ha paura:
+il fantasma → il cacciatore → la mamma → la ragazza nei muri → chi vota.
+1. Il biglietto «Alle 3:00 non rispondere. Mai.»; alle 3:00 la voce della sorellina dal giardino. Fine: «Poi la voce dice: "Quella nel
+   letto non sono io."» (È la voce della bambina copiata al computer dalla registrazione del primo giorno.)
+2. Impronte di piedi nudi nella brina fino al pozzo. Fine: sul telefono un video delle 3:04: sei tu che dormi, ripreso da sopra il letto.
+   (Telecamera nel lampadario; il video te lo manda Giada per avvertirti.)
+3. Arriva il cacciatore di fantasmi, simpatico e coraggioso; usa la termocamera. Fine: sullo schermo, dietro di te, c'è una persona. Ma
+   dietro di te c'è solo il muro. (È Giada, nell'intercapedine dietro il cartongesso.)
+4. Le regole: niente telefoni, nessuno esce per sette notti, ogni notte una prova. La prima: la sorellina dorme da sola in soffitta; la
+   madre rifiuta. Fine: alle 3:00 il suo letto è vuoto e la soffitta è chiusa a chiave da dentro. (L'ha portata lui dal passaggio nei muri.)
+5. Sfondi la porta: la bambina dorme in un cerchio di candele; sul muro, scritto da una bambina: GIADA 2023. Fine: lei apre gli occhi e
+   dice con una voce non sua: «Lui ti sta guardando.» (Ripete nel sonno quello che le ha sussurrato Giada dalla cassa dell'orsacchiotto.)
+6. Nell'orsacchiotto trovi la cassa: non è un fantasma. Sospetti il cacciatore. Fine: lo vedi nel suo furgone, da solo, che piange davanti
+   alla foto di una famiglia. (Falsa pista: si sta filmando mentre piange, per il suo canale.)
+7. Nella borsa della madre c'è un contratto con lui: 80.000 euro per partecipare al programma. Fine: «Non sapevo che sarebbe successo
+   davvero», piange. Poi si spengono tutte le luci.
+8. Al buio una mano ti tira dentro il muro: è il fantasma, una ragazza pallida di diciassette anni. Fine: «Mi chiamo Giada. Sono sparita
+   tre anni fa. Alla settima notte uno di voi muore. E lo scelgono loro.»
+9. Sul computer di lui c'è una diretta segreta: migliaia di persone pagano per guardarvi e votano. Fine: sullo schermo tre foto (tu, tua
+   madre, tua sorella) e un contatore: 48.312 voti.
+10. Settima notte: le porte si chiudono da sole, lui non sorride più e vi dà la caccia. Fine: «Il voto è chiuso. Il più votato sei tu.»
+Finale di stagione: l'ultimo voto lo fanno davvero i nostri spettatori nei commenti.
